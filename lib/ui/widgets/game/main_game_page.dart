@@ -11,6 +11,7 @@ class MainGamePage extends StatelessWidget {
         centerTitle: true,
         title: Text(
           S.of(context).main_game_appbar_title,
+          style: TextStyle(fontSize: 20),
         ),
       ),
       body: SafeArea(
@@ -48,7 +49,9 @@ class _BalanceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).primaryColor),
+        border: Border.symmetric(
+          horizontal: BorderSide(color: Theme.of(context).primaryColor),
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15),
@@ -99,7 +102,9 @@ class _WrapperBlockWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).primaryColor),
+        border: Border.symmetric(
+          horizontal: BorderSide(color: Theme.of(context).primaryColor),
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),

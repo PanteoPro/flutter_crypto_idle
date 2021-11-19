@@ -42,6 +42,9 @@
     "game_market_flat_change_item_title": "Заехать",
     "game_market_flat_buy_item_title": "Купить",
 
+    "game_crypto_title": "Криптовалюты",
+    "game_crypto_cost_header_title": "Общая стоимость",
+
     "text_with_dollar": "{value}$",
     "text_with_energy": "{value} Ват/ч",
     "text_with_power_mining": "{value} U/dex",

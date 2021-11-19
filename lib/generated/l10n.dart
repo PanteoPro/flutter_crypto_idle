@@ -410,6 +410,26 @@ class S {
     );
   }
 
+  /// `Crypto`
+  String get game_crypto_title {
+    return Intl.message(
+      'Crypto',
+      name: 'game_crypto_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Balance`
+  String get game_crypto_cost_header_title {
+    return Intl.message(
+      'Balance',
+      name: 'game_crypto_cost_header_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{value}$`
   String text_with_dollar(Object value) {
     return Intl.message(

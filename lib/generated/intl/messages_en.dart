@@ -36,6 +36,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "game_crypto_cost_header_title":
+            MessageLookupByLibrary.simpleMessage("Balance"),
+        "game_crypto_title": MessageLookupByLibrary.simpleMessage("Crypto"),
         "game_market_flat_buy_item_title":
             MessageLookupByLibrary.simpleMessage("Buy"),
         "game_market_flat_change_item_title":
