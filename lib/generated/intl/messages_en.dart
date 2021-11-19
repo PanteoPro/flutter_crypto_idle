@@ -20,9 +20,62 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(symbol) => "Earn on ${symbol}";
+
+  static String m1(symbol) => "Mining ${symbol}";
+
+  static String m2(value) => "${value}\$";
+
+  static String m3(value) => "${value} V/h";
+
+  static String m4(value) => "${value} U/dex";
+
+  static String m5(value1, value2) => "${value1}/${value2}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "main_game_action_buy_flat_title":
+            MessageLookupByLibrary.simpleMessage("Buy flat"),
+        "main_game_action_buy_pc_title":
+            MessageLookupByLibrary.simpleMessage("Buy PC\'s"),
+        "main_game_action_crypto_title":
+            MessageLookupByLibrary.simpleMessage("Purse crypto"),
+        "main_game_action_mining_title":
+            MessageLookupByLibrary.simpleMessage("Mining crypto"),
         "main_game_appbar_title":
-            MessageLookupByLibrary.simpleMessage("Crypto IDLE")
+            MessageLookupByLibrary.simpleMessage("Crypto IDLE"),
+        "main_game_cash_balance_title":
+            MessageLookupByLibrary.simpleMessage("Cash"),
+        "main_game_crypto_balance_title":
+            MessageLookupByLibrary.simpleMessage("Crypto"),
+        "main_game_info_count_pc_title":
+            MessageLookupByLibrary.simpleMessage("Count PC"),
+        "main_game_info_energy_title":
+            MessageLookupByLibrary.simpleMessage("Consuming energy"),
+        "main_game_info_place_title":
+            MessageLookupByLibrary.simpleMessage("Place"),
+        "main_game_info_power_mining_title":
+            MessageLookupByLibrary.simpleMessage("Power mining"),
+        "main_game_info_title": MessageLookupByLibrary.simpleMessage("Main"),
+        "main_game_month_energy_title":
+            MessageLookupByLibrary.simpleMessage("Cost energy"),
+        "main_game_month_flat_title":
+            MessageLookupByLibrary.simpleMessage("Cost flat"),
+        "main_game_month_title":
+            MessageLookupByLibrary.simpleMessage("Month prices"),
+        "main_game_stat_earn_on_crypto_title": m0,
+        "main_game_stat_mining_on_crypto_title": m1,
+        "main_game_stat_spend_all_title":
+            MessageLookupByLibrary.simpleMessage("Spend all time"),
+        "main_game_stat_spend_energy_title":
+            MessageLookupByLibrary.simpleMessage("Spend on energy"),
+        "main_game_stat_spend_flat_title":
+            MessageLookupByLibrary.simpleMessage("Spend on flat"),
+        "main_game_stat_title":
+            MessageLookupByLibrary.simpleMessage("Statistic"),
+        "text_with_dollar": m2,
+        "text_with_energy": m3,
+        "text_with_power_mining": m4,
+        "text_with_slash": m5
       };
 }

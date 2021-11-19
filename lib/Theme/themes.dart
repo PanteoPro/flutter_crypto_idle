@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
 final ThemeData kLightTheme = ThemeData.light().copyWith(
-  primaryColor: Colors.white,
+  primaryColor: Colors.black,
   appBarTheme: const AppBarTheme(
     color: Colors.blue,
   ),
-  // textTheme: TextTheme(headline1: TextStyle())
+  textTheme: const TextTheme(
+    bodyText1: TextStyle(color: Colors.black, fontWeight: FontWeight.normal, fontSize: 18),
+    bodyText2: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+    subtitle1: TextStyle(color: Colors.green, fontWeight: FontWeight.w400, fontSize: 18),
+    headline2: TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 20),
+  ),
 );
 
 final ThemeData kDarkTheme = ThemeData.dark().copyWith(

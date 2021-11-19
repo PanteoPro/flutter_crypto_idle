@@ -1,3 +1,33 @@
 {
-    "main_game_appbar_title": "Криптовалютный IDLE"
+    "main_game_appbar_title": "Криптовалютный IDLE",
+    "main_game_cash_balance_title": "Наличные",
+    "main_game_crypto_balance_title": "Криптовалюта",
+
+    "main_game_action_buy_pc_title": "Купить установки",
+    "main_game_action_buy_flat_title": "Купить помещение",
+    "main_game_action_mining_title": "Добыча криптовалют",
+    "main_game_action_crypto_title": "Кошелек криптовалют",
+
+    "main_game_info_title": "Основное",
+    "main_game_info_place_title": "Место",
+    "main_game_info_count_pc_title": "Количество установок",
+    "main_game_info_energy_title": "Потребление энергии",
+    "main_game_info_power_mining_title": "Мощность майнинга",
+
+    "main_game_month_title": "Ежемесячные расходы",
+    "main_game_month_flat_title": "Оплата жилья",
+    "main_game_month_energy_title": "Оплата электричества",
+
+    "main_game_stat_title": "Статистика",
+    "main_game_stat_spend_all_title": "Потрачено за все время",
+    "main_game_stat_spend_flat_title": "Потрачено на жилье",
+    "main_game_stat_spend_energy_title": "Потрачено на электричество",
+    "main_game_stat_earn_on_crypto_title": "Заработано на {symbol}",
+    "main_game_stat_mining_on_crypto_title": "Добыто {symbol}",
+
+    "text_with_dollar": "{value}$",
+    "text_with_energy": "{value} Ват/ч",
+    "text_with_power_mining": "{value} U/dex",
+    "text_with_slash": "{value1}/{value2}"
+
 }

@@ -1,3 +1,33 @@
 {
-    "main_game_appbar_title": "Crypto IDLE"
+    "main_game_appbar_title": "Crypto IDLE",
+    "main_game_cash_balance_title": "Cash",
+    "main_game_crypto_balance_title": "Crypto",
+
+    "main_game_action_buy_pc_title": "Buy PC's",
+    "main_game_action_buy_flat_title": "Buy flat",
+    "main_game_action_mining_title": "Mining crypto",
+    "main_game_action_crypto_title": "Purse crypto",
+
+    "main_game_info_title": "Main",
+    "main_game_info_place_title": "Place",
+    "main_game_info_count_pc_title": "Count PC",
+    "main_game_info_energy_title": "Consuming energy",
+    "main_game_info_power_mining_title": "Power mining",
+
+    "main_game_month_title": "Month prices",
+    "main_game_month_flat_title": "Cost flat",
+    "main_game_month_energy_title": "Cost energy",
+
+    "main_game_stat_title": "Statistic",
+    "main_game_stat_spend_all_title": "Spend all time",
+    "main_game_stat_spend_flat_title": "Spend on flat",
+    "main_game_stat_spend_energy_title": "Spend on energy",
+    "main_game_stat_earn_on_crypto_title": "Earn on {symbol}",
+    "main_game_stat_mining_on_crypto_title": "Mining {symbol}",
+
+    "text_with_dollar": "{value}$",
+    "text_with_energy": "{value} V/h",
+    "text_with_power_mining": "{value} U/dex",
+    "text_with_slash": "{value1}/{value2}"
+
 }
