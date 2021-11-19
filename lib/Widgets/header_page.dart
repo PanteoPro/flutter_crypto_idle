@@ -18,7 +18,9 @@ class HeaderPage extends StatelessWidget {
         child: Stack(
           children: [
             GestureDetector(
-              onTap: onTap,
+              onTap: () {
+                Navigator.of(context).pop();
+              },
               child: Icon(
                 Icons.arrow_back,
                 color: Theme.of(context).primaryColor,

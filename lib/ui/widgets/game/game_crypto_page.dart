@@ -65,10 +65,10 @@ class _CryptoListWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: ListView.separated(
         itemBuilder: (ctx, index) {
-          return _CryptoItemWidget();
+          return const _CryptoItemWidget();
         },
         separatorBuilder: (ctx, index) {
-          return SizedBox(height: 10);
+          return const SizedBox(height: 10);
         },
         itemCount: 4,
       ),

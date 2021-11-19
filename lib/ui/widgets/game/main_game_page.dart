@@ -1,4 +1,5 @@
 import 'package:crypto_idle/generated/l10n.dart';
+import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:flutter/material.dart';
 
 class MainGamePage extends StatelessWidget {
@@ -130,27 +131,48 @@ class _ActionsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return _WrapperBlockWidget(
       children: [
-        __ActionItemWidget(title: S.of(context).main_game_action_buy_pc_title),
+        __ActionItemWidget(
+          title: S.of(context).main_game_action_buy_pc_title,
+          onTap: () {
+            Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMarketPC);
+          },
+        ),
         const SizedBox(height: 10),
-        __ActionItemWidget(title: S.of(context).main_game_action_buy_flat_title),
+        __ActionItemWidget(
+          title: S.of(context).main_game_action_buy_flat_title,
+          onTap: () {
+            Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMarketFlat);
+          },
+        ),
         const SizedBox(height: 10),
-        __ActionItemWidget(title: S.of(context).main_game_action_mining_title),
+        __ActionItemWidget(
+          title: S.of(context).main_game_action_mining_title,
+          onTap: () {
+            Navigator.of(context).pushNamed(MainNavigationRouteNames.main);
+          },
+        ),
         const SizedBox(height: 10),
-        __ActionItemWidget(title: S.of(context).main_game_action_crypto_title),
+        __ActionItemWidget(
+          title: S.of(context).main_game_action_crypto_title,
+          onTap: () {
+            Navigator.of(context).pushNamed(MainNavigationRouteNames.gameCrypto);
+          },
+        ),
       ],
     );
   }
 }
 
 class __ActionItemWidget extends StatelessWidget {
-  const __ActionItemWidget({Key? key, required this.title}) : super(key: key);
+  const __ActionItemWidget({Key? key, required this.title, required this.onTap}) : super(key: key);
 
   final String title;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

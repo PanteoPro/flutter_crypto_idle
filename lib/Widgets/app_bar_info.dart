@@ -9,6 +9,7 @@ AppBar kGameAppBar(BuildContext context) => AppBar(
           Text('Количество установок: 5/10'),
         ],
       ),
+      automaticallyImplyLeading: false,
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),

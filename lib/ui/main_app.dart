@@ -1,6 +1,7 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:crypto_idle/Theme/themes.dart';
 import 'package:crypto_idle/generated/l10n.dart';
+import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:crypto_idle/ui/widgets/game/game_crypto_page.dart';
 import 'package:crypto_idle/ui/widgets/game/game_market_flat_page.dart';
 import 'package:crypto_idle/ui/widgets/game/game_market_pc_page.dart';
@@ -9,7 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 class MainApp extends StatelessWidget {
-  const MainApp({Key? key}) : super(key: key);
+  MainApp({Key? key}) : super(key: key);
+  final mainNavigation = MainNavigation();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,8 @@ class MainApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: S.delegate.supportedLocales,
-        home: const GameCryptoPage(),
+        initialRoute: mainNavigation.initialRoute(),
+        routes: mainNavigation.routes,
       ),
     );
   }
