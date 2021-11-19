@@ -3,9 +3,16 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
-  const MyButton({Key? key, required this.color, required this.onPressed, required this.title}) : super(key: key);
+  const MyButton({
+    Key? key,
+    required this.color,
+    required this.onPressed,
+    required this.title,
+    this.textColor,
+  }) : super(key: key);
 
   final Color color;
+  final Color? textColor;
   final String title;
   final VoidCallback onPressed;
 
@@ -14,7 +21,7 @@ class MyButton extends StatelessWidget {
     return ElevatedButton(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(color),
-        textStyle: MaterialStateProperty.all(TextStyle(color: Colors.black)),
+        foregroundColor: MaterialStateProperty.all(textColor ?? Colors.white),
       ),
       onPressed: onPressed,
       child: Text(title),

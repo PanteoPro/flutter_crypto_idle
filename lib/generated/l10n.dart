@@ -340,6 +340,76 @@ class S {
     );
   }
 
+  /// `Flat`
+  String get game_market_flat_title {
+    return Intl.message(
+      'Flat',
+      name: 'game_market_flat_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cost`
+  String get game_market_flat_cost_item_title {
+    return Intl.message(
+      'Cost',
+      name: 'game_market_flat_cost_item_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Month cost`
+  String get game_market_flat_month_item_title {
+    return Intl.message(
+      'Month cost',
+      name: 'game_market_flat_month_item_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count PC`
+  String get game_market_flat_count_pc_item_title {
+    return Intl.message(
+      'Count PC',
+      name: 'game_market_flat_count_pc_item_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Own`
+  String get game_market_flat_own_item_title {
+    return Intl.message(
+      'Own',
+      name: 'game_market_flat_own_item_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change`
+  String get game_market_flat_change_item_title {
+    return Intl.message(
+      'Change',
+      name: 'game_market_flat_change_item_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Buy`
+  String get game_market_flat_buy_item_title {
+    return Intl.message(
+      'Buy',
+      name: 'game_market_flat_buy_item_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{value}$`
   String text_with_dollar(Object value) {
     return Intl.message(

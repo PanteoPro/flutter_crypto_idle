@@ -36,6 +36,20 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "game_market_flat_buy_item_title":
+            MessageLookupByLibrary.simpleMessage("Купить"),
+        "game_market_flat_change_item_title":
+            MessageLookupByLibrary.simpleMessage("Заехать"),
+        "game_market_flat_cost_item_title":
+            MessageLookupByLibrary.simpleMessage("Стоимость"),
+        "game_market_flat_count_pc_item_title":
+            MessageLookupByLibrary.simpleMessage("Количество установок"),
+        "game_market_flat_month_item_title":
+            MessageLookupByLibrary.simpleMessage("Месячная плата"),
+        "game_market_flat_own_item_title":
+            MessageLookupByLibrary.simpleMessage("Куплена"),
+        "game_market_flat_title":
+            MessageLookupByLibrary.simpleMessage("Помещения"),
         "game_market_pc_buy_item_title":
             MessageLookupByLibrary.simpleMessage("Купить"),
         "game_market_pc_cost_item_title":

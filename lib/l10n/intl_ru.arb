@@ -34,6 +34,14 @@
     "game_market_pc_buy_item_title": "Купить",
     "game_market_pc_sell_item_title": "Продать",
 
+    "game_market_flat_title": "Помещения",
+    "game_market_flat_cost_item_title": "Стоимость",
+    "game_market_flat_month_item_title": "Месячная плата",
+    "game_market_flat_count_pc_item_title": "Количество установок",
+    "game_market_flat_own_item_title": "Куплена",
+    "game_market_flat_change_item_title": "Заехать",
+    "game_market_flat_buy_item_title": "Купить",
+
     "text_with_dollar": "{value}$",
     "text_with_energy": "{value} Ват/ч",
     "text_with_power_mining": "{value} U/dex",

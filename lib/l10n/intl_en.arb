@@ -34,6 +34,14 @@
     "game_market_pc_buy_item_title": "Buy",
     "game_market_pc_sell_item_title": "Sell",
 
+    "game_market_flat_title": "Flat",
+    "game_market_flat_cost_item_title": "Cost",
+    "game_market_flat_month_item_title": "Month cost",
+    "game_market_flat_count_pc_item_title": "Count PC",
+    "game_market_flat_own_item_title": "Own",
+    "game_market_flat_change_item_title": "Change",
+    "game_market_flat_buy_item_title": "Buy",
+
     "text_with_dollar": "{value}$",
     "text_with_energy": "{value} V/h",
     "text_with_power_mining": "{value} U/dex",
