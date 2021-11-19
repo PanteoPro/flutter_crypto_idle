@@ -260,6 +260,86 @@ class S {
     );
   }
 
+  /// `Mining pc`
+  String get game_market_pc_title {
+    return Intl.message(
+      'Mining pc',
+      name: 'game_market_pc_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cost`
+  String get game_market_pc_cost_item_title {
+    return Intl.message(
+      'Cost',
+      name: 'game_market_pc_cost_item_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cost sell`
+  String get game_market_pc_cost_sell_item_title {
+    return Intl.message(
+      'Cost sell',
+      name: 'game_market_pc_cost_sell_item_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Power`
+  String get game_market_pc_power_item_title {
+    return Intl.message(
+      'Power',
+      name: 'game_market_pc_power_item_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Energy consume`
+  String get game_market_pc_energy_item_title {
+    return Intl.message(
+      'Energy consume',
+      name: 'game_market_pc_energy_item_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have {value} el`
+  String game_market_pc_you_have_item_title(Object value) {
+    return Intl.message(
+      'You have $value el',
+      name: 'game_market_pc_you_have_item_title',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `Buy`
+  String get game_market_pc_buy_item_title {
+    return Intl.message(
+      'Buy',
+      name: 'game_market_pc_buy_item_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sell`
+  String get game_market_pc_sell_item_title {
+    return Intl.message(
+      'Sell',
+      name: 'game_market_pc_sell_item_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{value}$`
   String text_with_dollar(Object value) {
     return Intl.message(

@@ -20,20 +20,37 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
 
-  static String m0(symbol) => "Заработано на ${symbol}";
+  static String m0(value) => "У вас имеется ${value} штук";
 
-  static String m1(symbol) => "Добыто ${symbol}";
+  static String m1(symbol) => "Заработано на ${symbol}";
 
-  static String m2(value) => "${value}\$";
+  static String m2(symbol) => "Добыто ${symbol}";
 
-  static String m3(value) => "${value} Ват/ч";
+  static String m3(value) => "${value}\$";
 
-  static String m4(value) => "${value} U/dex";
+  static String m4(value) => "${value} Ват/ч";
 
-  static String m5(value1, value2) => "${value1}/${value2}";
+  static String m5(value) => "${value} U/dex";
+
+  static String m6(value1, value2) => "${value1}/${value2}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "game_market_pc_buy_item_title":
+            MessageLookupByLibrary.simpleMessage("Купить"),
+        "game_market_pc_cost_item_title":
+            MessageLookupByLibrary.simpleMessage("Стоимость"),
+        "game_market_pc_cost_sell_item_title":
+            MessageLookupByLibrary.simpleMessage("Стоимость при продаже"),
+        "game_market_pc_energy_item_title":
+            MessageLookupByLibrary.simpleMessage("Потребление электричества"),
+        "game_market_pc_power_item_title":
+            MessageLookupByLibrary.simpleMessage("Мощность"),
+        "game_market_pc_sell_item_title":
+            MessageLookupByLibrary.simpleMessage("Продать"),
+        "game_market_pc_title":
+            MessageLookupByLibrary.simpleMessage("Майнинг установки"),
+        "game_market_pc_you_have_item_title": m0,
         "main_game_action_buy_flat_title":
             MessageLookupByLibrary.simpleMessage("Купить помещение"),
         "main_game_action_buy_pc_title":
@@ -64,8 +81,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Оплата жилья"),
         "main_game_month_title":
             MessageLookupByLibrary.simpleMessage("Ежемесячные расходы"),
-        "main_game_stat_earn_on_crypto_title": m0,
-        "main_game_stat_mining_on_crypto_title": m1,
+        "main_game_stat_earn_on_crypto_title": m1,
+        "main_game_stat_mining_on_crypto_title": m2,
         "main_game_stat_spend_all_title":
             MessageLookupByLibrary.simpleMessage("Потрачено за все время"),
         "main_game_stat_spend_energy_title":
@@ -74,9 +91,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Потрачено на жилье"),
         "main_game_stat_title":
             MessageLookupByLibrary.simpleMessage("Статистика"),
-        "text_with_dollar": m2,
-        "text_with_energy": m3,
-        "text_with_power_mining": m4,
-        "text_with_slash": m5
+        "text_with_dollar": m3,
+        "text_with_energy": m4,
+        "text_with_power_mining": m5,
+        "text_with_slash": m6
       };
 }

@@ -1,6 +1,7 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:crypto_idle/Theme/themes.dart';
 import 'package:crypto_idle/generated/l10n.dart';
+import 'package:crypto_idle/ui/widgets/game/game_market_pc_page.dart';
 import 'package:crypto_idle/ui/widgets/game/main_game_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -23,7 +24,7 @@ class MainApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: S.delegate.supportedLocales,
-        home: const MainGamePage(),
+        home: const GameMarketPCPage(),
       ),
     );
   }

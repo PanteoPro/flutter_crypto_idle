@@ -25,6 +25,15 @@
     "main_game_stat_earn_on_crypto_title": "Заработано на {symbol}",
     "main_game_stat_mining_on_crypto_title": "Добыто {symbol}",
 
+    "game_market_pc_title": "Майнинг установки",
+    "game_market_pc_cost_item_title": "Стоимость",
+    "game_market_pc_cost_sell_item_title": "Стоимость при продаже",
+    "game_market_pc_power_item_title": "Мощность",
+    "game_market_pc_energy_item_title": "Потребление электричества",
+    "game_market_pc_you_have_item_title": "У вас имеется {value} штук",
+    "game_market_pc_buy_item_title": "Купить",
+    "game_market_pc_sell_item_title": "Продать",
+
     "text_with_dollar": "{value}$",
     "text_with_energy": "{value} Ват/ч",
     "text_with_power_mining": "{value} U/dex",

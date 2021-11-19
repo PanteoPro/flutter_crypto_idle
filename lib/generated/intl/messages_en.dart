@@ -20,20 +20,37 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(symbol) => "Earn on ${symbol}";
+  static String m0(value) => "You have ${value} el";
 
-  static String m1(symbol) => "Mining ${symbol}";
+  static String m1(symbol) => "Earn on ${symbol}";
 
-  static String m2(value) => "${value}\$";
+  static String m2(symbol) => "Mining ${symbol}";
 
-  static String m3(value) => "${value} V/h";
+  static String m3(value) => "${value}\$";
 
-  static String m4(value) => "${value} U/dex";
+  static String m4(value) => "${value} V/h";
 
-  static String m5(value1, value2) => "${value1}/${value2}";
+  static String m5(value) => "${value} U/dex";
+
+  static String m6(value1, value2) => "${value1}/${value2}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "game_market_pc_buy_item_title":
+            MessageLookupByLibrary.simpleMessage("Buy"),
+        "game_market_pc_cost_item_title":
+            MessageLookupByLibrary.simpleMessage("Cost"),
+        "game_market_pc_cost_sell_item_title":
+            MessageLookupByLibrary.simpleMessage("Cost sell"),
+        "game_market_pc_energy_item_title":
+            MessageLookupByLibrary.simpleMessage("Energy consume"),
+        "game_market_pc_power_item_title":
+            MessageLookupByLibrary.simpleMessage("Power"),
+        "game_market_pc_sell_item_title":
+            MessageLookupByLibrary.simpleMessage("Sell"),
+        "game_market_pc_title":
+            MessageLookupByLibrary.simpleMessage("Mining pc"),
+        "game_market_pc_you_have_item_title": m0,
         "main_game_action_buy_flat_title":
             MessageLookupByLibrary.simpleMessage("Buy flat"),
         "main_game_action_buy_pc_title":
@@ -63,8 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Cost flat"),
         "main_game_month_title":
             MessageLookupByLibrary.simpleMessage("Month prices"),
-        "main_game_stat_earn_on_crypto_title": m0,
-        "main_game_stat_mining_on_crypto_title": m1,
+        "main_game_stat_earn_on_crypto_title": m1,
+        "main_game_stat_mining_on_crypto_title": m2,
         "main_game_stat_spend_all_title":
             MessageLookupByLibrary.simpleMessage("Spend all time"),
         "main_game_stat_spend_energy_title":
@@ -73,9 +90,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Spend on flat"),
         "main_game_stat_title":
             MessageLookupByLibrary.simpleMessage("Statistic"),
-        "text_with_dollar": m2,
-        "text_with_energy": m3,
-        "text_with_power_mining": m4,
-        "text_with_slash": m5
+        "text_with_dollar": m3,
+        "text_with_energy": m4,
+        "text_with_power_mining": m5,
+        "text_with_slash": m6
       };
 }
