@@ -7,7 +7,12 @@ class MainGamePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(S.of(context).main_game_appbar_title)),
+      appBar: AppBar(
+        title: Text(
+          S.of(context).main_game_appbar_title,
+          style: TextStyle(color: Theme.of(context).primaryColor),
+        ),
+      ),
     );
   }
 }
