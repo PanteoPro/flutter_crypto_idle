@@ -430,6 +430,106 @@ class S {
     );
   }
 
+  /// `Mining`
+  String get game_mining_title {
+    return Intl.message(
+      'Mining',
+      name: 'game_mining_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Now price`
+  String get game_mining_now_price_title {
+    return Intl.message(
+      'Now price',
+      name: 'game_mining_now_price_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Week price`
+  String get game_mining_week_price_title {
+    return Intl.message(
+      'Week price',
+      name: 'game_mining_week_price_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Month price`
+  String get game_mining_month_price_title {
+    return Intl.message(
+      'Month price',
+      name: 'game_mining_month_price_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Year price`
+  String get game_mining_year_price_title {
+    return Intl.message(
+      'Year price',
+      name: 'game_mining_year_price_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose PC`
+  String get game_mining_set_pc_title {
+    return Intl.message(
+      'Choose PC',
+      name: 'game_mining_set_pc_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mining {symbol}`
+  String game_mining_module_title(Object symbol) {
+    return Intl.message(
+      'Mining $symbol',
+      name: 'game_mining_module_title',
+      desc: '',
+      args: [symbol],
+    );
+  }
+
+  /// `Your pc`
+  String get game_mining_module_pc_title {
+    return Intl.message(
+      'Your pc',
+      name: 'game_mining_module_pc_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Power`
+  String get game_mining_module_pc_power_title {
+    return Intl.message(
+      'Power',
+      name: 'game_mining_module_pc_power_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mining`
+  String get game_mining_module_pc_mining_title {
+    return Intl.message(
+      'Mining',
+      name: 'game_mining_module_pc_mining_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{value}$`
   String text_with_dollar(Object value) {
     return Intl.message(

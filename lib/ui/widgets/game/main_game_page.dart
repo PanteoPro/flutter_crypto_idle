@@ -148,7 +148,7 @@ class _ActionsWidget extends StatelessWidget {
         __ActionItemWidget(
           title: S.of(context).main_game_action_mining_title,
           onTap: () {
-            Navigator.of(context).pushNamed(MainNavigationRouteNames.main);
+            Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMining);
           },
         ),
         const SizedBox(height: 10),

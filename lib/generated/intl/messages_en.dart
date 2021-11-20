@@ -22,17 +22,19 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(value) => "You have ${value} el";
 
-  static String m1(symbol) => "Earn on ${symbol}";
+  static String m1(symbol) => "Mining ${symbol}";
 
-  static String m2(symbol) => "Mining ${symbol}";
+  static String m2(symbol) => "Earn on ${symbol}";
 
-  static String m3(value) => "${value}\$";
+  static String m3(symbol) => "Mining ${symbol}";
 
-  static String m4(value) => "${value} V/h";
+  static String m4(value) => "${value}\$";
 
-  static String m5(value) => "${value} U/dex";
+  static String m5(value) => "${value} V/h";
 
-  static String m6(value1, value2) => "${value1}/${value2}";
+  static String m6(value) => "${value} U/dex";
+
+  static String m7(value1, value2) => "${value1}/${value2}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -67,6 +69,24 @@ class MessageLookup extends MessageLookupByLibrary {
         "game_market_pc_title":
             MessageLookupByLibrary.simpleMessage("Mining pc"),
         "game_market_pc_you_have_item_title": m0,
+        "game_mining_module_pc_mining_title":
+            MessageLookupByLibrary.simpleMessage("Mining"),
+        "game_mining_module_pc_power_title":
+            MessageLookupByLibrary.simpleMessage("Power"),
+        "game_mining_module_pc_title":
+            MessageLookupByLibrary.simpleMessage("Your pc"),
+        "game_mining_module_title": m1,
+        "game_mining_month_price_title":
+            MessageLookupByLibrary.simpleMessage("Month price"),
+        "game_mining_now_price_title":
+            MessageLookupByLibrary.simpleMessage("Now price"),
+        "game_mining_set_pc_title":
+            MessageLookupByLibrary.simpleMessage("Choose PC"),
+        "game_mining_title": MessageLookupByLibrary.simpleMessage("Mining"),
+        "game_mining_week_price_title":
+            MessageLookupByLibrary.simpleMessage("Week price"),
+        "game_mining_year_price_title":
+            MessageLookupByLibrary.simpleMessage("Year price"),
         "main_game_action_buy_flat_title":
             MessageLookupByLibrary.simpleMessage("Buy flat"),
         "main_game_action_buy_pc_title":
@@ -96,8 +116,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Cost flat"),
         "main_game_month_title":
             MessageLookupByLibrary.simpleMessage("Month prices"),
-        "main_game_stat_earn_on_crypto_title": m1,
-        "main_game_stat_mining_on_crypto_title": m2,
+        "main_game_stat_earn_on_crypto_title": m2,
+        "main_game_stat_mining_on_crypto_title": m3,
         "main_game_stat_spend_all_title":
             MessageLookupByLibrary.simpleMessage("Spend all time"),
         "main_game_stat_spend_energy_title":
@@ -106,9 +126,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Spend on flat"),
         "main_game_stat_title":
             MessageLookupByLibrary.simpleMessage("Statistic"),
-        "text_with_dollar": m3,
-        "text_with_energy": m4,
-        "text_with_power_mining": m5,
-        "text_with_slash": m6
+        "text_with_dollar": m4,
+        "text_with_energy": m5,
+        "text_with_power_mining": m6,
+        "text_with_slash": m7
       };
 }

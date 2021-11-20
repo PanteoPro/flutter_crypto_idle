@@ -22,17 +22,19 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(value) => "У вас имеется ${value} штук";
 
-  static String m1(symbol) => "Заработано на ${symbol}";
+  static String m1(symbol) => "Майнинг ${symbol}";
 
-  static String m2(symbol) => "Добыто ${symbol}";
+  static String m2(symbol) => "Заработано на ${symbol}";
 
-  static String m3(value) => "${value}\$";
+  static String m3(symbol) => "Добыто ${symbol}";
 
-  static String m4(value) => "${value} Ват/ч";
+  static String m4(value) => "${value}\$";
 
-  static String m5(value) => "${value} U/dex";
+  static String m5(value) => "${value} Ват/ч";
 
-  static String m6(value1, value2) => "${value1}/${value2}";
+  static String m6(value) => "${value} U/dex";
+
+  static String m7(value1, value2) => "${value1}/${value2}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -69,6 +71,24 @@ class MessageLookup extends MessageLookupByLibrary {
         "game_market_pc_title":
             MessageLookupByLibrary.simpleMessage("Майнинг установки"),
         "game_market_pc_you_have_item_title": m0,
+        "game_mining_module_pc_mining_title":
+            MessageLookupByLibrary.simpleMessage("Майнит"),
+        "game_mining_module_pc_power_title":
+            MessageLookupByLibrary.simpleMessage("Мощность"),
+        "game_mining_module_pc_title":
+            MessageLookupByLibrary.simpleMessage("Ваши установки"),
+        "game_mining_module_title": m1,
+        "game_mining_month_price_title":
+            MessageLookupByLibrary.simpleMessage("Месяц назад"),
+        "game_mining_now_price_title":
+            MessageLookupByLibrary.simpleMessage("Текущая цена"),
+        "game_mining_set_pc_title":
+            MessageLookupByLibrary.simpleMessage("Назначить"),
+        "game_mining_title": MessageLookupByLibrary.simpleMessage("Майнинг"),
+        "game_mining_week_price_title":
+            MessageLookupByLibrary.simpleMessage("Неделю назад"),
+        "game_mining_year_price_title":
+            MessageLookupByLibrary.simpleMessage("Год назад"),
         "main_game_action_buy_flat_title":
             MessageLookupByLibrary.simpleMessage("Купить помещение"),
         "main_game_action_buy_pc_title":
@@ -99,8 +119,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Оплата жилья"),
         "main_game_month_title":
             MessageLookupByLibrary.simpleMessage("Ежемесячные расходы"),
-        "main_game_stat_earn_on_crypto_title": m1,
-        "main_game_stat_mining_on_crypto_title": m2,
+        "main_game_stat_earn_on_crypto_title": m2,
+        "main_game_stat_mining_on_crypto_title": m3,
         "main_game_stat_spend_all_title":
             MessageLookupByLibrary.simpleMessage("Потрачено за все время"),
         "main_game_stat_spend_energy_title":
@@ -109,9 +129,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Потрачено на жилье"),
         "main_game_stat_title":
             MessageLookupByLibrary.simpleMessage("Статистика"),
-        "text_with_dollar": m3,
-        "text_with_energy": m4,
-        "text_with_power_mining": m5,
-        "text_with_slash": m6
+        "text_with_dollar": m4,
+        "text_with_energy": m5,
+        "text_with_power_mining": m6,
+        "text_with_slash": m7
       };
 }

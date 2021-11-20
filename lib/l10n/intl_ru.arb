@@ -45,6 +45,17 @@
     "game_crypto_title": "Криптовалюты",
     "game_crypto_cost_header_title": "Общая стоимость",
 
+    "game_mining_title": "Майнинг",
+    "game_mining_now_price_title": "Текущая цена",
+    "game_mining_week_price_title": "Неделю назад",
+    "game_mining_month_price_title": "Месяц назад",
+    "game_mining_year_price_title": "Год назад",
+    "game_mining_set_pc_title": "Назначить",
+    "game_mining_module_title": "Майнинг {symbol}",
+    "game_mining_module_pc_title": "Ваши установки",
+    "game_mining_module_pc_power_title": "Мощность",
+    "game_mining_module_pc_mining_title": "Майнит",
+
     "text_with_dollar": "{value}$",
     "text_with_energy": "{value} Ват/ч",
     "text_with_power_mining": "{value} U/dex",
