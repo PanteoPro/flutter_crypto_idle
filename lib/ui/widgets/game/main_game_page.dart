@@ -199,12 +199,20 @@ class __ActionItemWidget extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50),
               border: Border.all(
-                color: Theme.of(context).primaryColor,
+                color: Color.fromRGBO(250, 255, 105, 1),
               ),
+              color: Color.fromRGBO(215, 219, 90, 1),
             ),
           ),
           SizedBox(width: 10),
-          Text(title, style: Theme.of(context).textTheme.bodyText1),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  color: Color.fromRGBO(160, 219, 77, 1),
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                ),
+          ),
         ],
       ),
     );

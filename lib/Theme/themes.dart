@@ -10,7 +10,7 @@ final ThemeData kLightTheme = ThemeData.light().copyWith(
   textTheme: const TextTheme(
     bodyText1: TextStyle(color: Colors.white, fontWeight: FontWeight.normal, fontSize: 16),
     bodyText2: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
-    subtitle1: TextStyle(color: Colors.green, fontWeight: FontWeight.w400, fontSize: 16),
+    subtitle1: TextStyle(color: Color.fromRGBO(123, 115, 228, 1), fontWeight: FontWeight.w400, fontSize: 16),
     headline1: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 20),
     headline2: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 18),
     headline5: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
