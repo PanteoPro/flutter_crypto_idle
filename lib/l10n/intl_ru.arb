@@ -56,6 +56,13 @@
     "game_mining_module_pc_power_title": "Мощность",
     "game_mining_module_pc_mining_title": "Майнит",
 
+    "game_crypto_market_cost_title": "Текущая цена",
+    "game_crypto_market_fast_sell_title": "Продать мгновенно",
+    "game_crypto_market_sell_title": "Продать по цене",
+    "game_crypto_market_count_input_title": "Количество",
+    "game_crypto_market_price_input_title": "Цена",
+    "game_crypto_market_balance_title": "На кошельке",
+
     "text_with_dollar": "{value}$",
     "text_with_energy": "{value} Ват/ч",
     "text_with_power_mining": "{value} U/dex",

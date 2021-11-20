@@ -530,6 +530,66 @@ class S {
     );
   }
 
+  /// `Current cost`
+  String get game_crypto_market_cost_title {
+    return Intl.message(
+      'Current cost',
+      name: 'game_crypto_market_cost_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Market Sell`
+  String get game_crypto_market_fast_sell_title {
+    return Intl.message(
+      'Market Sell',
+      name: 'game_crypto_market_fast_sell_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Limit Sell`
+  String get game_crypto_market_sell_title {
+    return Intl.message(
+      'Limit Sell',
+      name: 'game_crypto_market_sell_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count`
+  String get game_crypto_market_count_input_title {
+    return Intl.message(
+      'Count',
+      name: 'game_crypto_market_count_input_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price`
+  String get game_crypto_market_price_input_title {
+    return Intl.message(
+      'Price',
+      name: 'game_crypto_market_price_input_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Balance`
+  String get game_crypto_market_balance_title {
+    return Intl.message(
+      'Balance',
+      name: 'game_crypto_market_balance_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{value}$`
   String text_with_dollar(Object value) {
     return Intl.message(

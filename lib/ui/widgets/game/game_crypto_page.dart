@@ -1,6 +1,7 @@
 import 'package:crypto_idle/Widgets/app_bar_info.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
 import 'package:crypto_idle/generated/l10n.dart';
+import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:flutter/material.dart';
 
 class GameCryptoPage extends StatelessWidget {
@@ -82,7 +83,9 @@ class _CryptoItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMarketCrypto);
+      },
       child: DecoratedBox(
         decoration: BoxDecoration(
           border: Border.all(),

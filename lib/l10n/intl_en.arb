@@ -56,6 +56,12 @@
     "game_mining_module_pc_power_title": "Power",
     "game_mining_module_pc_mining_title": "Mining",
 
+    "game_crypto_market_cost_title": "Current cost",
+    "game_crypto_market_fast_sell_title": "Market Sell",
+    "game_crypto_market_sell_title": "Limit Sell",
+    "game_crypto_market_count_input_title": "Count",
+    "game_crypto_market_price_input_title": "Price",
+    "game_crypto_market_balance_title": "Balance",
 
     "text_with_dollar": "{value}$",
     "text_with_energy": "{value} V/h",
