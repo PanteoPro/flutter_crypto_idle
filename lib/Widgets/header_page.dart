@@ -29,7 +29,7 @@ class HeaderPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(title),
+                Text(title, style: Theme.of(context).textTheme.headline1),
               ],
             ),
           ],

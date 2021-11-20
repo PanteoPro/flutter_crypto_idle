@@ -21,7 +21,9 @@ class GameCryptoPage extends StatelessWidget {
                 onTap: () {},
               ),
               const _BalanceWidget(),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
+              const _HelperWidget(),
+              const SizedBox(height: 10),
               const Expanded(child: _CryptoListWidget()),
             ],
           ),
@@ -43,6 +45,7 @@ class _BalanceWidget extends StatelessWidget {
           border: Border.symmetric(
             horizontal: BorderSide(color: Theme.of(context).primaryColor),
           ),
+          color: Theme.of(context).canvasColor,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
@@ -54,6 +57,26 @@ class _BalanceWidget extends StatelessWidget {
               Text(S.of(context).text_with_dollar(4320.34), style: Theme.of(context).textTheme.bodyText2),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _HelperWidget extends StatelessWidget {
+  const _HelperWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          children: [
+            Text(S.of(context).game_crypto_helper_title, textAlign: TextAlign.center),
+            Icon(Icons.arrow_downward, size: 48, color: Theme.of(context).primaryColor),
+          ],
         ),
       ),
     );
@@ -91,8 +114,9 @@ class _CryptoItemWidget extends StatelessWidget {
       },
       child: DecoratedBox(
         decoration: BoxDecoration(
-          border: Border.all(),
+          border: Border.all(color: Theme.of(context).primaryColor),
           borderRadius: BorderRadius.circular(5),
+          color: Theme.of(context).canvasColor,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

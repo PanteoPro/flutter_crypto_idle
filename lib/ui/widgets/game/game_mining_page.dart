@@ -22,7 +22,6 @@ class GameMiningPage extends StatelessWidget {
                     title: S.of(context).game_mining_title,
                     onTap: () {},
                   ),
-                  const SizedBox(height: 30),
                   const Expanded(
                       child: Padding(
                     padding: EdgeInsets.all(8.0),
@@ -30,7 +29,7 @@ class GameMiningPage extends StatelessWidget {
                   )),
                 ],
               ),
-              _ModulePcWidget(),
+              // _ModulePcWidget(),
             ],
           ),
         ),
@@ -64,6 +63,7 @@ class _MiningItemWidget extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         border: Border.all(color: Theme.of(context).primaryColor),
+        color: Theme.of(context).canvasColor,
       ),
       child: Padding(
         padding: const EdgeInsets.all(8),
@@ -270,6 +270,7 @@ class _ModulePCItemWidget extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).primaryColor),
+          color: Theme.of(context).canvasColor,
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),

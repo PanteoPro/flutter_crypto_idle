@@ -40,6 +40,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "game_crypto_cost_header_title":
             MessageLookupByLibrary.simpleMessage("Общая стоимость"),
+        "game_crypto_helper_title": MessageLookupByLibrary.simpleMessage(
+            "Нажми на криптовалюту, чтобы продать"),
         "game_crypto_market_balance_title":
             MessageLookupByLibrary.simpleMessage("На кошельке"),
         "game_crypto_market_cost_title":

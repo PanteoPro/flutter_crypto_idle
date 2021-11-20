@@ -47,30 +47,33 @@ class _ChartWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 300,
-      child: SfCartesianChart(
-        primaryXAxis: CategoryAxis(),
-        series: <LineSeries<ChartData, String>>[
-          LineSeries<ChartData, String>(
-            // Bind data source
-            dataSource: <ChartData>[
-              // ChartData('22.05.21', 4324.23),
-              // ChartData('23.05.21', 4329.23),
-              // ChartData('24.05.21', 4334.23),
-              // ChartData('25.05.21', 4342.23),
-              // ChartData('26.05.21', 4304.23),
-              // ChartData('27.05.21', 4304.23),
-              ChartData('28.05.21', 4304.23),
-              ChartData('29.05.21', 4304.23),
-              ChartData('30.05.21', 4304.23),
-              ChartData('31.05.21', 4304.23),
-              ChartData('32.05.21', 4394.23),
-              ChartData('01.06.21', 4394.23),
-              ChartData('02.06.21', 5000.23),
-            ],
-            xValueMapper: (ChartData data, _) => data.day,
-            yValueMapper: (ChartData data, _) => data.cost,
-          ),
-        ],
+      child: ColoredBox(
+        color: Colors.white,
+        child: SfCartesianChart(
+          primaryXAxis: CategoryAxis(),
+          series: <LineSeries<ChartData, String>>[
+            LineSeries<ChartData, String>(
+              // Bind data source
+              dataSource: <ChartData>[
+                // ChartData('22.05.21', 4324.23),
+                // ChartData('23.05.21', 4329.23),
+                // ChartData('24.05.21', 4334.23),
+                // ChartData('25.05.21', 4342.23),
+                // ChartData('26.05.21', 4304.23),
+                // ChartData('27.05.21', 4304.23),
+                ChartData('28.05.21', 4304.23),
+                ChartData('29.05.21', 4304.23),
+                ChartData('30.05.21', 4304.23),
+                ChartData('31.05.21', 4304.23),
+                ChartData('32.05.21', 4394.23),
+                ChartData('01.06.21', 4394.23),
+                ChartData('02.06.21', 5000.23),
+              ],
+              xValueMapper: (ChartData data, _) => data.day,
+              yValueMapper: (ChartData data, _) => data.cost,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -177,11 +180,12 @@ class _TradePriceSellWidget extends StatelessWidget {
     return TextField(
       decoration: InputDecoration(
         label: Text(S.of(context).game_crypto_market_price_input_title),
+        labelStyle: TextStyle(color: Theme.of(context).primaryColor),
         isDense: true,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
-          borderSide: const BorderSide(
-            color: Color.fromRGBO(3, 43, 67, 1),
+          borderSide: BorderSide(
+            color: Theme.of(context).canvasColor,
             width: 2,
           ),
         ),
@@ -198,11 +202,12 @@ class _TradeCountSellWidget extends StatelessWidget {
     return TextField(
       decoration: InputDecoration(
         label: Text(S.of(context).game_crypto_market_count_input_title),
+        labelStyle: TextStyle(color: Theme.of(context).primaryColor),
         isDense: true,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
-          borderSide: const BorderSide(
-            color: Color.fromRGBO(3, 43, 67, 1),
+          borderSide: BorderSide(
+            color: Theme.of(context).canvasColor,
             width: 2,
           ),
         ),
@@ -245,8 +250,8 @@ class _TradeCountSellButtonsItemWidget extends StatelessWidget {
     return MyButton(
       onPressed: onPressed,
       title: title,
-      color: Colors.white70,
-      textColor: Colors.black,
+      color: Theme.of(context).canvasColor,
+      textColor: Colors.white,
     );
   }
 }

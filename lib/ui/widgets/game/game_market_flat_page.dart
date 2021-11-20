@@ -62,6 +62,7 @@ class _MarketFlatItemWidget extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         border: Border.all(color: Theme.of(context).primaryColor),
+        color: Theme.of(context).canvasColor,
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),

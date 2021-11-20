@@ -44,6 +44,7 @@
 
     "game_crypto_title": "Crypto",
     "game_crypto_cost_header_title": "Balance",
+    "game_crypto_helper_title": "Press crypto to sell",
 
     "game_mining_title": "Mining",
     "game_mining_now_price_title": "Now price",

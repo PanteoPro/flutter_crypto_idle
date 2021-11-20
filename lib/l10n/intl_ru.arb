@@ -44,6 +44,7 @@
 
     "game_crypto_title": "Криптовалюты",
     "game_crypto_cost_header_title": "Общая стоимость",
+    "game_crypto_helper_title": "Нажми на криптовалюту, чтобы продать",
 
     "game_mining_title": "Майнинг",
     "game_mining_now_price_title": "Текущая цена",

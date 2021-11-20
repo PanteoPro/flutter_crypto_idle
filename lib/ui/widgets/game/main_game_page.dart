@@ -143,36 +143,39 @@ class _ActionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _WrapperBlockWidget(
-      children: [
-        __ActionItemWidget(
-          title: S.of(context).main_game_action_buy_pc_title,
-          onTap: () {
-            Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMarketPC);
-          },
-        ),
-        const SizedBox(height: 10),
-        __ActionItemWidget(
-          title: S.of(context).main_game_action_buy_flat_title,
-          onTap: () {
-            Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMarketFlat);
-          },
-        ),
-        const SizedBox(height: 10),
-        __ActionItemWidget(
-          title: S.of(context).main_game_action_mining_title,
-          onTap: () {
-            Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMining);
-          },
-        ),
-        const SizedBox(height: 10),
-        __ActionItemWidget(
-          title: S.of(context).main_game_action_crypto_title,
-          onTap: () {
-            Navigator.of(context).pushNamed(MainNavigationRouteNames.gameCrypto);
-          },
-        ),
-      ],
+    return ColoredBox(
+      color: Theme.of(context).canvasColor,
+      child: _WrapperBlockWidget(
+        children: [
+          __ActionItemWidget(
+            title: S.of(context).main_game_action_buy_pc_title,
+            onTap: () {
+              Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMarketPC);
+            },
+          ),
+          const SizedBox(height: 10),
+          __ActionItemWidget(
+            title: S.of(context).main_game_action_buy_flat_title,
+            onTap: () {
+              Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMarketFlat);
+            },
+          ),
+          const SizedBox(height: 10),
+          __ActionItemWidget(
+            title: S.of(context).main_game_action_mining_title,
+            onTap: () {
+              Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMining);
+            },
+          ),
+          const SizedBox(height: 10),
+          __ActionItemWidget(
+            title: S.of(context).main_game_action_crypto_title,
+            onTap: () {
+              Navigator.of(context).pushNamed(MainNavigationRouteNames.gameCrypto);
+            },
+          ),
+        ],
+      ),
     );
   }
 }

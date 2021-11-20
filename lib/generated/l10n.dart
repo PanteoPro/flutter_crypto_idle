@@ -430,6 +430,16 @@ class S {
     );
   }
 
+  /// `Press crypto to sell`
+  String get game_crypto_helper_title {
+    return Intl.message(
+      'Press crypto to sell',
+      name: 'game_crypto_helper_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Mining`
   String get game_mining_title {
     return Intl.message(
