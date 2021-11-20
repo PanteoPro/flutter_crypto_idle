@@ -12,14 +12,17 @@ class GameMarketFlatPage extends StatelessWidget {
     return Scaffold(
       appBar: kGameAppBar(context),
       body: SafeArea(
-        child: Column(
-          children: [
-            HeaderPage(
-              title: S.of(context).game_market_flat_title,
-              onTap: () {},
-            ),
-            const Expanded(child: _MarketFlatListWidget()),
-          ],
+        child: ColoredBox(
+          color: Theme.of(context).backgroundColor,
+          child: Column(
+            children: [
+              HeaderPage(
+                title: S.of(context).game_market_flat_title,
+                onTap: () {},
+              ),
+              const Expanded(child: _MarketFlatListWidget()),
+            ],
+          ),
         ),
       ),
     );

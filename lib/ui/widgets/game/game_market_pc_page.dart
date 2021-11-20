@@ -12,14 +12,17 @@ class GameMarketPCPage extends StatelessWidget {
     return Scaffold(
       appBar: kGameAppBar(context),
       body: SafeArea(
-        child: Column(
-          children: [
-            HeaderPage(
-              title: S.of(context).game_market_pc_title,
-              onTap: () {},
-            ),
-            const Expanded(child: _MarketPCListWidget()),
-          ],
+        child: ColoredBox(
+          color: Theme.of(context).backgroundColor,
+          child: Column(
+            children: [
+              HeaderPage(
+                title: S.of(context).game_market_pc_title,
+                onTap: () {},
+              ),
+              const Expanded(child: _MarketPCListWidget()),
+            ],
+          ),
         ),
       ),
     );

@@ -12,16 +12,19 @@ class GameCryptoPage extends StatelessWidget {
     return Scaffold(
       appBar: kGameAppBar(context),
       body: SafeArea(
-        child: Column(
-          children: [
-            HeaderPage(
-              title: S.of(context).game_crypto_title,
-              onTap: () {},
-            ),
-            const _BalanceWidget(),
-            const SizedBox(height: 30),
-            const Expanded(child: _CryptoListWidget()),
-          ],
+        child: ColoredBox(
+          color: Theme.of(context).backgroundColor,
+          child: Column(
+            children: [
+              HeaderPage(
+                title: S.of(context).game_crypto_title,
+                onTap: () {},
+              ),
+              const _BalanceWidget(),
+              const SizedBox(height: 30),
+              const Expanded(child: _CryptoListWidget()),
+            ],
+          ),
         ),
       ),
     );

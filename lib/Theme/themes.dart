@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 final ThemeData kLightTheme = ThemeData.light().copyWith(
   primaryColor: Colors.black,
+  backgroundColor: const Color.fromRGBO(45, 43, 85, 1),
   appBarTheme: const AppBarTheme(
     color: Colors.blue,
   ),

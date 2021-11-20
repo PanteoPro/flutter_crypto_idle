@@ -12,24 +12,27 @@ class GameMiningPage extends StatelessWidget {
     return Scaffold(
       appBar: kGameAppBar(context),
       body: SafeArea(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                HeaderPage(
-                  title: S.of(context).game_mining_title,
-                  onTap: () {},
-                ),
-                const SizedBox(height: 30),
-                const Expanded(
-                    child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: _MiningListWidget(),
-                )),
-              ],
-            ),
-            _ModulePcWidget(),
-          ],
+        child: ColoredBox(
+          color: Theme.of(context).backgroundColor,
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  HeaderPage(
+                    title: S.of(context).game_mining_title,
+                    onTap: () {},
+                  ),
+                  const SizedBox(height: 30),
+                  const Expanded(
+                      child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: _MiningListWidget(),
+                  )),
+                ],
+              ),
+              _ModulePcWidget(),
+            ],
+          ),
         ),
       ),
     );
@@ -200,7 +203,7 @@ class _ModulePcWidget extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Theme.of(context).primaryColor),
-                color: Colors.white,
+                color: Theme.of(context).backgroundColor,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.max,

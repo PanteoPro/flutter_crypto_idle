@@ -19,18 +19,21 @@ class GameMarketCryptoPage extends StatelessWidget {
     return Scaffold(
       appBar: kGameAppBar(context),
       body: SafeArea(
-        child: ListView(
-          children: [
-            HeaderPage(
-              title: "BTC/USD Bitcoin",
-              onTap: () {},
-            ),
-            _ChartWidget(),
-            _CostWidget(),
-            _CountCryptoWidget(),
-            SizedBox(height: 40),
-            _TradeWidget(),
-          ],
+        child: ColoredBox(
+          color: Theme.of(context).backgroundColor,
+          child: ListView(
+            children: [
+              HeaderPage(
+                title: "BTC/USD Bitcoin",
+                onTap: () {},
+              ),
+              _ChartWidget(),
+              _CostWidget(),
+              _CountCryptoWidget(),
+              SizedBox(height: 40),
+              _TradeWidget(),
+            ],
+          ),
         ),
       ),
     );

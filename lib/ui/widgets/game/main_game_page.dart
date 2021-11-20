@@ -12,19 +12,33 @@ class MainGamePage extends StatelessWidget {
         centerTitle: true,
         title: Text(
           S.of(context).main_game_appbar_title,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 16),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text('13.05.2015', style: Theme.of(context).textTheme.bodyText1),
+              ],
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
-        child: ListView(
-          children: const <Widget>[
-            _GameImageWidget(),
-            _BalanceWidget(),
-            _ActionsWidget(),
-            _CurrentInfoWidget(),
-            _MonthInfoWidget(),
-            _StatisticWidget(),
-          ],
+        child: ColoredBox(
+          color: Theme.of(context).backgroundColor,
+          child: ListView(
+            children: const <Widget>[
+              _GameImageWidget(),
+              _BalanceWidget(),
+              _ActionsWidget(),
+              _CurrentInfoWidget(),
+              _MonthInfoWidget(),
+              _StatisticWidget(),
+            ],
+          ),
         ),
       ),
     );
