@@ -14,16 +14,21 @@ class GameViewModel extends ChangeNotifier {
 
   Future<void> _initialRepository() async {
     await _gameRepository.init();
-    _updateState();
+    updateState();
   }
 
-  void _updateState() {
+  Future<void> tempMETHODLOAD() async {
+    await _gameRepository.loadData();
+    updateState();
+  }
+
+  void updateState() {
     _game = _gameRepository.game.copyWith();
     notifyListeners();
   }
 
-  Future<void> changeMoney(int money) async {
+  Future<void> changeMoney(double money) async {
     await _gameRepository.changeData(money: money);
-    _updateState();
+    updateState();
   }
 }

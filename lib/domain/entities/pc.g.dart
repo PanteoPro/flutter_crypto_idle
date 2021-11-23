@@ -1,38 +1,47 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'game.dart';
+part of 'pc.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class GameAdapter extends TypeAdapter<Game> {
+class PCAdapter extends TypeAdapter<PC> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
-  Game read(BinaryReader reader) {
+  PC read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Game(
+    return PC(
       id: fields[0] as int,
-      money: fields[1] as double,
-      nick: fields[2] as String,
+      name: fields[1] as String,
+      cost: fields[2] as double,
+      costSell: fields[3] as double,
+      power: fields[4] as double,
+      energy: fields[5] as double,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Game obj) {
+  void write(BinaryWriter writer, PC obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.money)
+      ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.nick);
+      ..write(obj.cost)
+      ..writeByte(3)
+      ..write(obj.costSell)
+      ..writeByte(4)
+      ..write(obj.power)
+      ..writeByte(5)
+      ..write(obj.energy);
   }
 
   @override
@@ -41,7 +50,7 @@ class GameAdapter extends TypeAdapter<Game> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is GameAdapter &&
+      other is PCAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

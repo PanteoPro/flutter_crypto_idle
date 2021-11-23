@@ -2,7 +2,10 @@ import 'package:crypto_idle/Widgets/app_bar_info.dart';
 import 'package:crypto_idle/Widgets/buttons.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
 import 'package:crypto_idle/generated/l10n.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/game_market_pc_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class GameMarketPCPage extends StatelessWidget {
   const GameMarketPCPage({Key? key}) : super(key: key);
@@ -10,7 +13,7 @@ class GameMarketPCPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GameAppBar(),
+      appBar: const GameAppBar(),
       body: SafeArea(
         child: ColoredBox(
           color: Theme.of(context).backgroundColor,
@@ -36,14 +39,15 @@ class _MarketPCListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pcs_length = context.select((GameMarketPCViewModel vm) => vm.state.marketPCs.length);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: SizedBox(
         height: double.infinity,
         child: ListView.separated(
-          itemCount: 3,
+          itemCount: pcs_length,
           itemBuilder: (ctx, index) {
-            return _MarketPCItemWidget();
+            return _MarketPCItemWidget(index: index);
           },
           separatorBuilder: (ctx, index) {
             return SizedBox(height: 20);
@@ -55,7 +59,9 @@ class _MarketPCListWidget extends StatelessWidget {
 }
 
 class _MarketPCItemWidget extends StatelessWidget {
-  const _MarketPCItemWidget({Key? key}) : super(key: key);
+  const _MarketPCItemWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -67,12 +73,12 @@ class _MarketPCItemWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          children: const [
-            _HeaderItemWidget(),
-            SizedBox(height: 10),
-            _BodyItemWidget(),
-            SizedBox(height: 10),
-            _ButtonsItemWidget(),
+          children: [
+            _HeaderItemWidget(index: index),
+            const SizedBox(height: 10),
+            _BodyItemWidget(index: index),
+            const SizedBox(height: 10),
+            _ButtonsItemWidget(index: index),
           ],
         ),
       ),
@@ -83,21 +89,42 @@ class _MarketPCItemWidget extends StatelessWidget {
 class _HeaderItemWidget extends StatelessWidget {
   const _HeaderItemWidget({
     Key? key,
+    required this.index,
   }) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final pc = context.read<GameMarketPCViewModel>().state.marketPCs[index];
     return Row(
       children: [
-        Text('Старый ПК'),
+        Text(pc.name),
         Expanded(
-          child: Text(
-            S.of(context).game_market_pc_you_have_item_title(5),
-            textAlign: TextAlign.end,
-            style: Theme.of(context).textTheme.headline6,
-          ),
+          child: _HeaderItemCountWidget(pcId: pc.id),
         ),
       ],
+    );
+  }
+}
+
+class _HeaderItemCountWidget extends StatelessWidget {
+  const _HeaderItemCountWidget({
+    Key? key,
+    required this.pcId,
+  }) : super(key: key);
+
+  final int pcId;
+
+  @override
+  Widget build(BuildContext context) {
+    final ownPCs = context.select((GameMarketPCViewModel vm) => vm.state.ownPCs);
+    final count = context.read<GameMarketPCViewModel>().state.getCountPCsById(pcId);
+
+    return Text(
+      S.of(context).game_market_pc_you_have_item_title(count),
+      textAlign: TextAlign.end,
+      style: Theme.of(context).textTheme.headline6,
     );
   }
 }
@@ -105,11 +132,16 @@ class _HeaderItemWidget extends StatelessWidget {
 class _BodyItemWidget extends StatelessWidget {
   const _BodyItemWidget({
     Key? key,
+    required this.index,
   }) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
-    const int balance = 70;
+    final state = context.watch<GameMarketPCViewModel>().state;
+    final pc = state.marketPCs[index];
+    final isHavePC = state.isHavePCById(pc.id);
     return Row(
       children: [
         const SizedBox(
@@ -123,11 +155,11 @@ class _BodyItemWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              _CostItemWidget(),
-              if (balance >= 80) _CostSellItemWidget(),
-              _PowerItemWidget(),
-              _EnergyItemWidget(),
+            children: [
+              _CostItemWidget(cost: pc.cost),
+              if (isHavePC) _CostSellItemWidget(costSell: pc.costSell),
+              _PowerItemWidget(power: pc.power),
+              _EnergyItemWidget(energy: pc.energy),
             ],
           ),
         ),
@@ -137,58 +169,75 @@ class _BodyItemWidget extends StatelessWidget {
 }
 
 class _CostItemWidget extends StatelessWidget {
-  const _CostItemWidget({Key? key}) : super(key: key);
+  const _CostItemWidget({Key? key, required this.cost}) : super(key: key);
+
+  final double cost;
 
   @override
   Widget build(BuildContext context) {
-    return Text('${S.of(context).game_market_pc_cost_item_title}: ${S.of(context).text_with_dollar(50)}',
+    return Text('${S.of(context).game_market_pc_cost_item_title}: ${S.of(context).text_with_dollar(cost)}',
         style: Theme.of(context).textTheme.headline6);
   }
 }
 
 class _CostSellItemWidget extends StatelessWidget {
-  const _CostSellItemWidget({Key? key}) : super(key: key);
+  const _CostSellItemWidget({Key? key, required this.costSell}) : super(key: key);
+
+  final double costSell;
 
   @override
   Widget build(BuildContext context) {
-    return Text('${S.of(context).game_market_pc_cost_sell_item_title}: ${S.of(context).text_with_dollar(50)}',
+    return Text('${S.of(context).game_market_pc_cost_sell_item_title}: ${S.of(context).text_with_dollar(costSell)}',
         style: Theme.of(context).textTheme.headline6);
   }
 }
 
 class _PowerItemWidget extends StatelessWidget {
-  const _PowerItemWidget({Key? key}) : super(key: key);
+  const _PowerItemWidget({Key? key, required this.power}) : super(key: key);
+
+  final double power;
 
   @override
   Widget build(BuildContext context) {
-    return Text('${S.of(context).game_market_pc_power_item_title}: ${S.of(context).text_with_power_mining(50)}',
+    return Text('${S.of(context).game_market_pc_power_item_title}: ${S.of(context).text_with_power_mining(power)}',
         style: Theme.of(context).textTheme.headline6);
   }
 }
 
 class _EnergyItemWidget extends StatelessWidget {
-  const _EnergyItemWidget({Key? key}) : super(key: key);
+  const _EnergyItemWidget({Key? key, required this.energy}) : super(key: key);
+
+  final double energy;
 
   @override
   Widget build(BuildContext context) {
-    return Text('${S.of(context).game_market_pc_energy_item_title}: ${S.of(context).text_with_energy(50)}',
+    return Text('${S.of(context).game_market_pc_energy_item_title}: ${S.of(context).text_with_energy(energy)}',
         style: Theme.of(context).textTheme.headline6);
   }
 }
 
 class _ButtonsItemWidget extends StatelessWidget {
-  const _ButtonsItemWidget({Key? key}) : super(key: key);
+  const _ButtonsItemWidget({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
-    const bool haveThat = true;
-    const bool enoughMoney = true;
+    final state = context.read<GameMarketPCViewModel>().state;
+    final pc = state.marketPCs[index];
+    final balance = context.select((GameMarketPCViewModel vm) => vm.state.money);
+
+    final bool haveThat = state.isHavePCById(pc.id);
+    final bool enoughMoney = balance >= pc.cost;
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
-      children: const [
-        if (haveThat == true) _SellButtonWidget(),
-        SizedBox(width: 10),
-        if (enoughMoney == true) _BuyButtonWidget(),
+      children: [
+        if (haveThat == true) _SellButtonWidget(index: index),
+        const SizedBox(width: 10),
+        if (enoughMoney == true) _BuyButtonWidget(index: index),
       ],
     );
   }
@@ -197,12 +246,17 @@ class _ButtonsItemWidget extends StatelessWidget {
 class _BuyButtonWidget extends StatelessWidget {
   const _BuyButtonWidget({
     Key? key,
+    required this.index,
   }) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<GameMarketPCViewModel>();
+    final gvm = context.read<GameViewModel>();
     return MyButton(
-      onPressed: () {},
+      onPressed: () => vm.onBuyButtonPressed(index, gvm),
       title: S.of(context).game_market_pc_buy_item_title,
       color: Colors.green,
     );
@@ -212,12 +266,17 @@ class _BuyButtonWidget extends StatelessWidget {
 class _SellButtonWidget extends StatelessWidget {
   const _SellButtonWidget({
     Key? key,
+    required this.index,
   }) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<GameMarketPCViewModel>();
+    final gvm = context.read<GameViewModel>();
     return MyButton(
-      onPressed: () {},
+      onPressed: () => vm.onSellButtonPressed(index, gvm),
       title: S.of(context).game_market_pc_sell_item_title,
       color: Colors.red,
     );
