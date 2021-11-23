@@ -1,12 +1,20 @@
+import 'package:crypto_idle/generated/l10n.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-AppBar kGameAppBar(BuildContext context) => AppBar(
+class GameAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const GameAppBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
       titleTextStyle: Theme.of(context).textTheme.bodyText1,
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Баланс: 120\$'),
-          Text('Количество установок: 5/10'),
+        children: const [
+          _BalanceWidget(),
+          _CountPcWidget(),
         ],
       ),
       automaticallyImplyLeading: false,
@@ -15,10 +23,49 @@ AppBar kGameAppBar(BuildContext context) => AppBar(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text('13.05.2015', style: Theme.of(context).textTheme.bodyText1),
+            children: const [
+              _DayWidget(),
             ],
           ),
         ),
       ],
     );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+class _DayWidget extends StatelessWidget {
+  const _DayWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text('13.05.2015', style: Theme.of(context).textTheme.bodyText1);
+  }
+}
+
+class _CountPcWidget extends StatelessWidget {
+  const _CountPcWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text('Количество установок: ${S.of(context).text_with_slash(5, 10)}');
+  }
+}
+
+class _BalanceWidget extends StatelessWidget {
+  const _BalanceWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final money = context.select((GameViewModel vm) => vm.game.money);
+    return Text('Баланс: ${S.of(context).text_with_dollar(money)}');
+  }
+}

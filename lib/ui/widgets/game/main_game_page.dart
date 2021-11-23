@@ -1,6 +1,8 @@
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MainGamePage extends StatelessWidget {
   const MainGamePage({Key? key}) : super(key: key);
@@ -72,20 +74,7 @@ class _BalanceWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 15),
         child: Row(
           children: <Widget>[
-            Expanded(
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    S.of(context).main_game_cash_balance_title,
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  Text(
-                    S.of(context).text_with_dollar(100.24),
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                ],
-              ),
-            ),
+            const Expanded(child: _BalanceDollarsWidget()),
             Expanded(
               child: Column(
                 children: <Widget>[
@@ -103,6 +92,29 @@ class _BalanceWidget extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _BalanceDollarsWidget extends StatelessWidget {
+  const _BalanceDollarsWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final money = context.select((GameViewModel vm) => vm.game.money);
+    return Column(
+      children: <Widget>[
+        Text(
+          S.of(context).main_game_cash_balance_title,
+          style: Theme.of(context).textTheme.bodyText1,
+        ),
+        Text(
+          S.of(context).text_with_dollar(money),
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+      ],
     );
   }
 }

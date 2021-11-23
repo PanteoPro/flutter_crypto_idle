@@ -17,7 +17,7 @@ class GameMarketCryptoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: kGameAppBar(context),
+      appBar: GameAppBar(),
       body: SafeArea(
         child: ColoredBox(
           color: Theme.of(context).backgroundColor,
