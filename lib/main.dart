@@ -1,4 +1,5 @@
 import 'package:crypto_idle/domain/entities/flat.dart';
+import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/ui/main_app.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -11,6 +12,7 @@ Future<void> deleteAllHive() async {
   await Hive.deleteBoxFromDisk('pc');
   await Hive.deleteBoxFromDisk('pc_const');
   await Hive.deleteBoxFromDisk('game');
+  await Hive.deleteBoxFromDisk('flat');
 }
 
 Future<void> firstDataPC() async {
@@ -49,10 +51,20 @@ Future<void> firstDataFlat() async {
   }
 }
 
+Future<void> firstInitGame() async {
+  if (!Hive.isAdapterRegistered(0)) {
+    Hive.registerAdapter(GameAdapter());
+  }
+  final _gameBox = await Hive.openBox<Game>('game');
+  final game = _gameBox.get('main');
+  _gameBox.put('main', game!.copyWith(maxCountPC: 5));
+}
+
 Future<void> main() async {
   await Hive.initFlutter();
-  // await firstDataPC();
-  await firstDataFlat();
   // await deleteAllHive();
+  // await firstDataPC();
+  // await firstDataFlat();
+  // await firstInitGame();
   runApp(MainApp());
 }

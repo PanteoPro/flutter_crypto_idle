@@ -53,14 +53,19 @@ class GameMarketFlatViewModel extends ChangeNotifier {
 
   Future<void> onBuyButtonPressed(int index, GameViewModel gvm) async {
     final flat = _state.flats[index];
+    final currentFlat = _state.currentFlat();
+
     if (_state.money >= flat.cost) {
-      final currentFlat = _state.currentFlat();
-      await _flatRepository.changeFlat(currentFlat, isActive: false);
+      if (_gameRepository.game.currentCountPC <= flat.countPC) {
+        await _flatRepository.changeFlat(currentFlat, isActive: false);
 
-      await _gameRepository.changeData(money: _state.money - flat.cost);
-      await _flatRepository.changeFlat(flat, isBuy: true, isActive: true);
+        await _gameRepository.changeData(money: _state.money - flat.cost, maxCountPC: flat.countPC);
+        await _flatRepository.changeFlat(flat, isBuy: true, isActive: true);
 
-      await gvm.tempMETHODLOAD();
+        await gvm.tempMETHODLOAD();
+      } else {
+        // error message count PC
+      }
     } else {
       // error message
     }
@@ -71,10 +76,15 @@ class GameMarketFlatViewModel extends ChangeNotifier {
     final flat = _state.flats[index];
     final currentFlat = _state.currentFlat();
     if (!flat.isActive && flat.isBuy) {
-      await _flatRepository.changeFlat(currentFlat, isActive: false);
-      await _flatRepository.changeFlat(flat, isActive: true);
+      if (_gameRepository.game.currentCountPC <= flat.countPC) {
+        await _flatRepository.changeFlat(currentFlat, isActive: false);
+        await _flatRepository.changeFlat(flat, isActive: true);
+        await _gameRepository.changeData(maxCountPC: flat.countPC);
 
-      await gvm.tempMETHODLOAD();
+        await gvm.tempMETHODLOAD();
+      } else {
+        // error message count pc
+      }
     } else {
       // error message
     }

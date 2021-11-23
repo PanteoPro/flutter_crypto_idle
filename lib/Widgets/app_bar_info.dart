@@ -54,7 +54,9 @@ class _CountPcWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Количество установок: ${S.of(context).text_with_slash(5, 10)}');
+    final maxCountPC = context.select((GameViewModel vm) => vm.game.maxCountPC);
+    final currentCountPC = context.select((GameViewModel vm) => vm.game.currentCountPC);
+    return Text('Количество установок: ${S.of(context).text_with_slash(currentCountPC, maxCountPC)}');
   }
 }
 
