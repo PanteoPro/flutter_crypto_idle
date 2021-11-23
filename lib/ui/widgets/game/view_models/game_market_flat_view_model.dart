@@ -34,6 +34,7 @@ class GameMarketFlatViewModel extends ChangeNotifier {
   final _gameRepository = GameRepository();
 
   var _state = GameMarketFlatViewModelState.empty();
+  GameMarketFlatViewModelState get state => _state;
 
   Future<void> initialRepositories() async {
     await _flatRepository.init();

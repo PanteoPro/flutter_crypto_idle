@@ -4,6 +4,7 @@ import 'package:crypto_idle/ui/widgets/game/game_market_flat_page.dart';
 import 'package:crypto_idle/ui/widgets/game/game_market_pc_page.dart';
 import 'package:crypto_idle/ui/widgets/game/game_mining_page.dart';
 import 'package:crypto_idle/ui/widgets/game/main_game_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_pc_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,10 @@ class MainNavigation {
           create: (_) => GameMarketPCViewModel(),
           child: const GameMarketPCPage(),
         ),
-    MainNavigationRouteNames.gameMarketFlat: (context) => const GameMarketFlatPage(),
+    MainNavigationRouteNames.gameMarketFlat: (context) => ChangeNotifierProvider(
+          create: (_) => GameMarketFlatViewModel(),
+          child: const GameMarketFlatPage(),
+        ),
     MainNavigationRouteNames.gameCrypto: (context) => const GameCryptoPage(),
     MainNavigationRouteNames.gameMarketCrypto: (context) => const GameMarketCryptoPage(),
     MainNavigationRouteNames.gameMining: (context) => const GameMiningPage(),

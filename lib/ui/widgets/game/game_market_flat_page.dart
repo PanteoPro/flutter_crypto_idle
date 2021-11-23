@@ -2,7 +2,9 @@ import 'package:crypto_idle/Widgets/app_bar_info.dart';
 import 'package:crypto_idle/Widgets/buttons.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
 import 'package:crypto_idle/generated/l10n.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class GameMarketFlatPage extends StatelessWidget {
   const GameMarketFlatPage({Key? key}) : super(key: key);
@@ -10,7 +12,7 @@ class GameMarketFlatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GameAppBar(),
+      appBar: const GameAppBar(),
       body: SafeArea(
         child: ColoredBox(
           color: Theme.of(context).backgroundColor,
@@ -36,14 +38,15 @@ class _MarketFlatListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final flatLenght = context.select((GameMarketFlatViewModel vm) => vm.state.flats.length);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: SizedBox(
         height: double.infinity,
         child: ListView.separated(
-          itemCount: 3,
+          itemCount: flatLenght,
           itemBuilder: (ctx, index) {
-            return const _MarketFlatItemWidget();
+            return _MarketFlatItemWidget(index: index);
           },
           separatorBuilder: (ctx, index) {
             return const SizedBox(height: 20);
@@ -55,7 +58,12 @@ class _MarketFlatListWidget extends StatelessWidget {
 }
 
 class _MarketFlatItemWidget extends StatelessWidget {
-  const _MarketFlatItemWidget({Key? key}) : super(key: key);
+  const _MarketFlatItemWidget({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -67,12 +75,12 @@ class _MarketFlatItemWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          children: const [
-            _HeaderItemWidget(),
-            SizedBox(height: 10),
-            _BodyItemWidget(),
-            SizedBox(height: 10),
-            _ButtonsItemWidget(),
+          children: [
+            _HeaderItemWidget(index: index),
+            const SizedBox(height: 10),
+            _BodyItemWidget(index: index),
+            const SizedBox(height: 10),
+            _ButtonsItemWidget(index: index),
           ],
         ),
       ),
@@ -81,18 +89,20 @@ class _MarketFlatItemWidget extends StatelessWidget {
 }
 
 class _HeaderItemWidget extends StatelessWidget {
-  const _HeaderItemWidget({
-    Key? key,
-  }) : super(key: key);
+  const _HeaderItemWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final isBuy = context.select((GameMarketFlatViewModel vm) => vm.state.flats[index].isBuy);
+    final title = context.read<GameMarketFlatViewModel>().state.flats[index].name;
     return Row(
       children: [
-        Text('Твоя квартира'),
+        Text(title),
         Expanded(
           child: Text(
-            S.of(context).game_market_flat_own_item_title,
+            isBuy ? S.of(context).game_market_flat_own_item_title : '',
             textAlign: TextAlign.end,
             style: Theme.of(context).textTheme.headline6,
           ),
@@ -103,9 +113,9 @@ class _HeaderItemWidget extends StatelessWidget {
 }
 
 class _BodyItemWidget extends StatelessWidget {
-  const _BodyItemWidget({
-    Key? key,
-  }) : super(key: key);
+  const _BodyItemWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -122,10 +132,10 @@ class _BodyItemWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              _CostItemWidget(),
-              _MonthItemWidget(),
-              _CountPCItemWidget(),
+            children: [
+              _CostItemWidget(index: index),
+              _MonthItemWidget(index: index),
+              _CountPCItemWidget(index: index),
             ],
           ),
         ),
@@ -135,49 +145,62 @@ class _BodyItemWidget extends StatelessWidget {
 }
 
 class _CostItemWidget extends StatelessWidget {
-  const _CostItemWidget({Key? key}) : super(key: key);
+  const _CostItemWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
-    return Text('${S.of(context).game_market_flat_cost_item_title}: ${S.of(context).text_with_dollar(50)}',
+    final cost = context.read<GameMarketFlatViewModel>().state.flats[index].cost;
+    return Text('${S.of(context).game_market_flat_cost_item_title}: ${S.of(context).text_with_dollar(cost)}',
         style: Theme.of(context).textTheme.headline6);
   }
 }
 
 class _MonthItemWidget extends StatelessWidget {
-  const _MonthItemWidget({Key? key}) : super(key: key);
+  const _MonthItemWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
-    return Text('${S.of(context).game_market_flat_month_item_title}: ${S.of(context).text_with_dollar(50)}',
+    final costMonth = context.read<GameMarketFlatViewModel>().state.flats[index].costMonth;
+    return Text('${S.of(context).game_market_flat_month_item_title}: ${S.of(context).text_with_dollar(costMonth)}',
         style: Theme.of(context).textTheme.headline6);
   }
 }
 
 class _CountPCItemWidget extends StatelessWidget {
-  const _CountPCItemWidget({Key? key}) : super(key: key);
+  const _CountPCItemWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
-    final countPc = 5;
-    return Text('${S.of(context).game_market_flat_count_pc_item_title}: $countPc',
+    final countPC = context.read<GameMarketFlatViewModel>().state.flats[index].countPC;
+    return Text('${S.of(context).game_market_flat_count_pc_item_title}: $countPC',
         style: Theme.of(context).textTheme.headline6);
   }
 }
 
 class _ButtonsItemWidget extends StatelessWidget {
-  const _ButtonsItemWidget({Key? key}) : super(key: key);
+  const _ButtonsItemWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
-    const bool ownThis = true;
-    const bool enoughMoney = true;
+    final isBuy = context.select((GameMarketFlatViewModel vm) => vm.state.flats[index].isBuy);
+    final isActive = context.select((GameMarketFlatViewModel vm) => vm.state.flats[index].isActive);
+    final balance = context.select((GameMarketFlatViewModel vm) => vm.state.money);
+    final flatCost = context.read<GameMarketFlatViewModel>().state.flats[index].cost;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
-      children: const [
-        if (ownThis == true) _ChangeButtonWidget(),
-        SizedBox(width: 10),
-        if (enoughMoney == true) _BuyButtonWidget(),
+      children: [
+        if (!isActive) _ActivateButtonWidget(index: index),
+        const SizedBox(width: 10),
+        if (balance >= flatCost && !isBuy) _BuyButtonWidget(index: index),
       ],
     );
   }
@@ -186,27 +209,35 @@ class _ButtonsItemWidget extends StatelessWidget {
 class _BuyButtonWidget extends StatelessWidget {
   const _BuyButtonWidget({
     Key? key,
+    required this.index,
   }) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<GameMarketFlatViewModel>();
     return MyButton(
-      onPressed: () {},
+      onPressed: () => vm.onBuyButtonPressed(index),
       title: S.of(context).game_market_flat_buy_item_title,
       color: Colors.green,
     );
   }
 }
 
-class _ChangeButtonWidget extends StatelessWidget {
-  const _ChangeButtonWidget({
+class _ActivateButtonWidget extends StatelessWidget {
+  const _ActivateButtonWidget({
     Key? key,
+    required this.index,
   }) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<GameMarketFlatViewModel>();
     return MyButton(
-      onPressed: () {},
+      onPressed: () => vm.onActivateButtonPressed(index),
       title: S.of(context).game_market_flat_change_item_title,
       color: Colors.yellow,
       textColor: Colors.black,
