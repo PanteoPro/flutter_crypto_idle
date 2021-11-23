@@ -5,7 +5,7 @@ class FlatRepository {
   final _flatDataProvider = FlatDataProvider();
 
   var _flats = <Flat>[];
-  List<Flat> get flats => flats;
+  List<Flat> get flats => _flats;
 
   Future<void> init() async {
     await _flatDataProvider.openBox();

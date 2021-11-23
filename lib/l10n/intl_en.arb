@@ -41,6 +41,7 @@
     "game_market_flat_own_item_title": "Own",
     "game_market_flat_change_item_title": "Change",
     "game_market_flat_buy_item_title": "Buy",
+    "game_market_flat_status_active_title": "Active",
 
     "game_crypto_title": "Crypto",
     "game_crypto_cost_header_title": "Balance",

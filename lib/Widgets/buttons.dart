@@ -14,7 +14,7 @@ class MyButton extends StatelessWidget {
   final Color color;
   final Color? textColor;
   final String title;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {

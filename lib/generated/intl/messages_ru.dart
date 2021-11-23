@@ -68,6 +68,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Месячная плата"),
         "game_market_flat_own_item_title":
             MessageLookupByLibrary.simpleMessage("Куплена"),
+        "game_market_flat_status_active_title":
+            MessageLookupByLibrary.simpleMessage("Активна"),
         "game_market_flat_title":
             MessageLookupByLibrary.simpleMessage("Помещения"),
         "game_market_pc_buy_item_title":

@@ -410,6 +410,16 @@ class S {
     );
   }
 
+  /// `Active`
+  String get game_market_flat_status_active_title {
+    return Intl.message(
+      'Active',
+      name: 'game_market_flat_status_active_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Crypto`
   String get game_crypto_title {
     return Intl.message(

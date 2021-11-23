@@ -17,6 +17,7 @@ class GameViewModel extends ChangeNotifier {
     updateState();
   }
 
+  /// Temp method for update balance in the appbar
   Future<void> tempMETHODLOAD() async {
     await _gameRepository.loadData();
     updateState();

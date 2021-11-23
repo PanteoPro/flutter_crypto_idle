@@ -3,6 +3,7 @@ import 'package:crypto_idle/Widgets/buttons.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +24,7 @@ class GameMarketFlatPage extends StatelessWidget {
                 onTap: () {},
               ),
               const Expanded(child: _MarketFlatListWidget()),
+              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -195,12 +197,15 @@ class _ButtonsItemWidget extends StatelessWidget {
     final balance = context.select((GameMarketFlatViewModel vm) => vm.state.money);
     final flatCost = context.read<GameMarketFlatViewModel>().state.flats[index].cost;
 
+    final showActivateButton = !isActive && isBuy;
+    final showBuyButton = balance >= flatCost && !isBuy;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        if (!isActive) _ActivateButtonWidget(index: index),
-        const SizedBox(width: 10),
-        if (balance >= flatCost && !isBuy) _BuyButtonWidget(index: index),
+        if (showActivateButton) _ActivateButtonWidget(index: index),
+        if (showBuyButton) _BuyButtonWidget(index: index),
+        if (isActive) const _IsActiveButtonWidget(),
       ],
     );
   }
@@ -217,8 +222,9 @@ class _BuyButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.read<GameMarketFlatViewModel>();
+    final gvm = context.read<GameViewModel>();
     return MyButton(
-      onPressed: () => vm.onBuyButtonPressed(index),
+      onPressed: () => vm.onBuyButtonPressed(index, gvm),
       title: S.of(context).game_market_flat_buy_item_title,
       color: Colors.green,
     );
@@ -236,11 +242,26 @@ class _ActivateButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.read<GameMarketFlatViewModel>();
+    final gvm = context.read<GameViewModel>();
     return MyButton(
-      onPressed: () => vm.onActivateButtonPressed(index),
+      onPressed: () => vm.onActivateButtonPressed(index, gvm),
       title: S.of(context).game_market_flat_change_item_title,
       color: Colors.yellow,
       textColor: Colors.black,
+    );
+  }
+}
+
+class _IsActiveButtonWidget extends StatelessWidget {
+  const _IsActiveButtonWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MyButton(
+      onPressed: null,
+      title: S.of(context).game_market_flat_status_active_title,
+      color: Colors.red,
+      textColor: Colors.white,
     );
   }
 }

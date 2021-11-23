@@ -1,6 +1,7 @@
 import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class GameMarketFlatViewModelState {
@@ -47,9 +48,10 @@ class GameMarketFlatViewModel extends ChangeNotifier {
       money: _gameRepository.game.money,
       flats: _flatRepository.flats,
     );
+    notifyListeners();
   }
 
-  Future<void> onBuyButtonPressed(int index) async {
+  Future<void> onBuyButtonPressed(int index, GameViewModel gvm) async {
     final flat = _state.flats[index];
     if (_state.money >= flat.cost) {
       final currentFlat = _state.currentFlat();
@@ -57,20 +59,25 @@ class GameMarketFlatViewModel extends ChangeNotifier {
 
       await _gameRepository.changeData(money: _state.money - flat.cost);
       await _flatRepository.changeFlat(flat, isBuy: true, isActive: true);
+
+      await gvm.tempMETHODLOAD();
     } else {
       // error message
     }
     _updateState();
   }
 
-  Future<void> onActivateButtonPressed(int index) async {
+  Future<void> onActivateButtonPressed(int index, GameViewModel gvm) async {
     final flat = _state.flats[index];
     final currentFlat = _state.currentFlat();
     if (!flat.isActive && flat.isBuy) {
       await _flatRepository.changeFlat(currentFlat, isActive: false);
       await _flatRepository.changeFlat(flat, isActive: true);
+
+      await gvm.tempMETHODLOAD();
     } else {
       // error message
     }
+    _updateState();
   }
 }

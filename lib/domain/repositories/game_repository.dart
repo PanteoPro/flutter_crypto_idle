@@ -8,7 +8,7 @@ class GameRepository {
 
   Future<void> init() async {
     await _gameDataProvider.openBox();
-    // await changeData(money: 150);
+    // await changeData(money: 10000);
     await loadData();
   }
 

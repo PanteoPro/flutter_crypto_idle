@@ -67,6 +67,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Month cost"),
         "game_market_flat_own_item_title":
             MessageLookupByLibrary.simpleMessage("Own"),
+        "game_market_flat_status_active_title":
+            MessageLookupByLibrary.simpleMessage("Active"),
         "game_market_flat_title": MessageLookupByLibrary.simpleMessage("Flat"),
         "game_market_pc_buy_item_title":
             MessageLookupByLibrary.simpleMessage("Buy"),
