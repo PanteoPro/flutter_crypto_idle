@@ -1,6 +1,5 @@
 import 'package:crypto_idle/domain/data_providers/game_data_provider.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
-import 'package:crypto_idle/domain/entities/pc.dart';
 
 class GameRepository {
   final _gameDataProvider = GameDataProvider();
