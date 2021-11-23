@@ -51,14 +51,14 @@ Future<void> firstDataFlat() async {
   }
 }
 
-Future<void> firstInitGame() async {
-  if (!Hive.isAdapterRegistered(0)) {
-    Hive.registerAdapter(GameAdapter());
-  }
-  final _gameBox = await Hive.openBox<Game>('game');
-  final game = _gameBox.get('main');
-  _gameBox.put('main', game!.copyWith(maxCountPC: 5));
-}
+// Future<void> firstInitGame() async {
+//   if (!Hive.isAdapterRegistered(0)) {
+//     Hive.registerAdapter(GameAdapter());
+//   }
+//   final _gameBox = await Hive.openBox<Game>('game');
+//   final game = _gameBox.get('main');
+//   _gameBox.put('main', game!.copyWith(maxCountPC: 5));
+// }
 
 Future<void> main() async {
   await Hive.initFlutter();

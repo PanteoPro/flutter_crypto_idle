@@ -9,18 +9,12 @@ class GameRepository {
   Future<void> init() async {
     await _gameDataProvider.openBox();
     // await changeData(money: 10000);
-    await loadData();
-  }
-
-  Future<void> loadData() async {
     _game = await _gameDataProvider.loadData();
   }
 
   Future<void> changeData({
     double? money,
     String? nick,
-    int? maxCountPC,
-    int? currentCountPC,
   }) async {
     if (money != null) {
       _game = _game.copyWith(money: money);
@@ -28,13 +22,7 @@ class GameRepository {
     if (nick != null) {
       _game = _game.copyWith(nick: nick);
     }
-    if (maxCountPC != null) {
-      _game = _game.copyWith(maxCountPC: maxCountPC);
-    }
-    if (currentCountPC != null) {
-      _game = _game.copyWith(currentCountPC: currentCountPC);
-    }
-    if (money != null || nick != null || maxCountPC != null || currentCountPC != null) {
+    if (money != null || nick != null) {
       await _gameDataProvider.saveData(_game);
     }
   }

@@ -1,6 +1,7 @@
 import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
+import 'package:crypto_idle/domain/repositories/pc_repository.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -32,6 +33,7 @@ class GameMarketFlatViewModel extends ChangeNotifier {
   }
 
   final _flatRepository = FlatRepository();
+  final _pcRepository = PCRepository();
   final _gameRepository = GameRepository();
 
   var _state = GameMarketFlatViewModelState.empty();
@@ -40,6 +42,7 @@ class GameMarketFlatViewModel extends ChangeNotifier {
   Future<void> initialRepositories() async {
     await _flatRepository.init();
     await _gameRepository.init();
+    await _pcRepository.init();
     _updateState();
   }
 
@@ -56,13 +59,14 @@ class GameMarketFlatViewModel extends ChangeNotifier {
     final currentFlat = _state.currentFlat();
 
     if (_state.money >= flat.cost) {
-      if (_gameRepository.game.currentCountPC <= flat.countPC) {
+      final currentCountPC = _pcRepository.pcs.length;
+      if (currentCountPC <= flat.countPC) {
         await _flatRepository.changeFlat(currentFlat, isActive: false);
 
-        await _gameRepository.changeData(money: _state.money - flat.cost, maxCountPC: flat.countPC);
+        await _gameRepository.changeData(money: _state.money - flat.cost);
         await _flatRepository.changeFlat(flat, isBuy: true, isActive: true);
 
-        await gvm.tempMETHODLOAD();
+        await gvm.TEMP_UPDAGE_DATA();
       } else {
         // error message count PC
       }
@@ -76,12 +80,12 @@ class GameMarketFlatViewModel extends ChangeNotifier {
     final flat = _state.flats[index];
     final currentFlat = _state.currentFlat();
     if (!flat.isActive && flat.isBuy) {
-      if (_gameRepository.game.currentCountPC <= flat.countPC) {
+      final currentCountPC = _pcRepository.pcs.length;
+      if (currentCountPC <= flat.countPC) {
         await _flatRepository.changeFlat(currentFlat, isActive: false);
         await _flatRepository.changeFlat(flat, isActive: true);
-        await _gameRepository.changeData(maxCountPC: flat.countPC);
 
-        await gvm.tempMETHODLOAD();
+        await gvm.TEMP_UPDAGE_DATA();
       } else {
         // error message count pc
       }

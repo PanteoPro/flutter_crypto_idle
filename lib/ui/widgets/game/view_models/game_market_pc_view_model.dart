@@ -1,3 +1,4 @@
+import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -46,6 +47,7 @@ class GameMarketPCViewModel extends ChangeNotifier {
     _initialRepositories();
   }
   final _pcRepository = PCRepository();
+  final _flatRepository = FlatRepository();
   final _gameRepository = GameRepository();
 
   var _state = GameMarketPCViewModelState.empty();
@@ -54,6 +56,7 @@ class GameMarketPCViewModel extends ChangeNotifier {
   Future<void> _initialRepositories() async {
     await _pcRepository.init();
     await _gameRepository.init();
+    await _flatRepository.init();
 
     _updateState();
   }
@@ -70,11 +73,11 @@ class GameMarketPCViewModel extends ChangeNotifier {
   Future<void> onBuyButtonPressed(int index, GameViewModel gvm) async {
     final pc = _state.marketPCs[index];
     if (_state.money >= pc.cost) {
-      if (_gameRepository.game.currentCountPC < _gameRepository.game.maxCountPC) {
+      final maxCountPC = _flatRepository.flats.firstWhere((element) => element.isActive).countPC;
+      if (_state.ownPCs.length < maxCountPC) {
         await _pcRepository.addPC(pc);
-        await _gameRepository.changeData(
-            money: _state.money - pc.cost, currentCountPC: _gameRepository.game.currentCountPC + 1);
-        await gvm.tempMETHODLOAD();
+        await _gameRepository.changeData(money: _state.money - pc.cost);
+        await gvm.TEMP_UPDAGE_DATA();
       } else {
         // erorr message max  pcs
       }
@@ -87,9 +90,8 @@ class GameMarketPCViewModel extends ChangeNotifier {
   Future<void> onSellButtonPressed(int index, GameViewModel gvm) async {
     final pc = _state.marketPCs[index];
     if (await _pcRepository.sellPC(pc)) {
-      await _gameRepository.changeData(
-          money: _state.money + pc.costSell, currentCountPC: _gameRepository.game.currentCountPC - 1);
-      await gvm.tempMETHODLOAD();
+      await _gameRepository.changeData(money: _state.money + pc.costSell);
+      await gvm.TEMP_UPDAGE_DATA();
       // message good
     } else {
       //error message
