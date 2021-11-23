@@ -1,3 +1,4 @@
+import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/ui/main_app.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -12,7 +13,7 @@ Future<void> deleteAllHive() async {
   await Hive.deleteBoxFromDisk('game');
 }
 
-Future<void> firstData() async {
+Future<void> firstDataPC() async {
   if (!Hive.isAdapterRegistered(1)) {
     Hive.registerAdapter(PCAdapter());
   }
@@ -24,14 +25,34 @@ Future<void> firstData() async {
   ];
   var key = 1;
   for (final PC pc in pcs) {
-    _pcBox.put(key, pc);
+    await _pcBox.put(key, pc);
+    key += 1;
+  }
+}
+
+Future<void> firstDataFlat() async {
+  if (!Hive.isAdapterRegistered(2)) {
+    Hive.registerAdapter(FlatAdapter());
+  }
+  final _flatBox = await Hive.openBox<Flat>('flat');
+  final flats = <Flat>[
+    Flat(id: 1, name: 'Твоя квартира', cost: 0, costMonth: 0, countPC: 5, isBuy: true, isActive: true),
+    Flat(id: 2, name: 'Отдельная квартира', cost: 1200, costMonth: 220, countPC: 8, isBuy: false, isActive: false),
+    Flat(id: 2, name: 'Отдельная квартира 2', cost: 4200, costMonth: 804, countPC: 12, isBuy: false, isActive: false),
+    Flat(id: 2, name: 'Отдельная квартира 3', cost: 12200, costMonth: 1234, countPC: 15, isBuy: false, isActive: false),
+    Flat(id: 2, name: 'Отдельная квартира 4', cost: 42300, costMonth: 6342, countPC: 20, isBuy: false, isActive: false),
+  ];
+  var key = 1;
+  for (final Flat flat in flats) {
+    await _flatBox.put(key, flat);
     key += 1;
   }
 }
 
 Future<void> main() async {
   await Hive.initFlutter();
-  await firstData();
+  // await firstDataPC();
+  await firstDataFlat();
   // await deleteAllHive();
   runApp(MainApp());
 }
