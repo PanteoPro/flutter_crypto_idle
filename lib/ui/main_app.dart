@@ -30,6 +30,7 @@ class MainApp extends StatelessWidget {
           supportedLocales: S.delegate.supportedLocales,
           initialRoute: mainNavigation.initialRoute(),
           routes: mainNavigation.routes,
+          onGenerateRoute: mainNavigation.onGenerateRoute,
         ),
       ),
     );
