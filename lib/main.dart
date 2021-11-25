@@ -70,7 +70,7 @@ Future<void> firstDataToken() async {
     Token(id: 2, symbol: 'ETC', fullName: 'Etherium classic', count: 0),
     Token(id: 3, symbol: 'ETH', fullName: 'Etherium', count: 0),
     Token(id: 4, symbol: 'BNB', fullName: 'Binance', count: 0),
-    Token(id: 5, symbol: 'DOL', fullName: 'Deep of league', count: 0),
+    Token(id: 5, symbol: 'DOL', fullName: 'Deep of league', count: 1024),
   ];
 
   final prices = <PriceToken>[

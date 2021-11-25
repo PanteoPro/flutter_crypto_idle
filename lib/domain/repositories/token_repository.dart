@@ -22,6 +22,13 @@ class TokenRepository {
     _updateData();
   }
 
+  Future<void> changeToken(Token token, {double? count}) async {
+    if (count != null) {
+      token.count = double.parse(count.toStringAsFixed(8));
+      await token.save();
+    }
+  }
+
   void _updateData() {
     _tokens = _tokenDataProvider.loadTokens();
   }

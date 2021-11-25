@@ -15,6 +15,6 @@ class Token extends HiveObject {
   @HiveField(2)
   final String fullName;
   @HiveField(3)
-  final double count;
+  double count;
   HiveList<PriceToken>? prices;
 }

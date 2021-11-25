@@ -2,7 +2,10 @@ import 'package:crypto_idle/Widgets/app_bar_info.dart';
 import 'package:crypto_idle/Widgets/buttons.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
 import 'package:crypto_idle/generated/l10n.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/game_market_crypto_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartData {
@@ -17,20 +20,18 @@ class GameMarketCryptoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GameAppBar(),
+      appBar: const GameAppBar(),
       body: SafeArea(
         child: ColoredBox(
           color: Theme.of(context).backgroundColor,
           child: ListView(
             children: [
-              HeaderPage(
-                title: "BTC/USD Bitcoin",
-              ),
+              const _HeaderWidget(),
               _ChartWidget(),
-              _CostWidget(),
-              _CountCryptoWidget(),
-              SizedBox(height: 40),
-              _TradeWidget(),
+              const _CostWidget(),
+              const _CountCryptoWidget(),
+              const SizedBox(height: 40),
+              const _TradeWidget(),
             ],
           ),
         ),
@@ -39,8 +40,22 @@ class GameMarketCryptoPage extends StatelessWidget {
   }
 }
 
+class _HeaderWidget extends StatelessWidget {
+  const _HeaderWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final token = context.read<GameMarketCryptoViewModel>().state.token;
+    return HeaderPage(
+      title: '${S.of(context).text_with_slash(token?.symbol ?? 'NONE', 'USD')} ${token?.fullName}',
+    );
+  }
+}
+
 class _ChartWidget extends StatelessWidget {
-  _ChartWidget({Key? key}) : super(key: key);
+  const _ChartWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +98,7 @@ class _CostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final price = context.select((GameMarketCryptoViewModel vm) => vm.state.getLastPrice()).cost;
     return SizedBox(
       width: double.infinity,
       child: DecoratedBox(
@@ -96,7 +112,7 @@ class _CostWidget extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Text(
-              '${S.of(context).game_crypto_market_cost_title}: ${S.of(context).text_with_dollar(4234.23)}',
+              '${S.of(context).game_crypto_market_cost_title}: ${S.of(context).text_with_dollar(price)}',
             ),
           ),
         ),
@@ -110,6 +126,8 @@ class _CountCryptoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final count = context.select((GameMarketCryptoViewModel vm) => vm.state.token?.count);
+    final symbol = context.read<GameMarketCryptoViewModel>().state.token?.symbol;
     return SizedBox(
       width: double.infinity,
       child: DecoratedBox(
@@ -122,7 +140,7 @@ class _CountCryptoWidget extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Text(
-              '${S.of(context).game_crypto_market_balance_title}: 0.23412357 BTC',
+              '${S.of(context).game_crypto_market_balance_title}: ${count?.toStringAsFixed(8)} $symbol',
             ),
           ),
         ),
@@ -140,33 +158,46 @@ class _TradeWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: [
+        children: const [
           _TradePriceSellWidget(),
           SizedBox(height: 10),
           _TradeCountSellWidget(),
           _TradeCountSellButtonsWidget(),
           SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: MyButton(
-                  color: Colors.red,
-                  onPressed: () {},
-                  title: S.of(context).game_crypto_market_fast_sell_title,
-                ),
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                child: MyButton(
-                  color: Colors.red,
-                  onPressed: () {},
-                  title: S.of(context).game_crypto_market_sell_title,
-                ),
-              ),
-            ],
-          ),
+          _TradeButtonsWidget(),
         ],
       ),
+    );
+  }
+}
+
+class _TradeButtonsWidget extends StatelessWidget {
+  const _TradeButtonsWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = context.read<GameMarketCryptoViewModel>();
+    final gvm = context.read<GameViewModel>();
+    return Row(
+      children: [
+        Expanded(
+          child: MyButton(
+            color: Colors.red,
+            onPressed: () => vm.onSellNowButtonPressed(gvm),
+            title: S.of(context).game_crypto_market_fast_sell_title,
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: MyButton(
+            color: Colors.red,
+            onPressed: () => vm.onSellLimitButtonPressed(gvm),
+            title: S.of(context).game_crypto_market_sell_title,
+          ),
+        ),
+      ],
     );
   }
 }
@@ -176,7 +207,9 @@ class _TradePriceSellWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<GameMarketCryptoViewModel>();
     return TextField(
+      controller: vm.priceTextController,
       decoration: InputDecoration(
         label: Text(S.of(context).game_crypto_market_price_input_title),
         labelStyle: TextStyle(color: Theme.of(context).primaryColor),
@@ -198,7 +231,9 @@ class _TradeCountSellWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<GameMarketCryptoViewModel>();
     return TextField(
+      controller: vm.volumeTextController,
       decoration: InputDecoration(
         label: Text(S.of(context).game_crypto_market_count_input_title),
         labelStyle: TextStyle(color: Theme.of(context).primaryColor),
@@ -220,15 +255,36 @@ class _TradeCountSellButtonsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<GameMarketCryptoViewModel>();
     return Row(
       children: [
-        Expanded(child: _TradeCountSellButtonsItemWidget(onPressed: () {}, title: '25%')),
+        Expanded(
+          child: _TradeCountSellButtonsItemWidget(
+            onPressed: () => vm.onChangeVolumeButtonPressed(PercentButton.p25),
+            title: '25%',
+          ),
+        ),
         const SizedBox(width: 10),
-        Expanded(child: _TradeCountSellButtonsItemWidget(onPressed: () {}, title: '50%')),
+        Expanded(
+          child: _TradeCountSellButtonsItemWidget(
+            onPressed: () => vm.onChangeVolumeButtonPressed(PercentButton.p50),
+            title: '50%',
+          ),
+        ),
         const SizedBox(width: 10),
-        Expanded(child: _TradeCountSellButtonsItemWidget(onPressed: () {}, title: '75%')),
+        Expanded(
+          child: _TradeCountSellButtonsItemWidget(
+            onPressed: () => vm.onChangeVolumeButtonPressed(PercentButton.p75),
+            title: '75%',
+          ),
+        ),
         const SizedBox(width: 10),
-        Expanded(child: _TradeCountSellButtonsItemWidget(onPressed: () {}, title: '100%')),
+        Expanded(
+          child: _TradeCountSellButtonsItemWidget(
+            onPressed: () => vm.onChangeVolumeButtonPressed(PercentButton.p100),
+            title: '100%',
+          ),
+        ),
       ],
     );
   }

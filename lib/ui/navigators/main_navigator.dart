@@ -39,7 +39,6 @@ class MainNavigation {
           create: (_) => GameCryptoViewModel(),
           child: const GameCryptoPage(),
         ),
-    MainNavigationRouteNames.gameMarketCrypto: (context) => const GameMarketCryptoPage(),
     MainNavigationRouteNames.gameMining: (context) => ChangeNotifierProvider(
           create: (_) => GameMiningViewModel(),
           child: const GameMiningPage(),

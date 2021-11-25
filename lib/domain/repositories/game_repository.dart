@@ -17,7 +17,7 @@ class GameRepository {
     String? nick,
   }) async {
     if (money != null) {
-      _game = _game.copyWith(money: money);
+      _game = _game.copyWith(money: double.parse(money.toStringAsFixed(2)));
     }
     if (nick != null) {
       _game = _game.copyWith(nick: nick);
