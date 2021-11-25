@@ -62,9 +62,9 @@ Future<void> firstDataFlat() async {
 
 Future<void> main() async {
   await Hive.initFlutter();
-  // await deleteAllHive();
-  // await firstDataPC();
-  // await firstDataFlat();
+  await deleteAllHive();
+  await firstDataPC();
+  await firstDataFlat();
   // await firstInitGame();
   runApp(MainApp());
 }
