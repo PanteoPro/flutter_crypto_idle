@@ -25,7 +25,6 @@ class GameMarketCryptoPage extends StatelessWidget {
             children: [
               HeaderPage(
                 title: "BTC/USD Bitcoin",
-                onTap: () {},
               ),
               _ChartWidget(),
               _CostWidget(),

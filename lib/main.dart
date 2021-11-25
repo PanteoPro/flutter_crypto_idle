@@ -97,10 +97,10 @@ Future<void> firstDataToken() async {
 
 Future<void> main() async {
   await Hive.initFlutter();
-  await deleteAllHive();
-  await firstDataPC();
-  await firstDataFlat();
-  await firstDataToken();
+  // await deleteAllHive();
+  // await firstDataPC();
+  // await firstDataFlat();
+  // await firstDataToken();
   // await firstInitGame();
   runApp(MainApp());
 }

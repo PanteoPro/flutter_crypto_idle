@@ -4,11 +4,11 @@ class HeaderPage extends StatelessWidget {
   const HeaderPage({
     Key? key,
     required this.title,
-    required this.onTap,
+    this.onTap,
   }) : super(key: key);
 
   final String title;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,11 @@ class HeaderPage extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.of(context).pop();
+                if (onTap != null) {
+                  onTap!();
+                } else {
+                  Navigator.of(context).pop();
+                }
               },
               child: Icon(
                 Icons.arrow_back,

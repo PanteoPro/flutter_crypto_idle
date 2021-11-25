@@ -23,13 +23,14 @@ class PCAdapter extends TypeAdapter<PC> {
       costSell: fields[3] as double,
       power: fields[4] as double,
       energy: fields[5] as double,
+      miningToken: fields[6] as Token?,
     );
   }
 
   @override
   void write(BinaryWriter writer, PC obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -41,7 +42,9 @@ class PCAdapter extends TypeAdapter<PC> {
       ..writeByte(4)
       ..write(obj.power)
       ..writeByte(5)
-      ..write(obj.energy);
+      ..write(obj.energy)
+      ..writeByte(6)
+      ..write(obj.miningToken);
   }
 
   @override

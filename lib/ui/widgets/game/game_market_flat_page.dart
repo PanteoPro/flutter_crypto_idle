@@ -21,7 +21,6 @@ class GameMarketFlatPage extends StatelessWidget {
             children: [
               HeaderPage(
                 title: S.of(context).game_market_flat_title,
-                onTap: () {},
               ),
               const Expanded(child: _MarketFlatListWidget()),
               const SizedBox(height: 20),

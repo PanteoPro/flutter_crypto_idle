@@ -550,6 +550,16 @@ class S {
     );
   }
 
+  /// `Nothing`
+  String get game_mining_module_pc_mining_empty_title {
+    return Intl.message(
+      'Nothing',
+      name: 'game_mining_module_pc_mining_empty_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Current cost`
   String get game_crypto_market_cost_title {
     return Intl.message(

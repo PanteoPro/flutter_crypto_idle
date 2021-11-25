@@ -20,7 +20,6 @@ class GameCryptoPage extends StatelessWidget {
             children: [
               HeaderPage(
                 title: S.of(context).game_crypto_title,
-                onTap: () {},
               ),
               const _BalanceWidget(),
               const SizedBox(height: 20),
@@ -92,7 +91,7 @@ class _HelperWidget extends StatelessWidget {
         child: Column(
           children: [
             Text(S.of(context).game_crypto_helper_title, textAlign: TextAlign.center),
-            Icon(Icons.arrow_downward, size: 48, color: Theme.of(context).primaryColor),
+            Icon(Icons.arrow_downward, size: 32, color: Theme.of(context).primaryColor),
           ],
         ),
       ),
@@ -206,7 +205,7 @@ class __CryptoItemCostWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text('${countToken.toStringAsFixed(8)}', style: Theme.of(context).textTheme.headline5),
+        Text(countToken.toStringAsFixed(8), style: Theme.of(context).textTheme.headline5),
         Text(S.of(context).text_with_dollar(costInDollars.toStringAsFixed(2)),
             style: Theme.of(context).textTheme.headline6),
       ],

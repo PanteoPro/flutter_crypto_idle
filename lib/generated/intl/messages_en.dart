@@ -85,6 +85,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "game_market_pc_title":
             MessageLookupByLibrary.simpleMessage("Mining pc"),
         "game_market_pc_you_have_item_title": m0,
+        "game_mining_module_pc_mining_empty_title":
+            MessageLookupByLibrary.simpleMessage("Nothing"),
         "game_mining_module_pc_mining_title":
             MessageLookupByLibrary.simpleMessage("Mining"),
         "game_mining_module_pc_power_title":

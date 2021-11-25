@@ -21,7 +21,6 @@ class GameMarketPCPage extends StatelessWidget {
             children: [
               HeaderPage(
                 title: S.of(context).game_market_pc_title,
-                onTap: () {},
               ),
               const Expanded(child: _MarketPCListWidget()),
             ],

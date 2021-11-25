@@ -1,3 +1,4 @@
+import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:hive/hive.dart';
 
 part 'pc.g.dart';
@@ -11,6 +12,7 @@ class PC {
     required this.costSell,
     required this.power,
     required this.energy,
+    this.miningToken,
   });
 
   PC.empty({
@@ -34,6 +36,8 @@ class PC {
   final double power;
   @HiveField(5)
   final double energy;
+  @HiveField(6)
+  Token? miningToken;
 
   PC copyWith({
     int? id,
@@ -42,6 +46,7 @@ class PC {
     double? costSell,
     double? power,
     double? energy,
+    Token? miningToken,
   }) {
     return PC(
       id: id ?? this.id,
@@ -50,6 +55,7 @@ class PC {
       costSell: costSell ?? this.costSell,
       power: power ?? this.power,
       energy: energy ?? this.energy,
+      miningToken: miningToken ?? this.miningToken,
     );
   }
 }

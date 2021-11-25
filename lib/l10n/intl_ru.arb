@@ -57,6 +57,7 @@
     "game_mining_module_pc_title": "Ваши установки",
     "game_mining_module_pc_power_title": "Мощность",
     "game_mining_module_pc_mining_title": "Майнит",
+    "game_mining_module_pc_mining_empty_title": "Ничего",
 
     "game_crypto_market_cost_title": "Текущая цена",
     "game_crypto_market_fast_sell_title": "Продать мгновенно",

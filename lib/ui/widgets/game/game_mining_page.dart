@@ -2,7 +2,9 @@ import 'package:crypto_idle/Widgets/app_bar_info.dart';
 import 'package:crypto_idle/Widgets/buttons.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
 import 'package:crypto_idle/generated/l10n.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/game_mining_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class GameMiningPage extends StatelessWidget {
   const GameMiningPage({Key? key}) : super(key: key);
@@ -10,7 +12,7 @@ class GameMiningPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GameAppBar(),
+      appBar: const GameAppBar(),
       body: SafeArea(
         child: ColoredBox(
           color: Theme.of(context).backgroundColor,
@@ -20,16 +22,16 @@ class GameMiningPage extends StatelessWidget {
                 children: [
                   HeaderPage(
                     title: S.of(context).game_mining_title,
-                    onTap: () {},
                   ),
                   const Expanded(
-                      child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: _MiningListWidget(),
-                  )),
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: _MiningListWidget(),
+                    ),
+                  ),
                 ],
               ),
-              // _ModulePcWidget(),
+              _ModulePcWidget(),
             ],
           ),
         ),
@@ -43,20 +45,26 @@ class _MiningListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = ['BTC', 'ETC', 'ETH', 'BNB', 'BTC', 'ETC', 'ETH'];
+    context.select((GameMiningViewModel vm) => vm.state.tokens.length);
+    final tokens = context.read<GameMiningViewModel>().state.tokens;
+    final items = List.generate(tokens.length, (index) => index);
+
     return GridView.count(
       crossAxisCount: 2,
       crossAxisSpacing: 10,
       mainAxisSpacing: 20,
-      children: items.map((element) => _MiningItemWidget(element: element)).toList(),
+      children: items.map((index) => _MiningItemWidget(index: index)).toList(),
     );
   }
 }
 
 class _MiningItemWidget extends StatelessWidget {
-  const _MiningItemWidget({Key? key, required this.element}) : super(key: key);
+  const _MiningItemWidget({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
 
-  final String element;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -68,12 +76,12 @@ class _MiningItemWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(
-          children: const [
-            _MiningItemHeaderWidget(),
-            SizedBox(height: 10),
-            Expanded(child: _MiningItemInfoWidget()),
-            SizedBox(height: 10),
-            _MiningItemButtonWidget(),
+          children: [
+            _MiningItemHeaderWidget(index: index),
+            const SizedBox(height: 10),
+            Expanded(child: _MiningItemInfoWidget(index: index)),
+            const SizedBox(height: 10),
+            _MiningItemButtonWidget(index: index),
           ],
         ),
       ),
@@ -82,20 +90,30 @@ class _MiningItemWidget extends StatelessWidget {
 }
 
 class _MiningItemHeaderWidget extends StatelessWidget {
-  const _MiningItemHeaderWidget({Key? key}) : super(key: key);
+  const _MiningItemHeaderWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final token = context.read<GameMiningViewModel>().state.tokens[index];
     return Row(
       children: [
-        SizedBox(width: 32, height: 32, child: Placeholder()),
-        SizedBox(width: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('BTC', style: Theme.of(context).textTheme.headline5),
-            Text('Bitcoin', style: Theme.of(context).textTheme.headline6),
-          ],
+        const SizedBox(width: 32, height: 32, child: Placeholder()),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(token.symbol, style: Theme.of(context).textTheme.headline5),
+              Text(
+                token.fullName,
+                style: Theme.of(context).textTheme.headline6,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -103,7 +121,12 @@ class _MiningItemHeaderWidget extends StatelessWidget {
 }
 
 class _MiningItemInfoWidget extends StatelessWidget {
-  const _MiningItemInfoWidget({Key? key}) : super(key: key);
+  const _MiningItemInfoWidget({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -113,10 +136,10 @@ class _MiningItemInfoWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _MiningItemInfoNowPriceWidget(),
-          _MiningItemInfoWeekPriceWidget(),
-          _MiningItemInfoMonthPriceWidget(),
-          _MiningItemInfoYearPriceWidget(),
+          _MiningItemInfoNowPriceWidget(index: index),
+          _MiningItemInfoWeekPriceWidget(index: index),
+          _MiningItemInfoMonthPriceWidget(index: index),
+          _MiningItemInfoYearPriceWidget(index: index),
         ],
       ),
     );
@@ -124,61 +147,75 @@ class _MiningItemInfoWidget extends StatelessWidget {
 }
 
 class _MiningItemInfoNowPriceWidget extends StatelessWidget {
-  const _MiningItemInfoNowPriceWidget({Key? key}) : super(key: key);
+  const _MiningItemInfoNowPriceWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final token = context.read<GameMiningViewModel>().state.tokens[index];
+    final priceToken = context.select((GameMiningViewModel vm) => vm.state.getCurrentPriceByToken(token));
     return Text(
-      '${S.of(context).game_mining_now_price_title}: ${S.of(context).text_with_dollar(4320.23)}',
+      '${S.of(context).game_mining_now_price_title}: ${S.of(context).text_with_dollar(priceToken.cost)}',
       style: Theme.of(context).textTheme.headline6,
     );
   }
 }
 
 class _MiningItemInfoWeekPriceWidget extends StatelessWidget {
-  const _MiningItemInfoWeekPriceWidget({Key? key}) : super(key: key);
+  const _MiningItemInfoWeekPriceWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${S.of(context).game_mining_week_price_title}: ${S.of(context).text_with_dollar(4320.23)}',
+      '${S.of(context).game_mining_week_price_title}: ${S.of(context).text_with_dollar(0)}',
       style: Theme.of(context).textTheme.headline6,
     );
   }
 }
 
 class _MiningItemInfoMonthPriceWidget extends StatelessWidget {
-  const _MiningItemInfoMonthPriceWidget({Key? key}) : super(key: key);
+  const _MiningItemInfoMonthPriceWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${S.of(context).game_mining_month_price_title}: ${S.of(context).text_with_dollar(4320.23)}',
+      '${S.of(context).game_mining_month_price_title}: ${S.of(context).text_with_dollar(0)}',
       style: Theme.of(context).textTheme.headline6,
     );
   }
 }
 
 class _MiningItemInfoYearPriceWidget extends StatelessWidget {
-  const _MiningItemInfoYearPriceWidget({Key? key}) : super(key: key);
+  const _MiningItemInfoYearPriceWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${S.of(context).game_mining_year_price_title}: ${S.of(context).text_with_dollar(4320.23)}',
+      '${S.of(context).game_mining_year_price_title}: ${S.of(context).text_with_dollar(0)}',
       style: Theme.of(context).textTheme.headline6,
     );
   }
 }
 
 class _MiningItemButtonWidget extends StatelessWidget {
-  const _MiningItemButtonWidget({Key? key}) : super(key: key);
+  const _MiningItemButtonWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<GameMiningViewModel>();
+
     return MyButton(
       color: Colors.green,
-      onPressed: () {},
+      onPressed: () => vm.onOpenButtonPressed(index),
       title: S.of(context).game_mining_set_pc_title,
     );
   }
@@ -189,16 +226,19 @@ class _ModulePcWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isOpenModale = context.select((GameMiningViewModel vm) => vm.state.isOpenModale);
+    if (!isOpenModale) return const SizedBox();
+
+    final vm = context.read<GameMiningViewModel>();
+
     return Stack(
       children: [
         GestureDetector(
-          onTap: () {
-            print('tap');
-          },
+          onTap: () => vm.onExitModalAction(),
           child: Container(color: Colors.black.withAlpha(200)),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 40, vertical: 60),
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 60),
           child: Center(
             child: Container(
               decoration: BoxDecoration(
@@ -206,14 +246,16 @@ class _ModulePcWidget extends StatelessWidget {
                 color: Theme.of(context).backgroundColor,
               ),
               child: Column(
-                mainAxisSize: MainAxisSize.max,
                 children: [
-                  const _ModulePcHeaderWidget(),
+                  _ModulePcHeaderWidget(
+                    onTap: vm.onExitModalAction,
+                    symbol: vm.state.tokens[vm.state.modaleTokenIndex].symbol,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Text(S.of(context).game_mining_module_pc_title),
                   ),
-                  Expanded(child: _ModulePCListWidget()),
+                  const Expanded(child: _ModulePCListWidget()),
                 ],
               ),
             ),
@@ -225,7 +267,14 @@ class _ModulePcWidget extends StatelessWidget {
 }
 
 class _ModulePcHeaderWidget extends StatelessWidget {
-  const _ModulePcHeaderWidget({Key? key}) : super(key: key);
+  const _ModulePcHeaderWidget({
+    Key? key,
+    required this.onTap,
+    required this.symbol,
+  }) : super(key: key);
+
+  final VoidCallback? onTap;
+  final String symbol;
 
   @override
   Widget build(BuildContext context) {
@@ -236,8 +285,8 @@ class _ModulePcHeaderWidget extends StatelessWidget {
         ),
       ),
       child: HeaderPage(
-        title: S.of(context).game_mining_module_title('BTC'),
-        onTap: () {},
+        title: S.of(context).game_mining_module_title(symbol),
+        onTap: onTap,
       ),
     );
   }
@@ -248,20 +297,23 @@ class _ModulePCListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<GameMiningViewModel>();
     return ListView.separated(
       itemBuilder: (ctx, index) {
-        return _ModulePCItemWidget();
+        return _ModulePCItemWidget(index: index);
       },
       separatorBuilder: (ctx, index) {
-        return SizedBox(height: 20);
+        return const SizedBox(height: 20);
       },
-      itemCount: 15,
+      itemCount: vm.state.pcs.length,
     );
   }
 }
 
 class _ModulePCItemWidget extends StatelessWidget {
-  const _ModulePCItemWidget({Key? key}) : super(key: key);
+  const _ModulePCItemWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -277,9 +329,9 @@ class _ModulePCItemWidget extends StatelessWidget {
           child: Row(
             children: [
               _ModulePCItemImageWidget(),
-              SizedBox(width: 10),
-              Expanded(child: _ModulePCItemInfoWidget()),
-              _ModulePCItemChangeWidget(),
+              const SizedBox(width: 10),
+              Expanded(child: _ModulePCItemInfoWidget(index: index)),
+              _ModulePCItemChangeWidget(indexPC: index),
             ],
           ),
         ),
@@ -302,7 +354,12 @@ class _ModulePCItemImageWidget extends StatelessWidget {
 }
 
 class _ModulePCItemInfoWidget extends StatelessWidget {
-  const _ModulePCItemInfoWidget({Key? key}) : super(key: key);
+  const _ModulePCItemInfoWidget({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -312,9 +369,9 @@ class _ModulePCItemInfoWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _ModulePCItemInfoTitleWidget(),
-          _ModulePCItemInfoPowerWidget(),
-          _ModulePCItemInfoMiningWidget(),
+          _ModulePCItemInfoTitleWidget(index: index),
+          _ModulePCItemInfoPowerWidget(index: index),
+          _ModulePCItemInfoMiningWidget(index: index),
         ],
       ),
     );
@@ -322,53 +379,80 @@ class _ModulePCItemInfoWidget extends StatelessWidget {
 }
 
 class _ModulePCItemInfoTitleWidget extends StatelessWidget {
-  const _ModulePCItemInfoTitleWidget({Key? key}) : super(key: key);
+  const _ModulePCItemInfoTitleWidget({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final name = context.read<GameMiningViewModel>().state.pcs[index].name;
     return Text(
-      'Простой ПК',
+      name,
       style: Theme.of(context).textTheme.headline5,
     );
   }
 }
 
 class _ModulePCItemInfoPowerWidget extends StatelessWidget {
-  const _ModulePCItemInfoPowerWidget({Key? key}) : super(key: key);
+  const _ModulePCItemInfoPowerWidget({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final power = context.read<GameMiningViewModel>().state.pcs[index].power;
     return Text(
-      '${S.of(context).game_mining_module_pc_power_title}: ${S.of(context).text_with_power_mining(156)}',
+      '${S.of(context).game_mining_module_pc_power_title}: ${S.of(context).text_with_power_mining(power)}',
       style: Theme.of(context).textTheme.headline6,
     );
   }
 }
 
 class _ModulePCItemInfoMiningWidget extends StatelessWidget {
-  const _ModulePCItemInfoMiningWidget({Key? key}) : super(key: key);
+  const _ModulePCItemInfoMiningWidget({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
-    final String symbol = 'BTC';
+    final token = context.select((GameMiningViewModel vm) => vm.state.pcs[index].miningToken);
     return Text(
-      '${S.of(context).game_mining_module_pc_mining_title}: ${symbol}',
+      '${S.of(context).game_mining_module_pc_mining_title}: ${token?.symbol ?? S.of(context).game_mining_module_pc_mining_empty_title}',
       style: Theme.of(context).textTheme.headline6,
     );
   }
 }
 
 class _ModulePCItemChangeWidget extends StatelessWidget {
-  const _ModulePCItemChangeWidget({Key? key}) : super(key: key);
+  const _ModulePCItemChangeWidget({
+    Key? key,
+    required this.indexPC,
+  }) : super(key: key);
+
+  final int indexPC;
 
   @override
   Widget build(BuildContext context) {
+    final miningToken = context.select((GameMiningViewModel vm) => vm.state.pcs[indexPC].miningToken);
+    final vm = context.read<GameMiningViewModel>();
+    final token = vm.state.tokens[vm.state.modaleTokenIndex];
+    final value = token.id == miningToken?.id;
+
     return Transform.scale(
       scale: 3,
       child: Checkbox(
         checkColor: Colors.white,
-        value: false,
-        onChanged: (value) {},
+        value: value,
+        onChanged: (value) => vm.onChangeMiningToken(indexPC),
       ),
     );
   }
