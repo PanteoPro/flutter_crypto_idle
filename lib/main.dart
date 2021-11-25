@@ -15,6 +15,8 @@ Future<void> deleteAllHive() async {
   await Hive.deleteBoxFromDisk('pc_const');
   await Hive.deleteBoxFromDisk('game');
   await Hive.deleteBoxFromDisk('flat');
+  await Hive.deleteBoxFromDisk('token');
+  await Hive.deleteBoxFromDisk('price_token');
 }
 
 Future<void> firstDataPC() async {
@@ -64,7 +66,7 @@ Future<void> firstDataToken() async {
   final _priceBox = await Hive.openBox<PriceToken>('price_token');
 
   final tokens = <Token>[
-    Token(id: 1, symbol: 'BTC', fullName: 'Bitcoin', count: 0),
+    Token(id: 1, symbol: 'BTC', fullName: 'Bitcoin', count: 0.0003),
     Token(id: 2, symbol: 'ETC', fullName: 'Etherium classic', count: 0),
     Token(id: 3, symbol: 'ETH', fullName: 'Etherium', count: 0),
     Token(id: 4, symbol: 'BNB', fullName: 'Binance', count: 0),
@@ -73,6 +75,7 @@ Future<void> firstDataToken() async {
 
   final prices = <PriceToken>[
     PriceToken(date: DateTime.now(), cost: 1234.23, tokenId: 1),
+    PriceToken(date: DateTime.now(), cost: 4234.23, tokenId: 1),
     PriceToken(date: DateTime.now(), cost: 434.23, tokenId: 2),
     PriceToken(date: DateTime.now(), cost: 234.12, tokenId: 3),
     PriceToken(date: DateTime.now(), cost: 23.00, tokenId: 4),

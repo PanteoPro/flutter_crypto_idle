@@ -25,6 +25,9 @@ class GameCryptoViewModelState {
 }
 
 class GameCryptoViewModel extends ChangeNotifier {
+  GameCryptoViewModel() {
+    initialRepositories();
+  }
   final _tokenRepository = TokenRepository();
   final _priceTokenRepository = PriceTokenRepository();
 

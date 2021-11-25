@@ -74,7 +74,7 @@ class _BalanceValueWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final balance = context.watch<GameCryptoViewModel>().state.getBalance();
     return Text(
-      S.of(context).text_with_dollar(balance),
+      S.of(context).text_with_dollar(balance.toStringAsFixed(2)),
       style: Theme.of(context).textTheme.bodyText2,
     );
   }
@@ -207,7 +207,8 @@ class __CryptoItemCostWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text('${countToken.toStringAsFixed(8)}', style: Theme.of(context).textTheme.headline5),
-        Text(S.of(context).text_with_dollar(costInDollars), style: Theme.of(context).textTheme.headline6),
+        Text(S.of(context).text_with_dollar(costInDollars.toStringAsFixed(2)),
+            style: Theme.of(context).textTheme.headline6),
       ],
     );
   }
