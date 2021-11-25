@@ -1,5 +1,7 @@
 import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
+import 'package:crypto_idle/domain/entities/price_token.dart';
+import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/ui/main_app.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -51,6 +53,36 @@ Future<void> firstDataFlat() async {
   }
 }
 
+Future<void> firstDataToken() async {
+  if (!Hive.isAdapterRegistered(3)) {
+    Hive.registerAdapter(TokenAdapter());
+  }
+  if (!Hive.isAdapterRegistered(4)) {
+    Hive.registerAdapter(PriceTokenAdapter());
+  }
+  final _tokenBox = await Hive.openBox<Token>('token');
+  final _priceBox = await Hive.openBox<PriceToken>('price_token');
+
+  final tokens = <Token>[
+    Token(id: 1, symbol: 'BTC', fullName: 'Bitcoin', count: 0),
+    Token(id: 2, symbol: 'ETC', fullName: 'Etherium classic', count: 0),
+    Token(id: 3, symbol: 'ETH', fullName: 'Etherium', count: 0),
+    Token(id: 4, symbol: 'BNB', fullName: 'Binance', count: 0),
+    Token(id: 5, symbol: 'DOL', fullName: 'Deep of league', count: 0),
+  ];
+
+  final prices = <PriceToken>[
+    PriceToken(date: DateTime.now(), cost: 1234.23, tokenId: 1),
+    PriceToken(date: DateTime.now(), cost: 434.23, tokenId: 2),
+    PriceToken(date: DateTime.now(), cost: 234.12, tokenId: 3),
+    PriceToken(date: DateTime.now(), cost: 23.00, tokenId: 4),
+    PriceToken(date: DateTime.now(), cost: 0.023, tokenId: 5),
+  ];
+
+  await _tokenBox.addAll(tokens);
+  await _priceBox.addAll(prices);
+}
+
 // Future<void> firstInitGame() async {
 //   if (!Hive.isAdapterRegistered(0)) {
 //     Hive.registerAdapter(GameAdapter());
@@ -65,6 +97,7 @@ Future<void> main() async {
   await deleteAllHive();
   await firstDataPC();
   await firstDataFlat();
+  await firstDataToken();
   // await firstInitGame();
   runApp(MainApp());
 }
