@@ -11,8 +11,16 @@ class GameCryptoViewModelState {
   final List<Token> tokens;
   final Map<int, double> currentPrices;
 
-  double getBalanceByToken(Token token) {
+  double getPriceByToken(Token token) {
     return currentPrices[token.id]!;
+  }
+
+  double getBalance() {
+    double balance = 0;
+    for (Token token in tokens) {
+      balance += getPriceByToken(token) * token.count;
+    }
+    return balance;
   }
 }
 

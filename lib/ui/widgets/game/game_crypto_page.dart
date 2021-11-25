@@ -2,7 +2,9 @@ import 'package:crypto_idle/Widgets/app_bar_info.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/game_crypto_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class GameCryptoPage extends StatelessWidget {
   const GameCryptoPage({Key? key}) : super(key: key);
@@ -10,7 +12,7 @@ class GameCryptoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GameAppBar(),
+      appBar: const GameAppBar(),
       body: SafeArea(
         child: ColoredBox(
           color: Theme.of(context).backgroundColor,
@@ -54,11 +56,26 @@ class _BalanceWidget extends StatelessWidget {
             children: [
               Text(S.of(context).game_crypto_cost_header_title, style: Theme.of(context).textTheme.bodyText1),
               const SizedBox(height: 10),
-              Text(S.of(context).text_with_dollar(4320.34), style: Theme.of(context).textTheme.bodyText2),
+              const _BalanceValueWidget(),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _BalanceValueWidget extends StatelessWidget {
+  const _BalanceValueWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final balance = context.watch<GameCryptoViewModel>().state.getBalance();
+    return Text(
+      S.of(context).text_with_dollar(balance),
+      style: Theme.of(context).textTheme.bodyText2,
     );
   }
 }
@@ -88,30 +105,34 @@ class _CryptoListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tokensLenght = context.select((GameCryptoViewModel vm) => vm.state.tokens.length);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: ListView.separated(
         itemBuilder: (ctx, index) {
-          return const _CryptoItemWidget();
+          return _CryptoItemWidget(index: index);
         },
         separatorBuilder: (ctx, index) {
           return const SizedBox(height: 10);
         },
-        itemCount: 4,
+        itemCount: tokensLenght,
       ),
     );
   }
 }
 
 class _CryptoItemWidget extends StatelessWidget {
-  const _CryptoItemWidget({Key? key}) : super(key: key);
+  const _CryptoItemWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<GameCryptoViewModel>();
+    final token = vm.state.tokens[index];
+
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMarketCrypto);
-      },
+      onTap: () => vm.onTokenPressed(context, token),
       child: DecoratedBox(
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).primaryColor),
@@ -133,8 +154,8 @@ class _CryptoItemWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              const Expanded(child: __CryptoItemNameWidget()),
-              const __CryptoItemCostWidget(),
+              Expanded(child: __CryptoItemNameWidget(index: index)),
+              __CryptoItemCostWidget(index: index),
             ],
           ),
         ),
@@ -146,15 +167,19 @@ class _CryptoItemWidget extends StatelessWidget {
 class __CryptoItemNameWidget extends StatelessWidget {
   const __CryptoItemNameWidget({
     Key? key,
+    required this.index,
   }) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final token = context.read<GameCryptoViewModel>().state.tokens[index];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('BTC', style: Theme.of(context).textTheme.headline5),
-        Text('Bitcoin', style: Theme.of(context).textTheme.headline6),
+        Text(token.symbol, style: Theme.of(context).textTheme.headline5),
+        Text(token.fullName, style: Theme.of(context).textTheme.headline6),
       ],
     );
   }
@@ -163,15 +188,26 @@ class __CryptoItemNameWidget extends StatelessWidget {
 class __CryptoItemCostWidget extends StatelessWidget {
   const __CryptoItemCostWidget({
     Key? key,
+    required this.index,
   }) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    context.select((GameCryptoViewModel vm) => vm.state.tokens[index].count);
+    context.select((GameCryptoViewModel vm) => vm.state.tokens[index].prices);
+
+    final vm = context.read<GameCryptoViewModel>();
+    final token = vm.state.tokens[index];
+    final countToken = token.count;
+    final costInDollars = vm.state.getPriceByToken(token) * countToken;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text("0.23451234", style: Theme.of(context).textTheme.headline5),
-        Text(S.of(context).text_with_dollar(2345.23), style: Theme.of(context).textTheme.headline6),
+        Text('${countToken.toStringAsFixed(8)}', style: Theme.of(context).textTheme.headline5),
+        Text(S.of(context).text_with_dollar(costInDollars), style: Theme.of(context).textTheme.headline6),
       ],
     );
   }
