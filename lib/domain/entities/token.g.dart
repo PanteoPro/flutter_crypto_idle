@@ -20,7 +20,8 @@ class TokenAdapter extends TypeAdapter<Token> {
       id: fields[0] as int,
       symbol: fields[1] as String,
       fullName: fields[2] as String,
-    )..prices = (fields[3] as HiveList?)?.castHiveList();
+      count: fields[3] as double,
+    );
   }
 
   @override
@@ -34,7 +35,7 @@ class TokenAdapter extends TypeAdapter<Token> {
       ..writeByte(2)
       ..write(obj.fullName)
       ..writeByte(3)
-      ..write(obj.prices);
+      ..write(obj.count);
   }
 
   @override

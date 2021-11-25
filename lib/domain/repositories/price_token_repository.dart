@@ -7,6 +7,7 @@ class PriceTokenRepository {
   var _prices = <PriceToken>[];
   List<PriceToken> get prices => List.unmodifiable(_prices);
   List<PriceToken> pricesByTokenId(int tokenId) => _prices.where((element) => element.tokenId == tokenId).toList();
+  PriceToken getLatestPriceByTokenId(int tokenId) => pricesByTokenId(tokenId).last;
 
   Future<void> init() async {
     await _priceTokenDataProvider.openBox();
