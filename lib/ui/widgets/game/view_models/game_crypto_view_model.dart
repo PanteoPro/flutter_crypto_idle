@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:crypto_idle/domain/entities/token.dart';
+import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
@@ -28,43 +29,55 @@ class GameCryptoViewModelState {
 }
 
 class GameCryptoViewModel extends ChangeNotifier {
-  GameCryptoViewModel({required this.gvm}) {
-    initialRepositories();
-    streamSub ??= gvm.dayEndStream.listen(updateRepositories);
+  GameCryptoViewModel() {
+    _initialRepositories();
+    _subscriteStreams();
   }
 
   @override
   void dispose() {
-    streamSub?.cancel();
+    _tokenStreamSub?.cancel();
+    _priceStreamSub?.cancel();
     super.dispose();
   }
 
+  // Repositories
   final _tokenRepository = TokenRepository();
   final _priceTokenRepository = PriceTokenRepository();
+  StreamSubscription<dynamic>? _tokenStreamSub;
+  StreamSubscription<dynamic>? _priceStreamSub;
 
-  final GameViewModel gvm;
-  StreamSubscription? streamSub;
-
+  // Data
   var _state = GameCryptoViewModelState.empty();
   GameCryptoViewModelState get state => _state;
 
-  Future<void> initialRepositories() async {
+  /// Initial repositories
+  Future<void> _initialRepositories() async {
     await _tokenRepository.init();
     await _priceTokenRepository.init();
+
     _updateState();
   }
 
-  void updateRepositories(dynamic day) {
-    _tokenRepository.updateData();
-    _priceTokenRepository.updateData();
+  /// Subscribe to Streams from repositories
+  void _subscriteStreams() {
+    _tokenStreamSub = TokenRepository.stream?.listen(
+      (dynamic data) => _updateRepoByChangeEvent(data, _tokenRepository),
+    );
+    _priceStreamSub = PriceTokenRepository.stream?.listen(
+      (dynamic data) => _updateRepoByChangeEvent(data, _priceTokenRepository),
+    );
+  }
+
+  Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
+    await repository.updateData();
     _updateState();
-    print('Update Game Crypto');
   }
 
   void _updateState() {
     final currentPrices = <int, double>{};
     final currentTokens = _tokenRepository.tokens;
-    for (var token in currentTokens) {
+    for (final token in currentTokens) {
       currentPrices[token.id] = _priceTokenRepository.getLatestPriceByTokenId(token.id).cost;
     }
     _state = GameCryptoViewModelState(

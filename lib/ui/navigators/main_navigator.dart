@@ -1,10 +1,10 @@
 import 'package:crypto_idle/domain/entities/token.dart';
-import 'package:crypto_idle/ui/widgets/game/game_crypto_page.dart';
-import 'package:crypto_idle/ui/widgets/game/game_market_crypto_page.dart';
-import 'package:crypto_idle/ui/widgets/game/game_market_flat_page.dart';
-import 'package:crypto_idle/ui/widgets/game/game_market_pc_page.dart';
-import 'package:crypto_idle/ui/widgets/game/game_mining_page.dart';
-import 'package:crypto_idle/ui/widgets/game/main_game_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view/game_crypto_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view/game_market_crypto_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view/game_market_flat_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view/game_market_pc_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view/game_mining_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view/main_game_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_crypto_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_crypto_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_model.dart';
@@ -37,9 +37,8 @@ class MainNavigation {
           child: const GameMarketFlatPage(),
         ),
     MainNavigationRouteNames.gameCrypto: (context) {
-      final gvm = context.read<GameViewModel>();
       return ChangeNotifierProvider(
-        create: (_) => GameCryptoViewModel(gvm: gvm),
+        create: (_) => GameCryptoViewModel(),
         child: const GameCryptoPage(),
       );
     },

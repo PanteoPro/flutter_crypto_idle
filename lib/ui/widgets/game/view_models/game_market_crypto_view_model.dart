@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
+import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
@@ -23,23 +25,58 @@ class GameMarketCryptoViewModelState {
 class GameMarketCryptoViewModel extends ChangeNotifier {
   GameMarketCryptoViewModel({required Token token}) {
     _state = GameMarketCryptoViewModelState.empty(token: token);
-    initialRepositories();
+    _initialRepositories();
+    _subscriteStreams();
   }
 
+  @override
+  void dispose() {
+    _tokenStreamSub?.cancel();
+    _priceStreamSub?.cancel();
+    _gameStreamSub?.cancel();
+    super.dispose();
+  }
+
+  // Repository
   final _tokenRepository = TokenRepository();
   final _priceTokenRepository = PriceTokenRepository();
   final _gameRepository = GameRepository();
+  StreamSubscription<dynamic>? _tokenStreamSub;
+  StreamSubscription<dynamic>? _priceStreamSub;
+  StreamSubscription<dynamic>? _gameStreamSub;
 
+  // State Data
   var _state = GameMarketCryptoViewModelState.empty();
   GameMarketCryptoViewModelState get state => _state;
 
+  // Controllers
   final priceTextController = TextEditingController();
   final volumeTextController = TextEditingController();
 
-  Future<void> initialRepositories() async {
+  /// initial repositories
+  Future<void> _initialRepositories() async {
     await _tokenRepository.init();
     await _priceTokenRepository.init();
     await _gameRepository.init();
+    _updateState();
+  }
+
+  /// subscribe to repositories Streams
+  void _subscriteStreams() {
+    _tokenStreamSub = TokenRepository.stream?.listen(
+      (dynamic data) => _updateRepoByChangeEvent(data, _tokenRepository),
+    );
+    _priceStreamSub = PriceTokenRepository.stream?.listen(
+      (dynamic data) => _updateRepoByChangeEvent(data, _priceTokenRepository),
+    );
+    _gameStreamSub = GameRepository.stream?.listen(
+      (dynamic data) => _updateRepoByChangeEvent(data, _gameRepository),
+    );
+  }
+
+  /// Update date from repository, because data changed
+  Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
+    await repository.updateData();
     _updateState();
   }
 
@@ -55,7 +92,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> onSellNowButtonPressed(GameViewModel gmv) async {
+  Future<void> onSellNowButtonPressed() async {
     if (_state.token != null) {
       if (volumeTextController.text.isNotEmpty) {
         var volume = double.tryParse(volumeTextController.text);
@@ -66,7 +103,6 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
 
           await _gameRepository.changeData(money: _gameRepository.game.money + income);
           await _tokenRepository.changeToken(_state.token!, count: _state.token!.count - volume);
-          await gmv.TEMP_UPDAGE_DATA();
           _updateState();
         } else {
           print('Enter num digits');
@@ -79,7 +115,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
     }
   }
 
-  void onSellLimitButtonPressed(GameViewModel gmv) {
+  void onSellLimitButtonPressed() {
     if (priceTextController.text.isNotEmpty) {
       if (volumeTextController.text.isNotEmpty) {
         // do somethink

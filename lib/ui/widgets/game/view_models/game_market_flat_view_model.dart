@@ -54,19 +54,17 @@ class GameMarketFlatViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> onBuyButtonPressed(int index, GameViewModel gvm) async {
+  Future<void> onBuyButtonPressed(int index) async {
     final flat = _state.flats[index];
     final currentFlat = _state.currentFlat();
 
     if (_state.money >= flat.cost) {
       final currentCountPC = _pcRepository.pcs.length;
       if (currentCountPC <= flat.countPC) {
+        await _flatRepository.changeFlat(flat, isBuy: true, isActive: true);
         await _flatRepository.changeFlat(currentFlat, isActive: false);
 
         await _gameRepository.changeData(money: _state.money - flat.cost);
-        await _flatRepository.changeFlat(flat, isBuy: true, isActive: true);
-
-        await gvm.TEMP_UPDAGE_DATA();
       } else {
         // error message count PC
       }
@@ -76,7 +74,7 @@ class GameMarketFlatViewModel extends ChangeNotifier {
     _updateState();
   }
 
-  Future<void> onActivateButtonPressed(int index, GameViewModel gvm) async {
+  Future<void> onActivateButtonPressed(int index) async {
     final flat = _state.flats[index];
     final currentFlat = _state.currentFlat();
     if (!flat.isActive && flat.isBuy) {
@@ -84,8 +82,6 @@ class GameMarketFlatViewModel extends ChangeNotifier {
       if (currentCountPC <= flat.countPC) {
         await _flatRepository.changeFlat(currentFlat, isActive: false);
         await _flatRepository.changeFlat(flat, isActive: true);
-
-        await gvm.TEMP_UPDAGE_DATA();
       } else {
         // error message count pc
       }

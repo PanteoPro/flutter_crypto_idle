@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:crypto_idle/domain/entities/pc.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
+import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
@@ -40,17 +43,52 @@ class GameMiningViewModel extends ChangeNotifier {
   GameMiningViewModel() {
     initialRepositories();
   }
+
+  @override
+  void dispose() {
+    _tokenStreamSub?.cancel();
+    _priceStreamSub?.cancel();
+    _pcStreamSub?.cancel();
+    super.dispose();
+  }
+
+  // Repositories
   final _tokenRepository = TokenRepository();
   final _priceTokenRepository = PriceTokenRepository();
   final _pcRepository = PCRepository();
+  StreamSubscription<dynamic>? _tokenStreamSub;
+  StreamSubscription<dynamic>? _priceStreamSub;
+  StreamSubscription<dynamic>? _pcStreamSub;
 
+  // Data
   var _state = GameMiningViewModelState.empty();
   GameMiningViewModelState get state => _state;
 
+  /// Initial Repository
   Future<void> initialRepositories() async {
     await _tokenRepository.init();
     await _priceTokenRepository.init();
     await _pcRepository.init();
+
+    _subscriteStreams();
+    _updateState();
+  }
+
+  /// Subscribes to Repositories streams
+  void _subscriteStreams() {
+    _tokenStreamSub = TokenRepository.stream?.listen(
+      (dynamic data) => _updateRepoByChangeEvent(data, _tokenRepository),
+    );
+    _priceStreamSub = PriceTokenRepository.stream?.listen(
+      (dynamic data) => _updateRepoByChangeEvent(data, _priceTokenRepository),
+    );
+    _pcStreamSub = PCRepository.stream?.listen(
+      (dynamic data) => _updateRepoByChangeEvent(data, _pcRepository),
+    );
+  }
+
+  Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
+    await repository.updateData();
     _updateState();
   }
 

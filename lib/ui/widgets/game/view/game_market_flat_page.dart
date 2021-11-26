@@ -221,9 +221,8 @@ class _BuyButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.read<GameMarketFlatViewModel>();
-    final gvm = context.read<GameViewModel>();
     return MyButton(
-      onPressed: () => vm.onBuyButtonPressed(index, gvm),
+      onPressed: () => vm.onBuyButtonPressed(index),
       title: S.of(context).game_market_flat_buy_item_title,
       color: Colors.green,
     );
@@ -243,7 +242,7 @@ class _ActivateButtonWidget extends StatelessWidget {
     final vm = context.read<GameMarketFlatViewModel>();
     final gvm = context.read<GameViewModel>();
     return MyButton(
-      onPressed: () => vm.onActivateButtonPressed(index, gvm),
+      onPressed: () => vm.onActivateButtonPressed(index),
       title: S.of(context).game_market_flat_change_item_title,
       color: Colors.yellow,
       textColor: Colors.black,

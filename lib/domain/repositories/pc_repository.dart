@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:crypto_idle/domain/data_providers/pc_data_provider.dart';
 import 'package:crypto_idle/domain/entities/pc.dart';
+import 'package:crypto_idle/domain/repositories/my_repository.dart';
 
-class PCRepository {
+class PCRepository implements MyRepository {
   final _pcDataProvider = PCDataProvider();
+  static final _streamController = StreamController<dynamic>();
+  static Stream<dynamic>? stream;
 
   var _pcsConst = <PC>[];
   List<PC> get pcsConst => List.unmodifiable(_pcsConst);
@@ -20,20 +25,28 @@ class PCRepository {
 
   Future<void> init() async {
     await _pcDataProvider.openBox();
-    _pcsConst = await _pcDataProvider.loadAllConst();
-    _pcs = await _pcDataProvider.loadAll();
+    await updateData();
+    stream ??= _streamController.stream.asBroadcastStream();
   }
 
   Future<void> addPC(PC pc) async {
     await _pcDataProvider.savePC(pc);
-    _pcs = await _pcDataProvider.loadAll();
+    await updateData();
+    _streamController.add('addPC');
   }
 
   Future<bool> sellPC(PC pc) async {
     final result = await _pcDataProvider.deletePC(pc);
     if (result) {
-      _pcs = await _pcDataProvider.loadAll();
+      await updateData();
+      _streamController.add('sellPC');
     }
     return result;
+  }
+
+  @override
+  Future<void> updateData() async {
+    _pcsConst = await _pcDataProvider.loadAllConst();
+    _pcs = await _pcDataProvider.loadAll();
   }
 }

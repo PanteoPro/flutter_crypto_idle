@@ -179,13 +179,12 @@ class _TradeButtonsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.read<GameMarketCryptoViewModel>();
-    final gvm = context.read<GameViewModel>();
     return Row(
       children: [
         Expanded(
           child: MyButton(
             color: Colors.red,
-            onPressed: () => vm.onSellNowButtonPressed(gvm),
+            onPressed: () => vm.onSellNowButtonPressed(),
             title: S.of(context).game_crypto_market_fast_sell_title,
           ),
         ),
@@ -193,7 +192,7 @@ class _TradeButtonsWidget extends StatelessWidget {
         Expanded(
           child: MyButton(
             color: Colors.red,
-            onPressed: () => vm.onSellLimitButtonPressed(gvm),
+            onPressed: () => vm.onSellLimitButtonPressed(),
             title: S.of(context).game_crypto_market_sell_title,
           ),
         ),

@@ -70,14 +70,13 @@ class GameMarketPCViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> onBuyButtonPressed(int index, GameViewModel gvm) async {
+  Future<void> onBuyButtonPressed(int index) async {
     final pc = _state.marketPCs[index].copyWith();
     if (_state.money >= pc.cost) {
       final maxCountPC = _flatRepository.flats.firstWhere((element) => element.isActive).countPC;
       if (_state.ownPCs.length < maxCountPC) {
         await _pcRepository.addPC(pc);
         await _gameRepository.changeData(money: _state.money - pc.cost);
-        await gvm.TEMP_UPDAGE_DATA();
       } else {
         // erorr message max  pcs
       }
@@ -87,11 +86,10 @@ class GameMarketPCViewModel extends ChangeNotifier {
     _updateState();
   }
 
-  Future<void> onSellButtonPressed(int index, GameViewModel gvm) async {
+  Future<void> onSellButtonPressed(int index) async {
     final pc = _state.marketPCs[index];
     if (await _pcRepository.sellPC(pc)) {
       await _gameRepository.changeData(money: _state.money + pc.costSell);
-      await gvm.TEMP_UPDAGE_DATA();
       // message good
     } else {
       //error message

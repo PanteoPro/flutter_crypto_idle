@@ -253,9 +253,8 @@ class _BuyButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.read<GameMarketPCViewModel>();
-    final gvm = context.read<GameViewModel>();
     return MyButton(
-      onPressed: () => vm.onBuyButtonPressed(index, gvm),
+      onPressed: () => vm.onBuyButtonPressed(index),
       title: S.of(context).game_market_pc_buy_item_title,
       color: Colors.green,
     );
@@ -273,9 +272,8 @@ class _SellButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.read<GameMarketPCViewModel>();
-    final gvm = context.read<GameViewModel>();
     return MyButton(
-      onPressed: () => vm.onSellButtonPressed(index, gvm),
+      onPressed: () => vm.onSellButtonPressed(index),
       title: S.of(context).game_market_pc_sell_item_title,
       color: Colors.red,
     );
