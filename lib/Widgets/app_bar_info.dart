@@ -1,6 +1,7 @@
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class GameAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -43,7 +44,11 @@ class _DayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('13.05.2015', style: Theme.of(context).textTheme.bodyText1);
+    final format = DateFormat.yMd('ru-ru');
+    final date = context.select((GameViewModel vm) => vm.game.date);
+    final stringDate = format.format(date);
+
+    return Text(stringDate, style: Theme.of(context).textTheme.bodyText1);
   }
 }
 

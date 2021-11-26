@@ -66,11 +66,11 @@ Future<void> firstDataToken() async {
   final _priceBox = await Hive.openBox<PriceToken>('price_token');
 
   final tokens = <Token>[
-    Token(id: 1, symbol: 'BTC', fullName: 'Bitcoin', count: 0.0003),
-    Token(id: 2, symbol: 'ETC', fullName: 'Etherium classic', count: 0),
-    Token(id: 3, symbol: 'ETH', fullName: 'Etherium', count: 0),
-    Token(id: 4, symbol: 'BNB', fullName: 'Binance', count: 0),
-    Token(id: 5, symbol: 'DOL', fullName: 'Deep of league', count: 1024),
+    Token(id: 1, symbol: 'BTC', fullName: 'Bitcoin', count: 0.0003, coefMining: 0.001),
+    Token(id: 2, symbol: 'ETC', fullName: 'Etherium classic', count: 0, coefMining: 0.02),
+    Token(id: 3, symbol: 'ETH', fullName: 'Etherium', count: 0, coefMining: 0.05),
+    Token(id: 4, symbol: 'BNB', fullName: 'Binance', count: 0, coefMining: 0.11),
+    Token(id: 5, symbol: 'DOL', fullName: 'Deep of league', count: 1024, coefMining: 0.4),
   ];
 
   final prices = <PriceToken>[
@@ -79,7 +79,7 @@ Future<void> firstDataToken() async {
     PriceToken(date: DateTime.now(), cost: 434.23, tokenId: 2),
     PriceToken(date: DateTime.now(), cost: 234.12, tokenId: 3),
     PriceToken(date: DateTime.now(), cost: 23.00, tokenId: 4),
-    PriceToken(date: DateTime.now(), cost: 0.023, tokenId: 5),
+    PriceToken(date: DateTime.now(), cost: 0.123, tokenId: 5),
   ];
 
   await _tokenBox.addAll(tokens);
@@ -97,10 +97,10 @@ Future<void> firstDataToken() async {
 
 Future<void> main() async {
   await Hive.initFlutter();
-  // await deleteAllHive();
-  // await firstDataPC();
-  // await firstDataFlat();
-  // await firstDataToken();
+  await deleteAllHive();
+  await firstDataPC();
+  await firstDataFlat();
+  await firstDataToken();
   // await firstInitGame();
   runApp(MainApp());
 }

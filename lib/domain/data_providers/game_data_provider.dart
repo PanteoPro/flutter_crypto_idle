@@ -16,7 +16,7 @@ class GameDataProvider {
   }
 
   Future<Game> loadData() async {
-    return _box.get('main') ?? Game.empty();
+    return _box.get('main') ?? Game.empty(date: DateTime.now());
   }
 
   Future<void> saveData(Game game) async {

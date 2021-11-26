@@ -2,18 +2,28 @@ import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
+import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:flutter/cupertino.dart';
 
 class GameViewModel extends ChangeNotifier {
   GameViewModel() {
     _initialRepository();
+    dayStream = Stream.periodic(const Duration(seconds: lengthDaySeconds), (int day) {
+      return day;
+    });
+    dayStream.listen(_newDay);
   }
+
+  static const lengthDaySeconds = 10;
+
+  late Stream<dynamic> dayStream;
 
   final _gameRepository = GameRepository();
   final _pcRepository = PCRepository();
   final _flatRepository = FlatRepository();
+  final _tokenRepository = TokenRepository();
 
-  var _game = Game.empty();
+  var _game = Game.empty(date: DateTime(0));
   Game get game => _game;
 
   int get currentCountPC => _pcRepository.pcs.length;
@@ -23,6 +33,7 @@ class GameViewModel extends ChangeNotifier {
     await _gameRepository.init();
     await _pcRepository.init();
     await _flatRepository.init();
+    await _tokenRepository.init();
     updateState();
   }
 
@@ -31,6 +42,7 @@ class GameViewModel extends ChangeNotifier {
     await _gameRepository.init();
     await _pcRepository.init();
     await _flatRepository.init();
+    await _tokenRepository.init();
     updateState();
   }
 
@@ -42,5 +54,31 @@ class GameViewModel extends ChangeNotifier {
   Future<void> changeMoney(double money) async {
     await _gameRepository.changeData(money: money);
     updateState();
+  }
+
+  Future<void> _newDay(dynamic numberDaySession) async {
+    print('day $numberDaySession');
+    TEMP_UPDAGE_DATA();
+
+    await _gameRepository.changeData(date: _game.date.add(Duration(days: 1)));
+    await _miningDay();
+    updateState();
+  }
+
+  Future<void> _miningDay() async {
+    final ownPC = _pcRepository.pcs;
+    final tokens = _tokenRepository.tokens;
+    for (final pc in ownPC) {
+      if (pc.miningToken != null) {
+        final powerMining = pc.power;
+
+        final token = tokens.firstWhere((element) => element.id == pc.miningToken!.id);
+        final coefMining = token.coefMining;
+        final countMined = powerMining * coefMining;
+
+        await _tokenRepository.changeToken(token, count: token.count + countMined);
+        print('+ ${countMined.toStringAsFixed(8)} ${token.symbol}');
+      }
+    }
   }
 }

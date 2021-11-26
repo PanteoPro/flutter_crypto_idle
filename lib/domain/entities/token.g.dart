@@ -21,13 +21,14 @@ class TokenAdapter extends TypeAdapter<Token> {
       symbol: fields[1] as String,
       fullName: fields[2] as String,
       count: fields[3] as double,
+      coefMining: fields[4] as double,
     );
   }
 
   @override
   void write(BinaryWriter writer, Token obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class TokenAdapter extends TypeAdapter<Token> {
       ..writeByte(2)
       ..write(obj.fullName)
       ..writeByte(3)
-      ..write(obj.count);
+      ..write(obj.count)
+      ..writeByte(4)
+      ..write(obj.coefMining);
   }
 
   @override

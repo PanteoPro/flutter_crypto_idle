@@ -2,6 +2,7 @@ import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class MainGamePage extends StatelessWidget {
@@ -14,18 +15,10 @@ class MainGamePage extends StatelessWidget {
         centerTitle: true,
         title: Text(
           S.of(context).main_game_appbar_title,
-          style: TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: 16),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text('13.05.2015', style: Theme.of(context).textTheme.bodyText1),
-              ],
-            ),
-          ),
+        actions: const [
+          _AppBarDateWidget(),
         ],
       ),
       body: SafeArea(
@@ -42,6 +35,28 @@ class MainGamePage extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _AppBarDateWidget extends StatelessWidget {
+  const _AppBarDateWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final format = DateFormat.yMd('ru-ru');
+    final date = context.select((GameViewModel vm) => vm.game.date);
+    final stringDate = format.format(date);
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(stringDate, style: Theme.of(context).textTheme.bodyText1),
+        ],
       ),
     );
   }
