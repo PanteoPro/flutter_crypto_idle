@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:crypto_idle/domain/entities/game.dart';
+import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
+import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -20,6 +22,7 @@ class GameViewModel extends ChangeNotifier {
     _pcStreamSub?.cancel();
     _flatStreamSub?.cancel();
     _tokenStreamSub?.cancel();
+    _priceTokenStreamSub?.cancel();
     super.dispose();
   }
 
@@ -39,10 +42,12 @@ class GameViewModel extends ChangeNotifier {
   final _pcRepository = PCRepository();
   final _flatRepository = FlatRepository();
   final _tokenRepository = TokenRepository();
+  final _priceTokenRepository = PriceTokenRepository();
   StreamSubscription<dynamic>? _gameStreamSub;
   StreamSubscription<dynamic>? _pcStreamSub;
   StreamSubscription<dynamic>? _flatStreamSub;
   StreamSubscription<dynamic>? _tokenStreamSub;
+  StreamSubscription<dynamic>? _priceTokenStreamSub;
 
   // Data
   var _game = Game.empty(date: DateTime(0));
@@ -57,6 +62,7 @@ class GameViewModel extends ChangeNotifier {
     await _pcRepository.init();
     await _flatRepository.init();
     await _tokenRepository.init();
+    await _priceTokenRepository.init();
     _subscriteStreams();
     updateState();
   }
@@ -68,6 +74,8 @@ class GameViewModel extends ChangeNotifier {
     _flatStreamSub = FlatRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _flatRepository));
     _tokenStreamSub =
         TokenRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _tokenRepository));
+    _priceTokenStreamSub =
+        TokenRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _priceTokenRepository));
   }
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
@@ -87,10 +95,13 @@ class GameViewModel extends ChangeNotifier {
     updateState();
   }
 
+  // New day logic
+
   Future<void> _newDay(dynamic numberDaySession) async {
     print('day $numberDaySession');
     await _gameRepository.changeData(date: _game.date.add(Duration(days: 1)));
     await _miningDay();
+    await _newPricesDay();
   }
 
   Future<void> _miningDay() async {
@@ -107,6 +118,20 @@ class GameViewModel extends ChangeNotifier {
         await _tokenRepository.changeToken(token, count: token.count + countMined);
         print('+ ${countMined.toStringAsFixed(8)} ${token.symbol}');
       }
+    }
+  }
+
+  Future<void> _newPricesDay() async {
+    final tokens = _tokenRepository.tokens;
+    final oldPrices = <PriceToken>[];
+    for (final token in tokens) {
+      oldPrices.add(_priceTokenRepository.getLatestPriceByTokenId(token.id));
+    }
+    final newPrices = oldPrices.map((PriceToken price) {
+      return price.copyWith(cost: price.cost * 1.001, date: _game.date);
+    });
+    for (var price in newPrices) {
+      await _priceTokenRepository.addPrice(price);
     }
   }
 }

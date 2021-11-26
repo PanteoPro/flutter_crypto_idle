@@ -25,7 +25,8 @@ class PriceTokenRepository implements MyRepository {
   }
 
   Future<void> addPrice(PriceToken price) async {
-    await _priceTokenDataProvider.savePrice(price);
+    final priceNew = price.copyWith(cost: double.parse(price.cost.toStringAsFixed(4)));
+    await _priceTokenDataProvider.savePrice(priceNew);
     await updateData();
     _streamController.add('AddPrice');
   }

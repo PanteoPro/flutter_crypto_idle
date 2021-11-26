@@ -13,4 +13,16 @@ class PriceToken extends HiveObject {
   final double cost;
   @HiveField(2)
   final int tokenId;
+
+  PriceToken copyWith({
+    DateTime? date,
+    double? cost,
+    int? tokenId,
+  }) {
+    return PriceToken(
+      date: date ?? this.date,
+      cost: cost ?? this.cost,
+      tokenId: tokenId ?? this.tokenId,
+    );
+  }
 }

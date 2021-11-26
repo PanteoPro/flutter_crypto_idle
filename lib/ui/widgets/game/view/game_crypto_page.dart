@@ -195,7 +195,7 @@ class __CryptoItemCostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.select((GameCryptoViewModel vm) => vm.state.tokens[index].count);
-    context.select((GameCryptoViewModel vm) => vm.state.tokens[index].prices);
+    context.select((GameCryptoViewModel vm) => vm.state.currentPrices);
 
     final vm = context.read<GameCryptoViewModel>();
     final token = vm.state.tokens[index];
