@@ -71,7 +71,7 @@ class GameMarketPCViewModel extends ChangeNotifier {
   }
 
   Future<void> onBuyButtonPressed(int index, GameViewModel gvm) async {
-    final pc = _state.marketPCs[index];
+    final pc = _state.marketPCs[index].copyWith();
     if (_state.money >= pc.cost) {
       final maxCountPC = _flatRepository.flats.firstWhere((element) => element.isActive).countPC;
       if (_state.ownPCs.length < maxCountPC) {

@@ -21,12 +21,18 @@ class GameMiningViewModelState {
   final List<Token> tokens;
   final List<PriceToken> prices;
   final List<PC> pcs;
+  List<PC>? filtered;
 
   bool isOpenModale = false;
   int modaleTokenIndex = 0;
 
   PriceToken getCurrentPriceByToken(Token token) {
     return prices.where((price) => price.tokenId == token.id).last;
+  }
+
+  void sortedPCFirstEmpty() {
+    filtered = pcs.where((element) => element.miningToken == null).toList();
+    filtered?.addAll(pcs.where((element) => element.miningToken != null).toList());
   }
 }
 
@@ -58,7 +64,7 @@ class GameMiningViewModel extends ChangeNotifier {
   }
 
   void onChangeMiningToken(int pcIndex) {
-    final pc = _state.pcs[pcIndex];
+    final pc = _state.filtered![pcIndex];
     final token = _state.tokens[_state.modaleTokenIndex];
     if (pc.miningToken?.id == token.id) {
       pc.miningToken = null;
@@ -71,6 +77,7 @@ class GameMiningViewModel extends ChangeNotifier {
   void onOpenButtonPressed(int index) {
     _state.isOpenModale = true;
     _state.modaleTokenIndex = index;
+    _state.sortedPCFirstEmpty();
     notifyListeners();
   }
 

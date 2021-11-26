@@ -305,7 +305,7 @@ class _ModulePCListWidget extends StatelessWidget {
       separatorBuilder: (ctx, index) {
         return const SizedBox(height: 20);
       },
-      itemCount: vm.state.pcs.length,
+      itemCount: vm.state.filtered?.length ?? 0,
     );
   }
 }
@@ -388,9 +388,9 @@ class _ModulePCItemInfoTitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name = context.read<GameMiningViewModel>().state.pcs[index].name;
+    final name = context.read<GameMiningViewModel>().state.filtered?[index].name;
     return Text(
-      name,
+      name ?? '',
       style: Theme.of(context).textTheme.headline5,
     );
   }
@@ -406,9 +406,9 @@ class _ModulePCItemInfoPowerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final power = context.read<GameMiningViewModel>().state.pcs[index].power;
+    final power = context.read<GameMiningViewModel>().state.filtered?[index].power;
     return Text(
-      '${S.of(context).game_mining_module_pc_power_title}: ${S.of(context).text_with_power_mining(power)}',
+      '${S.of(context).game_mining_module_pc_power_title}: ${S.of(context).text_with_power_mining(power ?? "")}',
       style: Theme.of(context).textTheme.headline6,
     );
   }
@@ -424,7 +424,7 @@ class _ModulePCItemInfoMiningWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final token = context.select((GameMiningViewModel vm) => vm.state.pcs[index].miningToken);
+    final token = context.select((GameMiningViewModel vm) => vm.state.filtered?[index].miningToken);
     return Text(
       '${S.of(context).game_mining_module_pc_mining_title}: ${token?.symbol ?? S.of(context).game_mining_module_pc_mining_empty_title}',
       style: Theme.of(context).textTheme.headline6,
@@ -442,7 +442,7 @@ class _ModulePCItemChangeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final miningToken = context.select((GameMiningViewModel vm) => vm.state.pcs[indexPC].miningToken);
+    final miningToken = context.select((GameMiningViewModel vm) => vm.state.filtered?[indexPC].miningToken);
     final vm = context.read<GameMiningViewModel>();
     final token = vm.state.tokens[vm.state.modaleTokenIndex];
     final value = token.id == miningToken?.id;

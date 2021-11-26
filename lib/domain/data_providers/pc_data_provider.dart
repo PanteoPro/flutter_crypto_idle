@@ -27,7 +27,7 @@ class PCDataProvider {
   }
 
   Future<void> savePC(PC pc) async {
-    await _box.put(_box.length, pc);
+    await _box.add(pc);
   }
 
   Future<bool> deletePC(PC pc) async {
