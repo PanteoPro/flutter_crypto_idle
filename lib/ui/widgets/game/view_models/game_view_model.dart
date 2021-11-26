@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
@@ -12,11 +14,23 @@ class GameViewModel extends ChangeNotifier {
       return day;
     });
     dayStream.listen(_newDay);
+
+    _dayEndController = StreamController<dynamic>();
+    dayEndStream = _dayEndController.stream.asBroadcastStream();
+  }
+
+  @override
+  void dispose() {
+    _dayEndController.close();
+    super.dispose();
   }
 
   static const lengthDaySeconds = 10;
 
   late Stream<dynamic> dayStream;
+
+  late StreamController<dynamic> _dayEndController;
+  late Stream<dynamic> dayEndStream;
 
   final _gameRepository = GameRepository();
   final _pcRepository = PCRepository();
@@ -62,6 +76,7 @@ class GameViewModel extends ChangeNotifier {
 
     await _gameRepository.changeData(date: _game.date.add(Duration(days: 1)));
     await _miningDay();
+    _dayEndController.add(numberDaySession);
     updateState();
   }
 

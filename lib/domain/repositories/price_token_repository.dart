@@ -11,10 +11,10 @@ class PriceTokenRepository {
 
   Future<void> init() async {
     await _priceTokenDataProvider.openBox();
-    _updateData();
+    updateData();
   }
 
-  void _updateData() {
+  void updateData() {
     _prices = _priceTokenDataProvider.loadAllPrices();
   }
 

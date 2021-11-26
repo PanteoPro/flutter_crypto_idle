@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class GameCryptoViewModelState {
@@ -25,11 +28,22 @@ class GameCryptoViewModelState {
 }
 
 class GameCryptoViewModel extends ChangeNotifier {
-  GameCryptoViewModel() {
+  GameCryptoViewModel({required this.gvm}) {
     initialRepositories();
+    streamSub ??= gvm.dayEndStream.listen(updateRepositories);
   }
+
+  @override
+  void dispose() {
+    streamSub?.cancel();
+    super.dispose();
+  }
+
   final _tokenRepository = TokenRepository();
   final _priceTokenRepository = PriceTokenRepository();
+
+  final GameViewModel gvm;
+  StreamSubscription? streamSub;
 
   var _state = GameCryptoViewModelState.empty();
   GameCryptoViewModelState get state => _state;
@@ -38,6 +52,13 @@ class GameCryptoViewModel extends ChangeNotifier {
     await _tokenRepository.init();
     await _priceTokenRepository.init();
     _updateState();
+  }
+
+  void updateRepositories(dynamic day) {
+    _tokenRepository.updateData();
+    _priceTokenRepository.updateData();
+    _updateState();
+    print('Update Game Crypto');
   }
 
   void _updateState() {

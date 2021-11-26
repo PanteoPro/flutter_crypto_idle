@@ -9,17 +9,17 @@ class TokenRepository {
 
   Future<void> init() async {
     await _tokenDataProvider.openBox();
-    _updateData();
+    updateData();
   }
 
   Future<void> addToken(Token token) async {
     await _tokenDataProvider.saveToken(token);
-    _updateData();
+    updateData();
   }
 
   Future<void> deleteToken(Token token) async {
     await _tokenDataProvider.deleteToken(token);
-    _updateData();
+    updateData();
   }
 
   Future<void> changeToken(Token token, {double? count}) async {
@@ -29,7 +29,7 @@ class TokenRepository {
     }
   }
 
-  void _updateData() {
+  void updateData() {
     _tokens = _tokenDataProvider.loadTokens();
   }
 }
