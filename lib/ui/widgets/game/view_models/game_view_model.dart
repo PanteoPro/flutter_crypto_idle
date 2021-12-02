@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
+import 'package:crypto_idle/domain/entities/pc.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
+import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
@@ -10,6 +13,43 @@ import 'package:crypto_idle/domain/repositories/pc_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:flutter/cupertino.dart';
+
+class GameViewModelState {
+  GameViewModelState({
+    required this.game,
+    required this.pcs,
+    required this.flats,
+    required this.currentPrices,
+    required this.tokens,
+  });
+  const GameViewModelState.empty({
+    this.game,
+    this.pcs = const [],
+    this.flats = const [],
+    this.currentPrices = const {},
+    this.tokens = const [],
+  });
+  final Game? game;
+  final List<PC> pcs;
+  final List<Flat> flats;
+  final Map<int, double> currentPrices;
+  final List<Token> tokens;
+
+  int get currentCountPC => pcs.length;
+  int get maxCountPC => flats.firstWhere((element) => element.isActive).countPC;
+
+  double getPriceByToken(Token token) {
+    return currentPrices[token.id]!;
+  }
+
+  double get balance {
+    double balance = 0;
+    for (final Token token in tokens) {
+      balance += getPriceByToken(token) * token.count;
+    }
+    return double.parse(balance.toStringAsFixed(2));
+  }
+}
 
 class GameViewModel extends ChangeNotifier {
   GameViewModel() {
@@ -51,11 +91,8 @@ class GameViewModel extends ChangeNotifier {
   StreamSubscription<dynamic>? _priceTokenStreamSub;
 
   // Data
-  var _game = Game.empty(date: DateTime(0));
-  Game get game => _game;
-  // Methods need move TO STATE _______________________________________________________
-  int get currentCountPC => _pcRepository.pcs.length;
-  int get maxCountPC => _flatRepository.flats.firstWhere((element) => element.isActive).countPC;
+  var _state = GameViewModelState.empty();
+  GameViewModelState get state => _state;
 
   /// Initial Repository
   Future<void> _initialRepository() async {
@@ -76,18 +113,27 @@ class GameViewModel extends ChangeNotifier {
     _tokenStreamSub =
         TokenRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _tokenRepository));
     _priceTokenStreamSub =
-        TokenRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _priceTokenRepository));
+        PriceTokenRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _priceTokenRepository));
   }
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
     await repository.updateData();
-    if (repository is GameRepository) {
-      updateState();
-    }
+    updateState();
   }
 
   void updateState() {
-    _game = _gameRepository.game.copyWith();
+    final currentPrices = <int, double>{};
+    final currentTokens = _tokenRepository.tokens;
+    for (final token in currentTokens) {
+      currentPrices[token.id] = _priceTokenRepository.getLatestPriceByTokenId(token.id).cost;
+    }
+    _state = GameViewModelState(
+      game: _gameRepository.game.copyWith(),
+      flats: _flatRepository.flats,
+      pcs: _pcRepository.pcs,
+      currentPrices: currentPrices,
+      tokens: currentTokens,
+    );
     notifyListeners();
   }
 
@@ -100,7 +146,7 @@ class GameViewModel extends ChangeNotifier {
 
   Future<void> _newDay(dynamic numberDaySession) async {
     print('day $numberDaySession');
-    await _gameRepository.changeData(date: _game.date.add(Duration(days: 1)));
+    await _gameRepository.changeData(date: _state.game?.date.add(Duration(days: 1)));
     await _miningDay();
     await _newPricesDay();
   }
@@ -145,7 +191,7 @@ class GameViewModel extends ChangeNotifier {
       final isRaise = _getMoveCrypto(60, 40);
       final percentChange = isRaise ? 1 + _getChangePercent(1, 10) : 1 - _getChangePercent(1, 10);
       final newPrice = price.cost * percentChange;
-      return price.copyWith(cost: newPrice, date: _game.date);
+      return price.copyWith(cost: newPrice, date: _state.game?.date);
     });
     for (var price in newPrices) {
       await _priceTokenRepository.addPrice(price);
