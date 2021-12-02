@@ -74,12 +74,11 @@ Future<void> firstDataToken() async {
   ];
 
   final prices = <PriceToken>[
-    PriceToken(date: DateTime.now(), cost: 1234.23, tokenId: 1),
-    PriceToken(date: DateTime.now(), cost: 4234.23, tokenId: 1),
-    PriceToken(date: DateTime.now(), cost: 434.23, tokenId: 2),
-    PriceToken(date: DateTime.now(), cost: 234.12, tokenId: 3),
-    PriceToken(date: DateTime.now(), cost: 23.00, tokenId: 4),
-    PriceToken(date: DateTime.now(), cost: 0.123, tokenId: 5),
+    PriceToken(date: DateTime.now().add(Duration(days: -1)), cost: 4234.23, tokenId: 1),
+    PriceToken(date: DateTime.now().add(Duration(days: -1)), cost: 434.23, tokenId: 2),
+    PriceToken(date: DateTime.now().add(Duration(days: -1)), cost: 234.12, tokenId: 3),
+    PriceToken(date: DateTime.now().add(Duration(days: -1)), cost: 23.00, tokenId: 4),
+    PriceToken(date: DateTime.now().add(Duration(days: -1)), cost: 0.123, tokenId: 5),
   ];
 
   await _tokenBox.addAll(tokens);

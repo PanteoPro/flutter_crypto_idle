@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
+
 import 'package:crypto_idle/domain/entities/pc.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
@@ -7,14 +9,22 @@ import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
-import 'package:flutter/cupertino.dart';
 
 class GameMiningViewModelState {
   GameMiningViewModelState({
     required this.tokens,
     required this.prices,
     required this.pcs,
-  });
+    bool? isOpenModale,
+    int? modaleTokenIndex,
+  }) {
+    if (isOpenModale != null) {
+      this.isOpenModale = isOpenModale;
+    }
+    if (modaleTokenIndex != null) {
+      this.modaleTokenIndex = modaleTokenIndex;
+    }
+  }
   GameMiningViewModelState.empty({
     this.tokens = const [],
     this.prices = const [],
@@ -36,6 +46,22 @@ class GameMiningViewModelState {
   void sortedPCFirstEmpty() {
     filtered = pcs.where((element) => element.miningToken == null).toList();
     filtered?.addAll(pcs.where((element) => element.miningToken != null).toList());
+  }
+
+  GameMiningViewModelState copyWith({
+    List<Token>? tokens,
+    List<PriceToken>? prices,
+    List<PC>? pcs,
+    bool? isOpenModale,
+    int? modaleTokenIndex,
+  }) {
+    return GameMiningViewModelState(
+      tokens: tokens ?? this.tokens,
+      prices: prices ?? this.prices,
+      pcs: pcs ?? this.pcs,
+      isOpenModale: isOpenModale ?? this.isOpenModale,
+      modaleTokenIndex: modaleTokenIndex ?? this.modaleTokenIndex,
+    );
   }
 }
 
@@ -93,7 +119,7 @@ class GameMiningViewModel extends ChangeNotifier {
   }
 
   void _updateState() {
-    _state = GameMiningViewModelState(
+    _state = _state.copyWith(
       tokens: _tokenRepository.tokens,
       prices: _priceTokenRepository.prices,
       pcs: _pcRepository.pcs,

@@ -1,16 +1,21 @@
+import 'dart:math';
+
 import 'package:crypto_idle/Widgets/app_bar_info.dart';
 import 'package:crypto_idle/Widgets/buttons.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
+import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_crypto_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
 
 class ChartData {
   ChartData(this.day, this.cost);
-  final String day;
+  final DateTime day;
   final double cost;
 }
 
@@ -59,32 +64,60 @@ class _ChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final prices = context.select((GameMarketCryptoViewModel vm) => vm.state.prices);
+    final latestPrices = prices.reversed.take(200).toList().reversed.toList();
+    final dataChart = latestPrices.map((PriceToken price) => ChartData(price.date, price.cost)).toList();
+    final dateFormater = DateFormat.Md('ru-ru');
+
+    var visibleMaximum = 0.0;
+    var visibleMinimum = latestPrices.first.cost;
+    for (var element in latestPrices) {
+      if (visibleMaximum < element.cost) visibleMaximum = element.cost;
+      if (visibleMinimum > element.cost) visibleMinimum = element.cost;
+    }
+
+    final difference = visibleMaximum - visibleMinimum;
+    final expandValue = (difference * 0.3);
+
+    var devidedValue = 100.0;
+    if (visibleMaximum < 100 || visibleMinimum < 100) devidedValue = 10;
+    if (visibleMaximum < 1 || visibleMinimum < 1) devidedValue = 0.01;
+
+    final resMax = ((visibleMaximum + expandValue) / devidedValue).ceil() * devidedValue;
+    final resMin = (max(visibleMinimum - expandValue, 0) / devidedValue).floor() * devidedValue;
+
+    print("$visibleMaximum, $resMax");
+    print("$visibleMinimum, $resMin");
+
     return SizedBox(
       height: 300,
-      child: ColoredBox(
-        color: Colors.white,
+      child: SfChartTheme(
+        data: SfChartThemeData(
+          brightness: Brightness.dark,
+          backgroundColor: Color.fromRGBO(32, 30, 59, 1),
+        ),
         child: SfCartesianChart(
           primaryXAxis: CategoryAxis(),
-          series: <LineSeries<ChartData, String>>[
-            LineSeries<ChartData, String>(
+          primaryYAxis: NumericAxis(
+            anchorRangeToVisiblePoints: true,
+            visibleMinimum: resMin.toDouble(),
+            visibleMaximum: resMax.toDouble(),
+          ),
+          series: <FastLineSeries<ChartData, String>>[
+            FastLineSeries<ChartData, String>(
               // Bind data source
-              dataSource: <ChartData>[
-                // ChartData('22.05.21', 4324.23),
-                // ChartData('23.05.21', 4329.23),
-                // ChartData('24.05.21', 4334.23),
-                // ChartData('25.05.21', 4342.23),
-                // ChartData('26.05.21', 4304.23),
-                // ChartData('27.05.21', 4304.23),
-                ChartData('28.05.21', 4304.23),
-                ChartData('29.05.21', 4304.23),
-                ChartData('30.05.21', 4304.23),
-                ChartData('31.05.21', 4304.23),
-                ChartData('32.05.21', 4394.23),
-                ChartData('01.06.21', 4394.23),
-                ChartData('02.06.21', 5000.23),
-              ],
-              xValueMapper: (ChartData data, _) => data.day,
+              color: Colors.amber,
+              dataSource: dataChart,
+              xValueMapper: (ChartData data, _) => dateFormater.format(data.day),
               yValueMapper: (ChartData data, _) => data.cost,
+              trendlines: <Trendline>[
+                Trendline(
+                  type: TrendlineType.exponential,
+                  color: Colors.red,
+                  width: 0.9,
+                  opacity: 0.9,
+                ),
+              ],
             ),
           ],
         ),

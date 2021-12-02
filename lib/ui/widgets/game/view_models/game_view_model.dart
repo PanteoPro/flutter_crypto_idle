@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
@@ -112,13 +113,26 @@ class GameViewModel extends ChangeNotifier {
         final powerMining = pc.power;
 
         final token = tokens.firstWhere((element) => element.id == pc.miningToken!.id);
-        final coefMining = token.coefMining;
-        final countMined = powerMining * coefMining;
+        final lastPriceToken = _priceTokenRepository.getLatestPriceByTokenId(token.id).cost;
+        final countMined = powerMining / (lastPriceToken * 100);
 
         await _tokenRepository.changeToken(token, count: token.count + countMined);
         print('+ ${countMined.toStringAsFixed(8)} ${token.symbol}');
       }
     }
+  }
+
+  /// probabilityTrue = 60, probability = 40 => 60% to true
+  bool _getMoveCrypto(int probabilityTrue, int probabilityFalse) {
+    final sum = probabilityTrue + probabilityFalse;
+    final generatedValue = Random().nextInt(sum);
+    return generatedValue < probabilityTrue;
+  }
+
+  /// low = 1, high = 10 => 1% - 10% change 0.01 - 0.1
+  double _getChangePercent(int low, int high) {
+    final generatedValue = Random().nextInt(high - low) + low;
+    return generatedValue / 100;
   }
 
   Future<void> _newPricesDay() async {
@@ -128,7 +142,10 @@ class GameViewModel extends ChangeNotifier {
       oldPrices.add(_priceTokenRepository.getLatestPriceByTokenId(token.id));
     }
     final newPrices = oldPrices.map((PriceToken price) {
-      return price.copyWith(cost: price.cost * 1.001, date: _game.date);
+      final isRaise = _getMoveCrypto(60, 40);
+      final percentChange = isRaise ? 1 + _getChangePercent(1, 10) : 1 - _getChangePercent(1, 10);
+      final newPrice = price.cost * percentChange;
+      return price.copyWith(cost: newPrice, date: _game.date);
     });
     for (var price in newPrices) {
       await _priceTokenRepository.addPrice(price);

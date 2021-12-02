@@ -84,7 +84,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
     final token = _tokenRepository.tokens.firstWhere((element) => element.id == _state.token?.id);
     _state = GameMarketCryptoViewModelState(
       token: token,
-      prices: _priceTokenRepository.prices,
+      prices: _priceTokenRepository.pricesByTokenId(token.id),
     );
     if (priceTextController.text.isEmpty) {
       priceTextController.text = _state.getLastPrice().cost.toString();
