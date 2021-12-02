@@ -14,13 +14,13 @@ class Game {
   @HiveField(3)
   final DateTime date;
 
-  Game({
+  const Game({
     required this.id,
     required this.money,
     required this.nick,
     required this.date,
   });
-  Game.empty({
+  const Game.empty({
     this.id = -1,
     this.money = 0,
     this.nick = 'undefined',

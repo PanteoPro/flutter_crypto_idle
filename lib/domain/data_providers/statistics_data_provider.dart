@@ -16,10 +16,11 @@ class StatisticsDataProvider {
   }
 
   Future<void> saveStatistics(Statistics stat) async {
-    await stat.save();
+    await _box.put(0, stat);
+    // await stat.save();
   }
 
   Statistics loadStatistics() {
-    return _box.values.first;
+    return _box.get(0) ?? Statistics.empty();
   }
 }

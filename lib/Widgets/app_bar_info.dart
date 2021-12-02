@@ -45,7 +45,7 @@ class _DayWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final format = DateFormat.yMd('ru-ru');
-    final date = context.select((GameViewModel vm) => vm.game.date);
+    final date = context.select((GameViewModel vm) => vm.state.game?.date) ?? DateTime(0);
     final stringDate = format.format(date);
 
     return Text(stringDate, style: Theme.of(context).textTheme.bodyText1);
@@ -59,8 +59,8 @@ class _CountPcWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final maxCountPC = context.select((GameViewModel vm) => vm.maxCountPC);
-    final currentCountPC = context.select((GameViewModel vm) => vm.currentCountPC);
+    final maxCountPC = context.select((GameViewModel vm) => vm.state.maxCountPC);
+    final currentCountPC = context.select((GameViewModel vm) => vm.state.currentCountPC);
     return Text('Количество установок: ${S.of(context).text_with_slash(currentCountPC, maxCountPC)}');
   }
 }
@@ -72,7 +72,7 @@ class _BalanceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final money = context.select((GameViewModel vm) => vm.game.money);
+    final money = context.select((GameViewModel vm) => vm.state.game?.money) ?? 0;
     return Text('Баланс: ${S.of(context).text_with_dollar(money)}');
   }
 }

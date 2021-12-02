@@ -1,6 +1,8 @@
+import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/main_game_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +50,7 @@ class _AppBarDateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final format = DateFormat.yMd('ru-ru');
-    final date = context.select((GameViewModel vm) => vm.game.date);
+    final date = context.select((GameViewModel vm) => vm.state.game?.date) ?? DateTime(0);
     final stringDate = format.format(date);
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -88,25 +90,35 @@ class _BalanceWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15),
         child: Row(
-          children: <Widget>[
-            const Expanded(child: _BalanceDollarsWidget()),
-            Expanded(
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    S.of(context).main_game_crypto_balance_title,
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  Text(
-                    S.of(context).text_with_dollar(4234.23),
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                ],
-              ),
-            ),
+          children: const <Widget>[
+            Expanded(child: _BalanceDollarsWidget()),
+            Expanded(child: _BalanceCryptoWidget()),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _BalanceCryptoWidget extends StatelessWidget {
+  const _BalanceCryptoWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final money = context.select((GameViewModel vm) => vm.state.balance);
+    return Column(
+      children: <Widget>[
+        Text(
+          S.of(context).main_game_crypto_balance_title,
+          style: Theme.of(context).textTheme.bodyText1,
+        ),
+        Text(
+          S.of(context).text_with_dollar(money),
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+      ],
     );
   }
 }
@@ -118,7 +130,7 @@ class _BalanceDollarsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final money = context.select((GameViewModel vm) => vm.game.money);
+    final money = context.select((GameViewModel vm) => vm.state.game?.money) ?? 0;
     return Column(
       children: <Widget>[
         Text(
@@ -321,35 +333,130 @@ class _StatisticWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tempSymbols = ['BTC', 'ETC', 'ETH', 'BNB'];
     return _WrapperBlockWidget(
       title: S.of(context).main_game_stat_title,
-      children: [
-        _InfoItemWidget(
-          title: S.of(context).main_game_stat_spend_all_title,
-          value: S.of(context).text_with_dollar(432.23),
-        ),
-        _InfoItemWidget(
-          title: S.of(context).main_game_stat_spend_flat_title,
-          value: S.of(context).text_with_dollar(432.23),
-        ),
-        _InfoItemWidget(
-          title: S.of(context).main_game_stat_spend_energy_title,
-          value: S.of(context).text_with_dollar(432.23),
-        ),
+      children: const [
+        _StatisticsSpendAllTimeWidget(),
+        _StatisticsSpendAllTimeFlatWidget(),
+        _StatisticsSpendAllTimeEnergyWidget(),
         SizedBox(height: 20),
-        for (String symbol in tempSymbols)
-          _InfoItemWidget(
-            title: S.of(context).main_game_stat_earn_on_crypto_title(symbol),
-            value: S.of(context).text_with_dollar(432.23),
-          ),
+        _StatisticsEarnTokensList(),
         SizedBox(height: 20),
-        for (String symbol in tempSymbols)
-          _InfoItemWidget(
-            title: S.of(context).main_game_stat_mining_on_crypto_title(symbol),
-            value: S.of(context).text_with_dollar(432.23),
-          ),
+        _StatisticsMiningTokensList(),
       ],
+    );
+  }
+}
+
+class _StatisticsMiningTokensList extends StatelessWidget {
+  const _StatisticsMiningTokensList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    context.select((MainGameViewModel vm) => vm.state.tokens.length);
+    final tokens = context.read<MainGameViewModel>().state.tokens;
+    final widgets = <Widget>[];
+    for (var token in tokens) {
+      widgets.add(_StatisticsMiningTokensItemWidget(token: token));
+    }
+
+    return Column(children: widgets);
+  }
+}
+
+class _StatisticsMiningTokensItemWidget extends StatelessWidget {
+  const _StatisticsMiningTokensItemWidget({
+    Key? key,
+    required this.token,
+  }) : super(key: key);
+
+  final Token token;
+
+  @override
+  Widget build(BuildContext context) {
+    final earn = context.select((MainGameViewModel vm) => vm.state.miningTokensByTokenId(token.id));
+    return _InfoItemWidget(
+      title: S.of(context).main_game_stat_mining_on_crypto_title(token.symbol),
+      value: S.of(context).text_with_dollar(earn),
+    );
+  }
+}
+
+class _StatisticsEarnTokensList extends StatelessWidget {
+  const _StatisticsEarnTokensList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    context.select((MainGameViewModel vm) => vm.state.tokens.length);
+    final tokens = context.read<MainGameViewModel>().state.tokens;
+    final widgets = <Widget>[];
+    for (var token in tokens) {
+      widgets.add(_StatisticsEarnTokensItemWidget(token: token));
+    }
+
+    return Column(children: widgets);
+  }
+}
+
+class _StatisticsEarnTokensItemWidget extends StatelessWidget {
+  const _StatisticsEarnTokensItemWidget({
+    Key? key,
+    required this.token,
+  }) : super(key: key);
+
+  final Token token;
+
+  @override
+  Widget build(BuildContext context) {
+    final earn = context.select((MainGameViewModel vm) => vm.state.earnTokensByTokenId(token.id));
+    return _InfoItemWidget(
+      title: S.of(context).main_game_stat_earn_on_crypto_title(token.symbol),
+      value: S.of(context).text_with_dollar(earn),
+    );
+  }
+}
+
+class _StatisticsSpendAllTimeEnergyWidget extends StatelessWidget {
+  const _StatisticsSpendAllTimeEnergyWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final value = context.select((MainGameViewModel vm) => vm.state.sumEnergyConsume);
+    return _InfoItemWidget(
+      title: S.of(context).main_game_stat_spend_energy_title,
+      value: S.of(context).text_with_dollar(value),
+    );
+  }
+}
+
+class _StatisticsSpendAllTimeFlatWidget extends StatelessWidget {
+  const _StatisticsSpendAllTimeFlatWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final value = context.select((MainGameViewModel vm) => vm.state.sumFlatConsume);
+    return _InfoItemWidget(
+      title: S.of(context).main_game_stat_spend_flat_title,
+      value: S.of(context).text_with_dollar(value),
+    );
+  }
+}
+
+class _StatisticsSpendAllTimeWidget extends StatelessWidget {
+  const _StatisticsSpendAllTimeWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final value = context.select((MainGameViewModel vm) => vm.state.sumConsume);
+    return _InfoItemWidget(
+      title: S.of(context).main_game_stat_spend_all_title,
+      value: S.of(context).text_with_dollar(value),
     );
   }
 }
