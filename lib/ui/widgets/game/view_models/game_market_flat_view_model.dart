@@ -2,6 +2,7 @@ import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
+import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -35,6 +36,7 @@ class GameMarketFlatViewModel extends ChangeNotifier {
   final _flatRepository = FlatRepository();
   final _pcRepository = PCRepository();
   final _gameRepository = GameRepository();
+  final _statisticsRepository = StatisticsRepository();
 
   var _state = GameMarketFlatViewModelState.empty();
   GameMarketFlatViewModelState get state => _state;
@@ -43,6 +45,7 @@ class GameMarketFlatViewModel extends ChangeNotifier {
     await _flatRepository.init();
     await _gameRepository.init();
     await _pcRepository.init();
+    await _statisticsRepository.init();
     _updateState();
   }
 
@@ -65,6 +68,7 @@ class GameMarketFlatViewModel extends ChangeNotifier {
         await _flatRepository.changeFlat(currentFlat, isActive: false);
 
         await _gameRepository.changeData(money: _state.money - flat.cost);
+        await _statisticsRepository.addFlatConsume(flat.cost);
       } else {
         // error message count PC
       }

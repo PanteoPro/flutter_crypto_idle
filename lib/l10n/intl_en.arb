@@ -20,7 +20,8 @@
 
     "main_game_stat_title": "Statistic",
     "main_game_stat_spend_all_title": "Spend all time",
-    "main_game_stat_spend_flat_title": "Spend on flat",
+    "main_game_stat_spend_flat_title": "Spend on flats",
+    "main_game_stat_spend_pc_title": "Spend in pcs",
     "main_game_stat_spend_energy_title": "Spend on energy",
     "main_game_stat_earn_on_crypto_title": "Earn on {symbol}",
     "main_game_stat_mining_on_crypto_title": "Mining {symbol}",

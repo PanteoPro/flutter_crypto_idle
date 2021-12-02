@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:crypto_idle/domain/data_providers/pc_data_provider.dart';
 import 'package:crypto_idle/domain/entities/pc.dart';
+import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 
 class PCRepository implements MyRepository {
@@ -42,6 +43,12 @@ class PCRepository implements MyRepository {
       _streamController.add('sellPC');
     }
     return result;
+  }
+
+  Future<void> changeMiningToken(PC pc, [Token? token]) async {
+    pc.miningToken = token;
+    await pc.save();
+    _streamController.add('change mining token');
   }
 
   @override

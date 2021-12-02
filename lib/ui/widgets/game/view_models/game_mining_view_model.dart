@@ -17,12 +17,16 @@ class GameMiningViewModelState {
     required this.pcs,
     bool? isOpenModale,
     int? modaleTokenIndex,
+    List<PC>? filtered,
   }) {
     if (isOpenModale != null) {
       this.isOpenModale = isOpenModale;
     }
     if (modaleTokenIndex != null) {
       this.modaleTokenIndex = modaleTokenIndex;
+    }
+    if (filtered != null) {
+      this.filtered = filtered;
     }
   }
   GameMiningViewModelState.empty({
@@ -54,6 +58,7 @@ class GameMiningViewModelState {
     List<PC>? pcs,
     bool? isOpenModale,
     int? modaleTokenIndex,
+    List<PC>? filtered,
   }) {
     return GameMiningViewModelState(
       tokens: tokens ?? this.tokens,
@@ -61,6 +66,7 @@ class GameMiningViewModelState {
       pcs: pcs ?? this.pcs,
       isOpenModale: isOpenModale ?? this.isOpenModale,
       modaleTokenIndex: modaleTokenIndex ?? this.modaleTokenIndex,
+      filtered: filtered ?? this.filtered,
     );
   }
 }
@@ -127,13 +133,13 @@ class GameMiningViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onChangeMiningToken(int pcIndex) {
+  Future<void> onChangeMiningToken(int pcIndex) async {
     final pc = _state.filtered![pcIndex];
     final token = _state.tokens[_state.modaleTokenIndex];
     if (pc.miningToken?.id == token.id) {
-      pc.miningToken = null;
+      await _pcRepository.changeMiningToken(pc);
     } else {
-      pc.miningToken = token;
+      await _pcRepository.changeMiningToken(pc, token);
     }
     notifyListeners();
   }

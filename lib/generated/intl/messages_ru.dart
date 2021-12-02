@@ -99,7 +99,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "game_mining_month_price_title":
             MessageLookupByLibrary.simpleMessage("Месяц назад"),
         "game_mining_now_price_title":
-            MessageLookupByLibrary.simpleMessage("Текущая цена"),
+            MessageLookupByLibrary.simpleMessage("Текущая"),
         "game_mining_set_pc_title":
             MessageLookupByLibrary.simpleMessage("Назначить"),
         "game_mining_title": MessageLookupByLibrary.simpleMessage("Майнинг"),
@@ -145,6 +145,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Потрачено на электричество"),
         "main_game_stat_spend_flat_title":
             MessageLookupByLibrary.simpleMessage("Потрачено на жилье"),
+        "main_game_stat_spend_pc_title":
+            MessageLookupByLibrary.simpleMessage("Потрачено на установки"),
         "main_game_stat_title":
             MessageLookupByLibrary.simpleMessage("Статистика"),
         "text_with_dollar": m4,

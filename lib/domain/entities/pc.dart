@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 part 'pc.g.dart';
 
 @HiveType(typeId: 1)
-class PC {
+class PC extends HiveObject {
   PC({
     required this.id,
     required this.name,

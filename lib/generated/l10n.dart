@@ -220,11 +220,21 @@ class S {
     );
   }
 
-  /// `Spend on flat`
+  /// `Spend on flats`
   String get main_game_stat_spend_flat_title {
     return Intl.message(
-      'Spend on flat',
+      'Spend on flats',
       name: 'main_game_stat_spend_flat_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Spend in pcs`
+  String get main_game_stat_spend_pc_title {
+    return Intl.message(
+      'Spend in pcs',
+      name: 'main_game_stat_spend_pc_title',
       desc: '',
       args: [],
     );

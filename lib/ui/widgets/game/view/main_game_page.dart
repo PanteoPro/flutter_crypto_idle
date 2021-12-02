@@ -265,24 +265,73 @@ class _CurrentInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return _WrapperBlockWidget(
       title: S.of(context).main_game_info_title,
-      children: [
-        _InfoItemWidget(
-          title: S.of(context).main_game_info_place_title,
-          value: 'Твоя квартира',
-        ),
-        _InfoItemWidget(
-          title: S.of(context).main_game_info_count_pc_title,
-          value: S.of(context).text_with_slash(6, 10),
-        ),
-        _InfoItemWidget(
-          title: S.of(context).main_game_info_energy_title,
-          value: S.of(context).text_with_energy(523),
-        ),
-        _InfoItemWidget(
-          title: S.of(context).main_game_info_power_mining_title,
-          value: S.of(context).text_with_power_mining(523),
-        ),
+      children: const [
+        _CurrentInfoNameWidget(),
+        _CurrentInfoCountPcWidget(),
+        _CurrentInfoEnergyConsumeWidget(),
+        _CurrentInfoPowerWidget(),
       ],
+    );
+  }
+}
+
+class _CurrentInfoPowerWidget extends StatelessWidget {
+  const _CurrentInfoPowerWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final value = context.select((MainGameViewModel vm) => vm.state.powerPCs);
+    return _InfoItemWidget(
+      title: S.of(context).main_game_info_power_mining_title,
+      value: S.of(context).text_with_power_mining(value),
+    );
+  }
+}
+
+class _CurrentInfoEnergyConsumeWidget extends StatelessWidget {
+  const _CurrentInfoEnergyConsumeWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final value = context.select((MainGameViewModel vm) => vm.state.energyConsume);
+    return _InfoItemWidget(
+      title: S.of(context).main_game_info_energy_title,
+      value: S.of(context).text_with_energy(value),
+    );
+  }
+}
+
+class _CurrentInfoCountPcWidget extends StatelessWidget {
+  const _CurrentInfoCountPcWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final current = context.select((MainGameViewModel vm) => vm.state.myPCs.length);
+    final maxPC = context.select((MainGameViewModel vm) => vm.state.flat.countPC);
+    return _InfoItemWidget(
+      title: S.of(context).main_game_info_count_pc_title,
+      value: S.of(context).text_with_slash(current, maxPC),
+    );
+  }
+}
+
+class _CurrentInfoNameWidget extends StatelessWidget {
+  const _CurrentInfoNameWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final name = context.select((MainGameViewModel vm) => vm.state.flat.name);
+    return _InfoItemWidget(
+      title: S.of(context).main_game_info_place_title,
+      value: name,
     );
   }
 }
@@ -314,16 +363,40 @@ class _MonthInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return _WrapperBlockWidget(
       title: S.of(context).main_game_month_title,
-      children: [
-        _InfoItemWidget(
-          title: S.of(context).main_game_month_flat_title,
-          value: S.of(context).text_with_dollar(-44),
-        ),
-        _InfoItemWidget(
-          title: S.of(context).main_game_month_energy_title,
-          value: S.of(context).text_with_dollar(-120),
-        ),
+      children: const [
+        _MonthInfoFlatWidget(),
+        _MonthInfoEnergyWidget(),
       ],
+    );
+  }
+}
+
+class _MonthInfoEnergyWidget extends StatelessWidget {
+  const _MonthInfoEnergyWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final consume = context.select((MainGameViewModel vm) => vm.state.energyConsumeCost);
+    return _InfoItemWidget(
+      title: S.of(context).main_game_month_energy_title,
+      value: S.of(context).text_with_dollar(-consume),
+    );
+  }
+}
+
+class _MonthInfoFlatWidget extends StatelessWidget {
+  const _MonthInfoFlatWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final consume = context.select((MainGameViewModel vm) => vm.state.flatConsume);
+    return _InfoItemWidget(
+      title: S.of(context).main_game_month_flat_title,
+      value: S.of(context).text_with_dollar(-consume),
     );
   }
 }
@@ -338,6 +411,7 @@ class _StatisticWidget extends StatelessWidget {
       children: const [
         _StatisticsSpendAllTimeWidget(),
         _StatisticsSpendAllTimeFlatWidget(),
+        _StatisticsSpendAllTimePCWidget(),
         _StatisticsSpendAllTimeEnergyWidget(),
         SizedBox(height: 20),
         _StatisticsEarnTokensList(),
@@ -360,7 +434,7 @@ class _StatisticsMiningTokensList extends StatelessWidget {
       widgets.add(_StatisticsMiningTokensItemWidget(token: token));
     }
 
-    return Column(children: widgets);
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: widgets);
   }
 }
 
@@ -377,7 +451,7 @@ class _StatisticsMiningTokensItemWidget extends StatelessWidget {
     final earn = context.select((MainGameViewModel vm) => vm.state.miningTokensByTokenId(token.id));
     return _InfoItemWidget(
       title: S.of(context).main_game_stat_mining_on_crypto_title(token.symbol),
-      value: S.of(context).text_with_dollar(earn),
+      value: earn.toStringAsFixed(8),
     );
   }
 }
@@ -394,7 +468,7 @@ class _StatisticsEarnTokensList extends StatelessWidget {
       widgets.add(_StatisticsEarnTokensItemWidget(token: token));
     }
 
-    return Column(children: widgets);
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: widgets);
   }
 }
 
@@ -426,6 +500,21 @@ class _StatisticsSpendAllTimeEnergyWidget extends StatelessWidget {
     final value = context.select((MainGameViewModel vm) => vm.state.sumEnergyConsume);
     return _InfoItemWidget(
       title: S.of(context).main_game_stat_spend_energy_title,
+      value: S.of(context).text_with_dollar(value),
+    );
+  }
+}
+
+class _StatisticsSpendAllTimePCWidget extends StatelessWidget {
+  const _StatisticsSpendAllTimePCWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final value = context.select((MainGameViewModel vm) => vm.state.sumPCConsume);
+    return _InfoItemWidget(
+      title: S.of(context).main_game_stat_spend_pc_title,
       value: S.of(context).text_with_dollar(value),
     );
   }

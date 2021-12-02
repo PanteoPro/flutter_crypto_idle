@@ -6,6 +6,7 @@ import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
+import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,6 +42,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
   final _tokenRepository = TokenRepository();
   final _priceTokenRepository = PriceTokenRepository();
   final _gameRepository = GameRepository();
+  final _statisticsRepository = StatisticsRepository();
   StreamSubscription<dynamic>? _tokenStreamSub;
   StreamSubscription<dynamic>? _priceStreamSub;
   StreamSubscription<dynamic>? _gameStreamSub;
@@ -58,6 +60,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
     await _tokenRepository.init();
     await _priceTokenRepository.init();
     await _gameRepository.init();
+    await _statisticsRepository.init();
     _updateState();
   }
 
@@ -103,6 +106,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
 
           await _gameRepository.changeData(money: _gameRepository.game.money + income);
           await _tokenRepository.changeToken(_state.token!, count: _state.token!.count - volume);
+          await _statisticsRepository.addTokenEarn(_state.token!, income);
           _updateState();
         } else {
           print('Enter num digits');

@@ -39,6 +39,13 @@ class StatisticsRepository implements MyRepository {
     _streamController.add('add flat Consume');
   }
 
+  Future<void> addPCConsume(double pcConsume) async {
+    _statistics.pcConsume.add(pcConsume);
+    await _statisticsDataProvider.saveStatistics(_statistics);
+    await updateData();
+    _streamController.add('add pc Consume');
+  }
+
   Future<void> addTokenEarn(Token token, double earnCash) async {
     if (_statistics.tokenEarn[token.id] == null) {
       _statistics.tokenEarn[token.id] = [];

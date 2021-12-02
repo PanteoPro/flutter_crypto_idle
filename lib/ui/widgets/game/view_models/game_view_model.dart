@@ -11,6 +11,7 @@ import 'package:crypto_idle/domain/repositories/game_repository.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
+import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -64,6 +65,7 @@ class GameViewModel extends ChangeNotifier {
     _flatStreamSub?.cancel();
     _tokenStreamSub?.cancel();
     _priceTokenStreamSub?.cancel();
+    _statisticsStreamSub?.cancel();
     super.dispose();
   }
 
@@ -84,11 +86,13 @@ class GameViewModel extends ChangeNotifier {
   final _flatRepository = FlatRepository();
   final _tokenRepository = TokenRepository();
   final _priceTokenRepository = PriceTokenRepository();
+  final _statisticsRepository = StatisticsRepository();
   StreamSubscription<dynamic>? _gameStreamSub;
   StreamSubscription<dynamic>? _pcStreamSub;
   StreamSubscription<dynamic>? _flatStreamSub;
   StreamSubscription<dynamic>? _tokenStreamSub;
   StreamSubscription<dynamic>? _priceTokenStreamSub;
+  StreamSubscription<dynamic>? _statisticsStreamSub;
 
   // Data
   var _state = GameViewModelState.empty();
@@ -101,6 +105,7 @@ class GameViewModel extends ChangeNotifier {
     await _flatRepository.init();
     await _tokenRepository.init();
     await _priceTokenRepository.init();
+    await _statisticsRepository.init();
     _subscriteStreams();
     updateState();
   }
@@ -114,6 +119,8 @@ class GameViewModel extends ChangeNotifier {
         TokenRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _tokenRepository));
     _priceTokenStreamSub =
         PriceTokenRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _priceTokenRepository));
+    _statisticsStreamSub =
+        StatisticsRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _statisticsRepository));
   }
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
@@ -163,6 +170,7 @@ class GameViewModel extends ChangeNotifier {
         final countMined = powerMining / (lastPriceToken * 100);
 
         await _tokenRepository.changeToken(token, count: token.count + countMined);
+        await _statisticsRepository.addTokenMining(token, countMined);
         print('+ ${countMined.toStringAsFixed(8)} ${token.symbol}');
       }
     }

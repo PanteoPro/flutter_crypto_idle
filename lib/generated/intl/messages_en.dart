@@ -141,7 +141,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "main_game_stat_spend_energy_title":
             MessageLookupByLibrary.simpleMessage("Spend on energy"),
         "main_game_stat_spend_flat_title":
-            MessageLookupByLibrary.simpleMessage("Spend on flat"),
+            MessageLookupByLibrary.simpleMessage("Spend on flats"),
+        "main_game_stat_spend_pc_title":
+            MessageLookupByLibrary.simpleMessage("Spend in pcs"),
         "main_game_stat_title":
             MessageLookupByLibrary.simpleMessage("Statistic"),
         "text_with_dollar": m4,

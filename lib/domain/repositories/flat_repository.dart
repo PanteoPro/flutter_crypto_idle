@@ -11,6 +11,13 @@ class FlatRepository implements MyRepository {
 
   var _flats = <Flat>[];
   List<Flat> get flats => _flats;
+  Flat get currentFlat {
+    try {
+      return _flats.firstWhere((element) => element.isActive);
+    } catch (_) {
+      return Flat.empty();
+    }
+  }
 
   Future<void> init() async {
     await _flatDataProvider.openBox();

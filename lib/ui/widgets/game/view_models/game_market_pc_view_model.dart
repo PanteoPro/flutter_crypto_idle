@@ -1,4 +1,6 @@
+import 'package:crypto_idle/domain/entities/statistics.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
+import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -49,6 +51,7 @@ class GameMarketPCViewModel extends ChangeNotifier {
   final _pcRepository = PCRepository();
   final _flatRepository = FlatRepository();
   final _gameRepository = GameRepository();
+  final _statisticsRepository = StatisticsRepository();
 
   var _state = GameMarketPCViewModelState.empty();
   GameMarketPCViewModelState get state => _state;
@@ -57,6 +60,7 @@ class GameMarketPCViewModel extends ChangeNotifier {
     await _pcRepository.init();
     await _gameRepository.init();
     await _flatRepository.init();
+    await _statisticsRepository.init();
 
     _updateState();
   }
@@ -77,6 +81,7 @@ class GameMarketPCViewModel extends ChangeNotifier {
       if (_state.ownPCs.length < maxCountPC) {
         await _pcRepository.addPC(pc);
         await _gameRepository.changeData(money: _state.money - pc.cost);
+        await _statisticsRepository.addPCConsume(pc.cost);
       } else {
         // erorr message max  pcs
       }

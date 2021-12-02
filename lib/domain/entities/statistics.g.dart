@@ -19,9 +19,10 @@ class StatisticsAdapter extends TypeAdapter<Statistics> {
     return Statistics(
       energyConsume: (fields[0] as List).cast<double>(),
       flatConsume: (fields[1] as List).cast<double>(),
-      tokenEarn: (fields[2] as Map).map((dynamic k, dynamic v) =>
+      pcConsume: (fields[2] as List).cast<double>(),
+      tokenEarn: (fields[3] as Map).map((dynamic k, dynamic v) =>
           MapEntry(k as int, (v as List).cast<double>())),
-      tokenMining: (fields[3] as Map).map((dynamic k, dynamic v) =>
+      tokenMining: (fields[4] as Map).map((dynamic k, dynamic v) =>
           MapEntry(k as int, (v as List).cast<double>())),
     );
   }
@@ -29,14 +30,16 @@ class StatisticsAdapter extends TypeAdapter<Statistics> {
   @override
   void write(BinaryWriter writer, Statistics obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.energyConsume)
       ..writeByte(1)
       ..write(obj.flatConsume)
       ..writeByte(2)
-      ..write(obj.tokenEarn)
+      ..write(obj.pcConsume)
       ..writeByte(3)
+      ..write(obj.tokenEarn)
+      ..writeByte(4)
       ..write(obj.tokenMining);
   }
 

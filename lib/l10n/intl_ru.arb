@@ -21,6 +21,7 @@
     "main_game_stat_title": "Статистика",
     "main_game_stat_spend_all_title": "Потрачено за все время",
     "main_game_stat_spend_flat_title": "Потрачено на жилье",
+    "main_game_stat_spend_pc_title": "Потрачено на установки",
     "main_game_stat_spend_energy_title": "Потрачено на электричество",
     "main_game_stat_earn_on_crypto_title": "Заработано на {symbol}",
     "main_game_stat_mining_on_crypto_title": "Добыто {symbol}",
@@ -48,7 +49,7 @@
     "game_crypto_helper_title": "Нажми на криптовалюту, чтобы продать",
 
     "game_mining_title": "Майнинг",
-    "game_mining_now_price_title": "Текущая цена",
+    "game_mining_now_price_title": "Текущая",
     "game_mining_week_price_title": "Неделю назад",
     "game_mining_month_price_title": "Месяц назад",
     "game_mining_year_price_title": "Год назад",

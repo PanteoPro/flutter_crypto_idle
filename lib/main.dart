@@ -1,6 +1,7 @@
 import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
+import 'package:crypto_idle/domain/entities/statistics.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/ui/main_app.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ Future<void> deleteAllHive() async {
   await Hive.deleteBoxFromDisk('flat');
   await Hive.deleteBoxFromDisk('token');
   await Hive.deleteBoxFromDisk('price_token');
+  await Hive.deleteBoxFromDisk('statistics');
 }
 
 Future<void> firstDataPC() async {
@@ -67,7 +69,7 @@ Future<void> firstDataToken() async {
 
   final tokens = <Token>[
     Token(id: 1, symbol: 'BTC', fullName: 'Bitcoin', count: 0.0003, coefMining: 0.001),
-    Token(id: 2, symbol: 'ETC', fullName: 'Etherium classic', count: 0, coefMining: 0.02),
+    Token(id: 2, symbol: 'ETC', fullName: 'Etherium classic', count: 10, coefMining: 0.02),
     Token(id: 3, symbol: 'ETH', fullName: 'Etherium', count: 0, coefMining: 0.05),
     Token(id: 4, symbol: 'BNB', fullName: 'Binance', count: 0, coefMining: 0.11),
     Token(id: 5, symbol: 'DOL', fullName: 'Deep of league', count: 1024, coefMining: 0.4),
@@ -85,14 +87,14 @@ Future<void> firstDataToken() async {
   await _priceBox.addAll(prices);
 }
 
-// Future<void> firstInitGame() async {
-//   if (!Hive.isAdapterRegistered(0)) {
-//     Hive.registerAdapter(GameAdapter());
-//   }
-//   final _gameBox = await Hive.openBox<Game>('game');
-//   final game = _gameBox.get('main');
-//   _gameBox.put('main', game!.copyWith(maxCountPC: 5));
-// }
+Future<void> firstDataStatistics() async {
+  if (!Hive.isAdapterRegistered(5)) {
+    Hive.registerAdapter(StatisticsAdapter());
+  }
+  final _box = await Hive.openBox<Statistics>('statistics');
+  final statistics = Statistics.empty();
+  await _box.put(0, statistics);
+}
 
 Future<void> main() async {
   await Hive.initFlutter();
@@ -100,6 +102,6 @@ Future<void> main() async {
   await firstDataPC();
   await firstDataFlat();
   await firstDataToken();
-  // await firstInitGame();
+  await firstDataStatistics();
   runApp(MainApp());
 }
