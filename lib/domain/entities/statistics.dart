@@ -19,7 +19,7 @@ class Statistics extends HiveObject {
   @HiveField(1)
   List<double> flatConsume = [];
   @HiveField(2)
-  Map<Token, List<double>> tokenEarn = {};
+  Map<int, List<double>> tokenEarn = {};
   @HiveField(3)
-  Map<Token, List<double>> tokenMining = {};
+  Map<int, List<double>> tokenMining = {};
 }

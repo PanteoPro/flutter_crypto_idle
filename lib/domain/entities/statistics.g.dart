@@ -20,9 +20,9 @@ class StatisticsAdapter extends TypeAdapter<Statistics> {
       energyConsume: (fields[0] as List).cast<double>(),
       flatConsume: (fields[1] as List).cast<double>(),
       tokenEarn: (fields[2] as Map).map((dynamic k, dynamic v) =>
-          MapEntry(k as Token, (v as List).cast<double>())),
+          MapEntry(k as int, (v as List).cast<double>())),
       tokenMining: (fields[3] as Map).map((dynamic k, dynamic v) =>
-          MapEntry(k as Token, (v as List).cast<double>())),
+          MapEntry(k as int, (v as List).cast<double>())),
     );
   }
 
