@@ -79,7 +79,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "game_market_pc_cost_sell_item_title":
             MessageLookupByLibrary.simpleMessage("Стоимость при продаже"),
         "game_market_pc_energy_item_title":
-            MessageLookupByLibrary.simpleMessage("Потребление электричества"),
+            MessageLookupByLibrary.simpleMessage("Потребление"),
         "game_market_pc_power_item_title":
             MessageLookupByLibrary.simpleMessage("Мощность"),
         "game_market_pc_sell_item_title":

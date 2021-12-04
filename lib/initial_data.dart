@@ -75,7 +75,9 @@ abstract class InitialData {
   static const int baseMonthCostFlat = 200;
   static const int baseCountPC = 5;
 
-  static const double minTokenPrice = 0.001;
+  static const double minTooLowTokenPrice = 0.001;
+  static const double maxTooLowTokenPrice = 0.1;
+  static const double maxLowTokenPrice = 100;
   static const double maxTokenPrice = 4000.0;
 
   static List<PC> getInitialPCs() {
@@ -86,6 +88,7 @@ abstract class InitialData {
       final costSell = cost * sellCoefPC;
       final power = (basePowerPC * index).toDouble();
       final energy = (baseEnergyPC * index).toDouble();
+      index += 1;
       return PC(id: index, name: name, cost: cost, costSell: costSell, power: power, energy: energy);
     });
     return result.toList();
@@ -100,6 +103,7 @@ abstract class InitialData {
       final countPC = baseCountPC + index - 1;
       final isBuy = index == 1 || false;
       final isActive = index == 1 || false;
+      index += 1;
       return Flat(
         id: index,
         name: name,
@@ -116,22 +120,39 @@ abstract class InitialData {
   static List<Token> getInitialTokens() {
     const names = InitialDataNames.namesCrypto;
     var index = 1;
-    final result = names.entries.map(
-      (e) => Token(
+    final result = names.entries.map((e) {
+      final token = Token(
         id: index,
         symbol: e.key,
         fullName: e.value,
         count: 0,
         coefMining: 0,
-      ),
-    );
+      );
+      index += 1;
+      return token;
+    });
     return result.toList();
   }
 
   static List<PriceToken> getInitialPrices(List<Token> tokens) {
     final result = tokens.map((Token token) {
+      final random = Random();
+      final isLowPrice = random.nextBool();
+      final isTooLowPrice = random.nextBool();
+
+      final startCost = isLowPrice
+          ? isTooLowPrice
+              ? minTooLowTokenPrice
+              : maxTooLowTokenPrice
+          : maxLowTokenPrice;
+      final endCost = isLowPrice
+          ? isTooLowPrice
+              ? maxTooLowTokenPrice
+              : maxLowTokenPrice
+          : maxTokenPrice;
+
       final cost = double.parse(
-        (minTokenPrice + Random().nextDouble() * (maxTokenPrice - minTokenPrice)).toStringAsFixed(2),
+        (startCost + Random().nextDouble() * (endCost - startCost)).toStringAsFixed(2),
       );
       return PriceToken(
         date: DateTime.now().add(const Duration(days: -1)),
