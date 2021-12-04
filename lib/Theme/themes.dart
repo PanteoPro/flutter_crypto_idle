@@ -15,6 +15,7 @@ final ThemeData kLightTheme = ThemeData.light().copyWith(
     headline2: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 18),
     headline5: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
     headline6: TextStyle(color: Colors.white, fontWeight: FontWeight.normal, fontSize: 13),
+    subtitle2: TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 12),
   ),
 );
 

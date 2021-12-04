@@ -26,18 +26,104 @@ class MainGamePage extends StatelessWidget {
       body: SafeArea(
         child: ColoredBox(
           color: Theme.of(context).backgroundColor,
-          child: ListView(
-            children: const <Widget>[
-              _GameImageWidget(),
-              _BalanceWidget(),
-              _ActionsWidget(),
-              _CurrentInfoWidget(),
-              _MonthInfoWidget(),
-              _StatisticWidget(),
+          child: Stack(
+            children: const [
+              _MainWidget(),
+              _PrototypeOfNewsWidget(),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _PrototypeOfNewsWidget extends StatelessWidget {
+  const _PrototypeOfNewsWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+      child: Container(
+        color: Colors.black.withOpacity(0.7),
+        width: double.infinity,
+        height: 100,
+        child: Column(
+          children: const [
+            Padding(
+              padding: EdgeInsets.only(top: 6),
+              child: Text('Новости'),
+            ),
+            _PrototypeOfNewsItemsWidget(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PrototypeOfNewsItemsWidget extends StatelessWidget {
+  const _PrototypeOfNewsItemsWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final news = [
+      'Кто-то закупил BTC',
+      'Депортамент финансов России закупил BTC',
+      'Президент Челябинска Кирилл Иванников запретил использование криптовалют'
+    ];
+    var index = 1;
+    final newsWidgets = news.map((String news) {
+      final font = Theme.of(context).textTheme.subtitle2;
+      final double sizeIcon = font?.fontSize != null ? font!.fontSize! - 6 : 4;
+      final widget = Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: sizeIcon,
+            height: sizeIcon,
+            margin: EdgeInsets.only(top: sizeIcon / 2),
+            decoration: BoxDecoration(
+              color: index == 1 ? Colors.green : Colors.yellow,
+              borderRadius: BorderRadius.circular(50),
+            ),
+          ),
+          const SizedBox(width: 5),
+          Expanded(child: Text(news, style: font)),
+        ],
+      );
+      index += 1;
+      return widget;
+    }).toList();
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: newsWidgets,
+      ),
+    );
+  }
+}
+
+class _MainWidget extends StatelessWidget {
+  const _MainWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: const <Widget>[
+        _GameImageWidget(),
+        _BalanceWidget(),
+        _ActionsWidget(),
+        _CurrentInfoWidget(),
+        _MonthInfoWidget(),
+        _StatisticWidget(),
+      ],
     );
   }
 }
