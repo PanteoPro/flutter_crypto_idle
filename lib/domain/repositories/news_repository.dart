@@ -78,11 +78,12 @@ class NewsRepository {
     }
   }
 
-  Strign _replaceDataInTemplate(String template) {
+  String _replaceDataInTemplate(String template) {
     final isHaveCountry = template.contains('[Страна]');
     final isHaveSymbol = template.contains('[Символ]');
     final isHavePerson = template.contains('[Известная личность]');
     final isHaveCrypto = template.contains('[Крипта]');
+    final isHaveCompany = template.contains('[Компания]');
 
     String? symbol;
 
@@ -106,13 +107,17 @@ class NewsRepository {
       final cryptoName = _tokenNames[symbol] ?? '';
       template.replaceFirst('[Крипта]', cryptoName);
     }
-    if (isHaveSymbol) {
-      final symbols = _peopleNames.keys.toList();
-      symbols.shuffle();
-      symbol = symbols.first;
-      template.replaceFirst('[Символ]', symbol);
+    if (isHavePerson) {
+      _peopleNames.shuffle();
+      final people = _peopleNames.first;
+      template.replaceFirst('[Известная личность]', people);
     }
-    final requiredParams = regExp.allMatches(template);
+    if (isHaveCompany) {
+      _companyNames.shuffle();
+      final company = _companyNames.first;
+      template.replaceFirst('[Компания]', company);
+    }
+    return template;
   }
 
   String _generateNews() {
@@ -131,14 +136,22 @@ class NewsRepository {
       'Создатель криптовалюты [Крипта] [Символ] обрушил курс.',
       'Криптовалюта [Крипта] [Символ] оказалась скамом.',
     ];
+    positive.shuffle();
+    neutral.shuffle();
+    negative.shuffle();
     final newsType = NewsTypeExt.getRandom();
+    String template = '';
     switch (newsType) {
       case NewsType.positive:
+        template = positive.first;
         break;
       case NewsType.neutral:
+        template = neutral.first;
         break;
       case NewsType.negative:
+        template = negative.first;
         break;
     }
+    return _replaceDataInTemplate(template);
   }
 }
