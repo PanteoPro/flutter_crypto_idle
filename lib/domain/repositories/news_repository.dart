@@ -15,7 +15,7 @@ class NewsRepository {
   static const int _minWaitDayDelay = 5;
   static const int _maxWaitDayDelay = 30;
 
-  static const List<String> _countryNames = [
+  static final List<String> _countryNames = [
     'Нурляндия',
     'Гемец',
     'Шальмена',
@@ -31,7 +31,7 @@ class NewsRepository {
     'Скиудал',
   ];
 
-  static const List<String> _peopleNames = [
+  static final List<String> _peopleNames = [
     'Кирилл Иванников',
     'Генадий Шмутин ',
     'Иклон Немаск',
@@ -48,7 +48,7 @@ class NewsRepository {
     'Доктрин Шмитов',
   ];
 
-  static const List<String> _companyNames = [
+  static final List<String> _companyNames = [
     'Finalloy Quarries',
     'Dba Promotions',
     'Rw Auto Repair',
@@ -61,7 +61,7 @@ class NewsRepository {
     'Tpc Solutions',
   ];
 
-  static const Map<String, String> _tokenNames = InitialDataNames.namesCrypto;
+  static final Map<String, String> _tokenNames = InitialDataNames.namesCrypto;
 
   DateTime? lastGenerated;
   int? countWaitDays;
@@ -70,7 +70,8 @@ class NewsRepository {
   String? getNews(DateTime dateNow) {
     final dayBefore = dateNow.add(const Duration(days: -1));
     if (dateNow.isAfter(lastGenerated?.add(Duration(days: countWaitDays ?? 0)) ?? dayBefore)) {
-      countWaitDays = _minWaitDayDelay + Random().nextInt(_maxWaitDayDelay - _minWaitDayDelay);
+      // countWaitDays = _minWaitDayDelay + Random().nextInt(_maxWaitDayDelay - _minWaitDayDelay);
+      countWaitDays = 0;
       lastGenerated = dateNow;
       return _generateNews();
     } else {
@@ -86,17 +87,18 @@ class NewsRepository {
     final isHaveCompany = template.contains('[Компания]');
 
     String? symbol;
+    String result = template;
 
     if (isHaveCountry) {
       _countryNames.shuffle();
       final country = _countryNames.first;
-      template.replaceFirst('[Страна]', country);
+      result = result.replaceFirst('[Страна]', country);
     }
     if (isHaveSymbol) {
       final symbols = _tokenNames.keys.toList();
       symbols.shuffle();
       symbol = symbols.first;
-      template.replaceFirst('[Символ]', symbol);
+      result = result.replaceFirst('[Символ]', symbol);
     }
     if (isHaveCrypto) {
       if (symbol == null) {
@@ -105,19 +107,19 @@ class NewsRepository {
         symbol = symbols.first;
       }
       final cryptoName = _tokenNames[symbol] ?? '';
-      template.replaceFirst('[Крипта]', cryptoName);
+      result = result.replaceFirst('[Крипта]', cryptoName);
     }
     if (isHavePerson) {
       _peopleNames.shuffle();
       final people = _peopleNames.first;
-      template.replaceFirst('[Известная личность]', people);
+      result = result.replaceFirst('[Известная личность]', people);
     }
     if (isHaveCompany) {
       _companyNames.shuffle();
       final company = _companyNames.first;
-      template.replaceFirst('[Компания]', company);
+      result = result.replaceFirst('[Компания]', company);
     }
-    return template;
+    return result;
   }
 
   String _generateNews() {

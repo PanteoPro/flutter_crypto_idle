@@ -55,7 +55,7 @@ class _PrototypeOfNewsWidget extends StatelessWidget {
               padding: EdgeInsets.only(top: 6),
               child: Text('Новости'),
             ),
-            _PrototypeOfNewsItemsWidget(),
+            Expanded(child: _PrototypeOfNewsItemsWidget()),
           ],
         ),
       ),
@@ -70,11 +70,11 @@ class _PrototypeOfNewsItemsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final news = [
-      'Кто-то закупил BTC',
-      'Депортамент финансов России закупил BTC',
-      'Президент Челябинска Кирилл Иванников запретил использование криптовалют'
-    ];
+    context.select((GameViewModel vm) => vm.newsList.length);
+    var news = context.read<GameViewModel>().newsList;
+    // if (news.length > 3) {
+    //   news = news.reversed.toList().getRange(0, 3).toList();
+    // }
     var index = 1;
     final newsWidgets = news.map((String news) {
       final font = Theme.of(context).textTheme.subtitle2;
@@ -100,8 +100,8 @@ class _PrototypeOfNewsItemsWidget extends StatelessWidget {
     }).toList();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
+        // crossAxisAlignment: CrossAxisAlignment.start,
         children: newsWidgets,
       ),
     );

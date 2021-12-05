@@ -9,6 +9,7 @@ import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
+import 'package:crypto_idle/domain/repositories/news_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
@@ -94,6 +95,9 @@ class GameViewModel extends ChangeNotifier {
   StreamSubscription<dynamic>? _priceTokenStreamSub;
   StreamSubscription<dynamic>? _statisticsStreamSub;
 
+  final _newsRepository = NewsRepository();
+  List<String> newsList = [];
+
   // Data
   var _state = GameViewModelState.empty();
   GameViewModelState get state => _state;
@@ -156,6 +160,16 @@ class GameViewModel extends ChangeNotifier {
     await _gameRepository.changeData(date: _state.game?.date.add(Duration(days: 1)));
     await _miningDay();
     await _newPricesDay();
+    newsDay();
+  }
+
+  void newsDay() {
+    final news = _newsRepository.getNews(_state.game!.date);
+    if (news != null) {
+      newsList.add(news);
+      print('add news $news');
+      notifyListeners();
+    }
   }
 
   Future<void> _miningDay() async {
