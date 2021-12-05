@@ -1,3 +1,4 @@
+import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
@@ -76,7 +77,7 @@ class _PrototypeOfNewsItemsWidget extends StatelessWidget {
     //   news = news.reversed.toList().getRange(0, 3).toList();
     // }
     var index = 1;
-    final newsWidgets = news.map((String news) {
+    final newsWidgets = news.map((News news) {
       final font = Theme.of(context).textTheme.subtitle2;
       final double sizeIcon = font?.fontSize != null ? font!.fontSize! - 6 : 4;
       final widget = Row(
@@ -92,7 +93,7 @@ class _PrototypeOfNewsItemsWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 5),
-          Expanded(child: Text(news, style: font)),
+          Expanded(child: Text(news.text, style: font)),
         ],
       );
       index += 1;

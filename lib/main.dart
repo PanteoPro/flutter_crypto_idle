@@ -20,6 +20,7 @@ Future<void> deleteAllHive() async {
   await Hive.deleteBoxFromDisk('token');
   await Hive.deleteBoxFromDisk('price_token');
   await Hive.deleteBoxFromDisk('statistics');
+  await Hive.deleteBoxFromDisk('news');
 }
 
 Future<void> firstDataPC() async {

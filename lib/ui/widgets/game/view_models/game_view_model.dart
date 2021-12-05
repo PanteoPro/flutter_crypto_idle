@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
+import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/pc.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
@@ -88,6 +89,8 @@ class GameViewModel extends ChangeNotifier {
   final _tokenRepository = TokenRepository();
   final _priceTokenRepository = PriceTokenRepository();
   final _statisticsRepository = StatisticsRepository();
+  final _newsRepository = NewsRepository();
+
   StreamSubscription<dynamic>? _gameStreamSub;
   StreamSubscription<dynamic>? _pcStreamSub;
   StreamSubscription<dynamic>? _flatStreamSub;
@@ -95,8 +98,7 @@ class GameViewModel extends ChangeNotifier {
   StreamSubscription<dynamic>? _priceTokenStreamSub;
   StreamSubscription<dynamic>? _statisticsStreamSub;
 
-  final _newsRepository = NewsRepository();
-  List<String> newsList = [];
+  List<News> newsList = [];
 
   // Data
   var _state = GameViewModelState.empty();
@@ -110,6 +112,7 @@ class GameViewModel extends ChangeNotifier {
     await _tokenRepository.init();
     await _priceTokenRepository.init();
     await _statisticsRepository.init();
+    await _newsRepository.init();
     _subscriteStreams();
     updateState();
   }
@@ -159,17 +162,21 @@ class GameViewModel extends ChangeNotifier {
     print('day $numberDaySession');
     await _gameRepository.changeData(date: _state.game?.date.add(Duration(days: 1)));
     await _miningDay();
-    await _newPricesDay();
     newsDay();
+    await _newPricesDay();
   }
 
-  void newsDay() {
-    final news = _newsRepository.getNews(_state.game!.date);
-    if (news != null) {
-      newsList.add(news);
-      print('add news $news');
-      notifyListeners();
+  Future<void> newsDay() async {
+    final isAdded = _newsRepository.createNews(_state.game!.date);
+    if (isAdded) {
+      await _newsRepository.updateData();
+      newsList = _newsRepository.news.reversed.toList();
     }
+    // if (news != null) {
+    //   newsList.add(news);
+    //   print('add news $news');
+    //   notifyListeners();
+    // }
   }
 
   Future<void> _miningDay() async {
@@ -209,9 +216,31 @@ class GameViewModel extends ChangeNotifier {
     for (final token in tokens) {
       oldPrices.add(_priceTokenRepository.getLatestPriceByTokenId(token.id));
     }
+    final news = _newsRepository.newsNotActivate;
+    final tokensWithNews = <Token>[];
+    for (var token in tokens) {
+      if (news.where((news) => news.symbol == token.symbol).isNotEmpty) {
+        tokensWithNews.add(token);
+      }
+    }
     final newPrices = oldPrices.map((PriceToken price) {
-      final isRaise = _getMoveCrypto(60, 40);
-      final percentChange = isRaise ? 1 + _getChangePercent(1, 10) : 1 - _getChangePercent(1, 10);
+      final tokens = tokensWithNews.where((token) => token.id == price.tokenId);
+      var percentChange = 0.0;
+      if (tokens.isNotEmpty) {
+        // use news
+        final newsOne = news.firstWhere((element) => element.symbol == tokens.first.symbol);
+        newsOne.isActivate = true;
+        newsOne.save();
+        print('have a news for ${newsOne.symbol}');
+        var isRaise = false;
+        if (newsOne.newsTypeValue == NewsType.positive.index) {
+          isRaise = true;
+        } else if (newsOne.newsTypeValue == NewsType.negative.index) {}
+        percentChange = isRaise ? 1.9 : 0.1;
+      } else {
+        final isRaise = _getMoveCrypto(60, 40);
+        percentChange = isRaise ? 1 + _getChangePercent(1, 10) : 1 - _getChangePercent(1, 10);
+      }
       final newPrice = price.cost * percentChange;
       return price.copyWith(cost: newPrice, date: _state.game?.date);
     });
