@@ -149,7 +149,7 @@ class GameMiningViewModel extends ChangeNotifier {
 
   Future<void> onChangeMiningToken(int pcIndex) async {
     final pc = _state.filtered![pcIndex];
-    final token = _state.tokens[_state.modaleTokenIndex];
+    final token = _state.availableTokens[_state.modaleTokenIndex];
     if (pc.miningToken?.id == token.id) {
       await _pcRepository.changeMiningToken(pc);
     } else {
