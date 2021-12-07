@@ -60,7 +60,7 @@ Future<void> firstDataToken() async {
   final _priceBox = await Hive.openBox<PriceToken>('price_token');
 
   final tokens = InitialData.getInitialTokens();
-  final prices = InitialData.getInitialPrices(tokens);
+  final prices = InitialData.getInitialPrices(tokens: tokens, dayHistoryCount: 10);
 
   await _tokenBox.addAll(tokens);
   await _priceBox.addAll(prices);

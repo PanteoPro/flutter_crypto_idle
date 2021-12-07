@@ -49,7 +49,6 @@ class GameRepository implements MyRepository {
 
   Future<void> nextDay() async {
     _game = _game.copyWith(date: _game.date.add(const Duration(days: 1)));
-    print('neextDayt');
     await _gameDataProvider.saveData(_game);
     _streamController.add('nextDay');
   }

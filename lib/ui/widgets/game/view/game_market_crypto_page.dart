@@ -86,8 +86,11 @@ class _ChartWidget extends StatelessWidget {
     final resMax = ((visibleMaximum + expandValue) / devidedValue).ceil() * devidedValue;
     final resMin = (max(visibleMinimum - expandValue, 0) / devidedValue).floor() * devidedValue;
 
-    print("$visibleMaximum, $resMax");
-    print("$visibleMinimum, $resMin");
+    // print("$visibleMaximum, $resMax");
+    // print("$visibleMinimum, $resMin");
+
+    final isScam = latestPrices.where((element) => element.cost <= 0).isNotEmpty;
+    prices.forEach((elem) => print(elem.cost));
 
     return SizedBox(
       height: 300,
@@ -110,14 +113,16 @@ class _ChartWidget extends StatelessWidget {
               dataSource: dataChart,
               xValueMapper: (ChartData data, _) => dateFormater.format(data.day),
               yValueMapper: (ChartData data, _) => data.cost,
-              trendlines: <Trendline>[
-                Trendline(
-                  type: TrendlineType.exponential,
-                  color: Colors.red,
-                  width: 0.9,
-                  opacity: 0.9,
-                ),
-              ],
+              trendlines: !isScam
+                  ? <Trendline>[
+                      Trendline(
+                        type: TrendlineType.exponential,
+                        color: Colors.red,
+                        width: 0.9,
+                        opacity: 0.9,
+                      ),
+                    ]
+                  : null,
             ),
           ],
         ),

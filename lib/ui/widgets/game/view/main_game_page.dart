@@ -71,8 +71,8 @@ class _PrototypeOfNewsItemsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.select((GameViewModel vm) => vm.newsList.length);
-    var news = context.read<GameViewModel>().newsList;
+    context.select((GameViewModel vm) => vm.newsListToDisplay.length);
+    var news = context.read<GameViewModel>().newsListToDisplay;
     // if (news.length > 3) {
     //   news = news.reversed.toList().getRange(0, 3).toList();
     // }

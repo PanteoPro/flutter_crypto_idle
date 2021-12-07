@@ -98,11 +98,11 @@ class GameViewModel extends ChangeNotifier {
   StreamSubscription<dynamic>? _priceTokenStreamSub;
   StreamSubscription<dynamic>? _statisticsStreamSub;
 
-  List<News> newsList = [];
-
   // Data
   var _state = GameViewModelState.empty();
   GameViewModelState get state => _state;
+
+  var newsListToDisplay = <News>[];
 
   /// Initial Repository
   Future<void> _initialRepository() async {
@@ -159,24 +159,19 @@ class GameViewModel extends ChangeNotifier {
   // New day logic
 
   Future<void> _newDay(dynamic numberDaySession) async {
-    print('day $numberDaySession');
-    await _gameRepository.changeData(date: _state.game?.date.add(Duration(days: 1)));
+    await _gameRepository.nextDay();
+    // await _gameRepository.changeData(date: _state.game?.date.add(Duration(days: 1)));
     await _miningDay();
-    newsDay();
+    await newsDay();
     await _newPricesDay();
   }
 
   Future<void> newsDay() async {
-    final isAdded = _newsRepository.createNews(_state.game!.date);
-    if (isAdded) {
+    final isCreated = _newsRepository.createNews(_state.game!.date);
+    if (isCreated) {
       await _newsRepository.updateData();
-      newsList = _newsRepository.news.reversed.toList();
+      newsListToDisplay = _newsRepository.news.reversed.toList();
     }
-    // if (news != null) {
-    //   newsList.add(news);
-    //   print('add news $news');
-    //   notifyListeners();
-    // }
   }
 
   Future<void> _miningDay() async {
@@ -217,34 +212,51 @@ class GameViewModel extends ChangeNotifier {
       oldPrices.add(_priceTokenRepository.getLatestPriceByTokenId(token.id));
     }
     final news = _newsRepository.newsNotActivate;
-    final tokensWithNews = <Token>[];
-    for (var token in tokens) {
-      if (news.where((news) => news.symbol == token.symbol).isNotEmpty) {
-        tokensWithNews.add(token);
+    final newsAllCrypto = news.where((element) => element.isAllCrypto && !element.isActivate);
+    News? newsOneGlobal;
+    if (newsAllCrypto.isNotEmpty) {
+      newsOneGlobal = newsAllCrypto.first;
+    }
+    newsOneGlobal?.isActivate = true;
+    newsOneGlobal?.save();
+    final newPrices = <PriceToken>[];
+    for (var price in oldPrices) {
+      if (price.cost > 0) {
+        final newsForThisPrice = news.where((news) => news.tokenID == price.tokenId);
+        var percentChange = 0.0;
+
+        if (newsForThisPrice.isNotEmpty) {
+          final newsOne = newsForThisPrice.first;
+          newsOne.isActivate = true;
+          newsOne.save();
+
+          if (newsOne.newsTypeValue == NewsType.positive.index) {
+            percentChange = 1 + _getChangePercent(30, 80);
+          } else if (newsOne.newsTypeValue == NewsType.negative.index) {
+            percentChange = 1 - _getChangePercent(15, 50);
+          } else {
+            percentChange = 1;
+          }
+          if (newsOne.isScamToken) {
+            percentChange = 0;
+          }
+        } else {
+          // without News
+          final isRaise = _getMoveCrypto(55, 45);
+          percentChange = isRaise ? 1 + _getChangePercent(1, 10) : 1 - _getChangePercent(1, 10);
+        }
+        if (newsOneGlobal != null && percentChange != 0.0) {
+          if (newsOneGlobal.newsTypeValue == NewsType.positive.index) {
+            percentChange += _getChangePercent(8, 12);
+          } else if (newsOneGlobal.newsTypeValue == NewsType.negative.index) {
+            percentChange -= _getChangePercent(8, 12);
+          }
+        }
+        final newPrice = price.cost * percentChange;
+        newPrices.add(price.copyWith(cost: newPrice, date: _state.game?.date));
       }
     }
-    final newPrices = oldPrices.map((PriceToken price) {
-      final tokens = tokensWithNews.where((token) => token.id == price.tokenId);
-      var percentChange = 0.0;
-      if (tokens.isNotEmpty) {
-        // use news
-        final newsOne = news.firstWhere((element) => element.symbol == tokens.first.symbol);
-        newsOne.isActivate = true;
-        newsOne.save();
-        print('have a news for ${newsOne.symbol}');
-        var isRaise = false;
-        if (newsOne.newsTypeValue == NewsType.positive.index) {
-          isRaise = true;
-        } else if (newsOne.newsTypeValue == NewsType.negative.index) {}
-        percentChange = isRaise ? 1.9 : 0.1;
-      } else {
-        final isRaise = _getMoveCrypto(60, 40);
-        percentChange = isRaise ? 1 + _getChangePercent(1, 10) : 1 - _getChangePercent(1, 10);
-      }
-      final newPrice = price.cost * percentChange;
-      return price.copyWith(cost: newPrice, date: _state.game?.date);
-    });
-    for (var price in newPrices) {
+    for (final price in newPrices) {
       await _priceTokenRepository.addPrice(price);
     }
   }

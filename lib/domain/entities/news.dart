@@ -1,20 +1,30 @@
-import 'package:crypto_idle/domain/repositories/news_repository.dart';
 import 'package:hive/hive.dart';
 
 part 'news.g.dart';
 
 @HiveType(typeId: 6)
 class News extends HiveObject {
-  News({required this.text, required this.newsTypeValue, required this.symbol, required this.date});
+  News({
+    required this.text,
+    required this.newsTypeValue,
+    this.tokenID,
+    required this.date,
+    this.isScamToken = false,
+    this.isAllCrypto = false,
+  });
 
   @HiveField(0)
   final String text;
   @HiveField(1)
-  final int newsTypeValue;
+  final int? tokenID;
   @HiveField(2)
-  final String symbol;
+  final int newsTypeValue;
   @HiveField(3)
   final DateTime date;
   @HiveField(4)
   bool isActivate = false;
+  @HiveField(5)
+  bool isScamToken;
+  @HiveField(6)
+  bool isAllCrypto;
 }

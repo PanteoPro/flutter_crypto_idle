@@ -134,9 +134,10 @@ abstract class InitialData {
     return result.toList();
   }
 
-  static List<PriceToken> getInitialPrices(List<Token> tokens) {
-    final result = tokens.map((Token token) {
-      final random = Random();
+  static List<PriceToken> getInitialPrices({required List<Token> tokens, required int dayHistoryCount}) {
+    final result = <PriceToken>[];
+    final random = Random();
+    for (final token in tokens) {
       final isLowPrice = random.nextBool();
       final isTooLowPrice = random.nextBool();
 
@@ -150,16 +151,21 @@ abstract class InitialData {
               ? maxTooLowTokenPrice
               : maxLowTokenPrice
           : maxTokenPrice;
-
       final cost = double.parse(
-        (startCost + Random().nextDouble() * (endCost - startCost)).toStringAsFixed(2),
+        (startCost + Random().nextDouble() * (endCost - startCost)).toStringAsFixed(3),
       );
-      return PriceToken(
-        date: DateTime.now().add(const Duration(days: -1)),
-        cost: cost,
-        tokenId: token.id,
-      );
-    });
-    return result.toList();
+      for (int i = 0; i < dayHistoryCount; i++) {
+        final generatedValue = (Random().nextInt(3 - 1) + 1) / 100;
+        final coefChanged = Random().nextBool() ? 1 + generatedValue : 1 - generatedValue;
+        result.add(
+          PriceToken(
+            date: DateTime.now().add(Duration(days: -(dayHistoryCount - i))),
+            cost: cost * coefChanged,
+            tokenId: token.id,
+          ),
+        );
+      }
+    }
+    return result;
   }
 }

@@ -2,9 +2,29 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:crypto_idle/domain/data_providers/news_data_provider.dart';
+import 'package:crypto_idle/domain/data_providers/price_token_data_provider.dart';
+import 'package:crypto_idle/domain/data_providers/token_data_provider.dart';
 import 'package:crypto_idle/domain/entities/news.dart';
+import 'package:crypto_idle/domain/entities/price_token.dart';
+import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/initial_data.dart';
+
+class _NewsStruct {
+  _NewsStruct({
+    required this.template,
+    required this.type,
+    required this.isAllCrypto,
+    required this.isScamType,
+    this.token,
+  });
+
+  final String template;
+  final NewsType type;
+  final Token? token;
+  final bool isAllCrypto;
+  final bool isScamType;
+}
 
 enum NewsType { positive, neutral, negative }
 
@@ -15,20 +35,11 @@ extension NewsTypeExt on NewsType {
   }
 }
 
-class NewsRepository extends MyRepository {
-  final _newsDataProvider = NewsDataProvider();
+class _NewsRepositoryParams {
+  static const int minWaitDayDelay = 1;
+  static const int maxWaitDayDelay = 4;
 
-  var _news = <News>[];
-  List<News> get news => List.unmodifiable(_news);
-  List<News> get newsNotActivate => List.unmodifiable(_news.where((element) => element.isActivate == false));
-
-  static final _streamController = StreamController<dynamic>();
-  static Stream<dynamic>? stream;
-
-  static const int _minWaitDayDelay = 5;
-  static const int _maxWaitDayDelay = 30;
-
-  static final List<String> _countryNames = [
+  static final List<String> countryNames = [
     'Нурляндия',
     'Гемец',
     'Шальмена',
@@ -44,7 +55,7 @@ class NewsRepository extends MyRepository {
     'Скиудал',
   ];
 
-  static final List<String> _peopleNames = [
+  static final List<String> peopleNames = [
     'Кирилл Иванников',
     'Генадий Шмутин ',
     'Иклон Немаск',
@@ -61,7 +72,7 @@ class NewsRepository extends MyRepository {
     'Доктрин Шмитов',
   ];
 
-  static final List<String> _companyNames = [
+  static final List<String> companyNames = [
     'Finalloy Quarries',
     'Dba Promotions',
     'Rw Auto Repair',
@@ -74,7 +85,25 @@ class NewsRepository extends MyRepository {
     'Tpc Solutions',
   ];
 
-  static final Map<String, String> _tokenNames = InitialDataNames.namesCrypto;
+  static final Map<String, String> tokenNames = InitialDataNames.namesCrypto;
+}
+
+class NewsRepository extends MyRepository {
+  final _newsDataProvider = NewsDataProvider();
+  final _tokenDataProvider = TokenDataProvider();
+  final _priceDataProvider = PriceTokenDataProvider();
+
+  var _news = <News>[];
+
+  List<News> get news => List.unmodifiable(_news);
+  List<News> get newsNotActivate => List.unmodifiable(_news.where((element) => element.isActivate == false));
+
+  List<PriceToken> pricesByTokenId(int tokenId) =>
+      _priceDataProvider.loadAllPrices().where((element) => element.tokenId == tokenId).toList();
+  PriceToken getLatestPriceByTokenId(int tokenId) => pricesByTokenId(tokenId).last;
+
+  static final _streamController = StreamController<dynamic>();
+  static Stream<dynamic>? stream;
 
   DateTime? lastGenerated;
   int? countWaitDays;
@@ -82,6 +111,8 @@ class NewsRepository extends MyRepository {
   @override
   Future<void> init() async {
     await _newsDataProvider.openBox();
+    await _tokenDataProvider.openBox();
+    await _priceDataProvider.openBox();
     await updateData();
     stream ??= _streamController.stream.asBroadcastStream();
   }
@@ -100,8 +131,10 @@ class NewsRepository extends MyRepository {
   bool createNews(DateTime dateNow) {
     final dayBefore = dateNow.add(const Duration(days: -1));
     if (dateNow.isAfter(lastGenerated?.add(Duration(days: countWaitDays ?? 0)) ?? dayBefore)) {
-      // countWaitDays = _minWaitDayDelay + Random().nextInt(_maxWaitDayDelay - _minWaitDayDelay);
-      countWaitDays = 0;
+      countWaitDays = _NewsRepositoryParams.minWaitDayDelay +
+          Random().nextInt(_NewsRepositoryParams.maxWaitDayDelay - _NewsRepositoryParams.minWaitDayDelay);
+      // countWaitDays = 0;\
+      print('wait days $countWaitDays');
       lastGenerated = dateNow;
       final news = _generateNews(dateNow);
       addNews(news);
@@ -118,80 +151,122 @@ class NewsRepository extends MyRepository {
     final isHaveCrypto = template.contains('[Крипта]');
     final isHaveCompany = template.contains('[Компания]');
 
-    String? symbol;
+    final tokens = _tokenDataProvider.loadTokens();
+    final latestPrices = tokens.map((e) => getLatestPriceByTokenId(e.id));
+
+    final availableTokens = <Token>[];
+    for (final token in tokens) {
+      final price = latestPrices.where((element) => element.tokenId == token.id).first;
+      if (price.cost > 0) {
+        availableTokens.add(token);
+      }
+    }
+
+    availableTokens.shuffle();
+    Token? token = isHaveSymbol || isHaveCrypto ? availableTokens.first : null;
     String result = template;
 
     if (isHaveCountry) {
-      _countryNames.shuffle();
-      final country = _countryNames.first;
+      final countryNames = _NewsRepositoryParams.countryNames;
+      countryNames.shuffle();
+      final country = countryNames.first;
       result = result.replaceFirst('[Страна]', country);
     }
     if (isHaveSymbol) {
-      final symbols = _tokenNames.keys.toList();
-      symbols.shuffle();
-      symbol = symbols.first;
-      result = result.replaceFirst('[Символ]', symbol);
+      result = result.replaceFirst('[Символ]', token!.symbol);
     }
     if (isHaveCrypto) {
-      if (symbol == null) {
-        final symbols = _tokenNames.keys.toList();
-        symbols.shuffle();
-        symbol = symbols.first;
-      }
-      final cryptoName = _tokenNames[symbol] ?? '';
-      result = result.replaceFirst('[Крипта]', cryptoName);
+      result = result.replaceFirst('[Крипта]', token!.fullName);
     }
     if (isHavePerson) {
-      _peopleNames.shuffle();
-      final people = _peopleNames.first;
+      final peopleNames = _NewsRepositoryParams.peopleNames;
+      peopleNames.shuffle();
+      final people = peopleNames.first;
       result = result.replaceFirst('[Известная личность]', people);
     }
     if (isHaveCompany) {
-      _companyNames.shuffle();
-      final company = _companyNames.first;
+      final companyNames = _NewsRepositoryParams.companyNames;
+      companyNames.shuffle();
+      final company = companyNames.first;
       result = result.replaceFirst('[Компания]', company);
     }
-    return {'result': result, 'symbol': symbol};
+    return {'result': result, 'tokenID': token?.id};
   }
 
   News _generateNews(DateTime dateNow) {
-    final positive = [
-      'Департамент финансов страны [Страна] закупил [Символ].',
-      'Президент [Страна] ретвитнул обновление [Символ].',
-      '[Компания] начала принимать [Символ].',
+    final newsTexts = [
+      _NewsStruct(
+        template: 'Департамент финансов страны [Страна] закупил [Символ].',
+        type: NewsType.positive,
+        isAllCrypto: false,
+        isScamType: false,
+      ),
+      _NewsStruct(
+        template: 'Президент [Страна] ретвитнул обновление [Символ].',
+        type: NewsType.positive,
+        isAllCrypto: false,
+        isScamType: false,
+      ),
+      _NewsStruct(
+        template: '[Компания] начала принимать [Символ].',
+        type: NewsType.positive,
+        isAllCrypto: false,
+        isScamType: false,
+      ),
+      _NewsStruct(
+        template: '[Известная личность] закупил [Символ].',
+        type: NewsType.neutral,
+        isAllCrypto: false,
+        isScamType: false,
+      ),
+      _NewsStruct(
+        template: '[Известная личность] продал [Символ].',
+        type: NewsType.neutral,
+        isAllCrypto: false,
+        isScamType: false,
+      ),
+      _NewsStruct(
+        template: '[Известная личность] обвинил [Крипта] [Символ] в мошеничестве.',
+        type: NewsType.neutral,
+        isAllCrypto: false,
+        isScamType: false,
+      ),
+      _NewsStruct(
+        template: 'Страна [Страна] запретила использование криптовалют на своей территории',
+        type: NewsType.negative,
+        isAllCrypto: true,
+        isScamType: false,
+      ),
+      _NewsStruct(
+        template: 'Создатель криптовалюты [Крипта] [Символ] обрушил курс.',
+        type: NewsType.negative,
+        isAllCrypto: true,
+        isScamType: false,
+      ),
+      _NewsStruct(
+        template: 'Криптовалюта [Крипта] [Символ] оказалась скамом.',
+        type: NewsType.negative,
+        isAllCrypto: true,
+        isScamType: true,
+      ),
     ];
-    final neutral = [
-      '[Известная личность] закупил [Символ].',
-      '[Известная личность] продал [Символ].',
-      '[Известная личность] обвинил [Крипта] [Символ] в мошеничестве.',
-    ];
-    final negative = [
-      // 'Страна [Страна] запретила использование криптовалют на своей территории',
-      'Создатель криптовалюты [Крипта] [Символ] обрушил курс.',
-      'Криптовалюта [Крипта] [Символ] оказалась скамом.',
-    ];
-    positive.shuffle();
-    neutral.shuffle();
-    negative.shuffle();
-    final newsType = NewsTypeExt.getRandom();
-    String template = '';
-    switch (newsType) {
-      case NewsType.positive:
-        template = positive.first;
-        break;
-      case NewsType.neutral:
-        template = neutral.first;
-        break;
-      case NewsType.negative:
-        template = negative.first;
-        break;
+    newsTexts.shuffle();
+    var newsType = NewsTypeExt.getRandom();
+    var newsStruct = newsTexts.firstWhere((element) => element.type == newsType);
+    if (newsStruct.isScamType == true) {
+      print('ReTake, but scam');
+      newsTexts.shuffle();
+      newsType = NewsTypeExt.getRandom();
+      newsStruct = newsTexts.firstWhere((element) => element.type == newsType);
     }
-    final result = _replaceDataInTemplate(template);
+    final result = _replaceDataInTemplate(newsStruct.template);
     return News(
       text: result['result'] as String,
       newsTypeValue: newsType.index,
-      symbol: result['symbol'] as String,
+      tokenID: result['tokenID'] as int?,
       date: dateNow,
+      isAllCrypto: newsStruct.isAllCrypto,
+      isScamToken: newsStruct.isScamType,
     );
   }
 }

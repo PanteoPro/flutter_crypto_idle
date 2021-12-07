@@ -24,6 +24,6 @@ class TokenDataProvider {
   }
 
   List<Token> loadTokens() {
-    return _box.values.toList();
+    return [..._box.values];
   }
 }
