@@ -61,6 +61,11 @@ class GameMiningViewModelState {
     return prices.where((price) => price.tokenId == token.id).last;
   }
 
+  PriceToken getDataAfterPriceByToken({required Token token, required DateTime fromDate, required int daysAgo}) {
+    return prices
+        .firstWhere((price) => price.date.isAfter(fromDate.add(Duration(days: -daysAgo))) && price.tokenId == token.id);
+  }
+
   void sortedPCFirstEmpty() {
     filtered = pcs.where((element) => element.miningToken == null).toList();
     filtered?.addAll(pcs.where((element) => element.miningToken != null).toList());

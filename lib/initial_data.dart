@@ -160,7 +160,7 @@ abstract class InitialData {
         result.add(
           PriceToken(
             date: DateTime.now().add(Duration(days: -(dayHistoryCount - i))),
-            cost: cost * coefChanged,
+            cost: double.parse((cost * coefChanged).toStringAsFixed(4)),
             tokenId: token.id,
           ),
         );

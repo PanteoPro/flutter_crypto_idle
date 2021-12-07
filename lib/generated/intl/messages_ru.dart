@@ -97,16 +97,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Ваши установки"),
         "game_mining_module_title": m1,
         "game_mining_month_price_title":
-            MessageLookupByLibrary.simpleMessage("Месяц назад"),
+            MessageLookupByLibrary.simpleMessage("М. назад"),
         "game_mining_now_price_title":
             MessageLookupByLibrary.simpleMessage("Текущая"),
         "game_mining_set_pc_title":
             MessageLookupByLibrary.simpleMessage("Назначить"),
         "game_mining_title": MessageLookupByLibrary.simpleMessage("Майнинг"),
         "game_mining_week_price_title":
-            MessageLookupByLibrary.simpleMessage("Неделю назад"),
+            MessageLookupByLibrary.simpleMessage("Н. назад"),
         "game_mining_year_price_title":
-            MessageLookupByLibrary.simpleMessage("Год назад"),
+            MessageLookupByLibrary.simpleMessage("Г. назад"),
         "main_game_action_buy_flat_title":
             MessageLookupByLibrary.simpleMessage("Купить помещение"),
         "main_game_action_buy_pc_title":

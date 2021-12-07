@@ -3,6 +3,7 @@ import 'package:crypto_idle/Widgets/buttons.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_mining_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -130,16 +131,25 @@ class _MiningItemInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final token = context.read<GameMiningViewModel>().state.availableTokens[index];
+    final priceToken = context.select((GameMiningViewModel vm) => vm.state.getCurrentPriceByToken(token));
+    final data = context.read<GameViewModel>().state.game!.date;
+    final priceTokenWeek =
+        context.read<GameMiningViewModel>().state.getDataAfterPriceByToken(token: token, fromDate: data, daysAgo: 7);
+    final priceTokenMonth =
+        context.read<GameMiningViewModel>().state.getDataAfterPriceByToken(token: token, fromDate: data, daysAgo: 31);
+    final priceTokenYear =
+        context.read<GameMiningViewModel>().state.getDataAfterPriceByToken(token: token, fromDate: data, daysAgo: 365);
     return SizedBox(
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _MiningItemInfoNowPriceWidget(index: index),
-          _MiningItemInfoWeekPriceWidget(index: index),
-          _MiningItemInfoMonthPriceWidget(index: index),
-          _MiningItemInfoYearPriceWidget(index: index),
+          _MiningItemInfoNowPriceWidget(price: priceToken.cost),
+          _MiningItemInfoWeekPriceWidget(price: priceTokenWeek.cost),
+          _MiningItemInfoMonthPriceWidget(price: priceTokenMonth.cost),
+          _MiningItemInfoYearPriceWidget(price: priceTokenYear.cost),
         ],
       ),
     );
@@ -147,58 +157,64 @@ class _MiningItemInfoWidget extends StatelessWidget {
 }
 
 class _MiningItemInfoNowPriceWidget extends StatelessWidget {
-  const _MiningItemInfoNowPriceWidget({Key? key, required this.index}) : super(key: key);
+  const _MiningItemInfoNowPriceWidget({Key? key, required this.price}) : super(key: key);
 
-  final int index;
+  final double price;
 
   @override
   Widget build(BuildContext context) {
-    final token = context.read<GameMiningViewModel>().state.availableTokens[index];
-    final priceToken = context.select((GameMiningViewModel vm) => vm.state.getCurrentPriceByToken(token));
     return Text(
-      '${S.of(context).game_mining_now_price_title}: ${S.of(context).text_with_dollar(priceToken.cost)}',
+      '${S.of(context).game_mining_now_price_title}: ${S.of(context).text_with_dollar(price)}',
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
       style: Theme.of(context).textTheme.headline6,
     );
   }
 }
 
 class _MiningItemInfoWeekPriceWidget extends StatelessWidget {
-  const _MiningItemInfoWeekPriceWidget({Key? key, required this.index}) : super(key: key);
+  const _MiningItemInfoWeekPriceWidget({Key? key, required this.price}) : super(key: key);
 
-  final int index;
+  final double price;
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${S.of(context).game_mining_week_price_title}: ${S.of(context).text_with_dollar(0)}',
+      '${S.of(context).game_mining_week_price_title}: ${S.of(context).text_with_dollar(price)}',
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
       style: Theme.of(context).textTheme.headline6,
     );
   }
 }
 
 class _MiningItemInfoMonthPriceWidget extends StatelessWidget {
-  const _MiningItemInfoMonthPriceWidget({Key? key, required this.index}) : super(key: key);
+  const _MiningItemInfoMonthPriceWidget({Key? key, required this.price}) : super(key: key);
 
-  final int index;
+  final double price;
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${S.of(context).game_mining_month_price_title}: ${S.of(context).text_with_dollar(0)}',
+      '${S.of(context).game_mining_month_price_title}: ${S.of(context).text_with_dollar(price)}',
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
       style: Theme.of(context).textTheme.headline6,
     );
   }
 }
 
 class _MiningItemInfoYearPriceWidget extends StatelessWidget {
-  const _MiningItemInfoYearPriceWidget({Key? key, required this.index}) : super(key: key);
+  const _MiningItemInfoYearPriceWidget({Key? key, required this.price}) : super(key: key);
 
-  final int index;
+  final double price;
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${S.of(context).game_mining_year_price_title}: ${S.of(context).text_with_dollar(0)}',
+      '${S.of(context).game_mining_year_price_title}: ${S.of(context).text_with_dollar(price)}',
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
       style: Theme.of(context).textTheme.headline6,
     );
   }

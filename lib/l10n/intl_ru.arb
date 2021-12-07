@@ -50,9 +50,9 @@
 
     "game_mining_title": "Майнинг",
     "game_mining_now_price_title": "Текущая",
-    "game_mining_week_price_title": "Неделю назад",
-    "game_mining_month_price_title": "Месяц назад",
-    "game_mining_year_price_title": "Год назад",
+    "game_mining_week_price_title": "Н. назад",
+    "game_mining_month_price_title": "М. назад",
+    "game_mining_year_price_title": "Г. назад",
     "game_mining_set_pc_title": "Назначить",
     "game_mining_module_title": "Майнинг {symbol}",
     "game_mining_module_pc_title": "Ваши установки",
