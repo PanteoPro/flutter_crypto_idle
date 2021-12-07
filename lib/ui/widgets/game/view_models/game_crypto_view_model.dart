@@ -31,18 +31,18 @@ class GameCryptoViewModelState {
   }
 
   void _filterTokens() {
-    final toSort = <double, Token>{};
+    final toSort = <Token, double>{};
     for (final token in tokens) {
-      toSort[getPriceByToken(token) * token.count] = token;
+      toSort[token] = getPriceByToken(token) * token.count;
     }
-    var sortedKeys = toSort.keys.toList()..sort();
+    var sortedKeys = toSort.keys.toList(growable: false)..sort((k1, k2) => toSort[k1]!.compareTo(toSort[k2]!));
     sortedKeys = sortedKeys.reversed.toList();
-    final filt = sortedKeys.map((key) => toSort[key]).toList();
+    // final filt = sortedKeys.map((key) => toSort[key]).toList();
     filtered = [];
-    for (final filtToken in filt) {
-      if (filtToken != null) {
-        filtered.add(filtToken);
-      }
+    for (final filtToken in sortedKeys) {
+      // if (filtToken != null) {
+      filtered.add(filtToken);
+      // }
     }
   }
 }
