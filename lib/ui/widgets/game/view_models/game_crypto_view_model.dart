@@ -9,11 +9,14 @@ import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class GameCryptoViewModelState {
-  GameCryptoViewModelState({required this.tokens, required this.currentPrices});
+  GameCryptoViewModelState({required this.tokens, required this.currentPrices}) {
+    _filterTokens();
+  }
   GameCryptoViewModelState.empty({this.tokens = const [], this.currentPrices = const {}});
 
   final List<Token> tokens;
   final Map<int, double> currentPrices;
+  List<Token> filtered = [];
 
   double getPriceByToken(Token token) {
     return currentPrices[token.id]!;
@@ -21,10 +24,26 @@ class GameCryptoViewModelState {
 
   double getBalance() {
     double balance = 0;
-    for (Token token in tokens) {
+    for (final token in tokens) {
       balance += getPriceByToken(token) * token.count;
     }
     return balance;
+  }
+
+  void _filterTokens() {
+    final toSort = <double, Token>{};
+    for (final token in tokens) {
+      toSort[getPriceByToken(token) * token.count] = token;
+    }
+    var sortedKeys = toSort.keys.toList()..sort();
+    sortedKeys = sortedKeys.reversed.toList();
+    final filt = sortedKeys.map((key) => toSort[key]).toList();
+    filtered = [];
+    for (final filtToken in filt) {
+      if (filtToken != null) {
+        filtered.add(filtToken);
+      }
+    }
   }
 }
 

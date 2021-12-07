@@ -253,12 +253,12 @@ class NewsRepository extends MyRepository {
     newsTexts.shuffle();
     var newsType = NewsTypeExt.getRandom();
     var newsStruct = newsTexts.firstWhere((element) => element.type == newsType);
-    // if (newsStruct.isScamType == true) {
-    //   print('ReTake, but scam');
-    //   newsTexts.shuffle();
-    //   newsType = NewsTypeExt.getRandom();
-    //   newsStruct = newsTexts.firstWhere((element) => element.type == newsType);
-    // }
+    if (newsStruct.isScamType == true) {
+      print('ReTake, but scam');
+      newsTexts.shuffle();
+      newsType = NewsTypeExt.getRandom();
+      newsStruct = newsTexts.firstWhere((element) => element.type == newsType);
+    }
     final result = _replaceDataInTemplate(newsStruct.template);
     return News(
       text: result['result'] as String,

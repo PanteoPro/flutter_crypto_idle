@@ -104,7 +104,7 @@ class _CryptoListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tokensLenght = context.select((GameCryptoViewModel vm) => vm.state.tokens.length);
+    final tokensLenght = context.select((GameCryptoViewModel vm) => vm.state.filtered.length);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: ListView.separated(
@@ -127,8 +127,8 @@ class _CryptoItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final token = context.select((GameCryptoViewModel vm) => vm.state.filtered[index]);
     final vm = context.read<GameCryptoViewModel>();
-    final token = vm.state.tokens[index];
 
     return GestureDetector(
       onTap: () => vm.onTokenPressed(context, token),
@@ -173,7 +173,7 @@ class __CryptoItemNameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final token = context.read<GameCryptoViewModel>().state.tokens[index];
+    final token = context.select((GameCryptoViewModel vm) => vm.state.filtered[index]);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -194,11 +194,11 @@ class __CryptoItemCostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.select((GameCryptoViewModel vm) => vm.state.tokens[index].count);
+    context.select((GameCryptoViewModel vm) => vm.state.filtered[index].count);
     context.select((GameCryptoViewModel vm) => vm.state.currentPrices);
 
     final vm = context.read<GameCryptoViewModel>();
-    final token = vm.state.tokens[index];
+    final token = vm.state.filtered[index];
     final countToken = token.count;
     final costInDollars = vm.state.getPriceByToken(token) * countToken;
 
