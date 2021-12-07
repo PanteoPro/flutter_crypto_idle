@@ -260,4 +260,8 @@ class GameViewModel extends ChangeNotifier {
       await _priceTokenRepository.addPrice(price);
     }
   }
+
+  void BABLO() {
+    _gameRepository.changeData(money: _state.game!.money + 100);
+  }
 }

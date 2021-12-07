@@ -31,7 +31,28 @@ class MainGamePage extends StatelessWidget {
             children: const [
               _MainWidget(),
               _PrototypeOfNewsWidget(),
+              ______BUTTONMONEY______(),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ______BUTTONMONEY______ extends StatelessWidget {
+  const ______BUTTONMONEY______({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: 200,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Center(
+          child: ElevatedButton(
+            onPressed: context.read<GameViewModel>().BABLO,
+            child: Text('БАБЛО'),
           ),
         ),
       ),
