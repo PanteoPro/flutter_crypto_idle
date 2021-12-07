@@ -98,6 +98,7 @@ class _PrototypeOfNewsItemsWidget extends StatelessWidget {
     //   news = news.reversed.toList().getRange(0, 3).toList();
     // }
     var index = 1;
+    final format = DateFormat.yMd('ru-ru');
     final newsWidgets = news.map((News news) {
       final font = Theme.of(context).textTheme.subtitle2;
       final double sizeIcon = font?.fontSize != null ? font!.fontSize! - 6 : 4;
@@ -114,7 +115,23 @@ class _PrototypeOfNewsItemsWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 5),
-          Expanded(child: Text(news.text, style: font)),
+          Expanded(
+            child: RichText(
+              text: TextSpan(
+                text: news.text,
+                style: font,
+                children: [
+                  TextSpan(
+                    text: format.format(news.date),
+                    style: TextStyle(
+                      fontSize: font!.fontSize! / 2 + 4,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       );
       index += 1;
