@@ -133,7 +133,7 @@ class NewsRepository extends MyRepository {
     if (dateNow.isAfter(lastGenerated?.add(Duration(days: countWaitDays ?? 0)) ?? dayBefore)) {
       countWaitDays = _NewsRepositoryParams.minWaitDayDelay +
           Random().nextInt(_NewsRepositoryParams.maxWaitDayDelay - _NewsRepositoryParams.minWaitDayDelay);
-      // countWaitDays = 0;\
+      // countWaitDays = 0;
       print('wait days $countWaitDays');
       lastGenerated = dateNow;
       final news = _generateNews(dateNow);
@@ -253,12 +253,12 @@ class NewsRepository extends MyRepository {
     newsTexts.shuffle();
     var newsType = NewsTypeExt.getRandom();
     var newsStruct = newsTexts.firstWhere((element) => element.type == newsType);
-    if (newsStruct.isScamType == true) {
-      print('ReTake, but scam');
-      newsTexts.shuffle();
-      newsType = NewsTypeExt.getRandom();
-      newsStruct = newsTexts.firstWhere((element) => element.type == newsType);
-    }
+    // if (newsStruct.isScamType == true) {
+    //   print('ReTake, but scam');
+    //   newsTexts.shuffle();
+    //   newsType = NewsTypeExt.getRandom();
+    //   newsStruct = newsTexts.firstWhere((element) => element.type == newsType);
+    // }
     final result = _replaceDataInTemplate(newsStruct.template);
     return News(
       text: result['result'] as String,

@@ -164,6 +164,34 @@ class GameViewModel extends ChangeNotifier {
     await _miningDay();
     await newsDay();
     await _newPricesDay();
+    await _checkMiningScamTokens();
+  }
+
+  List<PriceToken> _pricesByTokenId(int tokenId) =>
+      _priceTokenRepository.prices.where((element) => element.tokenId == tokenId).toList();
+  PriceToken _getLatestPriceByTokenId(int tokenId) => _pricesByTokenId(tokenId).last;
+
+  Future<void> _checkMiningScamTokens() async {
+    final scamTokens = <Token>[];
+    for (final token in _tokenRepository.tokens) {
+      final price = _getLatestPriceByTokenId(token.id);
+      if (price.cost <= 0) {
+        scamTokens.add(token);
+      }
+    }
+    final pcsToChangeMining = _pcRepository.pcs.where((pc) {
+      for (final scam in scamTokens) {
+        if (scam.id == pc.miningToken?.id) {
+          return true;
+        }
+      }
+      return false;
+    });
+    print(scamTokens);
+    for (final pc in pcsToChangeMining) {
+      pc.miningToken = null;
+      pc.save();
+    }
   }
 
   Future<void> newsDay() async {
