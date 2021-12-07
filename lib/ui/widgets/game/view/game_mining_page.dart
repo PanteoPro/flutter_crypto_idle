@@ -45,8 +45,8 @@ class _MiningListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.select((GameMiningViewModel vm) => vm.state.tokens.length);
-    final tokens = context.read<GameMiningViewModel>().state.tokens;
+    context.select((GameMiningViewModel vm) => vm.state.availableTokens.length);
+    final tokens = context.read<GameMiningViewModel>().state.availableTokens;
     final items = List.generate(tokens.length, (index) => index);
 
     return GridView.count(
@@ -96,7 +96,7 @@ class _MiningItemHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final token = context.read<GameMiningViewModel>().state.tokens[index];
+    final token = context.read<GameMiningViewModel>().state.availableTokens[index];
     return Row(
       children: [
         const SizedBox(width: 32, height: 32, child: Placeholder()),
@@ -153,7 +153,7 @@ class _MiningItemInfoNowPriceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final token = context.read<GameMiningViewModel>().state.tokens[index];
+    final token = context.read<GameMiningViewModel>().state.availableTokens[index];
     final priceToken = context.select((GameMiningViewModel vm) => vm.state.getCurrentPriceByToken(token));
     return Text(
       '${S.of(context).game_mining_now_price_title}: ${S.of(context).text_with_dollar(priceToken.cost)}',
@@ -249,7 +249,7 @@ class _ModulePcWidget extends StatelessWidget {
                 children: [
                   _ModulePcHeaderWidget(
                     onTap: vm.onExitModalAction,
-                    symbol: vm.state.tokens[vm.state.modaleTokenIndex].symbol,
+                    symbol: vm.state.availableTokens[vm.state.modaleTokenIndex].symbol,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
@@ -444,7 +444,7 @@ class _ModulePCItemChangeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final miningToken = context.select((GameMiningViewModel vm) => vm.state.filtered?[indexPC].miningToken);
     final vm = context.read<GameMiningViewModel>();
-    final token = vm.state.tokens[vm.state.modaleTokenIndex];
+    final token = vm.state.availableTokens[vm.state.modaleTokenIndex];
     final value = token.id == miningToken?.id;
 
     return Transform.scale(

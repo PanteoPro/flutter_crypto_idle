@@ -43,6 +43,20 @@ class GameMiningViewModelState {
   bool isOpenModale = false;
   int modaleTokenIndex = 0;
 
+  List<PriceToken> _pricesByTokenId(int tokenId) => prices.where((element) => element.tokenId == tokenId).toList();
+  PriceToken _getLatestPriceByTokenId(int tokenId) => _pricesByTokenId(tokenId).last;
+
+  List<Token> get availableTokens {
+    final availableTokens = <Token>[];
+    for (final token in tokens) {
+      final price = _getLatestPriceByTokenId(token.id);
+      if (price.cost > 0) {
+        availableTokens.add(token);
+      }
+    }
+    return availableTokens;
+  }
+
   PriceToken getCurrentPriceByToken(Token token) {
     return prices.where((price) => price.tokenId == token.id).last;
   }
