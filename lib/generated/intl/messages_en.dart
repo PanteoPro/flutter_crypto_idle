@@ -146,6 +146,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Spend in pcs"),
         "main_game_stat_title":
             MessageLookupByLibrary.simpleMessage("Statistic"),
+        "menu_about_button_title":
+            MessageLookupByLibrary.simpleMessage("About authors"),
+        "menu_company_button_title":
+            MessageLookupByLibrary.simpleMessage("Start company"),
+        "menu_free_button_title":
+            MessageLookupByLibrary.simpleMessage("Start free game"),
+        "menu_game_title": MessageLookupByLibrary.simpleMessage("Crypto IDLE"),
+        "menu_settings_button_title":
+            MessageLookupByLibrary.simpleMessage("Settings"),
+        "menu_title": MessageLookupByLibrary.simpleMessage("Menu"),
         "text_with_dollar": m4,
         "text_with_energy": m5,
         "text_with_power_mining": m6,

@@ -67,6 +67,13 @@
     "game_crypto_market_count_buy_input_title": "Count to buy",
     "game_crypto_market_balance_title": "Balance",
 
+    "menu_title": "Menu",
+    "menu_game_title": "Crypto IDLE",
+    "menu_company_button_title": "Start company",
+    "menu_free_button_title": "Start free game",
+    "menu_settings_button_title": "Settings",
+    "menu_about_button_title": "About authors",
+
     "text_with_dollar": "{value}$",
     "text_with_energy": "{value} V/h",
     "text_with_power_mining": "{value} U/dex",

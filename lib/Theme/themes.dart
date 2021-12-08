@@ -4,6 +4,7 @@ final ThemeData kLightTheme = ThemeData.light().copyWith(
   primaryColor: Colors.white,
   backgroundColor: const Color.fromRGBO(45, 43, 85, 1),
   canvasColor: const Color.fromRGBO(48, 65, 95, 1),
+  splashColor: const Color.fromRGBO(46, 43, 151, 1),
   appBarTheme: const AppBarTheme(
     color: Color.fromRGBO(30, 30, 63, 1),
   ),

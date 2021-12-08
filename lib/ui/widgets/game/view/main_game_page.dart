@@ -23,6 +23,7 @@ class MainGamePage extends StatelessWidget {
         actions: const [
           _AppBarDateWidget(),
         ],
+        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: ColoredBox(

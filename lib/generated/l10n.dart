@@ -630,6 +630,66 @@ class S {
     );
   }
 
+  /// `Menu`
+  String get menu_title {
+    return Intl.message(
+      'Menu',
+      name: 'menu_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Crypto IDLE`
+  String get menu_game_title {
+    return Intl.message(
+      'Crypto IDLE',
+      name: 'menu_game_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start company`
+  String get menu_company_button_title {
+    return Intl.message(
+      'Start company',
+      name: 'menu_company_button_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start free game`
+  String get menu_free_button_title {
+    return Intl.message(
+      'Start free game',
+      name: 'menu_free_button_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Settings`
+  String get menu_settings_button_title {
+    return Intl.message(
+      'Settings',
+      name: 'menu_settings_button_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `About authors`
+  String get menu_about_button_title {
+    return Intl.message(
+      'About authors',
+      name: 'menu_about_button_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{value}$`
   String text_with_dollar(Object value) {
     return Intl.message(

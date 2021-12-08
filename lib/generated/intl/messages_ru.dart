@@ -149,6 +149,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Потрачено на установки"),
         "main_game_stat_title":
             MessageLookupByLibrary.simpleMessage("Статистика"),
+        "menu_about_button_title":
+            MessageLookupByLibrary.simpleMessage("Об авторе"),
+        "menu_company_button_title":
+            MessageLookupByLibrary.simpleMessage("Начать компанию"),
+        "menu_free_button_title":
+            MessageLookupByLibrary.simpleMessage("Начать свободную игру"),
+        "menu_game_title":
+            MessageLookupByLibrary.simpleMessage("Криптовалютный IDLE"),
+        "menu_settings_button_title":
+            MessageLookupByLibrary.simpleMessage("Настройки"),
+        "menu_title": MessageLookupByLibrary.simpleMessage("Меню"),
         "text_with_dollar": m4,
         "text_with_energy": m5,
         "text_with_power_mining": m6,

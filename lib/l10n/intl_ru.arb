@@ -67,6 +67,13 @@
     "game_crypto_market_count_buy_input_title": "Количество для покупки",
     "game_crypto_market_balance_title": "На кошельке",
 
+    "menu_title": "Меню",
+    "menu_game_title": "Криптовалютный IDLE",
+    "menu_company_button_title": "Начать компанию",
+    "menu_free_button_title": "Начать свободную игру",
+    "menu_settings_button_title": "Настройки",
+    "menu_about_button_title": "Об авторе",
+
     "text_with_dollar": "{value}$",
     "text_with_energy": "{value} Ват/ч",
     "text_with_power_mining": "{value} U/dex",
