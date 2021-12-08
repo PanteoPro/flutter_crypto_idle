@@ -46,14 +46,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Balance"),
         "game_crypto_market_cost_title":
             MessageLookupByLibrary.simpleMessage("Current cost"),
-        "game_crypto_market_count_input_title":
-            MessageLookupByLibrary.simpleMessage("Count"),
+        "game_crypto_market_count_buy_input_title":
+            MessageLookupByLibrary.simpleMessage("Count to buy"),
+        "game_crypto_market_count_sell_input_title":
+            MessageLookupByLibrary.simpleMessage("Count to sell"),
+        "game_crypto_market_fast_buy_title":
+            MessageLookupByLibrary.simpleMessage("Market Buy"),
         "game_crypto_market_fast_sell_title":
             MessageLookupByLibrary.simpleMessage("Market Sell"),
-        "game_crypto_market_price_input_title":
-            MessageLookupByLibrary.simpleMessage("Price"),
-        "game_crypto_market_sell_title":
-            MessageLookupByLibrary.simpleMessage("Limit Sell"),
         "game_crypto_title": MessageLookupByLibrary.simpleMessage("Crypto"),
         "game_market_flat_buy_item_title":
             MessageLookupByLibrary.simpleMessage("Buy"),

@@ -30,13 +30,13 @@ class GameMarketCryptoPage extends StatelessWidget {
         child: ColoredBox(
           color: Theme.of(context).backgroundColor,
           child: ListView(
-            children: [
-              const _HeaderWidget(),
+            children: const [
+              _HeaderWidget(),
               _ChartWidget(),
-              const _CostWidget(),
-              const _CountCryptoWidget(),
-              const SizedBox(height: 40),
-              const _TradeWidget(),
+              _CostWidget(),
+              _CountCryptoWidget(),
+              SizedBox(height: 10),
+              _TradeWidget(),
             ],
           ),
         ),
@@ -93,7 +93,7 @@ class _ChartWidget extends StatelessWidget {
     prices.forEach((elem) => print(elem.cost));
 
     return SizedBox(
-      height: 300,
+      height: 250,
       child: SfChartTheme(
         data: SfChartThemeData(
           brightness: Brightness.dark,
@@ -192,17 +192,19 @@ class _TradeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<GameMarketCryptoViewModel>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: const [
-          _TradePriceSellWidget(),
-          SizedBox(height: 10),
-          _TradeCountSellWidget(),
-          _TradeCountSellButtonsWidget(),
-          SizedBox(height: 10),
-          _TradeButtonsWidget(),
+        children: [
+          const _TradeVolumeBuyWidget(),
+          _TradeChangeVolumeButtonsWidget(clickHandler: vm.onChangeBuyVolumeButtonPressed),
+          const SizedBox(height: 10),
+          const _TradeVolumeSellWidget(),
+          _TradeChangeVolumeButtonsWidget(clickHandler: vm.onChangeSellVolumeButtonPressed),
+          const SizedBox(height: 10),
+          const _TradeButtonsWidget(),
         ],
       ),
     );
@@ -229,9 +231,9 @@ class _TradeButtonsWidget extends StatelessWidget {
         const SizedBox(width: 10),
         Expanded(
           child: MyButton(
-            color: Colors.red,
-            onPressed: () => vm.onSellLimitButtonPressed(),
-            title: S.of(context).game_crypto_market_sell_title,
+            color: Colors.green,
+            onPressed: () => vm.onBuyNowButtonPressed(),
+            title: S.of(context).game_crypto_market_fast_buy_title,
           ),
         ),
       ],
@@ -239,16 +241,16 @@ class _TradeButtonsWidget extends StatelessWidget {
   }
 }
 
-class _TradePriceSellWidget extends StatelessWidget {
-  const _TradePriceSellWidget({Key? key}) : super(key: key);
+class _TradeVolumeBuyWidget extends StatelessWidget {
+  const _TradeVolumeBuyWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final vm = context.read<GameMarketCryptoViewModel>();
     return TextField(
-      controller: vm.priceTextController,
+      controller: vm.volumeBuyTextController,
       decoration: InputDecoration(
-        label: Text(S.of(context).game_crypto_market_price_input_title),
+        label: Text(S.of(context).game_crypto_market_count_buy_input_title),
         labelStyle: TextStyle(color: Theme.of(context).primaryColor),
         isDense: true,
         enabledBorder: OutlineInputBorder(
@@ -263,16 +265,16 @@ class _TradePriceSellWidget extends StatelessWidget {
   }
 }
 
-class _TradeCountSellWidget extends StatelessWidget {
-  const _TradeCountSellWidget({Key? key}) : super(key: key);
+class _TradeVolumeSellWidget extends StatelessWidget {
+  const _TradeVolumeSellWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final vm = context.read<GameMarketCryptoViewModel>();
     return TextField(
-      controller: vm.volumeTextController,
+      controller: vm.volumeSellTextController,
       decoration: InputDecoration(
-        label: Text(S.of(context).game_crypto_market_count_input_title),
+        label: Text(S.of(context).game_crypto_market_count_sell_input_title),
         labelStyle: TextStyle(color: Theme.of(context).primaryColor),
         isDense: true,
         enabledBorder: OutlineInputBorder(
@@ -287,8 +289,10 @@ class _TradeCountSellWidget extends StatelessWidget {
   }
 }
 
-class _TradeCountSellButtonsWidget extends StatelessWidget {
-  const _TradeCountSellButtonsWidget({Key? key}) : super(key: key);
+class _TradeChangeVolumeButtonsWidget extends StatelessWidget {
+  const _TradeChangeVolumeButtonsWidget({Key? key, required this.clickHandler}) : super(key: key);
+
+  final Function(PercentButton) clickHandler;
 
   @override
   Widget build(BuildContext context) {
@@ -297,28 +301,28 @@ class _TradeCountSellButtonsWidget extends StatelessWidget {
       children: [
         Expanded(
           child: _TradeCountSellButtonsItemWidget(
-            onPressed: () => vm.onChangeVolumeButtonPressed(PercentButton.p25),
+            onPressed: () => clickHandler(PercentButton.p25),
             title: '25%',
           ),
         ),
         const SizedBox(width: 10),
         Expanded(
           child: _TradeCountSellButtonsItemWidget(
-            onPressed: () => vm.onChangeVolumeButtonPressed(PercentButton.p50),
+            onPressed: () => clickHandler(PercentButton.p50),
             title: '50%',
           ),
         ),
         const SizedBox(width: 10),
         Expanded(
           child: _TradeCountSellButtonsItemWidget(
-            onPressed: () => vm.onChangeVolumeButtonPressed(PercentButton.p75),
+            onPressed: () => clickHandler(PercentButton.p75),
             title: '75%',
           ),
         ),
         const SizedBox(width: 10),
         Expanded(
           child: _TradeCountSellButtonsItemWidget(
-            onPressed: () => vm.onChangeVolumeButtonPressed(PercentButton.p100),
+            onPressed: () => clickHandler(PercentButton.p100),
             title: '100%',
           ),
         ),

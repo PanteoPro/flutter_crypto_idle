@@ -590,31 +590,31 @@ class S {
     );
   }
 
-  /// `Limit Sell`
-  String get game_crypto_market_sell_title {
+  /// `Market Buy`
+  String get game_crypto_market_fast_buy_title {
     return Intl.message(
-      'Limit Sell',
-      name: 'game_crypto_market_sell_title',
+      'Market Buy',
+      name: 'game_crypto_market_fast_buy_title',
       desc: '',
       args: [],
     );
   }
 
-  /// `Count`
-  String get game_crypto_market_count_input_title {
+  /// `Count to sell`
+  String get game_crypto_market_count_sell_input_title {
     return Intl.message(
-      'Count',
-      name: 'game_crypto_market_count_input_title',
+      'Count to sell',
+      name: 'game_crypto_market_count_sell_input_title',
       desc: '',
       args: [],
     );
   }
 
-  /// `Price`
-  String get game_crypto_market_price_input_title {
+  /// `Count to buy`
+  String get game_crypto_market_count_buy_input_title {
     return Intl.message(
-      'Price',
-      name: 'game_crypto_market_price_input_title',
+      'Count to buy',
+      name: 'game_crypto_market_count_buy_input_title',
       desc: '',
       args: [],
     );

@@ -62,9 +62,9 @@
 
     "game_crypto_market_cost_title": "Current cost",
     "game_crypto_market_fast_sell_title": "Market Sell",
-    "game_crypto_market_sell_title": "Limit Sell",
-    "game_crypto_market_count_input_title": "Count",
-    "game_crypto_market_price_input_title": "Price",
+    "game_crypto_market_fast_buy_title": "Market Buy",
+    "game_crypto_market_count_sell_input_title": "Count to sell",
+    "game_crypto_market_count_buy_input_title": "Count to buy",
     "game_crypto_market_balance_title": "Balance",
 
     "text_with_dollar": "{value}$",

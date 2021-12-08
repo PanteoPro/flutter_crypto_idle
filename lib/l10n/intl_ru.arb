@@ -62,9 +62,9 @@
 
     "game_crypto_market_cost_title": "Текущая цена",
     "game_crypto_market_fast_sell_title": "Продать мгновенно",
-    "game_crypto_market_sell_title": "Продать по цене",
-    "game_crypto_market_count_input_title": "Количество",
-    "game_crypto_market_price_input_title": "Цена",
+    "game_crypto_market_fast_buy_title": "Купить мгновенно",
+    "game_crypto_market_count_sell_input_title": "Количество для продажи",
+    "game_crypto_market_count_buy_input_title": "Количество для покупки",
     "game_crypto_market_balance_title": "На кошельке",
 
     "text_with_dollar": "{value}$",

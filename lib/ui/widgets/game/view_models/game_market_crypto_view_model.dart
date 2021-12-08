@@ -52,8 +52,8 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
   GameMarketCryptoViewModelState get state => _state;
 
   // Controllers
-  final priceTextController = TextEditingController();
-  final volumeTextController = TextEditingController();
+  final volumeBuyTextController = TextEditingController();
+  final volumeSellTextController = TextEditingController();
 
   /// initial repositories
   Future<void> _initialRepositories() async {
@@ -89,25 +89,29 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
       token: token,
       prices: _priceTokenRepository.pricesByTokenId(token.id),
     );
-    if (priceTextController.text.isEmpty) {
-      priceTextController.text = _state.getLastPrice().cost.toString();
-    }
+    // if (volumeBuyTextController.text.isEmpty) {
+    //   volumeBuyTextController.text = _state.getLastPrice().cost.toString();
+    // }
     notifyListeners();
   }
 
   Future<void> onSellNowButtonPressed() async {
     if (_state.token != null) {
-      if (volumeTextController.text.isNotEmpty) {
-        var volume = double.tryParse(volumeTextController.text);
+      if (volumeSellTextController.text.isNotEmpty) {
+        var volume = double.tryParse(volumeSellTextController.text);
         if (volume != null) {
-          volume = min(volume, _state.token!.count);
-          final lastPrice = _state.getLastPrice().cost;
-          final income = double.parse((volume * lastPrice).toStringAsFixed(2));
+          volume = max(min(volume, _state.token!.count), 0);
+          if (volume > 0) {
+            final lastPrice = _state.getLastPrice().cost;
+            final income = double.parse((volume * lastPrice).toStringAsFixed(2));
 
-          await _gameRepository.changeData(money: _gameRepository.game.money + income);
-          await _tokenRepository.changeToken(_state.token!, count: _state.token!.count - volume);
-          await _statisticsRepository.addTokenEarn(_state.token!, income);
-          _updateState();
+            await _gameRepository.changeData(money: _gameRepository.game.money + income);
+            await _tokenRepository.changeToken(_state.token!, count: _state.token!.count - volume);
+            await _statisticsRepository.addTokenEarn(_state.token!, income);
+            _updateState();
+          } else {
+            // not Enought tokens
+          }
         } else {
           print('Enter num digits');
         }
@@ -119,10 +123,25 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
     }
   }
 
-  void onSellLimitButtonPressed() {
-    if (priceTextController.text.isNotEmpty) {
-      if (volumeTextController.text.isNotEmpty) {
-        // do somethink
+  Future<void> onBuyNowButtonPressed() async {
+    if (_state.token != null) {
+      if (volumeBuyTextController.text.isNotEmpty) {
+        var volume = double.tryParse(volumeBuyTextController.text);
+        if (volume != null) {
+          volume = max(min(volume, _gameRepository.game.money), 0);
+          if (volume > 0) {
+            final lastPrice = _state.getLastPrice().cost;
+            final countTokens = double.parse((volume / lastPrice).toStringAsFixed(8));
+
+            await _gameRepository.changeData(money: _gameRepository.game.money - volume);
+            await _tokenRepository.changeToken(_state.token!, count: _state.token!.count + countTokens);
+            _updateState();
+          } else {
+            // not enough money
+          }
+        } else {
+          // error volume
+        }
       } else {
         // error message
       }
@@ -131,8 +150,12 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
     }
   }
 
-  void onChangeVolumeButtonPressed(PercentButton choice) {
-    volumeTextController.text = (choice.value * (_state.token?.count ?? 0)).toStringAsFixed(8);
+  void onChangeSellVolumeButtonPressed(PercentButton choice) {
+    volumeSellTextController.text = (choice.value * (_state.token?.count ?? 0)).toStringAsFixed(8);
+  }
+
+  void onChangeBuyVolumeButtonPressed(PercentButton choice) {
+    volumeBuyTextController.text = (choice.value * (_gameRepository.game.money)).toStringAsFixed(2);
   }
 }
 
