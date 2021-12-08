@@ -8,6 +8,7 @@ import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
+import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:crypto_idle/domain/entities/statistics.dart';
@@ -19,18 +20,22 @@ class MainGameViewModelState {
     required this.tokens,
     required this.myPCs,
     required this.flat,
+    required this.isModalShow,
   });
   MainGameViewModelState.empty({
     Statistics? statistics,
     List<Token>? tokens,
     List<PC>? myPCs,
     Flat? flat,
+    bool? isModalShow,
   }) {
     this.statistics = statistics ?? Statistics.empty();
     this.tokens = tokens ?? [];
     this.myPCs = myPCs ?? [];
     this.flat = flat ?? Flat.empty();
+    this.isModalShow = isModalShow ?? false;
   }
+
   late Statistics statistics;
   late List<Token> tokens;
   late List<PC> myPCs;
@@ -39,7 +44,7 @@ class MainGameViewModelState {
   double get energyConsumeCost => energyConsume / 10;
   double get energyConsume {
     var energy = 0.0;
-    for (var element in myPCs) {
+    for (final element in myPCs) {
       if (element.miningToken != null) {
         energy += element.energy;
       }
@@ -49,13 +54,15 @@ class MainGameViewModelState {
 
   double get powerPCs {
     var power = 0.0;
-    for (var element in myPCs) {
+    for (final element in myPCs) {
       if (element.miningToken != null) {
         power += element.power;
       }
     }
     return power;
   }
+
+  bool isModalShow = false;
 
   double get sumFlatConsume => statistics.flatConsume.sum;
   double get sumEnergyConsume => statistics.energyConsume.sum;
@@ -126,7 +133,22 @@ class MainGameViewModel extends ChangeNotifier {
       tokens: _tokensRepository.tokens,
       flat: _flatRepository.currentFlat,
       myPCs: _pcRepository.pcs,
+      isModalShow: _state.isModalShow,
     );
+    notifyListeners();
+  }
+
+  void onReturnToMenuButtonPressed() {
+    _state.isModalShow = !_state.isModalShow;
+    notifyListeners();
+  }
+
+  void onYesExitButtonPressed(BuildContext context) {
+    Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.menu);
+  }
+
+  void onNoExitButtonPressed() {
+    _state.isModalShow = false;
     notifyListeners();
   }
 }

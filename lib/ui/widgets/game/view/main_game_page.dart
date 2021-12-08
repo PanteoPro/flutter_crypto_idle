@@ -1,3 +1,5 @@
+import 'package:crypto_idle/Widgets/buttons.dart';
+import 'package:crypto_idle/Widgets/header_page.dart';
 import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/generated/l10n.dart';
@@ -13,6 +15,7 @@ class MainGamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<MainGameViewModel>();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -24,19 +27,93 @@ class MainGamePage extends StatelessWidget {
           _AppBarDateWidget(),
         ],
         automaticallyImplyLeading: false,
+        leading: IconButton(onPressed: vm.onReturnToMenuButtonPressed, icon: Icon(Icons.exit_to_app_sharp)),
       ),
       body: SafeArea(
-        child: ColoredBox(
-          color: Theme.of(context).backgroundColor,
-          child: Stack(
-            children: const [
-              _MainWidget(),
-              _PrototypeOfNewsWidget(),
-              ______BUTTONMONEY______(),
-            ],
-          ),
+        child: Stack(
+          children: [
+            ColoredBox(
+              color: Theme.of(context).backgroundColor,
+              child: Stack(
+                children: const [
+                  _MainWidget(),
+                  _PrototypeOfNewsWidget(),
+                  ______BUTTONMONEY______(),
+                ],
+              ),
+            ),
+            _ExitModalWidget(),
+          ],
         ),
       ),
+    );
+  }
+}
+
+class _ExitModalWidget extends StatelessWidget {
+  const _ExitModalWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final isModalShow = context.select((MainGameViewModel vm) => vm.state.isModalShow);
+    if (!isModalShow) return const SizedBox();
+    return Stack(
+      children: [
+        Container(
+          color: Colors.black.withOpacity(0.6),
+        ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Container(
+              color: Colors.black,
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  _ExitModalTitleWidget(),
+                  _ExitModalButtonsWidget(),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ExitModalTitleWidget extends StatelessWidget {
+  const _ExitModalTitleWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return HeaderPage(
+      title: 'Вы точно хотите выйти в меню?',
+      showBackIcon: false,
+    );
+  }
+}
+
+class _ExitModalButtonsWidget extends StatelessWidget {
+  const _ExitModalButtonsWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = context.read<MainGameViewModel>();
+    return Row(
+      children: [
+        Expanded(
+          child: MyButton(
+              color: Theme.of(context).splashColor,
+              onPressed: () => vm.onYesExitButtonPressed(context),
+              title: 'Выйти в меню'),
+        ),
+        const SizedBox(width: 30),
+        Expanded(
+            child: MyButton(
+                color: Theme.of(context).splashColor, onPressed: vm.onNoExitButtonPressed, title: 'Остаться в игре')),
+      ],
     );
   }
 }

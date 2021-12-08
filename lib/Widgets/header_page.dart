@@ -5,10 +5,12 @@ class HeaderPage extends StatelessWidget {
     Key? key,
     required this.title,
     this.onTap,
+    this.showBackIcon = true,
   }) : super(key: key);
 
   final String title;
   final VoidCallback? onTap;
+  final bool showBackIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -17,19 +19,20 @@ class HeaderPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
         child: Stack(
           children: [
-            GestureDetector(
-              onTap: () {
-                if (onTap != null) {
-                  onTap!();
-                } else {
-                  Navigator.of(context).pop();
-                }
-              },
-              child: Icon(
-                Icons.arrow_back,
-                color: Theme.of(context).primaryColor,
+            if (showBackIcon)
+              GestureDetector(
+                onTap: () {
+                  if (onTap != null) {
+                    onTap!();
+                  } else {
+                    Navigator.of(context).pop();
+                  }
+                },
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
