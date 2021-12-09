@@ -240,7 +240,6 @@ class _ActivateButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.read<GameMarketFlatViewModel>();
-    final gvm = context.read<GameViewModel>();
     return MyButton(
       onPressed: () => vm.onActivateButtonPressed(index),
       title: S.of(context).game_market_flat_change_item_title,

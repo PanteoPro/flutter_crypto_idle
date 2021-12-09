@@ -133,7 +133,7 @@ class _MiningItemInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final token = context.read<GameMiningViewModel>().state.availableTokens[index];
     final priceToken = context.select((GameMiningViewModel vm) => vm.state.getCurrentPriceByToken(token));
-    final data = context.read<GameViewModel>().state.game!.date;
+    final data = context.read<GameMiningViewModel>().state.date;
     final priceTokenWeek =
         context.read<GameMiningViewModel>().state.getDataAfterPriceByToken(token: token, fromDate: data, daysAgo: 7);
     final priceTokenMonth =

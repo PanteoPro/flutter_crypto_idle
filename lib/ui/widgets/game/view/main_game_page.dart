@@ -130,7 +130,7 @@ class ______BUTTONMONEY______ extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         child: Center(
           child: ElevatedButton(
-            onPressed: context.read<GameViewModel>().BABLO,
+            onPressed: context.read<MainGameViewModel>().BABLO,
             child: Text('БАБЛО'),
           ),
         ),
@@ -254,7 +254,7 @@ class _AppBarDateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final format = DateFormat.yMd('ru-ru');
-    final date = context.select((GameViewModel vm) => vm.state.game?.date) ?? DateTime(0);
+    final date = context.select((MainGameViewModel vm) => vm.state.date);
     final stringDate = format.format(date);
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -311,7 +311,7 @@ class _BalanceCryptoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final money = context.select((GameViewModel vm) => vm.state.balance);
+    final money = context.select((MainGameViewModel vm) => vm.state.cryptoBalance);
     return Column(
       children: <Widget>[
         Text(
@@ -334,7 +334,7 @@ class _BalanceDollarsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final money = context.select((GameViewModel vm) => vm.state.game?.money) ?? 0;
+    final money = context.select((MainGameViewModel vm) => vm.state.money);
     return Column(
       children: <Widget>[
         Text(

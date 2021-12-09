@@ -4,9 +4,11 @@ import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/entities/pc.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
+import 'package:crypto_idle/domain/repositories/game_repository.dart';
 
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
+import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
@@ -22,6 +24,9 @@ class MainGameViewModelState {
     required this.myPCs,
     required this.flat,
     required this.isModalShow,
+    required this.date,
+    required this.money,
+    required this.currentPrices,
   });
   MainGameViewModelState.empty({
     Statistics? statistics,
@@ -29,18 +34,25 @@ class MainGameViewModelState {
     List<PC>? myPCs,
     Flat? flat,
     bool? isModalShow,
+    DateTime? date,
+    this.money = 0,
+    this.currentPrices = const {},
   }) {
     this.statistics = statistics ?? Statistics.empty();
     this.tokens = tokens ?? [];
     this.myPCs = myPCs ?? [];
     this.flat = flat ?? Flat.empty();
     this.isModalShow = isModalShow ?? false;
+    this.date = date ?? DateTime.now();
   }
 
   late Statistics statistics;
   late List<Token> tokens;
   late List<PC> myPCs;
   late Flat flat;
+  late DateTime date;
+  late double money;
+  final Map<int, double> currentPrices;
   double get flatConsume => flat.costMonth;
   double get energyConsumeCost => energyConsume / 10;
   double get energyConsume {
@@ -61,6 +73,18 @@ class MainGameViewModelState {
       }
     }
     return power;
+  }
+
+  double getPriceByToken(Token token) {
+    return currentPrices[token.id]!;
+  }
+
+  double get cryptoBalance {
+    double balance = 0;
+    for (final Token token in tokens) {
+      balance += getPriceByToken(token) * token.count;
+    }
+    return double.parse(balance.toStringAsFixed(2));
   }
 
   bool isModalShow = false;
@@ -86,41 +110,52 @@ class MainGameViewModel extends ChangeNotifier {
 
   @override
   void dispose() {
+    _gameStreamSub?.cancel();
     _statisticsStreamSub?.cancel();
     _tokensStreamSub?.cancel();
     _flatStreamSub?.cancel();
     _pcStreamSub?.cancel();
+    _priceTokenStreamSub?.cancel();
     super.dispose();
   }
 
+  final _gameRepository = GameRepository();
   final _statisticsRepository = StatisticsRepository();
   final _tokensRepository = TokenRepository();
   final _flatRepository = FlatRepository();
   final _pcRepository = PCRepository();
+  final _priceTokenRepository = PriceTokenRepository();
+  StreamSubscription<dynamic>? _gameStreamSub;
   StreamSubscription<dynamic>? _statisticsStreamSub;
   StreamSubscription<dynamic>? _tokensStreamSub;
   StreamSubscription<dynamic>? _flatStreamSub;
   StreamSubscription<dynamic>? _pcStreamSub;
+  StreamSubscription<dynamic>? _priceTokenStreamSub;
 
   var _state = MainGameViewModelState.empty();
   MainGameViewModelState get state => _state;
 
   Future<void> _initialRepositories() async {
+    await _gameRepository.init();
     await _statisticsRepository.init();
     await _tokensRepository.init();
     await _flatRepository.init();
     await _pcRepository.init();
+    await _priceTokenRepository.init();
     _subscriteStreams();
     await _updateState();
   }
 
   void _subscriteStreams() {
+    _gameStreamSub = GameRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _gameRepository));
     _statisticsStreamSub =
         StatisticsRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _statisticsRepository));
     _tokensStreamSub =
         TokenRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _tokensRepository));
     _flatStreamSub = FlatRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _flatRepository));
     _pcStreamSub = PCRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _pcRepository));
+    _priceTokenStreamSub =
+        PriceTokenRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _priceTokenRepository));
   }
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
@@ -129,12 +164,20 @@ class MainGameViewModel extends ChangeNotifier {
   }
 
   Future<void> _updateState() async {
+    final currentPrices = <int, double>{};
+    final currentTokens = _tokensRepository.tokens;
+    for (final token in currentTokens) {
+      currentPrices[token.id] = _priceTokenRepository.getLatestPriceByTokenId(token.id).cost;
+    }
     _state = MainGameViewModelState(
       statistics: _statisticsRepository.statistics,
       tokens: _tokensRepository.tokens,
       flat: _flatRepository.currentFlat,
       myPCs: _pcRepository.pcs,
       isModalShow: _state.isModalShow,
+      date: _gameRepository.game.date,
+      money: _gameRepository.game.money,
+      currentPrices: currentPrices,
     );
     notifyListeners();
   }
@@ -151,5 +194,9 @@ class MainGameViewModel extends ChangeNotifier {
   void onNoExitButtonPressed() {
     _state.isModalShow = false;
     notifyListeners();
+  }
+
+  void BABLO() {
+    _gameRepository.changeData(money: _state.money + 100);
   }
 }

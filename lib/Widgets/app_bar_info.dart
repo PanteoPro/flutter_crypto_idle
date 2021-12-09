@@ -45,7 +45,7 @@ class _DayWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final format = DateFormat.yMd('ru-ru');
-    final date = context.select((GameViewModel vm) => vm.state.game?.date) ?? DateTime(0);
+    final date = context.select((GameViewModel vm) => vm.state.date);
     final stringDate = format.format(date);
 
     return Text(stringDate, style: Theme.of(context).textTheme.bodyText1);
@@ -72,7 +72,7 @@ class _BalanceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final money = context.select((GameViewModel vm) => vm.state.game?.money) ?? 0;
+    final money = context.select((GameViewModel vm) => vm.state.money);
     return Text('Баланс: ${S.of(context).text_with_dollar(money)}');
   }
 }

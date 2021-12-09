@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:crypto_idle/domain/repositories/game_repository.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:crypto_idle/domain/entities/pc.dart';
@@ -15,6 +16,7 @@ class GameMiningViewModelState {
     required this.tokens,
     required this.prices,
     required this.pcs,
+    required this.date,
     bool? isOpenModale,
     int? modaleTokenIndex,
     List<PC>? filtered,
@@ -33,11 +35,14 @@ class GameMiningViewModelState {
     this.tokens = const [],
     this.prices = const [],
     this.pcs = const [],
-  });
+  }) {
+    date = DateTime(0);
+  }
 
   final List<Token> tokens;
   final List<PriceToken> prices;
   final List<PC> pcs;
+  late DateTime date;
   List<PC>? filtered;
 
   bool isOpenModale = false;
@@ -78,6 +83,7 @@ class GameMiningViewModelState {
     bool? isOpenModale,
     int? modaleTokenIndex,
     List<PC>? filtered,
+    DateTime? date,
   }) {
     return GameMiningViewModelState(
       tokens: tokens ?? this.tokens,
@@ -86,6 +92,7 @@ class GameMiningViewModelState {
       isOpenModale: isOpenModale ?? this.isOpenModale,
       modaleTokenIndex: modaleTokenIndex ?? this.modaleTokenIndex,
       filtered: filtered ?? this.filtered,
+      date: date ?? this.date,
     );
   }
 }
@@ -100,6 +107,7 @@ class GameMiningViewModel extends ChangeNotifier {
     _tokenStreamSub?.cancel();
     _priceStreamSub?.cancel();
     _pcStreamSub?.cancel();
+    _gameStreamSub?.cancel();
     super.dispose();
   }
 
@@ -107,9 +115,11 @@ class GameMiningViewModel extends ChangeNotifier {
   final _tokenRepository = TokenRepository();
   final _priceTokenRepository = PriceTokenRepository();
   final _pcRepository = PCRepository();
+  final _gameRepository = GameRepository();
   StreamSubscription<dynamic>? _tokenStreamSub;
   StreamSubscription<dynamic>? _priceStreamSub;
   StreamSubscription<dynamic>? _pcStreamSub;
+  StreamSubscription<dynamic>? _gameStreamSub;
 
   // Data
   var _state = GameMiningViewModelState.empty();
@@ -120,6 +130,7 @@ class GameMiningViewModel extends ChangeNotifier {
     await _tokenRepository.init();
     await _priceTokenRepository.init();
     await _pcRepository.init();
+    await _gameRepository.init();
 
     _subscriteStreams();
     _updateState();
@@ -136,6 +147,9 @@ class GameMiningViewModel extends ChangeNotifier {
     _pcStreamSub = PCRepository.stream?.listen(
       (dynamic data) => _updateRepoByChangeEvent(data, _pcRepository),
     );
+    _gameStreamSub = GameRepository.stream?.listen(
+      (dynamic data) => _updateRepoByChangeEvent(data, _gameRepository),
+    );
   }
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
@@ -148,6 +162,7 @@ class GameMiningViewModel extends ChangeNotifier {
       tokens: _tokenRepository.tokens,
       prices: _priceTokenRepository.prices,
       pcs: _pcRepository.pcs,
+      date: _gameRepository.game.date,
     );
     notifyListeners();
   }
