@@ -4,6 +4,7 @@ import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/day_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game_view_model.dart';
 import 'package:flutter/material.dart';
@@ -101,13 +102,12 @@ class _ExitModalButtonsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.read<MainGameViewModel>();
-    final gvm = context.read<GameViewModel>();
     return Row(
       children: [
         Expanded(
           child: MyButton(
               color: Theme.of(context).splashColor,
-              onPressed: () => vm.onYesExitButtonPressed(context, gvm),
+              onPressed: () => vm.onYesExitButtonPressed(context),
               title: 'Выйти в меню'),
         ),
         const SizedBox(width: 30),
@@ -171,8 +171,8 @@ class _PrototypeOfNewsItemsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.select((GameViewModel vm) => vm.newsListToDisplay.length);
-    var news = context.read<GameViewModel>().newsListToDisplay;
+    context.select((DayStreamViewModel vm) => vm.newsListToDisplay.length);
+    var news = context.read<DayStreamViewModel>().newsListToDisplay;
     // if (news.length > 3) {
     //   news = news.reversed.toList().getRange(0, 3).toList();
     // }

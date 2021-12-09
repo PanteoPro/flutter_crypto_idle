@@ -80,9 +80,8 @@ class MainGameViewModelState {
 }
 
 class MainGameViewModel extends ChangeNotifier {
-  MainGameViewModel({required this.gvm}) {
+  MainGameViewModel() {
     _initialRepositories();
-    gvm.resumeDayStream();
   }
 
   @override
@@ -91,11 +90,8 @@ class MainGameViewModel extends ChangeNotifier {
     _tokensStreamSub?.cancel();
     _flatStreamSub?.cancel();
     _pcStreamSub?.cancel();
-    gvm.pauseDayStream();
     super.dispose();
   }
-
-  final GameViewModel gvm;
 
   final _statisticsRepository = StatisticsRepository();
   final _tokensRepository = TokenRepository();
@@ -148,8 +144,7 @@ class MainGameViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onYesExitButtonPressed(BuildContext context, GameViewModel gvm) {
-    gvm.pauseDayStream();
+  void onYesExitButtonPressed(BuildContext context) {
     Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.menu);
   }
 

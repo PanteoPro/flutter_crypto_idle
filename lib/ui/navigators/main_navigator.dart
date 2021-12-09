@@ -5,6 +5,7 @@ import 'package:crypto_idle/ui/widgets/game/view/game_market_flat_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/game_market_pc_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/game_mining_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/main_game_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/day_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_crypto_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_crypto_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_model.dart';
@@ -31,13 +32,17 @@ class MainNavigation {
   String initialRoute() => MainNavigationRouteNames.menu;
 
   final routes = <String, Widget Function(BuildContext)>{
-    MainNavigationRouteNames.gameMain: (context) {
-      final gvm = context.read<GameViewModel>();
-      return ChangeNotifierProvider(
-        create: (_) => MainGameViewModel(gvm: gvm),
-        child: const MainGamePage(),
-      );
-    },
+    MainNavigationRouteNames.gameMain: (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (_) => MainGameViewModel(),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => DayStreamViewModel(),
+            ),
+          ],
+          child: const MainGamePage(),
+        ),
     MainNavigationRouteNames.gameMarketPC: (context) => ChangeNotifierProvider<GameMarketPCViewModel>(
           create: (_) => GameMarketPCViewModel(),
           child: const GameMarketPCPage(),
