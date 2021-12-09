@@ -19,6 +19,7 @@ class MainApp extends StatelessWidget {
       builder: (ThemeData light, ThemeData dark) => ChangeNotifierProvider(
         create: (_) => GameViewModel(),
         child: MaterialApp(
+          locale: const Locale('en'),
           theme: light,
           darkTheme: dark,
           localizationsDelegates: const <LocalizationsDelegate<dynamic>>[

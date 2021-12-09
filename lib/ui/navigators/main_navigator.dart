@@ -11,7 +11,6 @@ import 'package:crypto_idle/ui/widgets/game/view_models/game_market_crypto_view_
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_pc_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_mining_view_model.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/menu/view/menu_page.dart';
 import 'package:crypto_idle/ui/widgets/menu/view_models/menu_view_model.dart';
@@ -19,13 +18,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 abstract class MainNavigationRouteNames {
-  static const gameMain = '/game';
-  static const gameMarketPC = '/game/market_pc';
-  static const gameMarketFlat = '/game/market_flat';
-  static const gameCrypto = '/game/crypto';
-  static const gameMarketCrypto = '/game/crypto/market';
-  static const gameMining = '/game/mining';
-  static const menu = '/menu';
+  static const gameMain = 'game';
+  static const gameMarketPC = 'game/market_pc';
+  static const gameMarketFlat = 'game/market_flat';
+  static const gameCrypto = 'game/crypto';
+  static const gameMarketCrypto = 'game/crypto/market';
+  static const gameMining = 'game/mining';
+  static const menu = 'menu';
 }
 
 class MainNavigation {
@@ -66,6 +65,7 @@ class MainNavigation {
   };
 
   Route<Object> onGenerateRoute(RouteSettings settings) {
+    print(settings.name);
     switch (settings.name) {
       case MainNavigationRouteNames.gameMarketCrypto:
         final token = settings.arguments is Token ? settings.arguments as Token : Token.empty();
