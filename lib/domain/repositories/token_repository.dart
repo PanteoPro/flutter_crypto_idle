@@ -12,21 +12,27 @@ class TokenRepository implements MyRepository {
   var _tokens = <Token>[];
   List<Token> get tokens => List.unmodifiable(_tokens);
 
+  @override
   Future<void> init() async {
     await _tokenDataProvider.openBox();
     stream ??= _streamController.stream.asBroadcastStream();
-    await updateData();
+    updateData();
+  }
+
+  @override
+  void updateData() {
+    _tokens = _tokenDataProvider.loadData();
   }
 
   Future<void> addToken(Token token) async {
     await _tokenDataProvider.saveData(token);
-    await updateData();
+    updateData();
     _streamController.add('Addtoken');
   }
 
   Future<void> deleteToken(Token token) async {
     await _tokenDataProvider.deleteToken(token);
-    await updateData();
+    updateData();
     _streamController.add('DeleteToken');
   }
 
@@ -36,9 +42,5 @@ class TokenRepository implements MyRepository {
       await token.save();
       _streamController.add('ChangeToken');
     }
-  }
-
-  Future<void> updateData() async {
-    _tokens = _tokenDataProvider.loadData();
   }
 }

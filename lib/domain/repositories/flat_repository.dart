@@ -19,10 +19,16 @@ class FlatRepository implements MyRepository {
     }
   }
 
+  @override
   Future<void> init() async {
     await _flatDataProvider.openBox();
-    await updateData();
+    updateData();
     stream ??= _streamController.stream.asBroadcastStream();
+  }
+
+  @override
+  void updateData() {
+    _flats = _flatDataProvider.loadData();
   }
 
   Future<void> addFlat(Flat flat) async {
@@ -40,10 +46,5 @@ class FlatRepository implements MyRepository {
     }
     await flat.save();
     _streamController.add('ChangeFlat');
-  }
-
-  @override
-  Future<void> updateData() async {
-    _flats = _flatDataProvider.loadData();
   }
 }

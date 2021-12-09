@@ -113,13 +113,13 @@ class NewsRepository extends MyRepository {
     await _newsDataProvider.openBox();
     await _tokenDataProvider.openBox();
     await _priceDataProvider.openBox();
-    await updateData();
+    updateData();
     stream ??= _streamController.stream.asBroadcastStream();
   }
 
   @override
-  Future<void> updateData() async {
-    _news = await _newsDataProvider.loadData();
+  void updateData() {
+    _news = _newsDataProvider.loadData();
   }
 
   Future<void> addNews(News news) async {

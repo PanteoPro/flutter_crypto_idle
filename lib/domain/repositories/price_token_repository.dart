@@ -14,20 +14,22 @@ class PriceTokenRepository implements MyRepository {
   List<PriceToken> pricesByTokenId(int tokenId) => _prices.where((element) => element.tokenId == tokenId).toList();
   PriceToken getLatestPriceByTokenId(int tokenId) => pricesByTokenId(tokenId).last;
 
+  @override
   Future<void> init() async {
     await _priceTokenDataProvider.openBox();
-    await updateData();
+    updateData();
     stream ??= _streamController.stream.asBroadcastStream();
   }
 
-  Future<void> updateData() async {
+  @override
+  void updateData() {
     _prices = _priceTokenDataProvider.loadData();
   }
 
   Future<void> addPrice(PriceToken price) async {
     final priceNew = price.copyWith(cost: double.parse(price.cost.toStringAsFixed(4)));
     await _priceTokenDataProvider.saveData(priceNew);
-    await updateData();
+    updateData();
     _streamController.add('AddPrice');
   }
 }

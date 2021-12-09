@@ -24,22 +24,29 @@ class PCRepository implements MyRepository {
     }
   }
 
+  @override
   Future<void> init() async {
     await _pcDataProvider.openBox();
-    await updateData();
+    updateData();
     stream ??= _streamController.stream.asBroadcastStream();
+  }
+
+  @override
+  void updateData() {
+    _pcsConst = _pcDataProvider.loadAllConst();
+    _pcs = _pcDataProvider.loadData();
   }
 
   Future<void> addPC(PC pc) async {
     await _pcDataProvider.saveData(pc);
-    await updateData();
+    updateData();
     _streamController.add('addPC');
   }
 
   Future<bool> sellPC(PC pc) async {
     final result = await _pcDataProvider.deletePC(pc);
     if (result) {
-      await updateData();
+      updateData();
       _streamController.add('sellPC');
     }
     return result;
@@ -49,11 +56,5 @@ class PCRepository implements MyRepository {
     pc.miningToken = token;
     await pc.save();
     _streamController.add('change mining token');
-  }
-
-  @override
-  Future<void> updateData() async {
-    _pcsConst = await _pcDataProvider.loadAllConst();
-    _pcs = _pcDataProvider.loadData();
   }
 }

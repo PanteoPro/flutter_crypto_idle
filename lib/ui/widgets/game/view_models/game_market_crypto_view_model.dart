@@ -79,7 +79,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
 
   /// Update date from repository, because data changed
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
-    await repository.updateData();
+    repository.updateData();
     _updateState();
   }
 

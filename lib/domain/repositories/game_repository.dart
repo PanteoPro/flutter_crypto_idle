@@ -13,16 +13,16 @@ class GameRepository implements MyRepository {
   var _game = Game.empty(date: DateTime(0));
   Game get game => _game;
 
+  @override
   Future<void> init() async {
     await _gameDataProvider.openBox();
-    // await changeData(money: 100000);
-    await updateData();
+    updateData();
     stream ??= _streamController.stream.asBroadcastStream();
   }
 
   @override
-  Future<void> updateData() async {
-    _game = await _gameDataProvider.loadData();
+  void updateData() {
+    _game = _gameDataProvider.loadData();
   }
 
   Future<void> changeData({
@@ -42,7 +42,7 @@ class GameRepository implements MyRepository {
     if (money != null || nick != null || date != null) {
       print('${_game.money} - repo game');
       await _gameDataProvider.saveData(_game);
-      await updateData();
+      updateData();
       _streamController.add('changeData');
     }
   }

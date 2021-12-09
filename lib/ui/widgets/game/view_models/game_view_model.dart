@@ -69,7 +69,7 @@ class GameViewModel extends ChangeNotifier {
   }
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
-    await repository.updateData();
+    repository.updateData();
     updateState();
   }
 

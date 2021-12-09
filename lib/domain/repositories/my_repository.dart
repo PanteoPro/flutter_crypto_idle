@@ -1,5 +1,7 @@
+import 'dart:async';
+
 abstract class MyRepository {
   /// _data = await _dataProvider.loadData();
-  Future<void> updateData();
+  void updateData();
   Future<void> init();
 }

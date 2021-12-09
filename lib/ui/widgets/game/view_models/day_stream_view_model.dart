@@ -67,7 +67,7 @@ class DayStreamViewModel extends ChangeNotifier {
   }
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
-    await repository.updateData();
+    repository.updateData();
   }
 
   static const lengthDaySeconds = 10;
@@ -120,7 +120,7 @@ class DayStreamViewModel extends ChangeNotifier {
   Future<void> newsDay() async {
     final isCreated = _newsRepository.createNews(_gameRepository.game.date);
     if (isCreated) {
-      await _newsRepository.updateData();
+      _newsRepository.updateData();
       newsListToDisplay = _newsRepository.news.reversed.toList();
       notifyListeners();
     }
