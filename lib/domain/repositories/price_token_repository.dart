@@ -21,12 +21,12 @@ class PriceTokenRepository implements MyRepository {
   }
 
   Future<void> updateData() async {
-    _prices = _priceTokenDataProvider.loadAllPrices();
+    _prices = _priceTokenDataProvider.loadData();
   }
 
   Future<void> addPrice(PriceToken price) async {
     final priceNew = price.copyWith(cost: double.parse(price.cost.toStringAsFixed(4)));
-    await _priceTokenDataProvider.savePrice(priceNew);
+    await _priceTokenDataProvider.saveData(priceNew);
     await updateData();
     _streamController.add('AddPrice');
   }

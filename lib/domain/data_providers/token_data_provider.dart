@@ -1,9 +1,11 @@
+import 'package:crypto_idle/domain/data_providers/my_hive_data_provider.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:hive/hive.dart';
 
-class TokenDataProvider {
+class TokenDataProvider implements MyHiveDataProvider<Token> {
   late Box<Token> _box;
 
+  @override
   Future<void> openBox() async {
     if (!Hive.isAdapterRegistered(3)) {
       Hive.registerAdapter(TokenAdapter());
@@ -15,15 +17,17 @@ class TokenDataProvider {
     }
   }
 
-  Future<void> deleteToken(Token token) async {
-    _box.values.firstWhere((element) => element.id == token.id).delete();
+  @override
+  List<Token> loadData() {
+    return [..._box.values];
   }
 
-  Future<void> saveToken(Token token) async {
+  @override
+  Future<void> saveData(Token token) async {
     await _box.add(token);
   }
 
-  List<Token> loadTokens() {
-    return [..._box.values];
+  Future<void> deleteToken(Token token) async {
+    _box.values.firstWhere((element) => element.id == token.id).delete();
   }
 }

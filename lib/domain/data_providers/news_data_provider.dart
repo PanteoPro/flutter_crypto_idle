@@ -1,9 +1,11 @@
+import 'package:crypto_idle/domain/data_providers/my_hive_data_provider.dart';
 import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:hive/hive.dart';
 
-class NewsDataProvider {
+class NewsDataProvider implements MyHiveDataProvider<News> {
   late Box<News> _box;
 
+  @override
   Future<void> openBox() async {
     if (!Hive.isAdapterRegistered(6)) {
       Hive.registerAdapter(NewsAdapter());
@@ -15,10 +17,12 @@ class NewsDataProvider {
     }
   }
 
-  Future<List<News>> loadData() async {
+  @override
+  List<News> loadData() {
     return _box.values.toList();
   }
 
+  @override
   Future<void> saveData(News news) async {
     await _box.add(news);
   }

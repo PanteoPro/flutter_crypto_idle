@@ -22,26 +22,26 @@ class StatisticsRepository implements MyRepository {
 
   @override
   Future<void> updateData() async {
-    _statistics = _statisticsDataProvider.loadStatistics();
+    _statistics = _statisticsDataProvider.loadData();
   }
 
   Future<void> addEnergyConsume(List<double> energyConsume) async {
     _statistics.energyConsume.addAll(energyConsume);
-    await _statisticsDataProvider.saveStatistics(_statistics);
+    await _statisticsDataProvider.saveData(_statistics);
     await updateData();
     _streamController.add('add energy Consume');
   }
 
   Future<void> addFlatConsume(double flatConsume) async {
     _statistics.flatConsume.add(flatConsume);
-    await _statisticsDataProvider.saveStatistics(_statistics);
+    await _statisticsDataProvider.saveData(_statistics);
     await updateData();
     _streamController.add('add flat Consume');
   }
 
   Future<void> addPCConsume(double pcConsume) async {
     _statistics.pcConsume.add(pcConsume);
-    await _statisticsDataProvider.saveStatistics(_statistics);
+    await _statisticsDataProvider.saveData(_statistics);
     await updateData();
     _streamController.add('add pc Consume');
   }
@@ -51,7 +51,7 @@ class StatisticsRepository implements MyRepository {
       _statistics.tokenEarn[token.id] = [];
     }
     _statistics.tokenEarn[token.id]?.add(earnCash);
-    await _statisticsDataProvider.saveStatistics(_statistics);
+    await _statisticsDataProvider.saveData(_statistics);
     await updateData();
     _streamController.add('add earn cash');
   }
@@ -61,7 +61,7 @@ class StatisticsRepository implements MyRepository {
       _statistics.tokenMining[token.id] = [];
     }
     _statistics.tokenMining[token.id]?.add(miningValue);
-    await _statisticsDataProvider.saveStatistics(_statistics);
+    await _statisticsDataProvider.saveData(_statistics);
     await updateData();
     _streamController.add('add earn mining');
   }

@@ -1,10 +1,12 @@
+import 'package:crypto_idle/domain/data_providers/my_hive_data_provider.dart';
 import 'package:crypto_idle/domain/entities/pc.dart';
 import 'package:hive/hive.dart';
 
-class PCDataProvider {
+class PCDataProvider implements MyHiveDataProvider<PC> {
   late Box<PC> _box;
   late Box<PC> _constBox;
 
+  @override
   Future<void> openBox() async {
     if (!Hive.isAdapterRegistered(1)) {
       Hive.registerAdapter(PCAdapter());
@@ -22,11 +24,13 @@ class PCDataProvider {
     }
   }
 
-  Future<List<PC>> loadAll() async {
+  @override
+  List<PC> loadData() {
     return _box.values.toList();
   }
 
-  Future<void> savePC(PC pc) async {
+  @override
+  Future<void> saveData(PC pc) async {
     await _box.add(pc);
   }
 
@@ -51,11 +55,7 @@ class PCDataProvider {
     }
   }
 
-  Future<List<PC>> loadAllConst() async {
+  List<PC> loadAllConst() {
     return _constBox.values.toList();
-  }
-
-  Future<PC> loadByIdConst(int id) async {
-    return _constBox.get(id) ?? PC.empty();
   }
 }

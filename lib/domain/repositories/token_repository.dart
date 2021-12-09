@@ -19,7 +19,7 @@ class TokenRepository implements MyRepository {
   }
 
   Future<void> addToken(Token token) async {
-    await _tokenDataProvider.saveToken(token);
+    await _tokenDataProvider.saveData(token);
     await updateData();
     _streamController.add('Addtoken');
   }
@@ -39,6 +39,6 @@ class TokenRepository implements MyRepository {
   }
 
   Future<void> updateData() async {
-    _tokens = _tokenDataProvider.loadTokens();
+    _tokens = _tokenDataProvider.loadData();
   }
 }

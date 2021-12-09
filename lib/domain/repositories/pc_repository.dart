@@ -31,7 +31,7 @@ class PCRepository implements MyRepository {
   }
 
   Future<void> addPC(PC pc) async {
-    await _pcDataProvider.savePC(pc);
+    await _pcDataProvider.saveData(pc);
     await updateData();
     _streamController.add('addPC');
   }
@@ -54,6 +54,6 @@ class PCRepository implements MyRepository {
   @override
   Future<void> updateData() async {
     _pcsConst = await _pcDataProvider.loadAllConst();
-    _pcs = await _pcDataProvider.loadAll();
+    _pcs = _pcDataProvider.loadData();
   }
 }

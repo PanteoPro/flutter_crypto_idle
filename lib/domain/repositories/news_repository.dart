@@ -99,7 +99,7 @@ class NewsRepository extends MyRepository {
   List<News> get newsNotActivate => List.unmodifiable(_news.where((element) => element.isActivate == false));
 
   List<PriceToken> pricesByTokenId(int tokenId) =>
-      _priceDataProvider.loadAllPrices().where((element) => element.tokenId == tokenId).toList();
+      _priceDataProvider.loadData().where((element) => element.tokenId == tokenId).toList();
   PriceToken getLatestPriceByTokenId(int tokenId) => pricesByTokenId(tokenId).last;
 
   static final _streamController = StreamController<dynamic>();
@@ -151,7 +151,7 @@ class NewsRepository extends MyRepository {
     final isHaveCrypto = template.contains('[Крипта]');
     final isHaveCompany = template.contains('[Компания]');
 
-    final tokens = _tokenDataProvider.loadTokens();
+    final tokens = _tokenDataProvider.loadData();
     final latestPrices = tokens.map((e) => getLatestPriceByTokenId(e.id));
 
     final availableTokens = <Token>[];

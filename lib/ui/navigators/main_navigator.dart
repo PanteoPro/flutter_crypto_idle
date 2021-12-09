@@ -65,7 +65,6 @@ class MainNavigation {
   };
 
   Route<Object> onGenerateRoute(RouteSettings settings) {
-    print(settings.name);
     switch (settings.name) {
       case MainNavigationRouteNames.gameMarketCrypto:
         final token = settings.arguments is Token ? settings.arguments as Token : Token.empty();
