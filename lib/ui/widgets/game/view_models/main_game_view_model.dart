@@ -9,6 +9,7 @@ import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:crypto_idle/domain/entities/statistics.dart';
@@ -79,8 +80,9 @@ class MainGameViewModelState {
 }
 
 class MainGameViewModel extends ChangeNotifier {
-  MainGameViewModel() {
+  MainGameViewModel({required this.gvm}) {
     _initialRepositories();
+    gvm.resumeDayStream();
   }
 
   @override
@@ -89,8 +91,11 @@ class MainGameViewModel extends ChangeNotifier {
     _tokensStreamSub?.cancel();
     _flatStreamSub?.cancel();
     _pcStreamSub?.cancel();
+    gvm.pauseDayStream();
     super.dispose();
   }
+
+  final GameViewModel gvm;
 
   final _statisticsRepository = StatisticsRepository();
   final _tokensRepository = TokenRepository();
@@ -143,7 +148,8 @@ class MainGameViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onYesExitButtonPressed(BuildContext context) {
+  void onYesExitButtonPressed(BuildContext context, GameViewModel gvm) {
+    gvm.pauseDayStream();
     Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.menu);
   }
 

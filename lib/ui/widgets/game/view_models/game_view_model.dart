@@ -68,18 +68,34 @@ class GameViewModel extends ChangeNotifier {
     _tokenStreamSub?.cancel();
     _priceTokenStreamSub?.cancel();
     _statisticsStreamSub?.cancel();
+    _dayStreamSub.cancel();
     super.dispose();
   }
 
   // Day Stream
   static const lengthDaySeconds = 10;
   late Stream<dynamic> dayStream;
+  late StreamSubscription<dynamic> _dayStreamSub;
 
   void _initialDayStream() {
     dayStream = Stream.periodic(const Duration(seconds: lengthDaySeconds), (int day) {
       return day;
     });
-    dayStream.listen(_newDay);
+    _dayStreamSub = dayStream.listen(_newDay);
+  }
+
+  void pauseDayStream() {
+    if (!_dayStreamSub.isPaused) {
+      _dayStreamSub.pause();
+      print('DAY Stream Paused');
+    }
+  }
+
+  void resumeDayStream() {
+    if (_dayStreamSub.isPaused) {
+      _dayStreamSub.resume();
+      print('DAY Stream Resumed');
+    }
   }
 
   // Repositories

@@ -31,10 +31,13 @@ class MainNavigation {
   String initialRoute() => MainNavigationRouteNames.menu;
 
   final routes = <String, Widget Function(BuildContext)>{
-    MainNavigationRouteNames.gameMain: (context) => ChangeNotifierProvider(
-          create: (_) => MainGameViewModel(),
-          child: const MainGamePage(),
-        ),
+    MainNavigationRouteNames.gameMain: (context) {
+      final gvm = context.read<GameViewModel>();
+      return ChangeNotifierProvider(
+        create: (_) => MainGameViewModel(gvm: gvm),
+        child: const MainGamePage(),
+      );
+    },
     MainNavigationRouteNames.gameMarketPC: (context) => ChangeNotifierProvider<GameMarketPCViewModel>(
           create: (_) => GameMarketPCViewModel(),
           child: const GameMarketPCPage(),

@@ -101,12 +101,13 @@ class _ExitModalButtonsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.read<MainGameViewModel>();
+    final gvm = context.read<GameViewModel>();
     return Row(
       children: [
         Expanded(
           child: MyButton(
               color: Theme.of(context).splashColor,
-              onPressed: () => vm.onYesExitButtonPressed(context),
+              onPressed: () => vm.onYesExitButtonPressed(context, gvm),
               title: 'Выйти в меню'),
         ),
         const SizedBox(width: 30),
