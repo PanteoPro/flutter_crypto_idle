@@ -15,6 +15,7 @@ import 'domain/entities/pc.dart';
 Future<void> main() async {
   await Hive.initFlutter();
   final dataManager = InitialDataManager();
+  await dataManager.deleteBoxesFromDisk();
   await dataManager.init();
   runApp(MainApp());
 }

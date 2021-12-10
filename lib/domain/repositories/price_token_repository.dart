@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:crypto_idle/domain/data_providers/price_token_data_provider.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
+import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
+import 'package:crypto_idle/initial_data.dart';
 
 class PriceTokenRepository implements MyRepository {
   final _priceTokenDataProvider = PriceTokenDataProvider();
@@ -31,5 +33,14 @@ class PriceTokenRepository implements MyRepository {
     await _priceTokenDataProvider.saveData(priceNew);
     updateData();
     _streamController.add('AddPrice');
+  }
+
+  Future<void> addInitialPricesForToken(Token token, DateTime date) async {
+    final prices = InitialData.generatePrices(tokens: [token], dayHistoryCount: 30, startDate: date);
+    for (final price in prices) {
+      await _priceTokenDataProvider.saveData(price);
+    }
+    updateData();
+    _streamController.add('Add initial prices');
   }
 }

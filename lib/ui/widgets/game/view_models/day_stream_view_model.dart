@@ -93,6 +93,16 @@ class DayStreamViewModel extends ChangeNotifier {
     await newsDay();
     await _newPricesDay();
     await _checkMiningScamTokens();
+    await _addNewToken();
+  }
+
+  Future<void> _addNewToken() async {
+    final token = await _tokenRepository.createToken(_gameRepository.game.date);
+    if (token != null) {
+      await _priceTokenRepository.addInitialPricesForToken(token, _gameRepository.game.date);
+      await _tokenRepository.addToken(token);
+      print("GENERATED NEW TOKEN - ${token.symbol}");
+    }
   }
 
   List<PriceToken> _pricesByTokenId(int tokenId) =>

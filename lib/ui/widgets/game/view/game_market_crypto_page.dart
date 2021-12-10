@@ -90,7 +90,7 @@ class _ChartWidget extends StatelessWidget {
     // print("$visibleMinimum, $resMin");
 
     final isScam = latestPrices.where((element) => element.cost <= 0).isNotEmpty;
-    prices.forEach((elem) => print(elem.cost));
+    // prices.forEach((elem) => print(elem.cost));
 
     return SizedBox(
       height: 250,

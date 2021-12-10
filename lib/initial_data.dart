@@ -52,19 +52,33 @@ abstract class InitialDataNames {
     'ISF': 'Income Soft Frame',
     'PRS': 'Proof Resistant Secure',
     'LVZ': 'Level Virus Zombie',
-    // 'YROON': 'Young Roon',
-    // 'AWE': 'Awesome weapon edition',
-    // 'ZZU': 'Zettel Zeus Ultra',
-    // 'CAT': 'Cat Coin',
-    // 'SPD': 'Spider Coin',
-    // 'MZS': 'Moscow Zero Social',
-    // 'OLEG': 'Outbounded lego',
-    // 'MCC': 'Minecraft club.clan',
-    // 'FOAP': 'Fell On A Parrot',
-    // 'BMF': 'Bit My Fork',
-    // 'KDGH': 'Kingdom Global Hero',
-    // 'PDF': 'Piece Drive Fatality ',
+    'YROON': 'Young Roon',
+    'AWE': 'Awesome weapon edition',
+    'ZZU': 'Zettel Zeus Ultra',
+    'CAT': 'Cat Coin',
+    'SPD': 'Spider Coin',
+    'MZS': 'Moscow Zero Social',
+    'OLEG': 'Outbounded lego',
+    'MCC': 'Minecraft club.clan',
+    'FOAP': 'Fell On A Parrot',
+    'BMF': 'Bit My Fork',
+    'KDGH': 'Kingdom Global Hero',
+    'PDF': 'Piece Drive Fatality ',
   };
+  static Map<String, String> startTokens(int count) {
+    final tokens = <String, String>{};
+    final rnd = Random();
+    while (tokens.length < count) {
+      final key = nameTokens.keys.elementAt(rnd.nextInt(nameTokens.length));
+      tokens[key] = nameTokens[key]!;
+    }
+    return tokens;
+  }
+
+  static Map<String, String> getRandomToken() {
+    final rndKey = nameTokens.keys.elementAt(Random().nextInt(nameTokens.length));
+    return {rndKey: nameTokens[rndKey]!};
+  }
 }
 
 abstract class InitialData {
@@ -82,7 +96,7 @@ abstract class InitialData {
   static const double maxLowTokenPrice = 100;
   static const double maxTokenPrice = 4000.0;
 
-  static List<PC> getInitialPCs() {
+  static List<PC> generatePCs() {
     const names = InitialDataNames.namePCs;
     var index = 1;
     final result = names.map((String name) {
@@ -96,7 +110,7 @@ abstract class InitialData {
     return result.toList();
   }
 
-  static List<Flat> getInitialFlats() {
+  static List<Flat> generateFlats() {
     const names = InitialDataNames.nameFlats;
     var index = 1;
     final result = names.map((String name) {
@@ -119,9 +133,14 @@ abstract class InitialData {
     return result.toList();
   }
 
-  static List<Token> getInitialTokens() {
-    const names = InitialDataNames.nameTokens;
-    var index = 1;
+  static List<Token> generateTokens({Map<String, String>? tokenNames, int countGenerate = 5, int startIdToken = 1}) {
+    final names = <String, String>{};
+    if (tokenNames != null) {
+      names.addAll(tokenNames);
+    } else {
+      names.addAll(InitialDataNames.startTokens(countGenerate));
+    }
+    var index = startIdToken;
     final result = names.entries.map((e) {
       final token = Token(
         id: index,
@@ -136,9 +155,14 @@ abstract class InitialData {
     return result.toList();
   }
 
-  static List<PriceToken> getInitialPrices({required List<Token> tokens, required int dayHistoryCount}) {
+  static List<PriceToken> generatePrices(
+      {required List<Token> tokens, required int dayHistoryCount, DateTime? startDate}) {
     final result = <PriceToken>[];
     final random = Random();
+    var date = DateTime.now();
+    if (startDate != null) {
+      date = startDate;
+    }
     for (final token in tokens) {
       final isLowPrice = random.nextBool();
       final isTooLowPrice = random.nextBool();
@@ -156,12 +180,14 @@ abstract class InitialData {
       final cost = double.parse(
         (startCost + Random().nextDouble() * (endCost - startCost)).toStringAsFixed(3),
       );
+
       for (int i = 0; i < dayHistoryCount; i++) {
         final generatedValue = (Random().nextInt(3 - 1) + 1) / 100;
         final coefChanged = Random().nextBool() ? 1 + generatedValue : 1 - generatedValue;
+
         result.add(
           PriceToken(
-            date: DateTime.now().add(Duration(days: -(dayHistoryCount - i))),
+            date: date.add(Duration(days: -(dayHistoryCount - i))),
             cost: double.parse((cost * coefChanged).toStringAsFixed(4)),
             tokenId: token.id,
           ),
@@ -238,8 +264,8 @@ class InitialDataManager {
   }
 
   Future<void> _initPCData() async {
-    final box = Hive.box<PC>(pcConstBoxName);
-    final pcs = InitialData.getInitialPCs();
+    final box = await Hive.openBox<PC>(pcConstBoxName);
+    final pcs = InitialData.generatePCs();
     await box.addAll(pcs);
   }
 
@@ -256,8 +282,8 @@ class InitialDataManager {
   }
 
   Future<void> _initFlatData() async {
-    final box = Hive.box<Flat>(flatBoxName);
-    final flats = InitialData.getInitialFlats();
+    final box = await Hive.openBox<Flat>(flatBoxName);
+    final flats = InitialData.generateFlats();
     await box.addAll(flats);
   }
 
@@ -274,11 +300,12 @@ class InitialDataManager {
   }
 
   Future<void> _initTokenData() async {
-    final tokenBox = Hive.box<Token>('token');
-    final priceBox = Hive.box<PriceToken>('price_token');
+    final tokenBox = await Hive.openBox<Token>(tokenBoxName);
+    final priceBox = await Hive.openBox<PriceToken>(priceTokenBoxName);
 
-    final tokens = InitialData.getInitialTokens();
-    final prices = InitialData.getInitialPrices(tokens: tokens, dayHistoryCount: 30);
+    final tokens = InitialData.generateTokens();
+    print(tokens.length);
+    final prices = InitialData.generatePrices(tokens: tokens, dayHistoryCount: 30);
 
     await tokenBox.addAll(tokens);
     await priceBox.addAll(prices);
@@ -287,26 +314,23 @@ class InitialDataManager {
   Future<bool> _checkTokenData() async {
     _registerAdapter<Token>(3, TokenAdapter());
     _registerAdapter<PriceToken>(4, PriceTokenAdapter());
-    final tokenBox = await Hive.openBox<Token>('token');
-    final priceBox = await Hive.openBox<PriceToken>('price_token');
+    final tokenBox = await Hive.openBox<Token>(tokenBoxName);
+    final priceBox = await Hive.openBox<PriceToken>(priceTokenBoxName);
     if (tokenBox.isEmpty || priceBox.isEmpty) {
-      return false;
-    }
-    if (tokenBox.length != InitialDataNames.nameTokens.length) {
       return false;
     }
     return true;
   }
 
   Future<void> _initStatisticsData() async {
-    final box = Hive.box<Statistics>('statistics');
+    final box = await Hive.openBox<Statistics>(statisticsBoxName);
     final statistics = Statistics.empty();
     await box.put(0, statistics);
   }
 
   Future<bool> _checkStatisticsData() async {
     _registerAdapter<Statistics>(5, StatisticsAdapter());
-    final box = await Hive.openBox<Statistics>('statistics');
+    final box = await Hive.openBox<Statistics>(statisticsBoxName);
     if (box.isEmpty) {
       return false;
     }
