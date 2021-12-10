@@ -128,18 +128,14 @@ class NewsRepository extends MyRepository {
   }
 
   // Get new if dateNow after lastGeneratedDate + waitDays
-  bool createNews(DateTime dateNow) {
+  void createNews(DateTime dateNow) {
     final dayBefore = dateNow.add(const Duration(days: -1));
     if (dateNow.isAfter(lastGenerated?.add(Duration(days: countWaitDays ?? 0)) ?? dayBefore)) {
       countWaitDays = _NewsRepositoryParams.minWaitDayDelay +
           Random().nextInt(_NewsRepositoryParams.maxWaitDayDelay - _NewsRepositoryParams.minWaitDayDelay);
-      // countWaitDays = 0;
       lastGenerated = dateNow;
       final news = _generateNews(dateNow);
       addNews(news);
-      return true;
-    } else {
-      return false;
     }
   }
 
@@ -273,5 +269,14 @@ class NewsRepository extends MyRepository {
       isAllCrypto: newsStruct.isAllCrypto,
       isScamToken: newsStruct.isScamType,
     );
+  }
+
+  void createNewsByNewToken(Token token, DateTime date) {
+    final news = News(
+      text: 'Появилась новая криптовалюта ${token.symbol} - ${token.fullName}',
+      newsTypeValue: NewsType.neutral.index,
+      date: date,
+    );
+    addNews(news);
   }
 }

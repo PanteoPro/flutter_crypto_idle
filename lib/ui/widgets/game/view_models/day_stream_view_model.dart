@@ -26,6 +26,7 @@ class DayStreamViewModel extends ChangeNotifier {
     _tokenStreamSub?.cancel();
     _priceTokenStreamSub?.cancel();
     _statisticsStreamSub?.cancel();
+    _newsStreamSub?.cancel();
     _dayStreamSub.cancel();
     super.dispose();
   }
@@ -48,6 +49,7 @@ class DayStreamViewModel extends ChangeNotifier {
   StreamSubscription<dynamic>? _tokenStreamSub;
   StreamSubscription<dynamic>? _priceTokenStreamSub;
   StreamSubscription<dynamic>? _statisticsStreamSub;
+  StreamSubscription<dynamic>? _newsStreamSub;
 
   Future<void> _initialRepository() async {
     await _gameRepository.init();
@@ -69,10 +71,14 @@ class DayStreamViewModel extends ChangeNotifier {
         PriceTokenRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _priceTokenRepository));
     _statisticsStreamSub =
         StatisticsRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _statisticsRepository));
+    _newsStreamSub = NewsRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _newsRepository));
   }
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
     repository.updateData();
+    if (repository.runtimeType == NewsRepository) {
+      _updateNews();
+    }
   }
 
   static const lengthDaySeconds = 10;
@@ -97,10 +103,12 @@ class DayStreamViewModel extends ChangeNotifier {
   }
 
   Future<void> _addNewToken() async {
-    final token = await _tokenRepository.createToken(_gameRepository.game.date);
+    final dateNow = _gameRepository.game.date;
+    final token = await _tokenRepository.createToken(dateNow);
     if (token != null) {
-      await _priceTokenRepository.addInitialPricesForToken(token, _gameRepository.game.date);
+      await _priceTokenRepository.addInitialPricesForToken(token, dateNow);
       await _tokenRepository.addToken(token);
+      _newsRepository.createNewsByNewToken(token, dateNow);
       print("GENERATED NEW TOKEN - ${token.symbol}");
     }
   }
@@ -132,10 +140,7 @@ class DayStreamViewModel extends ChangeNotifier {
   }
 
   Future<void> newsDay() async {
-    final isCreated = _newsRepository.createNews(_gameRepository.game.date);
-    if (isCreated) {
-      _updateNews();
-    }
+    _newsRepository.createNews(_gameRepository.game.date);
   }
 
   Future<void> _miningDay() async {
