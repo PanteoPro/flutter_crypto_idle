@@ -38,6 +38,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "game_app_bar_info_balance_title":
+            MessageLookupByLibrary.simpleMessage("Balance"),
+        "game_app_bar_info_count_pc_title":
+            MessageLookupByLibrary.simpleMessage("Count pcs"),
         "game_crypto_cost_header_title":
             MessageLookupByLibrary.simpleMessage("Balance"),
         "game_crypto_helper_title":
@@ -155,6 +159,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "menu_game_title": MessageLookupByLibrary.simpleMessage("Crypto IDLE"),
         "menu_settings_button_title":
             MessageLookupByLibrary.simpleMessage("Settings"),
+        "menu_settings_swap_en_button_title":
+            MessageLookupByLibrary.simpleMessage("Change language on EN"),
+        "menu_settings_swap_ru_button_title":
+            MessageLookupByLibrary.simpleMessage("Change language on RU"),
+        "menu_settings_title": MessageLookupByLibrary.simpleMessage("Settings"),
         "menu_title": MessageLookupByLibrary.simpleMessage("Menu"),
         "text_with_dollar": m4,
         "text_with_energy": m5,

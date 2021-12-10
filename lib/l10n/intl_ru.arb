@@ -74,6 +74,13 @@
     "menu_settings_button_title": "Настройки",
     "menu_about_button_title": "Об авторе",
 
+    "menu_settings_title": "Настройки",
+    "menu_settings_swap_ru_button_title": "Поменять на язык RU",
+    "menu_settings_swap_en_button_title": "Поменять на язык EN",
+
+    "game_app_bar_info_balance_title": "Баланс",
+    "game_app_bar_info_count_pc_title": "Количество установок",
+
     "text_with_dollar": "{value}$",
     "text_with_energy": "{value} Ват/ч",
     "text_with_power_mining": "{value} U/dex",

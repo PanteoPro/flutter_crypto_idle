@@ -74,6 +74,13 @@
     "menu_settings_button_title": "Settings",
     "menu_about_button_title": "About authors",
 
+    "menu_settings_title": "Settings",
+    "menu_settings_swap_ru_button_title": "Change language on RU",
+    "menu_settings_swap_en_button_title": "Change language on EN",
+
+    "game_app_bar_info_balance_title": "Balance",
+    "game_app_bar_info_count_pc_title": "Count pcs",
+
     "text_with_dollar": "{value}$",
     "text_with_energy": "{value} V/h",
     "text_with_power_mining": "{value} U/dex",

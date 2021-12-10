@@ -7,6 +7,7 @@ import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/day_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -253,7 +254,8 @@ class _AppBarDateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final format = DateFormat.yMd('ru-ru');
+    final locale = context.read<MainAppViewModel>().locale;
+    final format = DateFormat.yMd(locale.languageCode);
     final date = context.select((MainGameViewModel vm) => vm.state.date);
     final stringDate = format.format(date);
     return Padding(

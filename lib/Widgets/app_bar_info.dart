@@ -1,5 +1,6 @@
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +45,8 @@ class _DayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final format = DateFormat.yMd('ru-ru');
+    final locale = context.read<MainAppViewModel>().locale;
+    final format = DateFormat.yMd(locale.languageCode);
     final date = context.select((GameViewModel vm) => vm.state.date);
     final stringDate = format.format(date);
 
@@ -61,7 +63,8 @@ class _CountPcWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final maxCountPC = context.select((GameViewModel vm) => vm.state.maxCountPC);
     final currentCountPC = context.select((GameViewModel vm) => vm.state.currentCountPC);
-    return Text('Количество установок: ${S.of(context).text_with_slash(currentCountPC, maxCountPC)}');
+    return Text(
+        '${S.of(context).game_app_bar_info_count_pc_title}: ${S.of(context).text_with_slash(currentCountPC, maxCountPC)}');
   }
 }
 
@@ -73,6 +76,6 @@ class _BalanceWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final money = context.select((GameViewModel vm) => vm.state.money);
-    return Text('Баланс: ${S.of(context).text_with_dollar(money)}');
+    return Text('${S.of(context).game_app_bar_info_balance_title}: ${S.of(context).text_with_dollar(money)}');
   }
 }

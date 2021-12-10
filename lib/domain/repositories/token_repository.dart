@@ -56,7 +56,6 @@ class TokenRepository implements MyRepository {
     final tokens = _tokenDataProvider.loadData();
     lastGeneratedToken ??= date;
     countWaitDays ??= Random().nextInt(_maxWaitDays - _minWaitDays) + _minWaitDays;
-    print(countWaitDays);
     if (InitialDataNames.nameTokens.length > tokens.length) {
       if (date.isAfter(lastGeneratedToken!.add(Duration(days: countWaitDays!)))) {
         var tokenMap = InitialDataNames.getRandomToken();

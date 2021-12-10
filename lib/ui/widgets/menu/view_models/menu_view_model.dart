@@ -14,6 +14,9 @@ class MenuViewModel {
     Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.gameMain);
   }
 
-  void onSettingsButtonPressed() {}
+  void onSettingsButtonPressed() {
+    Navigator.of(context).pushNamed(MainNavigationRouteNames.menuSettings);
+  }
+
   void onAboutButtonPressed() {}
 }

@@ -690,6 +690,56 @@ class S {
     );
   }
 
+  /// `Settings`
+  String get menu_settings_title {
+    return Intl.message(
+      'Settings',
+      name: 'menu_settings_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change language on RU`
+  String get menu_settings_swap_ru_button_title {
+    return Intl.message(
+      'Change language on RU',
+      name: 'menu_settings_swap_ru_button_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change language on EN`
+  String get menu_settings_swap_en_button_title {
+    return Intl.message(
+      'Change language on EN',
+      name: 'menu_settings_swap_en_button_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Balance`
+  String get game_app_bar_info_balance_title {
+    return Intl.message(
+      'Balance',
+      name: 'game_app_bar_info_balance_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count pcs`
+  String get game_app_bar_info_count_pc_title {
+    return Intl.message(
+      'Count pcs',
+      name: 'game_app_bar_info_count_pc_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{value}$`
   String text_with_dollar(Object value) {
     return Intl.message(

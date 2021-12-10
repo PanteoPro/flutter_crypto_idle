@@ -1,4 +1,6 @@
 import 'package:crypto_idle/Widgets/buttons.dart';
+import 'package:crypto_idle/generated/l10n.dart';
+import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
 import 'package:crypto_idle/ui/widgets/menu/view_models/menu_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,10 +10,11 @@ class MenuWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.select((MainAppViewModel vm) => vm.locale);
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Меню',
+          S.of(context).menu_title,
           style: const TextStyle(fontSize: 24),
         ),
         centerTitle: true,
@@ -64,7 +67,7 @@ class _TitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Криптовалютный IDLE');
+    return Text(S.of(context).menu_game_title);
   }
 }
 
@@ -79,26 +82,35 @@ class _ButtonsWidget extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-              width: double.infinity,
-              child: MyButton(
-                  color: Theme.of(context).splashColor,
-                  onPressed: vm.onCompanyGameButtonPressed,
-                  title: 'Начать компанию')),
+            width: double.infinity,
+            child: MyButton(
+                color: Theme.of(context).splashColor,
+                onPressed: vm.onCompanyGameButtonPressed,
+                title: S.of(context).menu_company_button_title),
+          ),
           SizedBox(
             width: double.infinity,
             child: MyButton(
                 color: Theme.of(context).splashColor,
                 onPressed: vm.onFreeGameButtonPressed,
-                title: 'Начать свободную игру'),
+                title: S.of(context).menu_free_button_title),
           ),
           SizedBox(
-              width: double.infinity,
-              child: MyButton(
-                  color: Theme.of(context).splashColor, onPressed: vm.onSettingsButtonPressed, title: 'Настройки')),
+            width: double.infinity,
+            child: MyButton(
+              color: Theme.of(context).splashColor,
+              onPressed: vm.onSettingsButtonPressed,
+              title: S.of(context).menu_settings_button_title,
+            ),
+          ),
           SizedBox(
-              width: double.infinity,
-              child: MyButton(
-                  color: Theme.of(context).splashColor, onPressed: vm.onAboutButtonPressed, title: 'Об авторе')),
+            width: double.infinity,
+            child: MyButton(
+              color: Theme.of(context).splashColor,
+              onPressed: vm.onAboutButtonPressed,
+              title: S.of(context).menu_about_button_title,
+            ),
+          ),
         ],
       ),
     );
