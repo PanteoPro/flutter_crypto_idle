@@ -252,7 +252,14 @@ class NewsRepository extends MyRepository {
     newsTexts.shuffle();
     var newsType = NewsTypeExt.getRandom();
     var newsStruct = newsTexts.firstWhere((element) => element.type == newsType);
-    if (newsStruct.isScamType == true) {
+    // Scam news can't be while tokens lenght <= 3
+    if (_tokenDataProvider.loadData().length <= 3) {
+      while (newsStruct.isScamType == true) {
+        newsTexts.shuffle();
+        newsType = NewsTypeExt.getRandom();
+        newsStruct = newsTexts.firstWhere((element) => element.type == newsType);
+      }
+    } else if (newsStruct.isScamType == true) {
       newsTexts.shuffle();
       newsType = NewsTypeExt.getRandom();
       newsStruct = newsTexts.firstWhere((element) => element.type == newsType);
