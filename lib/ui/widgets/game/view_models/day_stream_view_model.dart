@@ -31,6 +31,11 @@ class DayStreamViewModel extends ChangeNotifier {
   }
 
   var newsListToDisplay = <News>[];
+  void _updateNews() {
+    _newsRepository.updateData();
+    newsListToDisplay = _newsRepository.news.reversed.toList();
+    notifyListeners();
+  }
 
   final _priceTokenRepository = PriceTokenRepository();
   final _gameRepository = GameRepository();
@@ -51,6 +56,7 @@ class DayStreamViewModel extends ChangeNotifier {
     await _priceTokenRepository.init();
     await _statisticsRepository.init();
     await _newsRepository.init();
+    _updateNews();
     _subscriteStreams();
   }
 
@@ -118,9 +124,7 @@ class DayStreamViewModel extends ChangeNotifier {
   Future<void> newsDay() async {
     final isCreated = _newsRepository.createNews(_gameRepository.game.date);
     if (isCreated) {
-      _newsRepository.updateData();
-      newsListToDisplay = _newsRepository.news.reversed.toList();
-      notifyListeners();
+      _updateNews();
     }
   }
 
