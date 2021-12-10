@@ -21,7 +21,6 @@ class DayStreamViewModel extends ChangeNotifier {
 
   @override
   void dispose() {
-    print('Dispose DayStreamViewModel');
     _gameStreamSub?.cancel();
     _pcStreamSub?.cancel();
     _tokenStreamSub?.cancel();
@@ -110,7 +109,6 @@ class DayStreamViewModel extends ChangeNotifier {
       }
       return false;
     });
-    print(scamTokens);
     for (final pc in pcsToChangeMining) {
       pc.miningToken = null;
       pc.save();
@@ -139,7 +137,6 @@ class DayStreamViewModel extends ChangeNotifier {
 
         await _tokenRepository.changeToken(token, count: token.count + countMined);
         await _statisticsRepository.addTokenMining(token, countMined);
-        print('+ ${countMined.toStringAsFixed(8)} ${token.symbol}');
       }
     }
   }

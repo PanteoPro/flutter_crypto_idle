@@ -40,7 +40,6 @@ class GameRepository implements MyRepository {
       _game = _game.copyWith(date: date);
     }
     if (money != null || nick != null || date != null) {
-      print('${_game.money} - repo game');
       await _gameDataProvider.saveData(_game);
       updateData();
       _streamController.add('changeData');

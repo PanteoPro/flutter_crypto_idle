@@ -3,10 +3,12 @@ import 'dart:math';
 import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/entities/pc.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
+import 'package:crypto_idle/domain/entities/statistics.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
+import 'package:hive/hive.dart';
 
 abstract class InitialDataNames {
-  static const List<String> namesPC = [
+  static const List<String> namePCs = [
     'LowPriority-D1',
     'LowPriority-D2',
     'Старый ПК GH-01',
@@ -33,7 +35,7 @@ abstract class InitialDataNames {
     'Joker PC',
     'Griva Edition',
   ];
-  static const List<String> namesFlat = [
+  static const List<String> nameFlats = [
     'Родительский дом',
     'Гараж деда',
     'Подвал',
@@ -46,7 +48,7 @@ abstract class InitialDataNames {
     'Дата центр',
     'Квартира бабушки',
   ];
-  static const Map<String, String> namesCrypto = {
+  static const Map<String, String> nameTokens = {
     'ISF': 'Income Soft Frame',
     'PRS': 'Proof Resistant Secure',
     'LVZ': 'Level Virus Zombie',
@@ -81,7 +83,7 @@ abstract class InitialData {
   static const double maxTokenPrice = 4000.0;
 
   static List<PC> getInitialPCs() {
-    const names = InitialDataNames.namesPC;
+    const names = InitialDataNames.namePCs;
     var index = 1;
     final result = names.map((String name) {
       final cost = (baseCostPC * index).toDouble();
@@ -95,7 +97,7 @@ abstract class InitialData {
   }
 
   static List<Flat> getInitialFlats() {
-    const names = InitialDataNames.namesFlat;
+    const names = InitialDataNames.nameFlats;
     var index = 1;
     final result = names.map((String name) {
       final cost = (baseCostFlat * (index - 1)).toDouble();
@@ -118,7 +120,7 @@ abstract class InitialData {
   }
 
   static List<Token> getInitialTokens() {
-    const names = InitialDataNames.namesCrypto;
+    const names = InitialDataNames.nameTokens;
     var index = 1;
     final result = names.entries.map((e) {
       final token = Token(
@@ -167,5 +169,147 @@ abstract class InitialData {
       }
     }
     return result;
+  }
+}
+
+class InitialDataManager {
+  static const String pcConstBoxName = 'pc_const';
+  static const String pcBoxName = 'pc';
+  static const String gameBoxName = 'game';
+  static const String flatBoxName = 'flat';
+  static const String tokenBoxName = 'token';
+  static const String priceTokenBoxName = 'price_token';
+  static const String statisticsBoxName = 'statistics';
+  static const String newsBoxName = 'news';
+
+  Future<void> init() async {
+    final needResetPCData = !await _checkPCData();
+    final needResetHaveFlatData = !await _checkFlatData();
+    final needResetHaveTokenData = !await _checkTokenData();
+    final needResetHaveStatisticsData = !await _checkStatisticsData();
+
+    if (needResetPCData) {
+      print('reset PC DATA');
+      await _deleteBoxFromDisk(pcBoxName);
+      await _initPCData();
+    }
+
+    if (needResetHaveFlatData) {
+      print('reset Flat DATA');
+      await _deleteBoxFromDisk(flatBoxName);
+      await _initFlatData();
+    }
+
+    if (needResetHaveTokenData) {
+      print('reset Token DATA');
+      print('reset Price DATA');
+
+      await _deleteBoxFromDisk(tokenBoxName);
+      await _deleteBoxFromDisk(priceTokenBoxName);
+      await _initTokenData();
+    }
+
+    if (needResetHaveStatisticsData) {
+      print('reset Statistics DATA');
+      await _deleteBoxFromDisk(statisticsBoxName);
+      await _initStatisticsData();
+    }
+  }
+
+  Future<void> _deleteBoxFromDisk(String nameBox) async {
+    await Hive.deleteBoxFromDisk(nameBox);
+  }
+
+  Future<void> deleteBoxesFromDisk() async {
+    await Hive.deleteBoxFromDisk(pcConstBoxName);
+    await Hive.deleteBoxFromDisk(pcBoxName);
+    await Hive.deleteBoxFromDisk(gameBoxName);
+    await Hive.deleteBoxFromDisk(flatBoxName);
+    await Hive.deleteBoxFromDisk(tokenBoxName);
+    await Hive.deleteBoxFromDisk(priceTokenBoxName);
+    await Hive.deleteBoxFromDisk(statisticsBoxName);
+    await Hive.deleteBoxFromDisk(newsBoxName);
+  }
+
+  void _registerAdapter<T>(int typeID, TypeAdapter<T> adapter) {
+    if (!Hive.isAdapterRegistered(typeID)) {
+      Hive.registerAdapter<T>(adapter);
+    }
+  }
+
+  Future<void> _initPCData() async {
+    final box = Hive.box<PC>(pcConstBoxName);
+    final pcs = InitialData.getInitialPCs();
+    await box.addAll(pcs);
+  }
+
+  Future<bool> _checkPCData() async {
+    _registerAdapter<PC>(1, PCAdapter());
+    final box = await Hive.openBox<PC>(pcConstBoxName);
+    if (box.isEmpty) {
+      return false;
+    }
+    if (box.length != InitialDataNames.namePCs.length) {
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> _initFlatData() async {
+    final box = Hive.box<Flat>(flatBoxName);
+    final flats = InitialData.getInitialFlats();
+    await box.addAll(flats);
+  }
+
+  Future<bool> _checkFlatData() async {
+    _registerAdapter<Flat>(2, FlatAdapter());
+    final box = await Hive.openBox<Flat>(flatBoxName);
+    if (box.isEmpty) {
+      return false;
+    }
+    if (box.length != InitialDataNames.nameFlats.length) {
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> _initTokenData() async {
+    final tokenBox = Hive.box<Token>('token');
+    final priceBox = Hive.box<PriceToken>('price_token');
+
+    final tokens = InitialData.getInitialTokens();
+    final prices = InitialData.getInitialPrices(tokens: tokens, dayHistoryCount: 30);
+
+    await tokenBox.addAll(tokens);
+    await priceBox.addAll(prices);
+  }
+
+  Future<bool> _checkTokenData() async {
+    _registerAdapter<Token>(3, TokenAdapter());
+    _registerAdapter<PriceToken>(4, PriceTokenAdapter());
+    final tokenBox = await Hive.openBox<Token>('token');
+    final priceBox = await Hive.openBox<PriceToken>('price_token');
+    if (tokenBox.isEmpty || priceBox.isEmpty) {
+      return false;
+    }
+    if (tokenBox.length != InitialDataNames.nameTokens.length) {
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> _initStatisticsData() async {
+    final box = Hive.box<Statistics>('statistics');
+    final statistics = Statistics.empty();
+    await box.put(0, statistics);
+  }
+
+  Future<bool> _checkStatisticsData() async {
+    _registerAdapter<Statistics>(5, StatisticsAdapter());
+    final box = await Hive.openBox<Statistics>('statistics');
+    if (box.isEmpty) {
+      return false;
+    }
+    return true;
   }
 }

@@ -85,7 +85,7 @@ class _NewsRepositoryParams {
     'Tpc Solutions',
   ];
 
-  static final Map<String, String> tokenNames = InitialDataNames.namesCrypto;
+  static final Map<String, String> tokenNames = InitialDataNames.nameTokens;
 }
 
 class NewsRepository extends MyRepository {
@@ -134,7 +134,6 @@ class NewsRepository extends MyRepository {
       countWaitDays = _NewsRepositoryParams.minWaitDayDelay +
           Random().nextInt(_NewsRepositoryParams.maxWaitDayDelay - _NewsRepositoryParams.minWaitDayDelay);
       // countWaitDays = 0;
-      print('wait days $countWaitDays');
       lastGenerated = dateNow;
       final news = _generateNews(dateNow);
       addNews(news);
@@ -254,7 +253,6 @@ class NewsRepository extends MyRepository {
     var newsType = NewsTypeExt.getRandom();
     var newsStruct = newsTexts.firstWhere((element) => element.type == newsType);
     if (newsStruct.isScamType == true) {
-      print('ReTake, but scam');
       newsTexts.shuffle();
       newsType = NewsTypeExt.getRandom();
       newsStruct = newsTexts.firstWhere((element) => element.type == newsType);

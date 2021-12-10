@@ -461,7 +461,6 @@ class _ModulePCItemChangeWidget extends StatelessWidget {
     final miningToken = context.select((GameMiningViewModel vm) => vm.state.filtered?[indexPC].miningToken);
     final vm = context.read<GameMiningViewModel>();
     final token = vm.state.availableTokens[vm.state.modaleTokenIndex];
-    print(token.symbol);
     final value = token.id == miningToken?.id;
 
     return Transform.scale(
