@@ -18,5 +18,7 @@ class MenuViewModel {
     Navigator.of(context).pushNamed(MainNavigationRouteNames.menuSettings);
   }
 
-  void onAboutButtonPressed() {}
+  void onAboutButtonPressed() {
+    Navigator.of(context).pushNamed(MainNavigationRouteNames.menuAbout);
+  }
 }

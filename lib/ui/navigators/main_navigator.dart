@@ -12,6 +12,7 @@ import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_mo
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_pc_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_mining_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/menu/view/menu_about_page.dart';
 import 'package:crypto_idle/ui/widgets/menu/view/menu_page.dart';
 import 'package:crypto_idle/ui/widgets/menu/view/menu_settings_page.dart';
 import 'package:crypto_idle/ui/widgets/menu/view_models/menu_view_model.dart';
@@ -27,6 +28,7 @@ abstract class MainNavigationRouteNames {
   static const gameMining = 'game/mining';
   static const menu = 'menu';
   static const menuSettings = 'menu/settings';
+  static const menuAbout = 'menu/about';
 }
 
 class MainNavigation {
@@ -65,6 +67,7 @@ class MainNavigation {
     MainNavigationRouteNames.menu: (context) =>
         Provider(create: (ctx) => MenuViewModel(ctx), child: const MenuWidget()),
     MainNavigationRouteNames.menuSettings: (context) => const MenuSettingsPage(),
+    MainNavigationRouteNames.menuAbout: (context) => const MenuAboutWidget(),
   };
 
   Route<Object> onGenerateRoute(RouteSettings settings) {
