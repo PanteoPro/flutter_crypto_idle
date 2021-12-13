@@ -53,7 +53,7 @@ abstract class InitialDataNames {
     'PRS': 'Proof Resistant Secure',
     'LVZ': 'Level Virus Zombie',
     'YROON': 'Young Roon',
-    'AWE': 'Awesome weapon edition',
+    'AWES': 'Awesome weapon editions',
     'ZZU': 'Zettel Zeus Ultra',
     'CAT': 'Cat Coin',
     'SPD': 'Spider Coin',
@@ -68,7 +68,7 @@ abstract class InitialDataNames {
   static Map<String, String> startTokens(int count) {
     final tokens = <String, String>{};
     final rnd = Random();
-    while (tokens.length < count) {
+    while (tokens.length < min(count, nameTokens.length)) {
       final key = nameTokens.keys.elementAt(rnd.nextInt(nameTokens.length));
       tokens[key] = nameTokens[key]!;
     }
@@ -133,7 +133,7 @@ abstract class InitialData {
     return result.toList();
   }
 
-  static List<Token> generateTokens({Map<String, String>? tokenNames, int countGenerate = 5, int startIdToken = 1}) {
+  static List<Token> generateTokens({Map<String, String>? tokenNames, int countGenerate = 30, int startIdToken = 1}) {
     final names = <String, String>{};
     if (tokenNames != null) {
       names.addAll(tokenNames);

@@ -1,7 +1,7 @@
 import 'package:crypto_idle/Widgets/app_bar_info.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
 import 'package:crypto_idle/generated/l10n.dart';
-import 'package:crypto_idle/ui/navigators/main_navigator.dart';
+import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_crypto_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -142,21 +142,35 @@ class _CryptoItemWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Row(
             children: [
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: const SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: Placeholder(),
-                ),
-              ),
+              _ItemImageWidget(symbol: token.symbol),
               const SizedBox(width: 10),
               Expanded(child: __CryptoItemNameWidget(index: index)),
               __CryptoItemCostWidget(index: index),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ItemImageWidget extends StatelessWidget {
+  const _ItemImageWidget({
+    Key? key,
+    required this.symbol,
+  }) : super(key: key);
+
+  final String symbol;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(50),
+      child: SizedBox(
+        width: 24,
+        height: 24,
+        child: Image(
+          image: AssetImage(AppImages.getTokenPathBySymbol(symbol)),
         ),
       ),
     );

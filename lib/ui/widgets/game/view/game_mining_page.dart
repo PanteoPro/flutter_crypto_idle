@@ -2,6 +2,7 @@ import 'package:crypto_idle/Widgets/app_bar_info.dart';
 import 'package:crypto_idle/Widgets/buttons.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
 import 'package:crypto_idle/generated/l10n.dart';
+import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_mining_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/material.dart';
@@ -100,7 +101,16 @@ class _MiningItemHeaderWidget extends StatelessWidget {
     final token = context.read<GameMiningViewModel>().state.availableTokens[index];
     return Row(
       children: [
-        const SizedBox(width: 32, height: 32, child: Placeholder()),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(50),
+          child: SizedBox(
+            width: 32,
+            height: 32,
+            child: Image(
+              image: AssetImage(AppImages.getTokenPathBySymbol(token.symbol)),
+            ),
+          ),
+        ),
         const SizedBox(width: 10),
         Expanded(
           child: Column(
