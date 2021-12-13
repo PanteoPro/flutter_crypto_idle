@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
+import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/news_repository.dart';
@@ -27,8 +28,21 @@ class DayStreamViewModel extends ChangeNotifier {
     _priceTokenStreamSub?.cancel();
     _statisticsStreamSub?.cancel();
     _newsStreamSub?.cancel();
+    _flatStreamSub?.cancel();
     _dayStreamSub.cancel();
     super.dispose();
+  }
+
+  double get _flatConsume => _flatRepository.currentFlat.costMonth;
+  double get _energyConsumeCost => double.parse((_energyConsume / 30).toStringAsFixed(2));
+  double get _energyConsume {
+    var energy = 0.0;
+    for (final element in _pcRepository.pcs) {
+      if (element.miningToken != null) {
+        energy += element.energy;
+      }
+    }
+    return double.parse(energy.toStringAsFixed(2));
   }
 
   var newsListToDisplay = <News>[];
@@ -44,12 +58,14 @@ class DayStreamViewModel extends ChangeNotifier {
   final _pcRepository = PCRepository();
   final _newsRepository = NewsRepository();
   final _statisticsRepository = StatisticsRepository();
+  final _flatRepository = FlatRepository();
   StreamSubscription<dynamic>? _gameStreamSub;
   StreamSubscription<dynamic>? _pcStreamSub;
   StreamSubscription<dynamic>? _tokenStreamSub;
   StreamSubscription<dynamic>? _priceTokenStreamSub;
   StreamSubscription<dynamic>? _statisticsStreamSub;
   StreamSubscription<dynamic>? _newsStreamSub;
+  StreamSubscription<dynamic>? _flatStreamSub;
 
   Future<void> _initialRepository() async {
     await _gameRepository.init();
@@ -58,6 +74,7 @@ class DayStreamViewModel extends ChangeNotifier {
     await _priceTokenRepository.init();
     await _statisticsRepository.init();
     await _newsRepository.init();
+    await _flatRepository.init();
     _updateNews();
     _subscriteStreams();
   }
@@ -72,6 +89,7 @@ class DayStreamViewModel extends ChangeNotifier {
     _statisticsStreamSub =
         StatisticsRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _statisticsRepository));
     _newsStreamSub = NewsRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _newsRepository));
+    _flatStreamSub = NewsRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _flatRepository));
   }
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
@@ -100,6 +118,32 @@ class DayStreamViewModel extends ChangeNotifier {
     await _newPricesDay();
     await _checkMiningScamTokens();
     await _addNewToken();
+    await _monthyPayments();
+    if (_isMoneyGone()) {
+      await _gameEnd();
+    }
+  }
+
+  Future<void> _gameEnd() async {
+    await _dayStreamSub.cancel();
+    await _gameRepository.changeData(gameOver: true);
+  }
+
+  bool _isMoneyGone() {
+    if (_gameRepository.game.money < 0) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<void> _monthyPayments() async {
+    final nowDate = _gameRepository.game.date;
+    final prevDate = nowDate.add(const Duration(days: -1));
+    if (nowDate.day < prevDate.day) {
+      await _gameRepository.changeData(money: _gameRepository.game.money - _flatConsume);
+      await _gameRepository.changeData(money: _gameRepository.game.money - _energyConsumeCost);
+      _newsRepository.createNewsByMonthyPayments(flat: _flatConsume, energy: _energyConsumeCost, date: nowDate);
+    }
   }
 
   Future<void> _addNewToken() async {
@@ -109,7 +153,6 @@ class DayStreamViewModel extends ChangeNotifier {
       await _priceTokenRepository.addInitialPricesForToken(token, dateNow);
       await _tokenRepository.addToken(token);
       _newsRepository.createNewsByNewToken(token, dateNow);
-      print("GENERATED NEW TOKEN - ${token.symbol}");
     }
   }
 

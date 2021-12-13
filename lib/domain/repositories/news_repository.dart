@@ -8,6 +8,7 @@ import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
+import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/initial_data.dart';
 
 class _NewsStruct {
@@ -274,6 +275,15 @@ class NewsRepository extends MyRepository {
   void createNewsByNewToken(Token token, DateTime date) {
     final news = News(
       text: 'Появилась новая криптовалюта ${token.symbol} - ${token.fullName}',
+      newsTypeValue: NewsType.neutral.index,
+      date: date,
+    );
+    addNews(news);
+  }
+
+  void createNewsByMonthyPayments({required double flat, required double energy, required DateTime date}) {
+    final news = News(
+      text: 'Оплата жилья: -$flat\$. Оплата энергии: -$energy\$',
       newsTypeValue: NewsType.neutral.index,
       date: date,
     );

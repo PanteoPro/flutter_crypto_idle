@@ -17,6 +17,7 @@ class MainGamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final gameOver = context.select((MainGameViewModel vm) => vm.state.gameOver);
     final vm = context.read<MainGameViewModel>();
     return Scaffold(
       appBar: AppBar(
@@ -29,7 +30,9 @@ class MainGamePage extends StatelessWidget {
           _AppBarDateWidget(),
         ],
         automaticallyImplyLeading: false,
-        leading: IconButton(onPressed: vm.onReturnToMenuButtonPressed, icon: Icon(Icons.exit_to_app_sharp)),
+        leading: IconButton(
+            onPressed: vm.onReturnToMenuButtonPressed,
+            icon: Icon(Icons.exit_to_app_sharp, color: gameOver ? Colors.yellow : Colors.white)),
       ),
       body: SafeArea(
         child: Stack(
@@ -44,11 +47,52 @@ class MainGamePage extends StatelessWidget {
                 ],
               ),
             ),
+            _GameOverModalWidget(),
             _ExitModalWidget(),
           ],
         ),
       ),
     );
+  }
+}
+
+class _GameOverModalWidget extends StatelessWidget {
+  const _GameOverModalWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final gameOver = context.select((MainGameViewModel vm) => vm.state.gameOver);
+    final isModalGameOverClose = context.select((MainGameViewModel vm) => vm.state.isModalGameOverClose);
+    final vm = context.read<MainGameViewModel>();
+    if (gameOver && !isModalGameOverClose) {
+      return Stack(
+        children: [
+          GestureDetector(
+            onTap: () => vm.onExitGameOverPressed(),
+            child: Container(
+              color: Colors.black.withOpacity(0.6),
+            ),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Container(
+                color: Colors.black,
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    Text('Вы проиграли!'),
+                    Text('У вас закончились деньги!'),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+    return const SizedBox();
   }
 }
 

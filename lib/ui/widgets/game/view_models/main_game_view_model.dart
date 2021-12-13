@@ -10,8 +10,8 @@ import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
+import 'package:crypto_idle/initial_data.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:crypto_idle/domain/entities/statistics.dart';
@@ -27,6 +27,7 @@ class MainGameViewModelState {
     required this.date,
     required this.money,
     required this.currentPrices,
+    required this.gameOver,
   });
   MainGameViewModelState.empty({
     Statistics? statistics,
@@ -37,6 +38,7 @@ class MainGameViewModelState {
     DateTime? date,
     this.money = 0,
     this.currentPrices = const {},
+    this.gameOver = false,
   }) {
     this.statistics = statistics ?? Statistics.empty();
     this.tokens = tokens ?? [];
@@ -52,9 +54,11 @@ class MainGameViewModelState {
   late Flat flat;
   late DateTime date;
   late double money;
+  late bool gameOver;
   final Map<int, double> currentPrices;
+  bool isModalGameOverClose = false;
   double get flatConsume => flat.costMonth;
-  double get energyConsumeCost => energyConsume / 10;
+  double get energyConsumeCost => double.parse((energyConsume / 30).toStringAsFixed(2));
   double get energyConsume {
     var energy = 0.0;
     for (final element in myPCs) {
@@ -62,7 +66,7 @@ class MainGameViewModelState {
         energy += element.energy;
       }
     }
-    return energy;
+    return double.parse(energy.toStringAsFixed(2));
   }
 
   double get powerPCs {
@@ -178,6 +182,7 @@ class MainGameViewModel extends ChangeNotifier {
       date: _gameRepository.game.date,
       money: _gameRepository.game.money,
       currentPrices: currentPrices,
+      gameOver: _gameRepository.game.gameOver,
     );
     notifyListeners();
   }
@@ -193,6 +198,11 @@ class MainGameViewModel extends ChangeNotifier {
 
   void onNoExitButtonPressed() {
     _state.isModalShow = false;
+    notifyListeners();
+  }
+
+  void onExitGameOverPressed() {
+    state.isModalGameOverClose = true;
     notifyListeners();
   }
 

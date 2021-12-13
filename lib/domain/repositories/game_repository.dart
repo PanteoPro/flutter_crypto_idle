@@ -29,6 +29,7 @@ class GameRepository implements MyRepository {
     double? money,
     String? nick,
     DateTime? date,
+    bool? gameOver,
   }) async {
     if (money != null) {
       _game = _game.copyWith(money: double.parse(money.toStringAsFixed(2)));
@@ -39,7 +40,10 @@ class GameRepository implements MyRepository {
     if (date != null) {
       _game = _game.copyWith(date: date);
     }
-    if (money != null || nick != null || date != null) {
+    if (gameOver != null) {
+      _game = _game.copyWith(gameOver: gameOver);
+    }
+    if (money != null || nick != null || date != null || gameOver != null) {
       await _gameDataProvider.saveData(_game);
       updateData();
       _streamController.add('changeData');

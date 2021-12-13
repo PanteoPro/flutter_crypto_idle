@@ -1,3 +1,5 @@
+import 'package:crypto_idle/domain/repositories/game_repository.dart';
+import 'package:crypto_idle/initial_data.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -10,7 +12,14 @@ class MenuViewModel {
     Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.gameMain);
   }
 
-  void onFreeGameButtonPressed() {
+  Future<void> onFreeGameButtonPressed() async {
+    final gr = GameRepository();
+    await gr.init();
+    if (gr.game.gameOver) {
+      final dataManager = InitialDataManager();
+      await dataManager.deleteBoxesFromDisk();
+      await dataManager.init();
+    }
     Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.gameMain);
   }
 
