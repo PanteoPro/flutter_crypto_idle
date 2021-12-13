@@ -170,30 +170,30 @@ class S {
     );
   }
 
-  /// `Month prices`
+  /// `Monthly expenses`
   String get main_game_month_title {
     return Intl.message(
-      'Month prices',
+      'Monthly expenses',
       name: 'main_game_month_title',
       desc: '',
       args: [],
     );
   }
 
-  /// `Cost flat`
+  /// `Payment for housing`
   String get main_game_month_flat_title {
     return Intl.message(
-      'Cost flat',
+      'Payment for housing',
       name: 'main_game_month_flat_title',
       desc: '',
       args: [],
     );
   }
 
-  /// `Cost energy`
+  /// `Electricity payment`
   String get main_game_month_energy_title {
     return Intl.message(
-      'Cost energy',
+      'Electricity payment',
       name: 'main_game_month_energy_title',
       desc: '',
       args: [],
@@ -290,10 +290,10 @@ class S {
     );
   }
 
-  /// `Cost sell`
+  /// `Selling value`
   String get game_market_pc_cost_sell_item_title {
     return Intl.message(
-      'Cost sell',
+      'Selling value',
       name: 'game_market_pc_cost_sell_item_title',
       desc: '',
       args: [],
@@ -370,10 +370,10 @@ class S {
     );
   }
 
-  /// `Month cost`
+  /// `Monthly Fee`
   String get game_market_flat_month_item_title {
     return Intl.message(
-      'Month cost',
+      'Monthly Fee',
       name: 'game_market_flat_month_item_title',
       desc: '',
       args: [],
@@ -450,10 +450,10 @@ class S {
     );
   }
 
-  /// `Press crypto to sell`
+  /// `Click on cryptocurrency to sell`
   String get game_crypto_helper_title {
     return Intl.message(
-      'Press crypto to sell',
+      'Click on cryptocurrency to sell',
       name: 'game_crypto_helper_title',
       desc: '',
       args: [],
@@ -600,20 +600,20 @@ class S {
     );
   }
 
-  /// `Count to sell`
+  /// `Quantity for sale`
   String get game_crypto_market_count_sell_input_title {
     return Intl.message(
-      'Count to sell',
+      'Quantity for sale',
       name: 'game_crypto_market_count_sell_input_title',
       desc: '',
       args: [],
     );
   }
 
-  /// `Count to buy`
+  /// `Purchase quantity`
   String get game_crypto_market_count_buy_input_title {
     return Intl.message(
-      'Count to buy',
+      'Purchase quantity',
       name: 'game_crypto_market_count_buy_input_title',
       desc: '',
       args: [],
@@ -660,10 +660,10 @@ class S {
     );
   }
 
-  /// `Start free game`
+  /// `Start free play`
   String get menu_free_button_title {
     return Intl.message(
-      'Start free game',
+      'Start free play',
       name: 'menu_free_button_title',
       desc: '',
       args: [],
@@ -680,10 +680,10 @@ class S {
     );
   }
 
-  /// `About authors`
+  /// `About the author`
   String get menu_about_button_title {
     return Intl.message(
-      'About authors',
+      'About the author',
       name: 'menu_about_button_title',
       desc: '',
       args: [],
@@ -700,21 +700,51 @@ class S {
     );
   }
 
-  /// `Change language on RU`
+  /// `Change to language RU`
   String get menu_settings_swap_ru_button_title {
     return Intl.message(
-      'Change language on RU',
+      'Change to language RU',
       name: 'menu_settings_swap_ru_button_title',
       desc: '',
       args: [],
     );
   }
 
-  /// `Change language on EN`
+  /// `Change to language EN`
   String get menu_settings_swap_en_button_title {
     return Intl.message(
-      'Change language on EN',
+      'Change to language EN',
       name: 'menu_settings_swap_en_button_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `About the author`
+  String get manu_about_title {
+    return Intl.message(
+      'About the author',
+      name: 'manu_about_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The author of the application is Griva Konstantin.`
+  String get manu_about_by_title {
+    return Intl.message(
+      'The author of the application is Griva Konstantin.',
+      name: 'manu_about_by_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The application is created for flutter.`
+  String get manu_about_dev_title {
+    return Intl.message(
+      'The application is created for flutter.',
+      name: 'manu_about_dev_title',
       desc: '',
       args: [],
     );
