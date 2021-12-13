@@ -14,9 +14,9 @@
     "main_game_info_energy_title": "Consuming energy",
     "main_game_info_power_mining_title": "Power mining",
 
-    "main_game_month_title": "Month prices",
-    "main_game_month_flat_title": "Cost flat",
-    "main_game_month_energy_title": "Cost energy",
+    "main_game_month_title": "Monthly expenses",
+    "main_game_month_flat_title": "Payment for housing",
+    "main_game_month_energy_title": "Electricity payment",
 
     "main_game_stat_title": "Statistic",
     "main_game_stat_spend_all_title": "Spend all time",
@@ -28,7 +28,7 @@
 
     "game_market_pc_title": "Mining pc",
     "game_market_pc_cost_item_title": "Cost",
-    "game_market_pc_cost_sell_item_title": "Cost sell",
+    "game_market_pc_cost_sell_item_title": "Selling value",
     "game_market_pc_power_item_title": "Power",
     "game_market_pc_energy_item_title": "Energy consume",
     "game_market_pc_you_have_item_title": "You have {value} el",
@@ -37,7 +37,7 @@
 
     "game_market_flat_title": "Flat",
     "game_market_flat_cost_item_title": "Cost",
-    "game_market_flat_month_item_title": "Month cost",
+    "game_market_flat_month_item_title": "Monthly Fee",
     "game_market_flat_count_pc_item_title": "Count PC",
     "game_market_flat_own_item_title": "Own",
     "game_market_flat_change_item_title": "Change",
@@ -46,7 +46,7 @@
 
     "game_crypto_title": "Crypto",
     "game_crypto_cost_header_title": "Balance",
-    "game_crypto_helper_title": "Press crypto to sell",
+    "game_crypto_helper_title": "Click on cryptocurrency to sell",
 
     "game_mining_title": "Mining",
     "game_mining_now_price_title": "Now price",
@@ -63,20 +63,24 @@
     "game_crypto_market_cost_title": "Current cost",
     "game_crypto_market_fast_sell_title": "Market Sell",
     "game_crypto_market_fast_buy_title": "Market Buy",
-    "game_crypto_market_count_sell_input_title": "Count to sell",
-    "game_crypto_market_count_buy_input_title": "Count to buy",
+    "game_crypto_market_count_sell_input_title": "Quantity for sale",
+    "game_crypto_market_count_buy_input_title": "Purchase quantity",
     "game_crypto_market_balance_title": "Balance",
 
     "menu_title": "Menu",
     "menu_game_title": "Crypto IDLE",
     "menu_company_button_title": "Start company",
-    "menu_free_button_title": "Start free game",
+    "menu_free_button_title": "Start free play",
     "menu_settings_button_title": "Settings",
-    "menu_about_button_title": "About authors",
+    "menu_about_button_title": "About the author",
 
     "menu_settings_title": "Settings",
-    "menu_settings_swap_ru_button_title": "Change language on RU",
-    "menu_settings_swap_en_button_title": "Change language on EN",
+    "menu_settings_swap_ru_button_title": "Change to language RU",
+    "menu_settings_swap_en_button_title": "Change to language EN",
+
+    "manu_about_title": "About the author",
+    "manu_about_by_title": "The author of the application is Griva Konstantin.",
+    "manu_about_dev_title": "The application is created for flutter.",
 
     "game_app_bar_info_balance_title": "Balance",
     "game_app_bar_info_count_pc_title": "Count pcs",

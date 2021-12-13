@@ -153,6 +153,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Потрачено на установки"),
         "main_game_stat_title":
             MessageLookupByLibrary.simpleMessage("Статистика"),
+        "manu_about_by_title": MessageLookupByLibrary.simpleMessage(
+            "Автор приложения Грива Константин."),
+        "manu_about_dev_title": MessageLookupByLibrary.simpleMessage(
+            "Приложение создано на flutter."),
+        "manu_about_title": MessageLookupByLibrary.simpleMessage("Об авторе"),
         "menu_about_button_title":
             MessageLookupByLibrary.simpleMessage("Об авторе"),
         "menu_company_button_title":

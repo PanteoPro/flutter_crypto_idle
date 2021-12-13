@@ -78,6 +78,10 @@
     "menu_settings_swap_ru_button_title": "Поменять на язык RU",
     "menu_settings_swap_en_button_title": "Поменять на язык EN",
 
+    "manu_about_title": "Об авторе",
+    "manu_about_by_title": "Автор приложения Грива Константин.",
+    "manu_about_dev_title": "Приложение создано на flutter.",
+
     "game_app_bar_info_balance_title": "Баланс",
     "game_app_bar_info_count_pc_title": "Количество установок",
 

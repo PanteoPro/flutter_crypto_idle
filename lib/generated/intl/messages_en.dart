@@ -44,16 +44,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Count pcs"),
         "game_crypto_cost_header_title":
             MessageLookupByLibrary.simpleMessage("Balance"),
-        "game_crypto_helper_title":
-            MessageLookupByLibrary.simpleMessage("Press crypto to sell"),
+        "game_crypto_helper_title": MessageLookupByLibrary.simpleMessage(
+            "Click on cryptocurrency to sell"),
         "game_crypto_market_balance_title":
             MessageLookupByLibrary.simpleMessage("Balance"),
         "game_crypto_market_cost_title":
             MessageLookupByLibrary.simpleMessage("Current cost"),
         "game_crypto_market_count_buy_input_title":
-            MessageLookupByLibrary.simpleMessage("Count to buy"),
+            MessageLookupByLibrary.simpleMessage("Purchase quantity"),
         "game_crypto_market_count_sell_input_title":
-            MessageLookupByLibrary.simpleMessage("Count to sell"),
+            MessageLookupByLibrary.simpleMessage("Quantity for sale"),
         "game_crypto_market_fast_buy_title":
             MessageLookupByLibrary.simpleMessage("Market Buy"),
         "game_crypto_market_fast_sell_title":
@@ -68,7 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "game_market_flat_count_pc_item_title":
             MessageLookupByLibrary.simpleMessage("Count PC"),
         "game_market_flat_month_item_title":
-            MessageLookupByLibrary.simpleMessage("Month cost"),
+            MessageLookupByLibrary.simpleMessage("Monthly Fee"),
         "game_market_flat_own_item_title":
             MessageLookupByLibrary.simpleMessage("Own"),
         "game_market_flat_status_active_title":
@@ -79,7 +79,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "game_market_pc_cost_item_title":
             MessageLookupByLibrary.simpleMessage("Cost"),
         "game_market_pc_cost_sell_item_title":
-            MessageLookupByLibrary.simpleMessage("Cost sell"),
+            MessageLookupByLibrary.simpleMessage("Selling value"),
         "game_market_pc_energy_item_title":
             MessageLookupByLibrary.simpleMessage("Energy consume"),
         "game_market_pc_power_item_title":
@@ -133,11 +133,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Power mining"),
         "main_game_info_title": MessageLookupByLibrary.simpleMessage("Main"),
         "main_game_month_energy_title":
-            MessageLookupByLibrary.simpleMessage("Cost energy"),
+            MessageLookupByLibrary.simpleMessage("Electricity payment"),
         "main_game_month_flat_title":
-            MessageLookupByLibrary.simpleMessage("Cost flat"),
+            MessageLookupByLibrary.simpleMessage("Payment for housing"),
         "main_game_month_title":
-            MessageLookupByLibrary.simpleMessage("Month prices"),
+            MessageLookupByLibrary.simpleMessage("Monthly expenses"),
         "main_game_stat_earn_on_crypto_title": m2,
         "main_game_stat_mining_on_crypto_title": m3,
         "main_game_stat_spend_all_title":
@@ -150,19 +150,25 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Spend in pcs"),
         "main_game_stat_title":
             MessageLookupByLibrary.simpleMessage("Statistic"),
+        "manu_about_by_title": MessageLookupByLibrary.simpleMessage(
+            "The author of the application is Griva Konstantin."),
+        "manu_about_dev_title": MessageLookupByLibrary.simpleMessage(
+            "The application is created for flutter."),
+        "manu_about_title":
+            MessageLookupByLibrary.simpleMessage("About the author"),
         "menu_about_button_title":
-            MessageLookupByLibrary.simpleMessage("About authors"),
+            MessageLookupByLibrary.simpleMessage("About the author"),
         "menu_company_button_title":
             MessageLookupByLibrary.simpleMessage("Start company"),
         "menu_free_button_title":
-            MessageLookupByLibrary.simpleMessage("Start free game"),
+            MessageLookupByLibrary.simpleMessage("Start free play"),
         "menu_game_title": MessageLookupByLibrary.simpleMessage("Crypto IDLE"),
         "menu_settings_button_title":
             MessageLookupByLibrary.simpleMessage("Settings"),
         "menu_settings_swap_en_button_title":
-            MessageLookupByLibrary.simpleMessage("Change language on EN"),
+            MessageLookupByLibrary.simpleMessage("Change to language EN"),
         "menu_settings_swap_ru_button_title":
-            MessageLookupByLibrary.simpleMessage("Change language on RU"),
+            MessageLookupByLibrary.simpleMessage("Change to language RU"),
         "menu_settings_title": MessageLookupByLibrary.simpleMessage("Settings"),
         "menu_title": MessageLookupByLibrary.simpleMessage("Menu"),
         "text_with_dollar": m4,
