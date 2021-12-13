@@ -28,7 +28,7 @@ class GameViewModelState {
 
 class GameViewModel extends ChangeNotifier {
   GameViewModel() {
-    _initialRepository();
+    initialRepository();
   }
 
   @override
@@ -53,7 +53,7 @@ class GameViewModel extends ChangeNotifier {
   GameViewModelState get state => _state;
 
   /// Initial Repository
-  Future<void> _initialRepository() async {
+  Future<void> initialRepository() async {
     await _gameRepository.init();
     await _pcRepository.init();
     await _flatRepository.init();

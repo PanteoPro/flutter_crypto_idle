@@ -76,18 +76,20 @@ class _ButtonsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vm = context.read<MenuViewModel>();
+    final vm = context.watch<MenuViewModel>();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 80),
       child: Column(
         children: [
-          // SizedBox(
-          //   width: double.infinity,
-          //   child: MyButton(
-          //       color: Theme.of(context).splashColor,
-          //       onPressed: vm.onCompanyGameButtonPressed,
-          //       title: S.of(context).menu_company_button_title),
-          // ),
+          if (!vm.isEndGame)
+            SizedBox(
+              width: double.infinity,
+              child: MyButton(
+                  color: Theme.of(context).splashColor,
+                  onPressed: vm.onContinueGameButtonPressed,
+                  title: S.of(context).menu_free_continue_button_title),
+            ),
           SizedBox(
             width: double.infinity,
             child: MyButton(

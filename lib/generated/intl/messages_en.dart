@@ -161,7 +161,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "menu_company_button_title":
             MessageLookupByLibrary.simpleMessage("Start company"),
         "menu_free_button_title":
-            MessageLookupByLibrary.simpleMessage("Start free play"),
+            MessageLookupByLibrary.simpleMessage("Start new free play"),
+        "menu_free_continue_button_title":
+            MessageLookupByLibrary.simpleMessage("Continue free play"),
         "menu_game_title": MessageLookupByLibrary.simpleMessage("Crypto IDLE"),
         "menu_settings_button_title":
             MessageLookupByLibrary.simpleMessage("Settings"),

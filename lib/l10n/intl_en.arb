@@ -70,7 +70,8 @@
     "menu_title": "Menu",
     "menu_game_title": "Crypto IDLE",
     "menu_company_button_title": "Start company",
-    "menu_free_button_title": "Start free play",
+    "menu_free_continue_button_title": "Continue free play",
+    "menu_free_button_title": "Start new free play",
     "menu_settings_button_title": "Settings",
     "menu_about_button_title": "About the author",
 

@@ -70,7 +70,8 @@
     "menu_title": "Меню",
     "menu_game_title": "Криптовалютный IDLE",
     "menu_company_button_title": "Начать компанию",
-    "menu_free_button_title": "Начать свободную игру",
+    "menu_free_continue_button_title": "Продолжить свободную игру",
+    "menu_free_button_title": "Начать новую свободную игру",
     "menu_settings_button_title": "Настройки",
     "menu_about_button_title": "Об авторе",
 

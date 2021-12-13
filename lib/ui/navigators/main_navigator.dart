@@ -65,7 +65,7 @@ class MainNavigation {
           child: const GameMiningPage(),
         ),
     MainNavigationRouteNames.menu: (context) =>
-        Provider(create: (ctx) => MenuViewModel(ctx), child: const MenuWidget()),
+        ChangeNotifierProvider(create: (ctx) => MenuViewModel(ctx), child: const MenuWidget()),
     MainNavigationRouteNames.menuSettings: (context) => const MenuSettingsPage(),
     MainNavigationRouteNames.menuAbout: (context) => const MenuAboutWidget(),
   };

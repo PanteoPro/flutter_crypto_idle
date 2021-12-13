@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:crypto_idle/domain/entities/flat.dart';
+import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/domain/entities/pc.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/statistics.dart';
@@ -255,6 +256,10 @@ class InitialDataManager {
     await Hive.deleteBoxFromDisk(priceTokenBoxName);
     await Hive.deleteBoxFromDisk(statisticsBoxName);
     await Hive.deleteBoxFromDisk(newsBoxName);
+  }
+
+  Future<void> restartGame() async {
+    final gameBox = await Hive.openBox<Game>(pcConstBoxName);
   }
 
   void _registerAdapter<T>(int typeID, TypeAdapter<T> adapter) {

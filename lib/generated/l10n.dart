@@ -660,10 +660,20 @@ class S {
     );
   }
 
-  /// `Start free play`
+  /// `Continue free play`
+  String get menu_free_continue_button_title {
+    return Intl.message(
+      'Continue free play',
+      name: 'menu_free_continue_button_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start new free play`
   String get menu_free_button_title {
     return Intl.message(
-      'Start free play',
+      'Start new free play',
       name: 'menu_free_button_title',
       desc: '',
       args: [],

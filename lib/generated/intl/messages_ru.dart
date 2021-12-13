@@ -163,7 +163,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "menu_company_button_title":
             MessageLookupByLibrary.simpleMessage("Начать компанию"),
         "menu_free_button_title":
-            MessageLookupByLibrary.simpleMessage("Начать свободную игру"),
+            MessageLookupByLibrary.simpleMessage("Начать новую свободную игру"),
+        "menu_free_continue_button_title":
+            MessageLookupByLibrary.simpleMessage("Продолжить свободную игру"),
         "menu_game_title":
             MessageLookupByLibrary.simpleMessage("Криптовалютный IDLE"),
         "menu_settings_button_title":
