@@ -12,8 +12,8 @@ abstract class InitialDataNames {
   static const List<String> namePCs = [
     'LowPriority-D1',
     'LowPriority-D2',
-    'Старый ПК GH-01',
-    'Старый ПК GH-21',
+    'Old GH-01',
+    'Old GH-21',
     'Roberts Z1',
     'Roberts Z1-6',
     'Roberts 2Z-1',
