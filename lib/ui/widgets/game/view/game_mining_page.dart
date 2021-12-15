@@ -358,7 +358,7 @@ class _ModulePCItemWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Row(
             children: [
-              _ModulePCItemImageWidget(),
+              _ModulePCItemImageWidget(index: index),
               const SizedBox(width: 10),
               Expanded(child: _ModulePCItemInfoWidget(index: index)),
               _ModulePCItemChangeWidget(indexPC: index),
@@ -371,14 +371,17 @@ class _ModulePCItemWidget extends StatelessWidget {
 }
 
 class _ModulePCItemImageWidget extends StatelessWidget {
-  const _ModulePCItemImageWidget({Key? key}) : super(key: key);
+  const _ModulePCItemImageWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final name = context.read<GameMiningViewModel>().state.pcs[index].name;
     return SizedBox(
       width: 60,
       height: 60,
-      child: Placeholder(),
+      child: Image.asset(AppImages.getPcPathByName(name)),
     );
   }
 }

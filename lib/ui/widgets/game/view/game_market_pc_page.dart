@@ -4,6 +4,7 @@ import 'package:crypto_idle/Widgets/game_over_modal.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
 import 'package:crypto_idle/Widgets/page_wrapper.dart';
 import 'package:crypto_idle/generated/l10n.dart';
+import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_pc_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/material.dart';
@@ -147,10 +148,10 @@ class _BodyItemWidget extends StatelessWidget {
     final isHavePC = state.isHavePCById(pc.id);
     return Row(
       children: [
-        const SizedBox(
+        SizedBox(
           height: 80,
           width: 80,
-          child: Placeholder(),
+          child: Image.asset(AppImages.getPcPathByName(pc.name)),
         ),
         const SizedBox(width: 10),
         SizedBox(
