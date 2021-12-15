@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:crypto_idle/domain/entities/statistics.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
+import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,10 +51,17 @@ class GameMarketPCViewModel extends ChangeNotifier {
   GameMarketPCViewModel() {
     _initialRepositories();
   }
+  @override
+  void dispose() {
+    _gameStreamSub?.cancel();
+    super.dispose();
+  }
+
   final _pcRepository = PCRepository();
   final _flatRepository = FlatRepository();
   final _gameRepository = GameRepository();
   final _statisticsRepository = StatisticsRepository();
+  StreamSubscription<dynamic>? _gameStreamSub;
 
   var _state = GameMarketPCViewModelState.empty();
   GameMarketPCViewModelState get state => _state;
@@ -61,8 +71,16 @@ class GameMarketPCViewModel extends ChangeNotifier {
     await _gameRepository.init();
     await _flatRepository.init();
     await _statisticsRepository.init();
-
+    _subscriteStreams();
     _updateState();
+  }
+
+  void _subscriteStreams() {
+    _gameStreamSub = GameRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _gameRepository));
+  }
+
+  Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
+    repository.updateData();
   }
 
   Future<void> _updateState() async {

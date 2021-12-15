@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
+import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
 import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
@@ -33,10 +36,17 @@ class GameMarketFlatViewModel extends ChangeNotifier {
     initialRepositories();
   }
 
+  @override
+  void dispose() {
+    _gameStreamSub?.cancel();
+    super.dispose();
+  }
+
   final _flatRepository = FlatRepository();
   final _pcRepository = PCRepository();
   final _gameRepository = GameRepository();
   final _statisticsRepository = StatisticsRepository();
+  StreamSubscription<dynamic>? _gameStreamSub;
 
   var _state = GameMarketFlatViewModelState.empty();
   GameMarketFlatViewModelState get state => _state;
@@ -46,7 +56,16 @@ class GameMarketFlatViewModel extends ChangeNotifier {
     await _gameRepository.init();
     await _pcRepository.init();
     await _statisticsRepository.init();
+    _subscriteStreams();
     _updateState();
+  }
+
+  void _subscriteStreams() {
+    _gameStreamSub = GameRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _gameRepository));
+  }
+
+  Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
+    repository.updateData();
   }
 
   void _updateState() {
