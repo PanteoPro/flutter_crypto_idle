@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:crypto_idle/Widgets/app_bar_info.dart';
 import 'package:crypto_idle/Widgets/buttons.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
+import 'package:crypto_idle/Widgets/page_wrapper.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_crypto_view_model.dart';
@@ -27,17 +28,19 @@ class GameMarketCryptoPage extends StatelessWidget {
     return Scaffold(
       appBar: const GameAppBar(),
       body: SafeArea(
-        child: ColoredBox(
-          color: Theme.of(context).backgroundColor,
-          child: ListView(
-            children: const [
-              _HeaderWidget(),
-              _ChartWidget(),
-              _CostWidget(),
-              _CountCryptoWidget(),
-              SizedBox(height: 10),
-              _TradeWidget(),
-            ],
+        child: PageWrapperWidget(
+          child: ColoredBox(
+            color: Theme.of(context).backgroundColor,
+            child: ListView(
+              children: const [
+                _HeaderWidget(),
+                _ChartWidget(),
+                _CostWidget(),
+                _CountCryptoWidget(),
+                SizedBox(height: 10),
+                _TradeWidget(),
+              ],
+            ),
           ),
         ),
       ),

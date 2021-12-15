@@ -1,5 +1,6 @@
 import 'package:crypto_idle/Widgets/app_bar_info.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
+import 'package:crypto_idle/Widgets/page_wrapper.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_crypto_view_model.dart';
@@ -14,19 +15,21 @@ class GameCryptoPage extends StatelessWidget {
     return Scaffold(
       appBar: const GameAppBar(),
       body: SafeArea(
-        child: ColoredBox(
-          color: Theme.of(context).backgroundColor,
-          child: Column(
-            children: [
-              HeaderPage(
-                title: S.of(context).game_crypto_title,
-              ),
-              const _BalanceWidget(),
-              const SizedBox(height: 20),
-              const _HelperWidget(),
-              const SizedBox(height: 10),
-              const Expanded(child: _CryptoListWidget()),
-            ],
+        child: PageWrapperWidget(
+          child: ColoredBox(
+            color: Theme.of(context).backgroundColor,
+            child: Column(
+              children: [
+                HeaderPage(
+                  title: S.of(context).game_crypto_title,
+                ),
+                const _BalanceWidget(),
+                const SizedBox(height: 20),
+                const _HelperWidget(),
+                const SizedBox(height: 10),
+                const Expanded(child: _CryptoListWidget()),
+              ],
+            ),
           ),
         ),
       ),

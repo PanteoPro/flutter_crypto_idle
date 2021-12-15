@@ -1,6 +1,7 @@
 import 'package:crypto_idle/Widgets/app_bar_info.dart';
 import 'package:crypto_idle/Widgets/buttons.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
+import 'package:crypto_idle/Widgets/page_wrapper.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
@@ -17,14 +18,16 @@ class GameMarketFlatPage extends StatelessWidget {
       body: SafeArea(
         child: ColoredBox(
           color: Theme.of(context).backgroundColor,
-          child: Column(
-            children: [
-              HeaderPage(
-                title: S.of(context).game_market_flat_title,
-              ),
-              const Expanded(child: _MarketFlatListWidget()),
-              const SizedBox(height: 20),
-            ],
+          child: PageWrapperWidget(
+            child: Column(
+              children: [
+                HeaderPage(
+                  title: S.of(context).game_market_flat_title,
+                ),
+                const Expanded(child: _MarketFlatListWidget()),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),

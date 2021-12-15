@@ -1,6 +1,8 @@
 import 'package:crypto_idle/Widgets/app_bar_info.dart';
 import 'package:crypto_idle/Widgets/buttons.dart';
+import 'package:crypto_idle/Widgets/game_over_modal.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
+import 'package:crypto_idle/Widgets/page_wrapper.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_mining_view_model.dart';
@@ -18,23 +20,25 @@ class GameMiningPage extends StatelessWidget {
       body: SafeArea(
         child: ColoredBox(
           color: Theme.of(context).backgroundColor,
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  HeaderPage(
-                    title: S.of(context).game_mining_title,
-                  ),
-                  const Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: _MiningListWidget(),
+          child: PageWrapperWidget(
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    HeaderPage(
+                      title: S.of(context).game_mining_title,
                     ),
-                  ),
-                ],
-              ),
-              _ModulePcWidget(),
-            ],
+                    const Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: _MiningListWidget(),
+                      ),
+                    ),
+                  ],
+                ),
+                const _ModulePcWidget(),
+              ],
+            ),
           ),
         ),
       ),

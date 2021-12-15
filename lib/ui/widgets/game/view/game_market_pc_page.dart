@@ -1,6 +1,8 @@
 import 'package:crypto_idle/Widgets/app_bar_info.dart';
 import 'package:crypto_idle/Widgets/buttons.dart';
+import 'package:crypto_idle/Widgets/game_over_modal.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
+import 'package:crypto_idle/Widgets/page_wrapper.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_pc_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
@@ -17,13 +19,15 @@ class GameMarketPCPage extends StatelessWidget {
       body: SafeArea(
         child: ColoredBox(
           color: Theme.of(context).backgroundColor,
-          child: Column(
-            children: [
-              HeaderPage(
-                title: S.of(context).game_market_pc_title,
-              ),
-              const Expanded(child: _MarketPCListWidget()),
-            ],
+          child: PageWrapperWidget(
+            child: Column(
+              children: [
+                HeaderPage(
+                  title: S.of(context).game_market_pc_title,
+                ),
+                const Expanded(child: _MarketPCListWidget()),
+              ],
+            ),
           ),
         ),
       ),

@@ -12,11 +12,15 @@ class GameViewModelState {
     required this.money,
     required this.currentCountPC,
     required this.maxCountPC,
+    required this.gameOver,
+    required this.isModalGameOverClose,
   });
   GameViewModelState.empty({
     this.money = 0,
     this.currentCountPC = 0,
     this.maxCountPC = 0,
+    this.gameOver = false,
+    this.isModalGameOverClose = false,
   }) {
     date = DateTime(0);
   }
@@ -24,6 +28,8 @@ class GameViewModelState {
   final double money;
   final int currentCountPC;
   final int maxCountPC;
+  final bool gameOver;
+  bool isModalGameOverClose;
 }
 
 class GameViewModel extends ChangeNotifier {
@@ -49,7 +55,7 @@ class GameViewModel extends ChangeNotifier {
   StreamSubscription<dynamic>? _flatStreamSub;
 
   // Data
-  var _state = GameViewModelState.empty();
+  late GameViewModelState _state;
   GameViewModelState get state => _state;
 
   /// Initial Repository
@@ -57,6 +63,7 @@ class GameViewModel extends ChangeNotifier {
     await _gameRepository.init();
     await _pcRepository.init();
     await _flatRepository.init();
+    _state = GameViewModelState.empty();
     _subscriteStreams();
     updateState();
   }
@@ -79,7 +86,14 @@ class GameViewModel extends ChangeNotifier {
       money: _gameRepository.game.money,
       maxCountPC: _flatRepository.flats.firstWhere((element) => element.isActive).countPC,
       currentCountPC: _pcRepository.pcs.length,
+      gameOver: _gameRepository.game.gameOver,
+      isModalGameOverClose: _state.isModalGameOverClose,
     );
+    notifyListeners();
+  }
+
+  void onExitGameOverPressed() {
+    _state.isModalGameOverClose = true;
     notifyListeners();
   }
 }

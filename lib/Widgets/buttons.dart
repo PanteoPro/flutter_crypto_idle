@@ -24,7 +24,10 @@ class MyButton extends StatelessWidget {
         foregroundColor: MaterialStateProperty.all(textColor ?? Colors.white),
       ),
       onPressed: onPressed,
-      child: Text(title),
+      child: Text(
+        title,
+        textAlign: TextAlign.center,
+      ),
     );
   }
 }

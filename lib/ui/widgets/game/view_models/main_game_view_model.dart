@@ -27,7 +27,6 @@ class MainGameViewModelState {
     required this.date,
     required this.money,
     required this.currentPrices,
-    required this.gameOver,
   });
   MainGameViewModelState.empty({
     Statistics? statistics,
@@ -38,7 +37,6 @@ class MainGameViewModelState {
     DateTime? date,
     this.money = 0,
     this.currentPrices = const {},
-    this.gameOver = false,
   }) {
     this.statistics = statistics ?? Statistics.empty();
     this.tokens = tokens ?? [];
@@ -54,9 +52,7 @@ class MainGameViewModelState {
   late Flat flat;
   late DateTime date;
   late double money;
-  late bool gameOver;
   final Map<int, double> currentPrices;
-  bool isModalGameOverClose = false;
   double get flatConsume => flat.costMonth;
   double get energyConsumeCost => double.parse((energyConsume / 30).toStringAsFixed(2));
   double get energyConsume {
@@ -182,7 +178,6 @@ class MainGameViewModel extends ChangeNotifier {
       date: _gameRepository.game.date,
       money: _gameRepository.game.money,
       currentPrices: currentPrices,
-      gameOver: _gameRepository.game.gameOver,
     );
     notifyListeners();
   }
@@ -198,11 +193,6 @@ class MainGameViewModel extends ChangeNotifier {
 
   void onNoExitButtonPressed() {
     _state.isModalShow = false;
-    notifyListeners();
-  }
-
-  void onExitGameOverPressed() {
-    state.isModalGameOverClose = true;
     notifyListeners();
   }
 

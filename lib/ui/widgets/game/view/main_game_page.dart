@@ -1,5 +1,7 @@
 import 'package:crypto_idle/Widgets/buttons.dart';
+import 'package:crypto_idle/Widgets/game_over_modal.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
+import 'package:crypto_idle/Widgets/page_wrapper.dart';
 import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/generated/l10n.dart';
@@ -17,7 +19,7 @@ class MainGamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gameOver = context.select((MainGameViewModel vm) => vm.state.gameOver);
+    final gameOver = context.select((GameViewModel vm) => vm.state.gameOver);
     final vm = context.read<MainGameViewModel>();
     return Scaffold(
       appBar: AppBar(
@@ -35,64 +37,26 @@ class MainGamePage extends StatelessWidget {
             icon: Icon(Icons.exit_to_app_sharp, color: gameOver ? Colors.yellow : Colors.white)),
       ),
       body: SafeArea(
-        child: Stack(
-          children: [
-            ColoredBox(
-              color: Theme.of(context).backgroundColor,
-              child: Stack(
-                children: const [
-                  _MainWidget(),
-                  _PrototypeOfNewsWidget(),
-                  ______BUTTONMONEY______(),
-                ],
-              ),
-            ),
-            _GameOverModalWidget(),
-            _ExitModalWidget(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _GameOverModalWidget extends StatelessWidget {
-  const _GameOverModalWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final gameOver = context.select((MainGameViewModel vm) => vm.state.gameOver);
-    final isModalGameOverClose = context.select((MainGameViewModel vm) => vm.state.isModalGameOverClose);
-    final vm = context.read<MainGameViewModel>();
-    if (gameOver && !isModalGameOverClose) {
-      return Stack(
-        children: [
-          GestureDetector(
-            onTap: () => vm.onExitGameOverPressed(),
-            child: Container(
-              color: Colors.black.withOpacity(0.6),
-            ),
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Container(
-                color: Colors.black,
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
+        child: PageWrapperWidget(
+          child: Stack(
+            children: [
+              ColoredBox(
+                color: Theme.of(context).backgroundColor,
+                child: Stack(
                   children: const [
-                    Text('Вы проиграли!'),
-                    Text('У вас закончились деньги!'),
+                    _MainWidget(),
+                    _PrototypeOfNewsWidget(),
+                    ______BUTTONMONEY______(),
                   ],
                 ),
               ),
-            ),
+              const GameOverModalWidget(),
+              const _ExitModalWidget(),
+            ],
           ),
-        ],
-      );
-    }
-    return const SizedBox();
+        ),
+      ),
+    );
   }
 }
 
