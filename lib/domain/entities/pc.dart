@@ -12,6 +12,7 @@ class PC extends HiveObject {
     required this.costSell,
     required this.power,
     required this.energy,
+    required this.coefIncome,
     this.miningToken,
   });
 
@@ -21,6 +22,7 @@ class PC extends HiveObject {
     this.costSell = 0,
     this.power = 0,
     this.energy = 0,
+    this.coefIncome = 0,
     this.name = 'undefined',
   });
 
@@ -37,6 +39,8 @@ class PC extends HiveObject {
   @HiveField(5)
   final double energy;
   @HiveField(6)
+  final double coefIncome;
+  @HiveField(7)
   Token? miningToken;
 
   PC copyWith({
@@ -46,6 +50,7 @@ class PC extends HiveObject {
     double? costSell,
     double? power,
     double? energy,
+    double? coefIncome,
     Token? miningToken,
   }) {
     return PC(
@@ -55,6 +60,7 @@ class PC extends HiveObject {
       costSell: costSell ?? this.costSell,
       power: power ?? this.power,
       energy: energy ?? this.energy,
+      coefIncome: coefIncome ?? this.coefIncome,
       miningToken: miningToken ?? this.miningToken,
     );
   }

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:crypto_idle/config.dart';
 import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
@@ -34,7 +35,11 @@ class DayStreamViewModel extends ChangeNotifier {
   }
 
   double get _flatConsume => _flatRepository.currentFlat.costMonth;
-  double get _energyConsumeCost => double.parse((_energyConsume / 30).toStringAsFixed(2));
+  double get _energyConsumeCost {
+    final sumCostPC = _energyConsume / AppConfig.kVisualEnergy;
+    return double.parse((sumCostPC * AppConfig.kEnergyPc).toStringAsFixed(2));
+  }
+
   double get _energyConsume {
     var energy = 0.0;
     for (final element in _pcRepository.pcs) {
@@ -99,7 +104,7 @@ class DayStreamViewModel extends ChangeNotifier {
     }
   }
 
-  static const lengthDaySeconds = 10;
+  static const lengthDaySeconds = 3;
   late Stream<dynamic> dayStream;
   late StreamSubscription<dynamic> _dayStreamSub;
 
@@ -191,11 +196,12 @@ class DayStreamViewModel extends ChangeNotifier {
     final tokens = _tokenRepository.tokens;
     for (final pc in ownPC) {
       if (pc.miningToken != null) {
-        final powerMining = pc.power;
+        final coefIncome = pc.coefIncome;
+        final costPC = pc.cost;
 
         final token = tokens.firstWhere((element) => element.id == pc.miningToken!.id);
         final lastPriceToken = _priceTokenRepository.getLatestPriceByTokenId(token.id).cost;
-        final countMined = powerMining / (lastPriceToken * 100);
+        final countMined = costPC * coefIncome / lastPriceToken;
 
         await _tokenRepository.changeToken(token, count: token.count + countMined);
         await _statisticsRepository.addTokenMining(token, countMined);

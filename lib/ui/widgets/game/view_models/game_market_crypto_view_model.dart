@@ -108,6 +108,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
             await _gameRepository.changeData(money: _gameRepository.game.money + income);
             await _tokenRepository.changeToken(_state.token!, count: _state.token!.count - volume);
             await _statisticsRepository.addTokenEarn(_state.token!, income);
+            volumeSellTextController.text = '';
             _updateState();
           } else {
             // not Enought tokens
@@ -135,6 +136,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
 
             await _gameRepository.changeData(money: _gameRepository.game.money - volume);
             await _tokenRepository.changeToken(_state.token!, count: _state.token!.count + countTokens);
+            volumeBuyTextController.text = '';
             _updateState();
           } else {
             // not enough money

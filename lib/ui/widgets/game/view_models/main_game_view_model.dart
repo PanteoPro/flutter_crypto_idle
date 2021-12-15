@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:collection/collection.dart';
+import 'package:crypto_idle/config.dart';
 import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/entities/pc.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
@@ -54,7 +55,11 @@ class MainGameViewModelState {
   late double money;
   final Map<int, double> currentPrices;
   double get flatConsume => flat.costMonth;
-  double get energyConsumeCost => double.parse((energyConsume / 30).toStringAsFixed(2));
+  double get energyConsumeCost {
+    final sumCostPC = energyConsume / AppConfig.kVisualEnergy;
+    return double.parse((sumCostPC * AppConfig.kEnergyPc).toStringAsFixed(2));
+  }
+
   double get energyConsume {
     var energy = 0.0;
     for (final element in myPCs) {

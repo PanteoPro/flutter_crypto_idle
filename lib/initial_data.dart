@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:crypto_idle/config.dart';
 import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/domain/entities/pc.dart';
@@ -83,15 +84,6 @@ abstract class InitialDataNames {
 }
 
 abstract class InitialData {
-  static const int baseCostPC = 100;
-  static const double sellCoefPC = 0.6;
-  static const int basePowerPC = 150;
-  static const int baseEnergyPC = 200;
-
-  static const int baseCostFlat = 1000;
-  static const int baseMonthCostFlat = 200;
-  static const int baseCountPC = 5;
-
   static const double minTooLowTokenPrice = 0.001;
   static const double maxTooLowTokenPrice = 0.1;
   static const double maxLowTokenPrice = 100;
@@ -99,27 +91,36 @@ abstract class InitialData {
 
   static List<PC> generatePCs() {
     const names = InitialDataNames.namePCs;
-    var index = 1;
+    var index = 0;
     final result = names.map((String name) {
-      final cost = (baseCostPC * index).toDouble();
-      final costSell = cost * sellCoefPC;
-      final power = (basePowerPC * index).toDouble();
-      final energy = (baseEnergyPC * index).toDouble();
+      final cost = (AppConfig.kPcCosts[index]).toDouble();
+      final costSell = cost * AppConfig.kSellPc;
+      final power = cost * AppConfig.kVisualPower;
+      final energy = cost * AppConfig.kVisualEnergy;
+      final coefIncome = AppConfig.kStartIncomePC - (AppConfig.kDecreaseIncomePC * index);
       index += 1;
-      return PC(id: index, name: name, cost: cost, costSell: costSell, power: power, energy: energy);
+      return PC(
+        id: index,
+        name: name,
+        cost: cost,
+        costSell: costSell,
+        power: power,
+        energy: energy,
+        coefIncome: coefIncome,
+      );
     });
     return result.toList();
   }
 
   static List<Flat> generateFlats() {
     const names = InitialDataNames.nameFlats;
-    var index = 1;
+    var index = 0;
     final result = names.map((String name) {
-      final cost = (baseCostFlat * (index - 1)).toDouble();
-      final costMonth = (baseMonthCostFlat * (index - 1)).toDouble();
-      final countPC = baseCountPC + index - 1;
-      final isBuy = index == 1 || false;
-      final isActive = index == 1 || false;
+      final cost = (AppConfig.kFlatCost[index]).toDouble();
+      final costMonth = cost * AppConfig.kRentFlat;
+      final countPC = AppConfig.kStartCountPc + index;
+      final isBuy = index == 0 || false;
+      final isActive = index == 0 || false;
       index += 1;
       return Flat(
         id: index,
@@ -134,7 +135,7 @@ abstract class InitialData {
     return result.toList();
   }
 
-  static List<Token> generateTokens({Map<String, String>? tokenNames, int countGenerate = 30, int startIdToken = 1}) {
+  static List<Token> generateTokens({Map<String, String>? tokenNames, int countGenerate = 5, int startIdToken = 1}) {
     final names = <String, String>{};
     if (tokenNames != null) {
       names.addAll(tokenNames);
