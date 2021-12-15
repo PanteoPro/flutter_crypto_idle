@@ -36,7 +36,10 @@ class HeaderPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(title, style: Theme.of(context).textTheme.headline1),
+                SizedBox(width: 40),
+                Expanded(
+                  child: Text(title, style: Theme.of(context).textTheme.headline1, textAlign: TextAlign.center),
+                ),
               ],
             ),
           ],
