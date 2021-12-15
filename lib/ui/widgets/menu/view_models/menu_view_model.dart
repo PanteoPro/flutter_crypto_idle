@@ -29,12 +29,14 @@ class MenuViewModel extends ChangeNotifier {
   }
 
   Future<void> onContinueGameButtonPressed() async {
-    if (_gameRepository.game.gameOver) {
-      final dataManager = InitialDataManager();
-      await dataManager.deleteBoxesFromDisk();
-      await dataManager.init();
-      await context.read<GameViewModel>().initialRepository();
-    }
+    // if (_gameRepository.game.gameOver) {
+    //   final dataManager = InitialDataManager();
+    //   await dataManager.deleteBoxesFromDisk();
+    //   await dataManager.init();
+    // }
+    final dataManager = InitialDataManager();
+    await dataManager.registerAllAdapters();
+    await context.read<GameViewModel>().initialRepository();
     Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.gameMain);
   }
 

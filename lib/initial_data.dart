@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:crypto_idle/config.dart';
 import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
+import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/pc.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/statistics.dart';
@@ -149,7 +150,7 @@ abstract class InitialData {
         symbol: e.key,
         fullName: e.value,
         count: 0,
-        coefMining: 0,
+        isScam: false,
       );
       index += 1;
       return token;
@@ -187,13 +188,12 @@ abstract class InitialData {
         final generatedValue = (Random().nextInt(3 - 1) + 1) / 100;
         final coefChanged = Random().nextBool() ? 1 + generatedValue : 1 - generatedValue;
 
-        result.add(
-          PriceToken(
-            date: date.add(Duration(days: -(dayHistoryCount - i))),
-            cost: double.parse((cost * coefChanged).toStringAsFixed(4)),
-            tokenId: token.id,
-          ),
+        final price = PriceToken(
+          date: date.add(Duration(days: -(dayHistoryCount - i))),
+          cost: double.parse((cost * coefChanged).toStringAsFixed(4)),
+          tokenId: token.id,
         );
+        result.add(price);
       }
     }
     return result;
@@ -261,6 +261,16 @@ class InitialDataManager {
 
   Future<void> restartGame() async {
     final gameBox = await Hive.openBox<Game>(pcConstBoxName);
+  }
+
+  Future<void> registerAllAdapters() async {
+    _registerAdapter<Game>(0, GameAdapter());
+    _registerAdapter<PC>(1, PCAdapter());
+    _registerAdapter<Flat>(2, FlatAdapter());
+    _registerAdapter<Token>(3, TokenAdapter());
+    _registerAdapter<PriceToken>(4, PriceTokenAdapter());
+    _registerAdapter<Statistics>(5, StatisticsAdapter());
+    _registerAdapter<News>(6, NewsAdapter());
   }
 
   void _registerAdapter<T>(int typeID, TypeAdapter<T> adapter) {
