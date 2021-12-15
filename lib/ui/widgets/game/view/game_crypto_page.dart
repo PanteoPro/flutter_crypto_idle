@@ -132,6 +132,9 @@ class _CryptoItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final token = context.select((GameCryptoViewModel vm) => vm.state.filtered[index]);
     final vm = context.read<GameCryptoViewModel>();
+    final isScamToken = context.select((GameCryptoViewModel vm) => vm.state.filtered[index].isScam);
+    final color = isScamToken ? Colors.red.withOpacity(0.4) : Theme.of(context).canvasColor;
+    print(isScamToken);
 
     return GestureDetector(
       onTap: () => vm.onTokenPressed(context, token),
@@ -139,7 +142,7 @@ class _CryptoItemWidget extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).primaryColor),
           borderRadius: BorderRadius.circular(5),
-          color: Theme.of(context).canvasColor,
+          color: isScamToken ? Colors.red.withOpacity(0.4) : Theme.of(context).canvasColor,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

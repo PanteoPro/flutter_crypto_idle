@@ -10,14 +10,14 @@ class Token extends HiveObject {
     required this.symbol,
     required this.fullName,
     required this.count,
-    required this.coefMining,
+    required this.isScam,
   });
   Token.empty({
     this.id = -1,
     this.symbol = 'NONE',
     this.fullName = 'undefined',
     this.count = 0,
-    this.coefMining = 0,
+    this.isScam = false,
   });
 
   @HiveField(0)
@@ -29,6 +29,5 @@ class Token extends HiveObject {
   @HiveField(3)
   double count;
   @HiveField(4)
-  double coefMining;
-  HiveList<PriceToken>? prices;
+  bool isScam;
 }

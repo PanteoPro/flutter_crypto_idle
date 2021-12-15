@@ -104,7 +104,7 @@ class DayStreamViewModel extends ChangeNotifier {
     }
   }
 
-  static const lengthDaySeconds = 3;
+  static const lengthDaySeconds = 10;
   late Stream<dynamic> dayStream;
   late StreamSubscription<dynamic> _dayStreamSub;
 
@@ -271,6 +271,10 @@ class DayStreamViewModel extends ChangeNotifier {
         }
         final newPrice = price.cost * percentChange;
         newPrices.add(price.copyWith(cost: newPrice, date: _gameRepository.game.date));
+        if (newPrice == 0) {
+          final currentToken = tokens.firstWhere((element) => element.id == price.tokenId);
+          _tokenRepository.changeToken(currentToken, isScam: true);
+        }
       }
     }
     for (final price in newPrices) {

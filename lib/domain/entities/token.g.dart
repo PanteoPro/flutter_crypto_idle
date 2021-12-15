@@ -21,7 +21,7 @@ class TokenAdapter extends TypeAdapter<Token> {
       symbol: fields[1] as String,
       fullName: fields[2] as String,
       count: fields[3] as double,
-      coefMining: fields[4] as double,
+      isScam: fields[4] as bool,
     );
   }
 
@@ -38,7 +38,7 @@ class TokenAdapter extends TypeAdapter<Token> {
       ..writeByte(3)
       ..write(obj.count)
       ..writeByte(4)
-      ..write(obj.coefMining);
+      ..write(obj.isScam);
   }
 
   @override

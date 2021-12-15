@@ -43,9 +43,14 @@ class TokenRepository implements MyRepository {
     _streamController.add('DeleteToken');
   }
 
-  Future<void> changeToken(Token token, {double? count}) async {
+  Future<void> changeToken(Token token, {double? count, bool? isScam}) async {
     if (count != null) {
       token.count = double.parse(count.toStringAsFixed(8));
+    }
+    if (isScam != null) {
+      token.isScam = isScam;
+    }
+    if (count != null || isScam != null) {
       await token.save();
       _streamController.add('ChangeToken');
     }

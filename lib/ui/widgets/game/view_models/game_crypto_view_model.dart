@@ -5,7 +5,6 @@ import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class GameCryptoViewModelState {
@@ -31,9 +30,14 @@ class GameCryptoViewModelState {
   }
 
   void _filterTokens() {
+    final scamTokens = <Token>[];
     final toSort = <Token, double>{};
     for (final token in tokens) {
-      toSort[token] = getPriceByToken(token) * token.count;
+      if (token.isScam) {
+        scamTokens.add(token);
+      } else {
+        toSort[token] = getPriceByToken(token) * token.count;
+      }
     }
     var sortedKeys = toSort.keys.toList(growable: false)..sort((k1, k2) => toSort[k1]!.compareTo(toSort[k2]!));
     sortedKeys = sortedKeys.reversed.toList();
@@ -44,6 +48,7 @@ class GameCryptoViewModelState {
       filtered.add(filtToken);
       // }
     }
+    filtered.addAll(scamTokens);
   }
 }
 
