@@ -11,6 +11,7 @@ class Token extends HiveObject {
     required this.fullName,
     required this.count,
     required this.isScam,
+    required this.dateCreated,
   });
   Token.empty({
     this.id = -1,
@@ -18,7 +19,9 @@ class Token extends HiveObject {
     this.fullName = 'undefined',
     this.count = 0,
     this.isScam = false,
-  });
+  }) {
+    dateCreated = DateTime(0);
+  }
 
   @HiveField(0)
   final int id;
@@ -30,4 +33,6 @@ class Token extends HiveObject {
   double count;
   @HiveField(4)
   bool isScam;
+  @HiveField(5)
+  late DateTime dateCreated;
 }

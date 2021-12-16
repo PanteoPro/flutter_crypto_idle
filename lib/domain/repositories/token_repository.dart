@@ -69,7 +69,8 @@ class TokenRepository implements MyRepository {
           tokenMap = InitialDataNames.getRandomToken();
           tokenSymbol = tokenMap.keys.first;
         }
-        final token = InitialData.generateTokens(tokenNames: tokenMap, startIdToken: tokens.length + 1).first;
+        final token =
+            InitialData.generateTokens(tokenNames: tokenMap, startIdToken: tokens.length + 1, date: date).first;
         lastGeneratedToken = date;
         countWaitDays = Random().nextInt(_maxWaitDays - _minWaitDays) + _minWaitDays;
         return token;

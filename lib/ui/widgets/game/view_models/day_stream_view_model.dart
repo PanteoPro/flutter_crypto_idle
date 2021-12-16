@@ -105,6 +105,7 @@ class DayStreamViewModel extends ChangeNotifier {
   }
 
   static const lengthDaySeconds = 10;
+  static const lenghtRaisePriceWhenNewTokenDays = 6;
   late Stream<dynamic> dayStream;
   late StreamSubscription<dynamic> _dayStreamSub;
 
@@ -223,13 +224,20 @@ class DayStreamViewModel extends ChangeNotifier {
   }
 
   Future<void> _newPricesDay() async {
+    // get old Prices
     final tokens = _tokenRepository.tokens;
     final oldPrices = <PriceToken>[];
     for (final token in tokens) {
       oldPrices.add(_priceTokenRepository.getLatestPriceByTokenId(token.id));
     }
+
+    // Update repository for today news
     _newsRepository.updateData();
+
+    // get not activate news
     final news = _newsRepository.newsNotActivate;
+
+    // get global news
     final newsAllCrypto = news.where((element) => element.isAllCrypto && !element.isActivate);
     News? newsOneGlobal;
     if (newsAllCrypto.isNotEmpty) {
@@ -237,12 +245,18 @@ class DayStreamViewModel extends ChangeNotifier {
     }
     newsOneGlobal?.isActivate = true;
     newsOneGlobal?.save();
+
     final newPrices = <PriceToken>[];
-    for (var price in oldPrices) {
+    for (final price in oldPrices) {
+      // if token not a scam
       if (price.cost > 0) {
+        final currentToken = tokens.firstWhere((element) => element.id == price.tokenId);
+        final currentDate = _gameRepository.game.date;
+        // find news for this token
         final newsForThisPrice = news.where((news) => news.tokenID == price.tokenId);
         var percentChange = 0.0;
 
+        // if news is find
         if (newsForThisPrice.isNotEmpty) {
           final newsOne = newsForThisPrice.first;
           newsOne.isActivate = true;
@@ -260,7 +274,13 @@ class DayStreamViewModel extends ChangeNotifier {
           }
         } else {
           // without News
-          final isRaise = _getMoveCrypto(55, 45);
+          var isRaise = true;
+          final endRaiseDate = currentToken.dateCreated.add(const Duration(days: lenghtRaisePriceWhenNewTokenDays));
+          if (currentDate.isAfter(endRaiseDate)) {
+            isRaise = _getMoveCrypto(55, 45);
+          } else {
+            isRaise = _getMoveCrypto(75, 25);
+          }
           percentChange = isRaise ? 1 + _getChangePercent(1, 10) : 1 - _getChangePercent(1, 10);
         }
         if (newsOneGlobal != null && percentChange != 0.0) {
@@ -271,9 +291,8 @@ class DayStreamViewModel extends ChangeNotifier {
           }
         }
         final newPrice = price.cost * percentChange;
-        newPrices.add(price.copyWith(cost: newPrice, date: _gameRepository.game.date));
+        newPrices.add(price.copyWith(cost: newPrice, date: currentDate));
         if (newPrice == 0) {
-          final currentToken = tokens.firstWhere((element) => element.id == price.tokenId);
           _tokenRepository.changeToken(currentToken, isScam: true);
         }
       }

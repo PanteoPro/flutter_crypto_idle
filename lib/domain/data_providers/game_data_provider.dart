@@ -19,7 +19,7 @@ class GameDataProvider implements MyHiveDataProvider<Game> {
 
   @override
   Game loadData() {
-    return _box.get('main') ?? Game.empty(date: DateTime.now().add(Duration(days: 16)));
+    return _box.get('main') ?? Game.empty(date: DateTime.now());
   }
 
   @override

@@ -136,7 +136,13 @@ abstract class InitialData {
     return result.toList();
   }
 
-  static List<Token> generateTokens({Map<String, String>? tokenNames, int countGenerate = 5, int startIdToken = 1}) {
+  static List<Token> generateTokens({
+    Map<String, String>? tokenNames,
+    int countGenerate = 5,
+    int startIdToken = 1,
+    DateTime? date,
+  }) {
+    date ??= DateTime.now();
     final names = <String, String>{};
     if (tokenNames != null) {
       names.addAll(tokenNames);
@@ -151,6 +157,7 @@ abstract class InitialData {
         fullName: e.value,
         count: 0,
         isScam: false,
+        dateCreated: date!,
       );
       index += 1;
       return token;
