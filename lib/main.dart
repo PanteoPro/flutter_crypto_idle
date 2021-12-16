@@ -3,6 +3,7 @@ import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/statistics.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
+import 'package:crypto_idle/domain/repositories/message_manager.dart';
 import 'package:crypto_idle/initial_data.dart';
 import 'package:crypto_idle/ui/main_app.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ import 'domain/entities/pc.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
+  MessageManager.init();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

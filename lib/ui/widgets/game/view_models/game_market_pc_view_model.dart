@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:crypto_idle/domain/entities/statistics.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
+import 'package:crypto_idle/domain/repositories/message_manager.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:crypto_idle/domain/entities/pc.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
+import 'package:flutter/material.dart';
 
 class GameMarketPCViewModelState {
   GameMarketPCViewModelState({
@@ -100,11 +102,12 @@ class GameMarketPCViewModel extends ChangeNotifier {
         await _pcRepository.addPC(pc);
         await _gameRepository.changeData(money: _state.money - pc.cost);
         await _statisticsRepository.addPCConsume(pc.cost);
+        MessageManager.addMessage(text: 'Вы купили установку - ${pc.name} за ${pc.cost}\$', color: Colors.green);
       } else {
-        // erorr message max  pcs
+        MessageManager.addMessage(text: 'У вас максимальное количество установок!', color: Colors.red);
       }
     } else {
-      // error message
+      MessageManager.addMessage(text: 'У вас недостаточно денег!', color: Colors.red);
     }
     _updateState();
   }
@@ -113,9 +116,9 @@ class GameMarketPCViewModel extends ChangeNotifier {
     final pc = _state.marketPCs[index];
     if (await _pcRepository.sellPC(pc)) {
       await _gameRepository.changeData(money: _state.money + pc.costSell);
-      // message good
+      MessageManager.addMessage(text: 'Вы продали установку - ${pc.name} за ${pc.costSell}\$', color: Colors.green);
     } else {
-      //error message
+      MessageManager.addMessage(text: 'Вы не можете продать, то чего у вас нет', color: Colors.red);
     }
     _updateState();
   }

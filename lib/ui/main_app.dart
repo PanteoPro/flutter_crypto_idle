@@ -3,6 +3,7 @@ import 'package:crypto_idle/Theme/themes.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/message_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -20,6 +21,7 @@ class MainApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (_) => MainAppViewModel()),
           ChangeNotifierProvider(create: (_) => GameViewModel()),
+          ChangeNotifierProvider(create: (_) => MessageStreamViewModel()),
         ],
         child: MyMaterialApp(light, dark),
       ),

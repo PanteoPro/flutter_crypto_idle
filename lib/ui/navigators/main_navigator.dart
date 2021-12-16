@@ -12,6 +12,7 @@ import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_mo
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_pc_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_mining_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/message_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/menu/view/menu_about_page.dart';
 import 'package:crypto_idle/ui/widgets/menu/view/menu_page.dart';
 import 'package:crypto_idle/ui/widgets/menu/view/menu_settings_page.dart';

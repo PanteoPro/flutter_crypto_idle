@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
+import 'package:crypto_idle/domain/repositories/message_manager.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
 import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class GameMarketFlatViewModelState {
   GameMarketFlatViewModelState({required this.money, required this.flats});
@@ -88,11 +90,18 @@ class GameMarketFlatViewModel extends ChangeNotifier {
 
         await _gameRepository.changeData(money: _state.money - flat.cost);
         await _statisticsRepository.addFlatConsume(flat.cost);
+        MessageManager.addMessage(text: 'Куплено жилье ${flat.name} по цене ${flat.cost}\$');
       } else {
-        // error message count PC
+        MessageManager.addMessage(
+          text: 'Ваше текущее количество установок больше, чем максимальное количество установок в новом жилье',
+          color: Colors.red,
+        );
       }
     } else {
-      // error message
+      MessageManager.addMessage(
+        text: 'Недостаточно денег',
+        color: Colors.red,
+      );
     }
     _updateState();
   }
@@ -105,11 +114,21 @@ class GameMarketFlatViewModel extends ChangeNotifier {
       if (currentCountPC <= flat.countPC) {
         await _flatRepository.changeFlat(currentFlat, isActive: false);
         await _flatRepository.changeFlat(flat, isActive: true);
+        MessageManager.addMessage(
+          text: 'Вы переехали в ${flat.name}',
+          color: Colors.yellow,
+        );
       } else {
-        // error message count pc
+        MessageManager.addMessage(
+          text: 'Ваше текущее количество установок больше, чем максимальное количество установок в новом жилье',
+          color: Colors.red,
+        );
       }
     } else {
-      // error message
+      MessageManager.addMessage(
+        text: 'Это жилье не куплено',
+        color: Colors.red,
+      );
     }
     _updateState();
   }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:crypto_idle/domain/entities/token.dart';
+import 'package:crypto_idle/domain/repositories/message_manager.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
@@ -62,6 +63,7 @@ class GameCryptoViewModel extends ChangeNotifier {
   void dispose() {
     _tokenStreamSub?.cancel();
     _priceStreamSub?.cancel();
+    _messageStreamSub?.cancel();
     super.dispose();
   }
 
@@ -70,6 +72,8 @@ class GameCryptoViewModel extends ChangeNotifier {
   final _priceTokenRepository = PriceTokenRepository();
   StreamSubscription<dynamic>? _tokenStreamSub;
   StreamSubscription<dynamic>? _priceStreamSub;
+
+  StreamSubscription<dynamic>? _messageStreamSub;
 
   // Data
   var _state = GameCryptoViewModelState.empty();
@@ -91,6 +95,9 @@ class GameCryptoViewModel extends ChangeNotifier {
     _priceStreamSub = PriceTokenRepository.stream?.listen(
       (dynamic data) => _updateRepoByChangeEvent(data, _priceTokenRepository),
     );
+    _messageStreamSub = MessageManager.stream?.listen((event) {
+      notifyListeners();
+    });
   }
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {

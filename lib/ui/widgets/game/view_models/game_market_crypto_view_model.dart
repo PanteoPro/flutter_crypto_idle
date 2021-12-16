@@ -4,12 +4,14 @@ import 'dart:math';
 import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
+import 'package:crypto_idle/domain/repositories/message_manager.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class GameMarketCryptoViewModelState {
   GameMarketCryptoViewModelState({required this.token, required this.prices});
@@ -109,6 +111,10 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
             await _tokenRepository.changeToken(_state.token!, count: _state.token!.count - volume);
             await _statisticsRepository.addTokenEarn(_state.token!, income);
             volumeSellTextController.text = '';
+            MessageManager.addMessage(
+              text: 'Продано $volume ${_state.token!.symbol} по цене $lastPrice, вы получили $income\$',
+              color: Colors.red,
+            );
             _updateState();
           } else {
             // not Enought tokens
@@ -137,6 +143,10 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
             await _gameRepository.changeData(money: _gameRepository.game.money - volume);
             await _tokenRepository.changeToken(_state.token!, count: _state.token!.count + countTokens);
             volumeBuyTextController.text = '';
+            MessageManager.addMessage(
+              text: 'Куплено $countTokens ${_state.token!.symbol} по цене $lastPrice. Вы потратили $volume\$',
+              color: Colors.green,
+            );
             _updateState();
           } else {
             // not enough money
