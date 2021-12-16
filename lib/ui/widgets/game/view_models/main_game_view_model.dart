@@ -6,6 +6,7 @@ import 'package:crypto_idle/domain/entities/pc.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
+import 'package:crypto_idle/domain/repositories/message_manager.dart';
 
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
@@ -17,6 +18,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:crypto_idle/domain/entities/statistics.dart';
 import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
+import 'package:flutter/material.dart';
 
 class MainGameViewModelState {
   MainGameViewModelState({
@@ -54,6 +56,7 @@ class MainGameViewModelState {
   late DateTime date;
   late double money;
   final Map<int, double> currentPrices;
+  double get monthConsume => flatConsume + energyConsumeCost;
   double get flatConsume => flat.costMonth;
   double get energyConsumeCost {
     final sumCostPC = energyConsume / AppConfig.kVisualEnergy;
@@ -140,6 +143,9 @@ class MainGameViewModel extends ChangeNotifier {
   var _state = MainGameViewModelState.empty();
   MainGameViewModelState get state => _state;
 
+  static const daysUntilTheEndOfMonth = 7;
+  DateTime lastNotifyDate = DateTime.now();
+
   Future<void> _initialRepositories() async {
     await _gameRepository.init();
     await _statisticsRepository.init();
@@ -165,7 +171,26 @@ class MainGameViewModel extends ChangeNotifier {
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
     repository.updateData();
+    if (repository.runtimeType == GameRepository) {
+      _checkForEnoughtMoneyForPayments();
+    }
     _updateState();
+  }
+
+  void _checkForEnoughtMoneyForPayments() {
+    final currentDate = _gameRepository.game.date;
+    final endMonthDate = DateTime(currentDate.year, currentDate.month + 1);
+    if (currentDate.isAfter(endMonthDate.add(const Duration(days: -daysUntilTheEndOfMonth))) &&
+        currentDate != lastNotifyDate) {
+      if (state.monthConsume > state.money) {
+        lastNotifyDate = currentDate;
+        MessageManager.addMessage(
+          text:
+              'У вас не хватает денег для месячной оплаты, найдите ${state.monthConsume - state.money}\$, или проиграете!',
+          color: Colors.red,
+        );
+      }
+    }
   }
 
   Future<void> _updateState() async {

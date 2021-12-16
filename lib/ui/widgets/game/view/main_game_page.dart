@@ -345,15 +345,26 @@ class _BalanceDollarsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final money = context.select((MainGameViewModel vm) => vm.state.money);
+    final monthConsume = context.select((MainGameViewModel vm) => vm.state.monthConsume);
     return Column(
       children: <Widget>[
         Text(
           S.of(context).main_game_cash_balance_title,
           style: Theme.of(context).textTheme.bodyText1,
         ),
-        Text(
-          S.of(context).text_with_dollar(money),
-          style: Theme.of(context).textTheme.bodyText2,
+        RichText(
+          text: TextSpan(
+            text: S.of(context).text_with_dollar(money),
+            style: Theme.of(context).textTheme.bodyText2,
+            children: monthConsume > money
+                ? [
+                    TextSpan(
+                      text: '(-$monthConsume\$)',
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.red, fontSize: 12),
+                    ),
+                  ]
+                : [],
+          ),
         ),
       ],
     );
