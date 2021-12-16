@@ -228,6 +228,7 @@ class DayStreamViewModel extends ChangeNotifier {
     for (final token in tokens) {
       oldPrices.add(_priceTokenRepository.getLatestPriceByTokenId(token.id));
     }
+    _newsRepository.updateData();
     final news = _newsRepository.newsNotActivate;
     final newsAllCrypto = news.where((element) => element.isAllCrypto && !element.isActivate);
     News? newsOneGlobal;

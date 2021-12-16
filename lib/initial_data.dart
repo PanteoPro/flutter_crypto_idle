@@ -320,7 +320,6 @@ class InitialDataManager {
     final priceBox = await Hive.openBox<PriceToken>(priceTokenBoxName);
 
     final tokens = InitialData.generateTokens();
-    print(tokens.length);
     final prices = InitialData.generatePrices(tokens: tokens, dayHistoryCount: 30);
 
     await tokenBox.addAll(tokens);

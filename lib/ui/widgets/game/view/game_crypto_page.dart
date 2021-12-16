@@ -134,7 +134,6 @@ class _CryptoItemWidget extends StatelessWidget {
     final vm = context.read<GameCryptoViewModel>();
     final isScamToken = context.select((GameCryptoViewModel vm) => vm.state.filtered[index].isScam);
     final color = isScamToken ? Colors.red.withOpacity(0.4) : Theme.of(context).canvasColor;
-    print(isScamToken);
 
     return GestureDetector(
       onTap: () => vm.onTokenPressed(context, token),
