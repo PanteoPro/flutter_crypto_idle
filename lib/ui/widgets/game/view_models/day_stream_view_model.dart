@@ -7,6 +7,7 @@ import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
+import 'package:crypto_idle/domain/repositories/message_manager.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/news_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
@@ -106,6 +107,8 @@ class DayStreamViewModel extends ChangeNotifier {
 
   static const lengthDaySeconds = 10;
   static const lenghtRaisePriceWhenNewTokenDays = 6;
+  static const daysUntilTheEndOfMonth = 7;
+  var isNotificateUntilTheEndOfMonth = false;
   late Stream<dynamic> dayStream;
   late StreamSubscription<dynamic> _dayStreamSub;
 
@@ -120,13 +123,26 @@ class DayStreamViewModel extends ChangeNotifier {
     await _gameRepository.nextDay();
     // await _gameRepository.changeData(date: _state.game?.date.add(Duration(days: 1)));
     await _miningDay();
-    await newsDay();
+    await _newsDay();
     await _newPricesDay();
     await _checkMiningScamTokens();
     await _addNewToken();
     await _monthyPayments();
+    _reminderAboutMonthyPayments();
     if (_isMoneyGone()) {
       await _gameEnd();
+    }
+  }
+
+  void _reminderAboutMonthyPayments() {
+    final currentDate = _gameRepository.game.date;
+    final endMonthDate = DateTime(currentDate.year, currentDate.month + 1);
+    if (currentDate.isAfter(endMonthDate.add(const Duration(days: -daysUntilTheEndOfMonth))) &&
+        !isNotificateUntilTheEndOfMonth) {
+      MessageManager.addMessage(
+          text:
+              'Через 7 дней оплата ежемесячных расходов, у вас должно быть достаточное количество наличных для оплаты.');
+      isNotificateUntilTheEndOfMonth = true;
     }
   }
 
@@ -149,6 +165,7 @@ class DayStreamViewModel extends ChangeNotifier {
       await _gameRepository.changeData(money: _gameRepository.game.money - _flatConsume);
       await _gameRepository.changeData(money: _gameRepository.game.money - _energyConsumeCost);
       _newsRepository.createNewsByMonthyPayments(flat: _flatConsume, energy: _energyConsumeCost, date: nowDate);
+      isNotificateUntilTheEndOfMonth = false;
     }
   }
 
@@ -188,7 +205,7 @@ class DayStreamViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> newsDay() async {
+  Future<void> _newsDay() async {
     _newsRepository.createNews(_gameRepository.game.date);
   }
 
