@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:crypto_idle/Widgets/buttons.dart';
 import 'package:crypto_idle/Widgets/game_over_modal.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
@@ -5,6 +7,7 @@ import 'package:crypto_idle/Widgets/page_wrapper.dart';
 import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/generated/l10n.dart';
+import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/day_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
@@ -33,8 +36,9 @@ class MainGamePage extends StatelessWidget {
         ],
         automaticallyImplyLeading: false,
         leading: IconButton(
-            onPressed: vm.onReturnToMenuButtonPressed,
-            icon: Icon(Icons.exit_to_app_sharp, color: gameOver ? Colors.yellow : Colors.white)),
+          onPressed: vm.onReturnToMenuButtonPressed,
+          icon: Icon(Icons.exit_to_app_sharp, color: gameOver ? Colors.yellow : Colors.white),
+        ),
       ),
       body: SafeArea(
         child: PageWrapperWidget(
@@ -45,7 +49,7 @@ class MainGamePage extends StatelessWidget {
                 child: Stack(
                   children: const [
                     _MainWidget(),
-                    _PrototypeOfNewsWidget(),
+                    // _PrototypeOfNewsWidget(),
                     ______BUTTONMONEY______(),
                   ],
                 ),
@@ -77,7 +81,7 @@ class _ExitModalWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Container(
               color: Colors.black,
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: const [
@@ -153,21 +157,17 @@ class _PrototypeOfNewsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-      child: Container(
-        color: Colors.black.withOpacity(0.7),
-        width: double.infinity,
-        height: 100,
-        child: Column(
-          children: const [
-            Padding(
-              padding: EdgeInsets.only(top: 6),
-              child: Text('Новости'),
-            ),
-            Expanded(child: _PrototypeOfNewsItemsWidget()),
-          ],
-        ),
+    return Container(
+      color: Colors.black.withOpacity(0.7),
+      width: double.infinity,
+      child: Column(
+        children: const [
+          Padding(
+            padding: EdgeInsets.only(top: 6),
+            child: Text('Новости'),
+          ),
+          Expanded(child: _PrototypeOfNewsItemsWidget()),
+        ],
       ),
     );
   }
@@ -244,7 +244,7 @@ class _MainWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: const <Widget>[
-        _GameImageWidget(),
+        _HeaderWidget(),
         _BalanceWidget(),
         _ActionsWidget(),
         _CurrentInfoWidget(),
@@ -278,14 +278,81 @@ class _AppBarDateWidget extends StatelessWidget {
   }
 }
 
-class _GameImageWidget extends StatelessWidget {
-  const _GameImageWidget({Key? key}) : super(key: key);
+class _HeaderWidget extends StatelessWidget {
+  const _HeaderWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      height: 250,
-      child: Placeholder(),
+    return SizedBox(
+      height: 120,
+      child: Row(
+        children: const [
+          Expanded(child: _PrototypeOfNewsWidget()),
+          _HeaderClickerPCWidget(),
+        ],
+      ),
+    );
+  }
+}
+
+class _HeaderClickerPCWidget extends StatefulWidget {
+  const _HeaderClickerPCWidget({Key? key}) : super(key: key);
+
+  @override
+  State<_HeaderClickerPCWidget> createState() => _HeaderClickerPCWidgetState();
+}
+
+class _HeaderClickerPCWidgetState extends State<_HeaderClickerPCWidget> {
+  final _imagesPath = [
+    'assets/images/pcs/comp_touch_1.png',
+    'assets/images/pcs/comp_touch_2.png',
+    'assets/images/pcs/comp_touch_3.png',
+    'assets/images/pcs/comp_touch_4.png',
+  ];
+  var _indexImage = 0;
+  var _isStartAnimate = false;
+  final _millisecondsForSwapImage = 150;
+
+  Future<void> _startAnimate(Function income) async {
+    if (_isStartAnimate == false) {
+      income();
+      _isStartAnimate = true;
+      _indexImage++;
+      setState(() {});
+      for (int i = 1; i < _imagesPath.length; i++) {
+        await Future.delayed(Duration(milliseconds: _millisecondsForSwapImage), () {
+          _indexImage++;
+          setState(() {});
+        });
+      }
+      _indexImage = 0;
+      setState(() {});
+      _isStartAnimate = false;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = context.read<MainGameViewModel>();
+    return Stack(
+      children: [
+        SizedBox(
+          width: 120,
+          child: Column(
+            children: [
+              Text('Click me'),
+              GestureDetector(
+                onTap: () => _startAnimate(vm.onClickerPcPressed),
+                child: SizedBox(
+                  width: 80,
+                  height: 80,
+                  child: Image.asset(_imagesPath[_indexImage]),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

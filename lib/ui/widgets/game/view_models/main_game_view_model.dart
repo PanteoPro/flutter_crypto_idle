@@ -226,6 +226,11 @@ class MainGameViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void onClickerPcPressed() {
+    _gameRepository.changeData(money: _state.money + 0.15);
+    _updateState();
+  }
+
   void BABLO() {
     _gameRepository.changeData(money: _state.money + 100);
   }
