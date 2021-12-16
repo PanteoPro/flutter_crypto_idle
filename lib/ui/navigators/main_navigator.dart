@@ -16,6 +16,7 @@ import 'package:crypto_idle/ui/widgets/game/view_models/message_stream_view_mode
 import 'package:crypto_idle/ui/widgets/menu/view/menu_about_page.dart';
 import 'package:crypto_idle/ui/widgets/menu/view/menu_page.dart';
 import 'package:crypto_idle/ui/widgets/menu/view/menu_settings_page.dart';
+import 'package:crypto_idle/ui/widgets/menu/view/test_page.dart';
 import 'package:crypto_idle/ui/widgets/menu/view_models/menu_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,7 @@ abstract class MainNavigationRouteNames {
   static const menu = 'menu';
   static const menuSettings = 'menu/settings';
   static const menuAbout = 'menu/about';
+  static const test = 'menu/test';
 }
 
 class MainNavigation {
@@ -69,6 +71,7 @@ class MainNavigation {
         ChangeNotifierProvider(create: (ctx) => MenuViewModel(ctx), child: const MenuWidget()),
     MainNavigationRouteNames.menuSettings: (context) => const MenuSettingsPage(),
     MainNavigationRouteNames.menuAbout: (context) => const MenuAboutWidget(),
+    MainNavigationRouteNames.test: (context) => const TestWidget(),
   };
 
   Route<Object> onGenerateRoute(RouteSettings settings) {

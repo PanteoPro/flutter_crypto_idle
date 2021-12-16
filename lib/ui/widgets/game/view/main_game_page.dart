@@ -313,9 +313,14 @@ class _HeaderClickerPCWidgetState extends State<_HeaderClickerPCWidget> {
   var _isStartAnimate = false;
   final _millisecondsForSwapImage = 150;
 
+  final digitals = <Widget>[];
+  final animationLength = 800;
+  bool isStartCleaning = false;
+
   Future<void> _startAnimate(Function income) async {
     if (_isStartAnimate == false) {
       income();
+      _addMoney();
       _isStartAnimate = true;
       _indexImage++;
       setState(() {});
@@ -331,9 +336,24 @@ class _HeaderClickerPCWidgetState extends State<_HeaderClickerPCWidget> {
     }
   }
 
+  void _addMoney() {
+    final money = Random().nextInt(20);
+    final digit = _DigitalWidget(money: money);
+    digitals.add(digit);
+    setState(() {});
+    if (isStartCleaning == false) {
+      isStartCleaning = true;
+      Future.delayed(Duration(seconds: 30), () {
+        digitals.clear();
+        isStartCleaning = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final vm = context.read<MainGameViewModel>();
+    final gameOver = context.select((GameViewModel gvm) => gvm.state.gameOver);
     return Stack(
       children: [
         SizedBox(
@@ -342,7 +362,7 @@ class _HeaderClickerPCWidgetState extends State<_HeaderClickerPCWidget> {
             children: [
               Text('Click me'),
               GestureDetector(
-                onTap: () => _startAnimate(vm.onClickerPcPressed),
+                onTap: () => gameOver ? null : _startAnimate(vm.onClickerPcPressed),
                 child: SizedBox(
                   width: 80,
                   height: 80,
@@ -352,7 +372,57 @@ class _HeaderClickerPCWidgetState extends State<_HeaderClickerPCWidget> {
             ],
           ),
         ),
+        ...digitals,
       ],
+    );
+  }
+}
+
+class _DigitalWidget extends StatefulWidget {
+  const _DigitalWidget({Key? key, required this.money}) : super(key: key);
+
+  final int money;
+
+  @override
+  __DigitalWidgetState createState() => __DigitalWidgetState();
+}
+
+class __DigitalWidgetState extends State<_DigitalWidget> with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  final yToMove = 200.0;
+  final x = Random().nextInt(100).toDouble();
+  final y = Random().nextInt(20).toDouble();
+  final animationLength = 800;
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: animationLength),
+      lowerBound: y,
+      upperBound: yToMove,
+    );
+    animationController.addListener(() {
+      setState(() {});
+    });
+    animationController.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedPositioned(
+      child: Text('${widget.money}\$', style: TextStyle(color: Colors.green)),
+      bottom: animationController.value,
+      left: x,
+      duration: Duration(milliseconds: 0),
     );
   }
 }
