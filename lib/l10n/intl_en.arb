@@ -87,6 +87,7 @@
     "game_app_bar_info_count_pc_title": "Count pcs",
 
     "text_with_dollar": "{value}$",
+    "text_with_dollar_month": "{value}$/month",
     "text_with_energy": "{value} V/h",
     "text_with_power_mining": "{value} U/dex",
     "text_with_slash": "{value1}/{value2}"

@@ -15,7 +15,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AdaptiveTheme(
-      light: kLightTheme,
+      light: kLightTheme2,
       initial: AdaptiveThemeMode.dark,
       builder: (ThemeData light, ThemeData dark) => MultiProvider(
         providers: [

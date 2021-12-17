@@ -113,6 +113,22 @@ class _ButtonsWidget extends StatelessWidget {
               title: S.of(context).menu_about_button_title,
             ),
           ),
+          SizedBox(
+            width: double.infinity,
+            child: MyButton(
+              color: Theme.of(context).splashColor,
+              onPressed: vm.onTestPressed,
+              title: 'TEST PAGE',
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: MyButton(
+              color: Theme.of(context).splashColor,
+              onPressed: vm.onNewDesignPressed,
+              title: 'New Design',
+            ),
+          ),
         ],
       ),
     );

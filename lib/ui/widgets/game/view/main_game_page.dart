@@ -311,7 +311,7 @@ class _HeaderClickerPCWidgetState extends State<_HeaderClickerPCWidget> {
   ];
   var _indexImage = 0;
   var _isStartAnimate = false;
-  final _millisecondsForSwapImage = 150;
+  final _millisecondsForSwapImage = 30;
 
   final digitals = <Widget>[];
   final animationLength = 800;

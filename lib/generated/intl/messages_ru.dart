@@ -30,11 +30,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m4(value) => "${value}\$";
 
-  static String m5(value) => "${value} Ват/ч";
+  static String m5(value) => "${value}\$/мес";
 
-  static String m6(value) => "${value} U/dex";
+  static String m6(value) => "${value} Ват/ч";
 
-  static String m7(value1, value2) => "${value1}/${value2}";
+  static String m7(value) => "${value} U/dex";
+
+  static String m8(value1, value2) => "${value1}/${value2}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -132,7 +134,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "main_game_info_place_title":
             MessageLookupByLibrary.simpleMessage("Место"),
         "main_game_info_power_mining_title":
-            MessageLookupByLibrary.simpleMessage("Мощность майнинга"),
+            MessageLookupByLibrary.simpleMessage("Мощность"),
         "main_game_info_title":
             MessageLookupByLibrary.simpleMessage("Основное"),
         "main_game_month_energy_title":
@@ -178,8 +180,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Настройки"),
         "menu_title": MessageLookupByLibrary.simpleMessage("Меню"),
         "text_with_dollar": m4,
-        "text_with_energy": m5,
-        "text_with_power_mining": m6,
-        "text_with_slash": m7
+        "text_with_dollar_month": m5,
+        "text_with_energy": m6,
+        "text_with_power_mining": m7,
+        "text_with_slash": m8
       };
 }

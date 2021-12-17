@@ -790,6 +790,16 @@ class S {
     );
   }
 
+  /// `{value}$/month`
+  String text_with_dollar_month(Object value) {
+    return Intl.message(
+      '$value\$/month',
+      name: 'text_with_dollar_month',
+      desc: '',
+      args: [value],
+    );
+  }
+
   /// `{value} V/h`
   String text_with_energy(Object value) {
     return Intl.message(

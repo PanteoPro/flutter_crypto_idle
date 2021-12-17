@@ -12,7 +12,7 @@
     "main_game_info_place_title": "Место",
     "main_game_info_count_pc_title": "Количество установок",
     "main_game_info_energy_title": "Потребление энергии",
-    "main_game_info_power_mining_title": "Мощность майнинга",
+    "main_game_info_power_mining_title": "Мощность",
 
     "main_game_month_title": "Ежемесячные расходы",
     "main_game_month_flat_title": "Оплата жилья",
@@ -87,6 +87,7 @@
     "game_app_bar_info_count_pc_title": "Количество установок",
 
     "text_with_dollar": "{value}$",
+    "text_with_dollar_month": "{value}$/мес",
     "text_with_energy": "{value} Ват/ч",
     "text_with_power_mining": "{value} U/dex",
     "text_with_slash": "{value1}/{value2}"

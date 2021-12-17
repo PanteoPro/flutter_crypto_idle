@@ -69,6 +69,7 @@ flutter:
   assets:
     - assets/images/tokens/
     - assets/images/pcs/
+    - assets/images/icons/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
@@ -78,10 +79,18 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: AveriaSerifLibre
+      fonts:
+        - asset: assets/fonts/AveriaSerifLibre-Bold.ttf
+        - asset: assets/fonts/AveriaSerifLibre-BoldItalic.ttf
+        - asset: assets/fonts/AveriaSerifLibre-Italic.ttf
+        - asset: assets/fonts/AveriaSerifLibre-Light.ttf
+        - asset: assets/fonts/AveriaSerifLibre-LightItalic.ttf
+        - asset: assets/fonts/AveriaSerifLibre-Regular.ttf
+    - family: Bahnschrift
+      fonts:
+        - asset: assets/fonts/Bahnschrift.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
