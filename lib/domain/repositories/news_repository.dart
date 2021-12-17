@@ -8,8 +8,6 @@ import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
-import 'package:crypto_idle/generated/l10n.dart';
-import 'package:crypto_idle/initial_data.dart';
 
 class _NewsStruct {
   _NewsStruct({
@@ -31,7 +29,7 @@ enum NewsType { positive, neutral, negative }
 
 extension NewsTypeExt on NewsType {
   static NewsType getRandom() {
-    var value = Random().nextInt(NewsType.values.length);
+    final value = Random().nextInt(NewsType.values.length);
     return NewsType.values[value];
   }
 }
@@ -85,8 +83,6 @@ class _NewsRepositoryParams {
     'Autobazaarcom',
     'Tpc Solutions',
   ];
-
-  static final Map<String, String> tokenNames = InitialDataNames.nameTokens;
 }
 
 class NewsRepository extends MyRepository {
@@ -159,7 +155,7 @@ class NewsRepository extends MyRepository {
     }
 
     availableTokens.shuffle();
-    Token? token = isHaveSymbol || isHaveCrypto ? availableTokens.first : null;
+    final token = isHaveSymbol || isHaveCrypto ? availableTokens.first : null;
     String result = template;
 
     if (isHaveCountry) {

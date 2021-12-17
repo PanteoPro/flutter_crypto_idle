@@ -1,5 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// ignore_for_file: require_trailing_commas
+
 part of 'statistics.dart';
 
 // **************************************************************************
@@ -20,10 +22,8 @@ class StatisticsAdapter extends TypeAdapter<Statistics> {
       energyConsume: (fields[0] as List).cast<double>(),
       flatConsume: (fields[1] as List).cast<double>(),
       pcConsume: (fields[2] as List).cast<double>(),
-      tokenEarn: (fields[3] as Map).map((dynamic k, dynamic v) =>
-          MapEntry(k as int, (v as List).cast<double>())),
-      tokenMining: (fields[4] as Map).map((dynamic k, dynamic v) =>
-          MapEntry(k as int, (v as List).cast<double>())),
+      tokenEarn: (fields[3] as Map).map((dynamic k, dynamic v) => MapEntry(k as int, (v as List).cast<double>())),
+      tokenMining: (fields[4] as Map).map((dynamic k, dynamic v) => MapEntry(k as int, (v as List).cast<double>())),
     );
   }
 
@@ -49,7 +49,5 @@ class StatisticsAdapter extends TypeAdapter<Statistics> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is StatisticsAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is StatisticsAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }

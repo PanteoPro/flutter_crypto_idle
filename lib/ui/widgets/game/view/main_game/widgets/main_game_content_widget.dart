@@ -65,7 +65,7 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
                       padding: 10,
                       text: currentClicks > 0 ? '$currentClicks' : delayText,
                       left: currentClicks > 0 ? 10 : 5,
-                      child: Image.asset(AppImages.image_comp_tap),
+                      child: Image.asset(AppImages.imageCompTap),
                     ),
             ),
           ),
@@ -306,7 +306,7 @@ class _ComputerItemWidget extends StatelessWidget {
                   child: Image.asset(
                     pc.miningToken != null
                         ? AppImages.getTokenPathBySymbol(pc.miningToken!.symbol)
-                        : AppImages.icon_empty,
+                        : AppImages.iconEmpty,
                     height: 24,
                     width: 24,
                   ),

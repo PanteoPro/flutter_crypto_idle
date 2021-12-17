@@ -1,7 +1,7 @@
-import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:hive/hive.dart';
 
 abstract class MyHiveDataProvider<T> {
+  // ignore: unused_field
   late Box<T> _box;
 
   Future<void> openBox();

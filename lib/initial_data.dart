@@ -165,8 +165,11 @@ abstract class InitialData {
     return result.toList();
   }
 
-  static List<PriceToken> generatePrices(
-      {required List<Token> tokens, required int dayHistoryCount, DateTime? startDate}) {
+  static List<PriceToken> generatePrices({
+    required List<Token> tokens,
+    required int dayHistoryCount,
+    DateTime? startDate,
+  }) {
     final result = <PriceToken>[];
     final random = Random();
     var date = DateTime.now();
@@ -224,28 +227,22 @@ class InitialDataManager {
     final needResetHaveStatisticsData = !await _checkStatisticsData();
 
     if (needResetPCData) {
-      print('reset PC DATA');
       await _deleteBoxFromDisk(pcBoxName);
       await _initPCData();
     }
 
     if (needResetHaveFlatData) {
-      print('reset Flat DATA');
       await _deleteBoxFromDisk(flatBoxName);
       await _initFlatData();
     }
 
     if (needResetHaveTokenData) {
-      print('reset Token DATA');
-      print('reset Price DATA');
-
       await _deleteBoxFromDisk(tokenBoxName);
       await _deleteBoxFromDisk(priceTokenBoxName);
       await _initTokenData();
     }
 
     if (needResetHaveStatisticsData) {
-      print('reset Statistics DATA');
       await _deleteBoxFromDisk(statisticsBoxName);
       await _initStatisticsData();
     }
@@ -264,10 +261,6 @@ class InitialDataManager {
     await Hive.deleteBoxFromDisk(priceTokenBoxName);
     await Hive.deleteBoxFromDisk(statisticsBoxName);
     await Hive.deleteBoxFromDisk(newsBoxName);
-  }
-
-  Future<void> restartGame() async {
-    final gameBox = await Hive.openBox<Game>(pcConstBoxName);
   }
 
   Future<void> registerAllAdapters() async {

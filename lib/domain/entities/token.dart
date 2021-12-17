@@ -1,4 +1,3 @@
-import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:hive/hive.dart';
 
 part 'token.g.dart';

@@ -4,24 +4,6 @@ part 'game.g.dart';
 
 @HiveType(typeId: 0)
 class Game {
-  // 3 4 fbeld was user
-  @HiveField(0)
-  final int id;
-  @HiveField(1)
-  final double money;
-  @HiveField(2)
-  final String nick;
-  @HiveField(3)
-  final DateTime date;
-  @HiveField(4)
-  final bool gameOver;
-  @HiveField(5)
-  final int currentClicks;
-  @HiveField(6)
-  final int secondsDelay;
-  static const maxClicks = 20;
-  static const maxDelay = 10;
-
   const Game({
     required this.id,
     required this.money,
@@ -40,6 +22,23 @@ class Game {
     this.currentClicks = maxClicks,
     this.secondsDelay = 0,
   });
+  // 3 4 fbeld was user
+  @HiveField(0)
+  final int id;
+  @HiveField(1)
+  final double money;
+  @HiveField(2)
+  final String nick;
+  @HiveField(3)
+  final DateTime date;
+  @HiveField(4)
+  final bool gameOver;
+  @HiveField(5)
+  final int currentClicks;
+  @HiveField(6)
+  final int secondsDelay;
+  static const maxClicks = 20;
+  static const maxDelay = 10;
 
   Game copyWith({
     int? id,

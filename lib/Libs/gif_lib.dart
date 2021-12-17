@@ -2,6 +2,7 @@ library flutter_gifimage;
 
 import 'dart:io' show HttpClient, HttpClientRequest, HttpClientResponse;
 import 'dart:ui' as ui show Codec, FrameInfo;
+// ignore: directives_ordering
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';

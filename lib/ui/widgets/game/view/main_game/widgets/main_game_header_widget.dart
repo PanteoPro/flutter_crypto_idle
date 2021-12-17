@@ -51,7 +51,7 @@ class _BalanceCashWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Image.asset(
-          AppImages.icon_cash,
+          AppImages.iconCash,
           width: 24,
           height: 24,
         ),
@@ -86,7 +86,7 @@ class _BalanceCryptoWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Image.asset(
-          AppImages.icon_token,
+          AppImages.iconToken,
           width: 24,
           height: 24,
         ),

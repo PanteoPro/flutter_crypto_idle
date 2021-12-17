@@ -36,7 +36,7 @@ class PCDataProvider implements MyHiveDataProvider<PC> {
 
   Future<bool> deletePC(PC pc) async {
     try {
-      var keyToDelete;
+      dynamic keyToDelete;
       _box.toMap().forEach((key, value) {
         if (value.id == pc.id) {
           keyToDelete = key;
@@ -50,7 +50,6 @@ class PCDataProvider implements MyHiveDataProvider<PC> {
       }
     } catch (_) {
       // error? not find
-      print('cant delete pc in own box');
       return false;
     }
   }
