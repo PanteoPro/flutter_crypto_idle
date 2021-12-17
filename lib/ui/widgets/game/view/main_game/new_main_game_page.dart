@@ -6,6 +6,7 @@ import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/Libs/gif_lib.dart';
 import 'package:crypto_idle/Widgets/circular_widget.dart';
+import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/day_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game_view_model.dart';
@@ -24,15 +25,23 @@ class MainGamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const _AppBarWidget(),
-      body: Column(
-        children: const [
-          _HeaderWidget(),
-          Expanded(child: _ContentWidget()),
-          _FooterWidget(),
-        ],
+    return WillPopScope(
+      onWillPop: () async => _backToMenu(context),
+      child: Scaffold(
+        appBar: const _AppBarWidget(),
+        body: Column(
+          children: const [
+            _HeaderWidget(),
+            Expanded(child: _ContentWidget()),
+            _FooterWidget(),
+          ],
+        ),
       ),
     );
+  }
+
+  bool _backToMenu(BuildContext context) {
+    Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.menu);
+    return true;
   }
 }
