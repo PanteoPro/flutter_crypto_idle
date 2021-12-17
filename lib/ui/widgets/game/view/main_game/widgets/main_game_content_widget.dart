@@ -9,15 +9,15 @@ class _ContentWidget extends StatelessWidget {
       width: double.infinity,
       child: ColoredBox(
         color: Theme.of(context).backgroundColor,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: ListView(
-            children: const [
-              _CirlceWidget(),
-              SizedBox(height: 30),
-              _ActionsWidget(),
-            ],
-          ),
+        child: Column(
+          children: const [
+            _CirlceWidget(),
+            SizedBox(height: 30),
+            _ActionsWidget(),
+            SizedBox(height: 30),
+            Spacer(),
+            _ComputersWidget(),
+          ],
         ),
       ),
     );
@@ -144,45 +144,48 @@ class _ActionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: _ActionItemWidget(
-                title: 'Купить установки',
-                onPressed: () {},
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: _ActionItemWidget(
+                  title: 'Купить установки',
+                  onPressed: () {},
+                ),
               ),
-            ),
-            const SizedBox(width: 20),
-            Expanded(
-              child: _ActionItemWidget(
-                title: 'Купить помещение',
-                onPressed: () {},
+              const SizedBox(width: 20),
+              Expanded(
+                child: _ActionItemWidget(
+                  title: 'Купить помещение',
+                  onPressed: () {},
+                ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        Row(
-          children: [
-            Expanded(
-              child: _ActionItemWidget(
-                title: 'Криптовалюта',
-                onPressed: () {},
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(
+                child: _ActionItemWidget(
+                  title: 'Криптовалюта',
+                  onPressed: () {},
+                ),
               ),
-            ),
-            const SizedBox(width: 20),
-            Expanded(
-              child: _ActionItemWidget(
-                title: 'Статистика',
-                onPressed: () {},
+              const SizedBox(width: 20),
+              Expanded(
+                child: _ActionItemWidget(
+                  title: 'Статистика',
+                  onPressed: () {},
+                ),
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -223,6 +226,81 @@ class _ActionItemWidget extends StatelessWidget {
             style: Theme.of(context).textTheme.headline2,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _ComputersWidget extends StatelessWidget {
+  const _ComputersWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 100,
+      child: ColoredBox(
+        color: Theme.of(context).canvasColor,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              // shrinkWrap: true,
+              itemCount: 6,
+              itemBuilder: (context, index) {
+                return _ComputerItemWidget(index: index);
+              },
+              separatorBuilder: (ctx, index) {
+                return SizedBox(width: 10);
+              }),
+        ),
+      ),
+    );
+  }
+}
+
+class _ComputerItemWidget extends StatelessWidget {
+  const _ComputerItemWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 90,
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              SizedBox(
+                width: double.infinity,
+                child: Image.asset(
+                  AppImages.getPcPathByName('1'),
+                  width: 50,
+                  height: 50,
+                ),
+              ),
+              Positioned(
+                right: 5,
+                bottom: 5,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.asset(
+                    // AppImages.icon_empty,
+                    AppImages.getTokenPathBySymbol('cat'),
+                    height: 24,
+                    width: 24,
+                  ),
+                ),
+              )
+            ],
+          ),
+          Text(
+            'MZS Computer Club dasdsa',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 12),
+          )
+        ],
       ),
     );
   }

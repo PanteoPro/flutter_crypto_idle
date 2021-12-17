@@ -28,4 +28,5 @@ class AppImages {
   static const icon_cash = 'assets/images/icons/cash_icon.png';
   static const icon_down = 'assets/images/icons/down_icon.png';
   static const icon_up = 'assets/images/icons/up_icon.png';
+  static const icon_empty = 'assets/images/icons/empty_icon.png';
 }
