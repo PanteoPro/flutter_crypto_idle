@@ -65,7 +65,6 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
                       lineWidth: 2,
                       padding: 10,
                       child: Image.asset(AppImages.image_comp_tap),
-                      // text: '${(value * 100).toInt()}',
                       text: currentClicks > 0 ? '$currentClicks' : delayText,
                       left: currentClicks > 0 ? 10 : 5,
                     ),
@@ -78,10 +77,15 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
   }
 
   Future<void> _addMoney(MainGameViewModel vm) async {
-    final rndMoney = double.parse(Random().nextDouble().toStringAsFixed(2));
+    final rndMoney = MainGameViewModel.getRandomMoney();
     final isAddMoney = await vm.onClickerPcPressed(rndMoney);
+
     if (isAddMoney) {
-      final digit = _DigitalWidget(money: rndMoney);
+      final color = rndMoney == MainGameViewModel.critRandomMoney
+          ? const Color.fromRGBO(217, 0, 0, 1)
+          : const Color.fromRGBO(0, 210, 149, 1);
+      final speed = rndMoney == MainGameViewModel.critRandomMoney ? 1500 : 800;
+      final digit = _DigitalWidget(money: rndMoney, color: color, speed: speed);
       digitals.add(digit);
       setState(() {});
       if (isStartCleaning == false) {
@@ -91,14 +95,21 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
           isStartCleaning = false;
         });
       }
-    } else {}
+    }
   }
 }
 
 class _DigitalWidget extends StatefulWidget {
-  const _DigitalWidget({Key? key, required this.money}) : super(key: key);
+  const _DigitalWidget({
+    Key? key,
+    required this.money,
+    required this.color,
+    required this.speed,
+  }) : super(key: key);
 
   final double money;
+  final Color color;
+  final int speed;
 
   @override
   __DigitalWidgetState createState() => __DigitalWidgetState();
@@ -123,7 +134,7 @@ class __DigitalWidgetState extends State<_DigitalWidget> with SingleTickerProvid
 
     animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: animationLength),
+      duration: Duration(milliseconds: widget.speed),
       lowerBound: y,
       upperBound: yToMove,
     );
@@ -136,10 +147,13 @@ class __DigitalWidgetState extends State<_DigitalWidget> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return AnimatedPositioned(
-      child: Text('${widget.money}\$', style: TextStyle(color: Color.fromRGBO(0, 210, 149, 1))),
       bottom: animationController.value,
       left: x,
-      duration: Duration(milliseconds: 0),
+      duration: Duration.zero,
+      child: Text(
+        '${widget.money}\$',
+        style: TextStyle(color: widget.color),
+      ),
     );
   }
 }

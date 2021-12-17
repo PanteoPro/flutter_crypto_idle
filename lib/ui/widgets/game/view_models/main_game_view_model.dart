@@ -171,6 +171,20 @@ class MainGameViewModel extends ChangeNotifier {
   DateTime lastNotifyDate = DateTime.now();
 
   StreamSubscription<dynamic>? _delayClickerPCSub;
+  static const double _minRandomMoney = 0.01;
+  static const double _maxRandomMoney = 0.10;
+  static const double critRandomMoney = 1;
+  static const double _probabilityCritRandomMoney = 0.1;
+  static double getRandomMoney() {
+    final rnd = Random();
+    final isCrit = rnd.nextDouble() <= _probabilityCritRandomMoney;
+    if (isCrit) {
+      return critRandomMoney;
+    } else {
+      return double.parse(
+          (_minRandomMoney + rnd.nextDouble() * (_maxRandomMoney - _minRandomMoney)).toStringAsFixed(2));
+    }
+  }
 
   Future<void> _initialRepositories() async {
     await _gameRepository.init();

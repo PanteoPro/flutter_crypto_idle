@@ -158,6 +158,10 @@ class _NewsFirstNewsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final news = context.select((DayStreamViewModel vm) => vm.newsListToDisplay);
     final newsText = news.isEmpty ? '' : news.first.text;
-    return Text(newsText);
+    return Text(
+      newsText,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+    );
   }
 }
