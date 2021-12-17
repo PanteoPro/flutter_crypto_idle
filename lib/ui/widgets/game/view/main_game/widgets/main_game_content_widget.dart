@@ -36,7 +36,6 @@ class _CirlceWidget extends StatefulWidget {
 class _CirlceWidgetState extends State<_CirlceWidget> {
   final digitals = <Widget>[];
   final animationLength = 800;
-  bool isStartCleaning = false;
 
   @override
   Widget build(BuildContext context) {
@@ -60,13 +59,13 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
                   ? CircularProgressIndicator(color: Theme.of(context).hintColor)
                   : RadialPercentWidget(
                       percent: currentClicks > 0 ? percentCurrentClicks : percentCurrentDelay,
-                      lineColor: Color.fromRGBO(217, 0, 0, 1),
-                      maxLineColor: Color.fromRGBO(0, 210, 149, 1),
+                      lineColor: const Color.fromRGBO(217, 0, 0, 1),
+                      maxLineColor: const Color.fromRGBO(0, 210, 149, 1),
                       lineWidth: 2,
                       padding: 10,
-                      child: Image.asset(AppImages.image_comp_tap),
                       text: currentClicks > 0 ? '$currentClicks' : delayText,
                       left: currentClicks > 0 ? 10 : 5,
+                      child: Image.asset(AppImages.image_comp_tap),
                     ),
             ),
           ),
@@ -88,13 +87,10 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
       final digit = _DigitalWidget(money: rndMoney, color: color, speed: speed);
       digitals.add(digit);
       setState(() {});
-      if (isStartCleaning == false) {
-        isStartCleaning = true;
-        Future.delayed(Duration(seconds: 30), () {
-          digitals.clear();
-          isStartCleaning = false;
-        });
-      }
+    } else {
+      Future.delayed(const Duration(seconds: 2), () {
+        digitals.clear();
+      });
     }
   }
 }
