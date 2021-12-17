@@ -74,7 +74,7 @@ class MainNavigation {
     MainNavigationRouteNames.menuSettings: (context) => const MenuSettingsPage(),
     MainNavigationRouteNames.menuAbout: (context) => const MenuAboutWidget(),
     MainNavigationRouteNames.test: (context) => const TestWidget(),
-    MainNavigationRouteNames.newDesign: (context) => const MainGamePageW(),
+    MainNavigationRouteNames.newDesign: (context) => const MainGamePage(),
   };
 
   Route<Object> onGenerateRoute(RouteSettings settings) {

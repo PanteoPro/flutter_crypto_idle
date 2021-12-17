@@ -15,12 +15,20 @@ class Game {
   final DateTime date;
   @HiveField(4)
   final bool gameOver;
+  @HiveField(5)
+  final int currentClicks;
+  @HiveField(6)
+  final int secondsDelay;
+  static const maxClicks = 20;
+  static const maxDelay = 10;
 
   const Game({
     required this.id,
     required this.money,
     required this.nick,
     required this.date,
+    required this.currentClicks,
+    required this.secondsDelay,
     this.gameOver = false,
   });
   const Game.empty({
@@ -29,6 +37,8 @@ class Game {
     this.nick = 'undefined',
     required this.date,
     this.gameOver = false,
+    this.currentClicks = maxClicks,
+    this.secondsDelay = 0,
   });
 
   Game copyWith({
@@ -37,6 +47,8 @@ class Game {
     String? nick,
     DateTime? date,
     bool? gameOver,
+    int? currentClicks,
+    int? secondsDelay,
   }) {
     return Game(
       id: id ?? this.id,
@@ -44,6 +56,8 @@ class Game {
       nick: nick ?? this.nick,
       date: date ?? this.date,
       gameOver: gameOver ?? this.gameOver,
+      currentClicks: currentClicks ?? this.currentClicks,
+      secondsDelay: secondsDelay ?? this.secondsDelay,
     );
   }
 }

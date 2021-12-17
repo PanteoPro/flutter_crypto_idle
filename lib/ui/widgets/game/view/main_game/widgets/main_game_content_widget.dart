@@ -34,33 +34,41 @@ class _CirlceWidget extends StatefulWidget {
 }
 
 class _CirlceWidgetState extends State<_CirlceWidget> {
-  double value = 1.0;
-
   final digitals = <Widget>[];
   final animationLength = 800;
   bool isStartCleaning = false;
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<MainGameViewModel>();
+    final percentCurrentClicks = context.select((MainGameViewModel vm) => vm.state.percentCurrentClicks);
+    final currentClicks = vm.state.currentClicks;
+
+    final percentCurrentDelay = context.select((MainGameViewModel vm) => vm.state.percentCurrentDelay);
+    final delayText = vm.state.currentDelayString;
+
+    final isNoData = percentCurrentClicks == 0 && percentCurrentDelay == 1;
     return Center(
       child: Stack(
         children: [
           GestureDetector(
-            onTap: _addMoney,
+            onTap: () => _addMoney(vm),
             child: SizedBox(
               width: 170,
               height: 170,
-              child: RadialPercentWidget(
-                percent: value,
-                lineColor: Color.fromRGBO(217, 0, 0, 1),
-                maxLineColor: Color.fromRGBO(0, 210, 149, 1),
-                lineWidth: 2,
-                padding: 10,
-                child: Image.asset(AppImages.image_comp_tap),
-                // text: '${(value * 100).toInt()}',
-                text: '${(value * 500).toInt()} ',
-                left: 10,
-              ),
+              child: isNoData
+                  ? CircularProgressIndicator(color: Theme.of(context).hintColor)
+                  : RadialPercentWidget(
+                      percent: currentClicks > 0 ? percentCurrentClicks : percentCurrentDelay,
+                      lineColor: Color.fromRGBO(217, 0, 0, 1),
+                      maxLineColor: Color.fromRGBO(0, 210, 149, 1),
+                      lineWidth: 2,
+                      padding: 10,
+                      child: Image.asset(AppImages.image_comp_tap),
+                      // text: '${(value * 100).toInt()}',
+                      text: currentClicks > 0 ? '$currentClicks' : delayText,
+                      left: currentClicks > 0 ? 10 : 5,
+                    ),
             ),
           ),
           ...digitals,
@@ -69,31 +77,28 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
     );
   }
 
-  void _tap() {
-    value -= 0.002;
-    setState(() {});
-  }
-
-  void _addMoney() {
-    _tap();
-    final money = Random().nextInt(20);
-    final digit = _DigitalWidget(money: money);
-    digitals.add(digit);
-    setState(() {});
-    if (isStartCleaning == false) {
-      isStartCleaning = true;
-      Future.delayed(Duration(seconds: 30), () {
-        digitals.clear();
-        isStartCleaning = false;
-      });
-    }
+  Future<void> _addMoney(MainGameViewModel vm) async {
+    final rndMoney = double.parse(Random().nextDouble().toStringAsFixed(2));
+    final isAddMoney = await vm.onClickerPcPressed(rndMoney);
+    if (isAddMoney) {
+      final digit = _DigitalWidget(money: rndMoney);
+      digitals.add(digit);
+      setState(() {});
+      if (isStartCleaning == false) {
+        isStartCleaning = true;
+        Future.delayed(Duration(seconds: 30), () {
+          digitals.clear();
+          isStartCleaning = false;
+        });
+      }
+    } else {}
   }
 }
 
 class _DigitalWidget extends StatefulWidget {
   const _DigitalWidget({Key? key, required this.money}) : super(key: key);
 
-  final int money;
+  final double money;
 
   @override
   __DigitalWidgetState createState() => __DigitalWidgetState();
@@ -144,6 +149,7 @@ class _ActionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<MainGameViewModel>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Column(
@@ -154,14 +160,14 @@ class _ActionsWidget extends StatelessWidget {
               Expanded(
                 child: _ActionItemWidget(
                   title: 'Купить установки',
-                  onPressed: () {},
+                  onPressed: () => vm.onBuyPcButtonPressed(context),
                 ),
               ),
               const SizedBox(width: 20),
               Expanded(
                 child: _ActionItemWidget(
                   title: 'Купить помещение',
-                  onPressed: () {},
+                  onPressed: () => vm.onBuyFlatButtonPressed(context),
                 ),
               ),
             ],
@@ -172,14 +178,14 @@ class _ActionsWidget extends StatelessWidget {
               Expanded(
                 child: _ActionItemWidget(
                   title: 'Криптовалюта',
-                  onPressed: () {},
+                  onPressed: () => vm.onWalletButtonPressed(context),
                 ),
               ),
               const SizedBox(width: 20),
               Expanded(
                 child: _ActionItemWidget(
                   title: 'Статистика',
-                  onPressed: () {},
+                  onPressed: () => vm.onStatisticButtonPressed(context),
                 ),
               ),
             ],
@@ -236,6 +242,7 @@ class _ComputersWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final countPC = context.select((MainGameViewModel vm) => vm.state.myPCs.length);
     return SizedBox(
       width: double.infinity,
       height: 100,
@@ -246,7 +253,7 @@ class _ComputersWidget extends StatelessWidget {
           child: ListView.separated(
               scrollDirection: Axis.horizontal,
               // shrinkWrap: true,
-              itemCount: 6,
+              itemCount: countPC,
               itemBuilder: (context, index) {
                 return _ComputerItemWidget(index: index);
               },
@@ -266,6 +273,7 @@ class _ComputerItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pc = context.select((MainGameViewModel vm) => vm.state.myPCs[index]);
     return SizedBox(
       width: 90,
       child: Column(
@@ -275,7 +283,7 @@ class _ComputerItemWidget extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: Image.asset(
-                  AppImages.getPcPathByName('1'),
+                  AppImages.getPcPathByName(pc.name),
                   width: 50,
                   height: 50,
                 ),
@@ -286,8 +294,9 @@ class _ComputerItemWidget extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: Image.asset(
-                    // AppImages.icon_empty,
-                    AppImages.getTokenPathBySymbol('cat'),
+                    pc.miningToken != null
+                        ? AppImages.getTokenPathBySymbol(pc.miningToken!.symbol)
+                        : AppImages.icon_empty,
                     height: 24,
                     width: 24,
                   ),
@@ -296,7 +305,7 @@ class _ComputerItemWidget extends StatelessWidget {
             ],
           ),
           Text(
-            'MZS Computer Club dasdsa',
+            pc.name,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 12),
           )

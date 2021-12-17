@@ -17,8 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class MainGamePage extends StatelessWidget {
-  const MainGamePage({Key? key}) : super(key: key);
+class MainGamePageOLD extends StatelessWidget {
+  const MainGamePageOLD({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

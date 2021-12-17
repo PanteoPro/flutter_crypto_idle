@@ -13,7 +13,7 @@ class _AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         children: [
           const _AppBarAnimatedCalendarWidget(),
           const SizedBox(width: 4),
-          Text('16.12.2021', style: Theme.of(context).textTheme.headline1),
+          _DataWidget(),
         ],
       ),
       centerTitle: true,
@@ -36,6 +36,21 @@ class _AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+class _DataWidget extends StatelessWidget {
+  const _DataWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final locale = context.read<MainAppViewModel>().locale;
+    final format = DateFormat.yMd(locale.languageCode);
+    final date = context.select((MainGameViewModel vm) => vm.state.date);
+    final stringDate = format.format(date);
+    return Text(stringDate, style: Theme.of(context).textTheme.headline1);
+  }
 }
 
 class _AppBarAnimatedCalendarWidget extends StatefulWidget {

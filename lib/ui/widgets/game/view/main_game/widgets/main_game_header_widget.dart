@@ -56,11 +56,23 @@ class _BalanceCashWidget extends StatelessWidget {
           height: 24,
         ),
         const SizedBox(width: 4),
-        Text(
-          '${S.of(context).main_game_cash_balance_title}: ${S.of(context).text_with_dollar(1234.23)}',
-          style: Theme.of(context).textTheme.headline3,
-        ),
+        const _BalanceCashTextWidget(),
       ],
+    );
+  }
+}
+
+class _BalanceCashTextWidget extends StatelessWidget {
+  const _BalanceCashTextWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final money = context.select((MainGameViewModel vm) => vm.state.money);
+    return Text(
+      '${S.of(context).main_game_cash_balance_title}: ${S.of(context).text_with_dollar(money)}',
+      style: Theme.of(context).textTheme.headline3,
     );
   }
 }
@@ -79,11 +91,23 @@ class _BalanceCryptoWidget extends StatelessWidget {
           height: 24,
         ),
         const SizedBox(width: 4),
-        Text(
-          '${S.of(context).main_game_crypto_balance_title}: ${S.of(context).text_with_dollar(1234.23)}',
-          style: Theme.of(context).textTheme.headline3,
-        ),
+        const _BalanceCryptoTextWidget(),
       ],
+    );
+  }
+}
+
+class _BalanceCryptoTextWidget extends StatelessWidget {
+  const _BalanceCryptoTextWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final cryptoBalance = context.select((MainGameViewModel vm) => vm.state.cryptoBalance);
+    return Text(
+      '${S.of(context).main_game_crypto_balance_title}: ${S.of(context).text_with_dollar(cryptoBalance)}',
+      style: Theme.of(context).textTheme.headline3,
     );
   }
 }
@@ -132,6 +156,8 @@ class _NewsFirstNewsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Страна Россия запретила использование криптовалют на своей территории');
+    final news = context.select((DayStreamViewModel vm) => vm.newsListToDisplay);
+    final newsText = news.isEmpty ? '' : news.first.text;
+    return Text(newsText);
   }
 }

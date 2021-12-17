@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:collection/collection.dart';
 import 'package:crypto_idle/config.dart';
 import 'package:crypto_idle/domain/entities/flat.dart';
+import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/domain/entities/pc.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
@@ -30,6 +32,8 @@ class MainGameViewModelState {
     required this.date,
     required this.money,
     required this.currentPrices,
+    required this.currentClicks,
+    required this.currentDelay,
   });
   MainGameViewModelState.empty({
     Statistics? statistics,
@@ -39,6 +43,8 @@ class MainGameViewModelState {
     bool? isModalShow,
     DateTime? date,
     this.money = 0,
+    this.currentClicks = 0,
+    this.currentDelay = 0,
     this.currentPrices = const {},
   }) {
     this.statistics = statistics ?? Statistics.empty();
@@ -56,6 +62,23 @@ class MainGameViewModelState {
   late DateTime date;
   late double money;
   final Map<int, double> currentPrices;
+
+  final int currentClicks;
+  final int currentDelay;
+  double get percentCurrentClicks => currentClicks / Game.maxClicks;
+  double get percentCurrentDelay => (Game.maxDelay - currentDelay) / Game.maxDelay;
+  String get currentDelayString {
+    var minutes = 0;
+    var seconds = 0;
+    if (currentClicks == 0) {
+      minutes = (currentDelay / 60).floor();
+      seconds = currentDelay - minutes * 60;
+    }
+    final minutesString = minutes < 10 ? '0$minutes' : '$minutes';
+    final secondsString = seconds < 10 ? '0$seconds' : '$seconds';
+    return '$minutesString:$secondsString';
+  }
+
   double get monthConsume => flatConsume + energyConsumeCost;
   double get flatConsume => flat.costMonth;
   double get energyConsumeCost {
@@ -124,6 +147,7 @@ class MainGameViewModel extends ChangeNotifier {
     _flatStreamSub?.cancel();
     _pcStreamSub?.cancel();
     _priceTokenStreamSub?.cancel();
+    _delayClickerPCSub?.cancel();
     super.dispose();
   }
 
@@ -146,6 +170,8 @@ class MainGameViewModel extends ChangeNotifier {
   static const daysUntilTheEndOfMonth = 7;
   DateTime lastNotifyDate = DateTime.now();
 
+  StreamSubscription<dynamic>? _delayClickerPCSub;
+
   Future<void> _initialRepositories() async {
     await _gameRepository.init();
     await _statisticsRepository.init();
@@ -154,6 +180,7 @@ class MainGameViewModel extends ChangeNotifier {
     await _pcRepository.init();
     await _priceTokenRepository.init();
     _subscriteStreams();
+    _subscribeOnDelayClickablePc(true);
     await _updateState();
   }
 
@@ -208,6 +235,8 @@ class MainGameViewModel extends ChangeNotifier {
       date: _gameRepository.game.date,
       money: _gameRepository.game.money,
       currentPrices: currentPrices,
+      currentClicks: _gameRepository.game.currentClicks,
+      currentDelay: _gameRepository.game.secondsDelay,
     );
     notifyListeners();
   }
@@ -226,12 +255,56 @@ class MainGameViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onClickerPcPressed() {
-    _gameRepository.changeData(money: _state.money + 0.15);
+  Future<bool> onClickerPcPressed(double rndMoney) async {
+    await _gameRepository.decreaceClick();
+    if (_gameRepository.game.currentClicks > 0) {
+      await _gameRepository.changeData(money: _state.money + rndMoney);
+      _updateState();
+      return true;
+    } else {
+      _subscribeOnDelayClickablePc();
+    }
+    return false;
+  }
+
+  void _subscribeOnDelayClickablePc([bool isInitial = false]) {
+    if (_gameRepository.game.secondsDelay == 0 && !isInitial || isInitial && _gameRepository.game.secondsDelay > 0) {
+      final stream = Stream.periodic(const Duration(seconds: 1));
+      if (!isInitial) {
+        _gameRepository.restoreDelay();
+      }
+      _delayClickerPCSub = stream.listen(_checkEndDelayClickablePc);
+    }
+  }
+
+  Future<void> _checkEndDelayClickablePc(dynamic event) async {
+    if (_gameRepository.game.secondsDelay != 0) {
+      await _gameRepository.decreaceDelay();
+    }
+    if (_gameRepository.game.secondsDelay == 0) {
+      _delayClickerPCSub!.cancel();
+      await _gameRepository.restoreClicks();
+    }
     _updateState();
   }
 
   void BABLO() {
     _gameRepository.changeData(money: _state.money + 100);
+  }
+
+  void onBuyPcButtonPressed(BuildContext context) {
+    Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMarketPC);
+  }
+
+  void onBuyFlatButtonPressed(BuildContext context) {
+    Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMarketFlat);
+  }
+
+  void onWalletButtonPressed(BuildContext context) {
+    Navigator.of(context).pushNamed(MainNavigationRouteNames.gameCrypto);
+  }
+
+  void onStatisticButtonPressed(BuildContext context) {
+    Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMining);
   }
 }

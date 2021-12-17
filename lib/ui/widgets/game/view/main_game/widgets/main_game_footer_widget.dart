@@ -30,6 +30,7 @@ class _FooterPlaceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final flat = context.select((MainGameViewModel vm) => vm.state.flat);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: RichText(
@@ -38,7 +39,7 @@ class _FooterPlaceWidget extends StatelessWidget {
           style: Theme.of(context).textTheme.headline1,
           children: [
             TextSpan(
-              text: 'Родительский дом',
+              text: flat.name,
               style: Theme.of(context).textTheme.headline2,
             ),
           ],
@@ -55,20 +56,45 @@ class _FooterMainInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _FooterMainInfoItemWidget(
-          imagePath: AppImages.icon_computer,
-          text: S.of(context).text_with_slash(16, 16),
-        ),
-        _FooterMainInfoItemWidget(
-          imagePath: AppImages.icon_lightning,
-          text: S.of(context).text_with_energy(9232142),
-        ),
+        const _FooterMainInfoPcsWidget(),
+        const _FooterMainInfoEnergyWidget(),
         const Spacer(),
         Text(
           'Расходы',
           style: Theme.of(context).textTheme.headline1,
         ),
       ],
+    );
+  }
+}
+
+class _FooterMainInfoPcsWidget extends StatelessWidget {
+  const _FooterMainInfoPcsWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final maxPC = context.select((MainGameViewModel vm) => vm.state.flat.countPC);
+    final currentPC = context.select((MainGameViewModel vm) => vm.state.myPCs.length);
+    return _FooterMainInfoItemWidget(
+      imagePath: AppImages.icon_computer,
+      text: S.of(context).text_with_slash(currentPC, maxPC),
+    );
+  }
+}
+
+class _FooterMainInfoEnergyWidget extends StatelessWidget {
+  const _FooterMainInfoEnergyWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final energyConsume = context.select((MainGameViewModel vm) => vm.state.energyConsume);
+    return _FooterMainInfoItemWidget(
+      imagePath: AppImages.icon_lightning,
+      text: S.of(context).text_with_energy(energyConsume),
     );
   }
 }
@@ -133,8 +159,9 @@ class _FooterOtherInfoPowerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final power = context.select((MainGameViewModel vm) => vm.state.powerPCs);
     return Text(
-      '${S.of(context).main_game_info_power_mining_title}: ${S.of(context).text_with_power_mining(9432342)}',
+      '${S.of(context).main_game_info_power_mining_title}: ${S.of(context).text_with_power_mining(power)}',
       style: Theme.of(context).textTheme.bodyText2,
     );
   }
@@ -145,7 +172,8 @@ class _FooterOtherInfoFlatWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Жилье: ${S.of(context).text_with_dollar_month(0)}');
+    final flatConsume = context.select((MainGameViewModel vm) => vm.state.flatConsume);
+    return Text('Жилье: ${S.of(context).text_with_dollar_month(flatConsume)}');
   }
 }
 
@@ -154,6 +182,7 @@ class _FooterOtherInfoEnergyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Электричество: ${S.of(context).text_with_dollar_month(45000)}');
+    final energyConsume = context.select((MainGameViewModel vm) => vm.state.energyConsumeCost);
+    return Text('Электричество: ${S.of(context).text_with_dollar_month(energyConsume)}');
   }
 }

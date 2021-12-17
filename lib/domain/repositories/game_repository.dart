@@ -44,15 +44,44 @@ class GameRepository implements MyRepository {
       _game = _game.copyWith(gameOver: gameOver);
     }
     if (money != null || nick != null || date != null || gameOver != null) {
-      await _gameDataProvider.saveData(_game);
-      updateData();
-      _streamController.add('changeData');
+      await _save('change date');
     }
+  }
+
+  Future<bool> decreaceClick() async {
+    if (_game.currentClicks > 0) {
+      _game = _game.copyWith(currentClicks: _game.currentClicks - 1);
+      await _save('decreace click');
+      return true;
+    }
+    return false;
+  }
+
+  Future<void> decreaceDelay() async {
+    if (_game.secondsDelay > 0) {
+      _game = _game.copyWith(secondsDelay: _game.secondsDelay - 1);
+      await _save('decreace delay');
+    }
+  }
+
+  Future<void> restoreClicks() async {
+    _game = _game.copyWith(currentClicks: Game.maxClicks);
+    await _save('restore clicks');
+  }
+
+  Future<void> restoreDelay() async {
+    _game = _game.copyWith(secondsDelay: Game.maxDelay);
+    await _save('restore clicks');
   }
 
   Future<void> nextDay() async {
     _game = _game.copyWith(date: _game.date.add(const Duration(days: 1)));
+    await _save('next day');
+  }
+
+  Future<void> _save(String message) async {
     await _gameDataProvider.saveData(_game);
-    _streamController.add('nextDay');
+    updateData();
+    _streamController.add(message);
   }
 }
