@@ -75,7 +75,7 @@ class _AppBarAnimatedCalendarWidgetState extends State<_AppBarAnimatedCalendarWi
   void initState() {
     super.initState();
     controller = GifController(vsync: this);
-    WidgetsBinding.instance!.addPostFrameCallback((_) => _startAnimation());
+    // WidgetsBinding.instance!.addPostFrameCallback((_) => _startAnimation());
   }
 
   void _startAnimation() {

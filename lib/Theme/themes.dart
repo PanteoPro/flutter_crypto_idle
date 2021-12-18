@@ -31,39 +31,39 @@ final kLightTheme2 = ThemeData.light().copyWith(
   textTheme: const TextTheme(
     bodyText1: TextStyle(
       color: Colors.white,
-      fontWeight: FontWeight.normal,
+      fontWeight: FontWeight.w300,
       fontSize: 16,
-      fontFamily: 'Bahnschrift',
+      fontFamily: 'RobotoCondensed',
     ),
     bodyText2: TextStyle(
       color: Colors.white,
-      fontWeight: FontWeight.normal,
+      fontWeight: FontWeight.w300,
       fontSize: 14,
-      fontFamily: 'Bahnschrift',
+      fontFamily: 'RobotoCondensed',
     ),
     headline1: TextStyle(
       color: Colors.white,
       fontWeight: FontWeight.normal,
       fontSize: 20,
-      fontFamily: 'Bahnschrift',
+      fontFamily: 'RobotoCondensed',
     ),
     headline2: TextStyle(
       color: Color.fromRGBO(0, 210, 149, 1),
       fontWeight: FontWeight.normal,
       fontSize: 20,
-      fontFamily: 'Bahnschrift',
+      fontFamily: 'RobotoCondensed',
     ),
     headline3: TextStyle(
       color: Colors.white,
       fontWeight: FontWeight.normal,
       fontSize: 18,
-      fontFamily: 'Bahnschrift',
+      fontFamily: 'RobotoCondensed',
     ),
     button: TextStyle(
       color: Color.fromRGBO(0, 210, 149, 1),
       fontWeight: FontWeight.normal,
-      fontSize: 24,
-      fontFamily: 'Bahnschrift',
+      fontSize: 16,
+      fontFamily: 'RobotoCondensed',
     ),
   ),
 );

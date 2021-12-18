@@ -121,7 +121,6 @@ class DayStreamViewModel extends ChangeNotifier {
 
   Future<void> _newDay(dynamic numberDaySession) async {
     await _gameRepository.nextDay();
-    // await _gameRepository.changeData(date: _state.game?.date.add(Duration(days: 1)));
     await _miningDay();
     await _newsDay();
     await _newPricesDay();

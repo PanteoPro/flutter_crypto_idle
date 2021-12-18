@@ -219,7 +219,7 @@ class _ActionItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 65,
+      height: 55,
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Colors.transparent),
@@ -239,7 +239,7 @@ class _ActionItemWidget extends StatelessWidget {
           child: Text(
             title,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline2,
+            style: Theme.of(context).textTheme.button,
           ),
         ),
       ),
@@ -283,7 +283,8 @@ class _ComputerItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pc = context.select((MainGameViewModel vm) => vm.state.myPCs[index]);
+    context.select((MainGameViewModel vm) => vm.state.myPCs[index].miningToken);
+    final pc = context.read<MainGameViewModel>().state.myPCs[index];
     return SizedBox(
       width: 90,
       child: Column(

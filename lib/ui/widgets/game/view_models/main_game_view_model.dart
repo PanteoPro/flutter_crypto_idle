@@ -173,7 +173,7 @@ class MainGameViewModel extends ChangeNotifier {
   StreamSubscription<dynamic>? _delayClickerPCSub;
   static const double _minRandomMoney = 0.01;
   static const double _maxRandomMoney = 0.10;
-  static const double critRandomMoney = 1;
+  static const double critRandomMoney = 100;
   static const double _probabilityCritRandomMoney = 0.1;
   static double getRandomMoney() {
     final rnd = Random();

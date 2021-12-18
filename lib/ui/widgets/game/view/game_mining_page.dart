@@ -377,7 +377,7 @@ class _ModulePCItemImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name = context.read<GameMiningViewModel>().state.pcs[index].name;
+    final name = context.read<GameMiningViewModel>().state.filtered![index].name;
     return SizedBox(
       width: 60,
       height: 60,
