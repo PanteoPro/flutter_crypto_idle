@@ -15,6 +15,7 @@ import 'package:crypto_idle/domain/repositories/pc_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:crypto_idle/initial_data.dart';
+import 'package:crypto_idle/ui/navigators/game_navigator.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -261,7 +262,8 @@ class MainGameViewModel extends ChangeNotifier {
   }
 
   void onYesExitButtonPressed(BuildContext context) {
-    Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.menu);
+    final mainNavigator = context.findRootAncestorStateOfType<NavigatorState>();
+    mainNavigator?.pushReplacementNamed(MainNavigationRouteNames.menu);
   }
 
   void onNoExitButtonPressed() {
@@ -307,18 +309,18 @@ class MainGameViewModel extends ChangeNotifier {
   }
 
   void onBuyPcButtonPressed(BuildContext context) {
-    Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMarketPC);
+    Navigator.of(context).pushNamed(GameNavigationRouteNames.marketPC);
   }
 
   void onBuyFlatButtonPressed(BuildContext context) {
-    Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMarketFlat);
+    Navigator.of(context).pushNamed(GameNavigationRouteNames.marketFlat);
   }
 
   void onWalletButtonPressed(BuildContext context) {
-    Navigator.of(context).pushNamed(MainNavigationRouteNames.gameCrypto);
+    Navigator.of(context).pushNamed(GameNavigationRouteNames.crypto);
   }
 
   void onStatisticButtonPressed(BuildContext context) {
-    Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMining);
+    Navigator.of(context).pushNamed(GameNavigationRouteNames.mining);
   }
 }

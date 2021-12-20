@@ -5,6 +5,7 @@ import 'package:crypto_idle/domain/repositories/message_manager.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
+import 'package:crypto_idle/ui/navigators/game_navigator.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -119,6 +120,6 @@ class GameCryptoViewModel extends ChangeNotifier {
   }
 
   void onTokenPressed(BuildContext context, Token token) {
-    Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMarketCrypto, arguments: token);
+    Navigator.of(context).pushNamed(GameNavigationRouteNames.marketCrypto, arguments: token);
   }
 }

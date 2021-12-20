@@ -3,7 +3,6 @@ import 'package:crypto_idle/initial_data.dart';
 class AppImages {
   static String getTokenPathBySymbol(String symbol) {
     final result = 'assets/images/tokens/${symbol.toLowerCase()}.png';
-    print(result);
     return result;
   }
 

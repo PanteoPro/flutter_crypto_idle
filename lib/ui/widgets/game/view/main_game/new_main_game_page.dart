@@ -20,28 +20,49 @@ part 'widgets/main_game_content_widget.dart';
 part 'widgets/main_game_footer_widget.dart';
 part 'widgets/main_game_app_bar_widget.dart';
 
-class MainGamePage extends StatelessWidget {
+class MainGamePage extends StatefulWidget {
   const MainGamePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => _backToMenu(context),
-      child: Scaffold(
-        appBar: const _AppBarWidget(),
-        body: Column(
-          children: const [
-            _HeaderWidget(),
-            Expanded(child: _ContentWidget()),
-            _FooterWidget(),
-          ],
-        ),
-      ),
-    );
+  State<MainGamePage> createState() => _MainGamePageState();
+}
+
+class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addObserver(this);
   }
 
-  bool _backToMenu(BuildContext context) {
-    Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.menu);
+  @override
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  Future<bool> didPopRoute() async {
+    // Вызывается каждый раз, когда нажимается кнопка назад
+    if (ModalRoute.of(context)?.isCurrent ?? false) {
+      Navigator.of(context, rootNavigator: true).pushReplacementNamed(MainNavigationRouteNames.menu);
+    } else {
+      Navigator.of(context).pop();
+    }
     return true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final gameOver = context.read<GameViewModel>();
+    return Scaffold(
+      appBar: const _AppBarWidget(),
+      body: Column(
+        children: const [
+          _HeaderWidget(),
+          Expanded(child: _ContentWidget()),
+          _FooterWidget(),
+        ],
+      ),
+    );
   }
 }

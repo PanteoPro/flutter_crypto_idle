@@ -25,7 +25,7 @@ class MenuViewModel extends ChangeNotifier {
   final BuildContext context;
 
   void onCompanyGameButtonPressed() {
-    Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.gameMain);
+    Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.game);
   }
 
   Future<void> onContinueGameButtonPressed() async {
@@ -36,16 +36,16 @@ class MenuViewModel extends ChangeNotifier {
     // }
     final dataManager = InitialDataManager();
     await dataManager.registerAllAdapters();
-    await context.read<GameViewModel>().initialRepository();
-    Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.gameMain);
+    // await context.read<GameViewModel>().initialRepository();
+    Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.game);
   }
 
   Future<void> onFreeGameButtonPressed() async {
     final dataManager = InitialDataManager();
     await dataManager.deleteBoxesFromDisk();
     await dataManager.init();
-    await context.read<GameViewModel>().initialRepository();
-    Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.gameMain);
+    // await context.read<GameViewModel>().initialRepository();
+    Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.game);
   }
 
   void onSettingsButtonPressed() {

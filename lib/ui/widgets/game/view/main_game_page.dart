@@ -8,6 +8,7 @@ import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/app_images.dart';
+import 'package:crypto_idle/ui/navigators/game_navigator.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/day_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
@@ -551,28 +552,28 @@ class _ActionsWidget extends StatelessWidget {
           __ActionItemWidget(
             title: S.of(context).main_game_action_buy_pc_title,
             onTap: () {
-              Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMarketPC);
+              Navigator.of(context).pushNamed(GameNavigationRouteNames.marketPC);
             },
           ),
           const SizedBox(height: 10),
           __ActionItemWidget(
             title: S.of(context).main_game_action_buy_flat_title,
             onTap: () {
-              Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMarketFlat);
+              Navigator.of(context).pushNamed(GameNavigationRouteNames.marketFlat);
             },
           ),
           const SizedBox(height: 10),
           __ActionItemWidget(
             title: S.of(context).main_game_action_mining_title,
             onTap: () {
-              Navigator.of(context).pushNamed(MainNavigationRouteNames.gameMining);
+              Navigator.of(context).pushNamed(GameNavigationRouteNames.mining);
             },
           ),
           const SizedBox(height: 10),
           __ActionItemWidget(
             title: S.of(context).main_game_action_crypto_title,
             onTap: () {
-              Navigator.of(context).pushNamed(MainNavigationRouteNames.gameCrypto);
+              Navigator.of(context).pushNamed(GameNavigationRouteNames.crypto);
             },
           ),
         ],

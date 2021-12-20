@@ -17,12 +17,8 @@ class MainApp extends StatelessWidget {
     return AdaptiveTheme(
       light: kLightTheme2,
       initial: AdaptiveThemeMode.dark,
-      builder: (ThemeData light, ThemeData dark) => MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => MainAppViewModel()),
-          ChangeNotifierProvider(create: (_) => GameViewModel()),
-          ChangeNotifierProvider(create: (_) => MessageStreamViewModel()),
-        ],
+      builder: (ThemeData light, ThemeData dark) => ChangeNotifierProvider(
+        create: (_) => MainAppViewModel(),
         child: MyMaterialApp(light, dark),
       ),
     );
