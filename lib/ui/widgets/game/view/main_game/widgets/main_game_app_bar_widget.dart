@@ -11,31 +11,30 @@ class _AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         mainAxisSize: MainAxisSize.min,
         children: const [
-          _AppBarAnimatedCalendarWidget(),
-          SizedBox(width: 4),
+          // _AppBarAnimatedCalendarWidget(),
+          // SizedBox(width: 4),
           _DataWidget(),
         ],
       ),
       centerTitle: true,
       actions: [
         _AppBarActionWidget(onTap: () {}, imagePath: AppImages.iconMute),
-        const SizedBox(width: 5),
+        const SizedBox(width: 12),
         _AppBarActionWidget(onTap: () {}, imagePath: AppImages.iconSettings),
-        const SizedBox(width: 5),
+        const SizedBox(width: 12),
       ],
-      toolbarHeight: 50,
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(2),
-        child: Container(
-          color: Colors.black,
-          height: 1,
-        ),
-      ),
+      // bottom: PreferredSize(
+      //   preferredSize: const Size.fromHeight(2),
+      //   child: Container(
+      //     color: Colors.black,
+      //     height: 1,
+      //   ),
+      // ),
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(32);
 }
 
 class _DataWidget extends StatelessWidget {
@@ -107,7 +106,7 @@ class _AppBarActionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Image.asset(imagePath, width: 28, height: 28),
+      child: Image.asset(imagePath, width: 20, height: 20),
     );
   }
 }

@@ -16,7 +16,8 @@ class RadialPercentWidget extends StatelessWidget {
     this.lineWidth = 3,
     this.freeColor = Colors.transparent,
     this.freeLineWidth = 0,
-    this.padding = 5,
+    this.padding = 0,
+    this.paddingForChild = 10,
     this.left = 20,
     this.bottom = 20,
   }) : super(key: key);
@@ -36,8 +37,8 @@ class RadialPercentWidget extends StatelessWidget {
   final double lineWidth;
   final double freeLineWidth;
 
-  /// Padding in circle for child
   final double padding;
+  final double paddingForChild;
 
   /// Text around cirlce
   final String text;
@@ -50,7 +51,7 @@ class RadialPercentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final paddingForChild = (padding + lineWidth) * 2;
+    final paddingForChildT = (padding + lineWidth) * 2 + paddingForChild;
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -67,7 +68,7 @@ class RadialPercentWidget extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.all(paddingForChild),
+          padding: EdgeInsets.all(paddingForChildT),
           child: Center(child: child),
         ),
         Positioned(

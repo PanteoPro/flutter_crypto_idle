@@ -27,7 +27,7 @@ class _BalanceWidget extends StatelessWidget {
       child: ColoredBox(
         color: Theme.of(context).primaryColor,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
@@ -133,32 +133,37 @@ class _NewsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Column(
-        children: [
-          ColoredBox(
-            color: AppColors.secondGrey,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-              child: Row(
-                children: [
-                  Stack(
-                    children: [
-                      Text(
-                        'Новости:',
-                        style: AppFonts.main.copyWith(color: AppColors.green),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: 6),
-                  const Expanded(
-                    child: _NewsFirstNewsWidget(),
-                  ),
-                ],
+    return ColoredBox(
+      color: AppColors.secondGrey,
+      child: SizedBox(
+        height: 40,
+        child: Column(
+          children: [
+            ColoredBox(
+              color: AppColors.secondGrey,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Stack(
+                      children: [
+                        Text(
+                          'Новости:',
+                          style: AppFonts.main.copyWith(color: AppColors.green),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(width: 6),
+                    const Expanded(
+                      child: _NewsFirstNewsWidget(),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

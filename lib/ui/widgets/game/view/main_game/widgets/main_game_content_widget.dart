@@ -11,6 +11,7 @@ class _ContentWidget extends StatelessWidget {
         color: Theme.of(context).backgroundColor,
         child: Column(
           children: const [
+            SizedBox(height: 20),
             _CirlceWidget(),
             SizedBox(height: 30),
             _ActionsWidget(),
@@ -56,13 +57,13 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
               width: 170,
               height: 170,
               child: isNoData
-                  ? CircularProgressIndicator(color: Theme.of(context).hintColor)
+                  ? const CircularProgressIndicator(color: AppColors.green)
                   : RadialPercentWidget(
                       percent: currentClicks > 0 ? percentCurrentClicks : percentCurrentDelay,
                       lineColor: AppColors.red,
                       maxLineColor: AppColors.green,
                       lineWidth: 2,
-                      padding: 10,
+                      paddingForChild: 15,
                       text: currentClicks > 0 ? '$currentClicks' : delayText,
                       left: currentClicks > 0 ? 10 : 5,
                       child: Image.asset(AppImages.imageCompTap),
@@ -171,37 +172,31 @@ class _ActionsWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(
-                child: _ActionItemWidget(
-                  title: 'Купить установки',
-                  onPressed: () => vm.onBuyPcButtonPressed(context),
-                ),
+              _ActionItemWidget(
+                title: 'Купить установки',
+                onPressed: () => vm.onBuyPcButtonPressed(context),
               ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: _ActionItemWidget(
-                  title: 'Купить помещение',
-                  onPressed: () => vm.onBuyFlatButtonPressed(context),
-                ),
+              const SizedBox(width: 12),
+              _ActionItemWidget(
+                title: 'Купить помещение',
+                onPressed: () => vm.onBuyFlatButtonPressed(context),
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 12),
           Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(
-                child: _ActionItemWidget(
-                  title: 'Криптовалюта',
-                  onPressed: () => vm.onWalletButtonPressed(context),
-                ),
+              _ActionItemWidget(
+                title: 'Криптовалюта',
+                onPressed: () => vm.onWalletButtonPressed(context),
               ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: _ActionItemWidget(
-                  title: 'Статистика',
-                  onPressed: () => vm.onStatisticButtonPressed(context),
-                ),
+              const SizedBox(width: 12),
+              _ActionItemWidget(
+                title: 'Статистика',
+                onPressed: () => vm.onStatisticButtonPressed(context),
               ),
             ],
           ),
@@ -224,28 +219,26 @@ class _ActionItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 55,
+      height: 32,
+      width: 100,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.transparent),
+          backgroundColor: MaterialStateProperty.all(AppColors.mainGrey),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
-              side: BorderSide(
-                color: Theme.of(context).hintColor,
-                width: 2.0,
+              side: const BorderSide(
+                color: AppColors.green,
               ),
             ),
           ),
+          padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 9, horizontal: 10)),
         ),
         onPressed: onPressed,
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: AppFonts.mainButton.copyWith(color: AppColors.green),
-          ),
+        child: Text(
+          title,
+          textAlign: TextAlign.center,
+          style: AppFonts.mainButton.copyWith(color: AppColors.green),
         ),
       ),
     );
@@ -260,21 +253,20 @@ class _ComputersWidget extends StatelessWidget {
     final countPC = context.select((MainGameViewModel vm) => vm.state.myPCs.length);
     return SizedBox(
       width: double.infinity,
-      height: 100,
+      height: 150,
       child: ColoredBox(
         color: AppColors.secondGrey,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
           child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              // shrinkWrap: true,
-              itemCount: countPC,
-              itemBuilder: (context, index) {
-                return _ComputerItemWidget(index: index);
-              },
-              separatorBuilder: (ctx, index) {
-                return SizedBox(width: 10);
-              }),
+            itemCount: countPC,
+            itemBuilder: (context, index) {
+              return _ComputerItemWidget(index: index);
+            },
+            separatorBuilder: (ctx, index) {
+              return const SizedBox(height: 10);
+            },
+          ),
         ),
       ),
     );
@@ -283,6 +275,147 @@ class _ComputersWidget extends StatelessWidget {
 
 class _ComputerItemWidget extends StatelessWidget {
   const _ComputerItemWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    final pc = context.read<MainGameViewModel>().state.myPCs[index];
+    return SizedBox(
+      height: 36,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50),
+          border: Border.all(color: AppColors.green),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 7),
+          child: Row(
+            children: [
+              __ComputerItemIndexWidget(index: index),
+              const SizedBox(width: 4),
+              Image.asset(
+                AppImages.getPcPathByName(pc.name),
+                width: 28,
+                height: 28,
+              ),
+              const SizedBox(width: 4),
+              Text(
+                pc.name,
+                style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
+              ),
+              const Spacer(),
+              __ComputerItemImageCryptoWidget(index: index),
+              __ComputerItemButtonOrMiningWidget(index: index),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class __ComputerItemIndexWidget extends StatelessWidget {
+  const __ComputerItemIndexWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    final currentIndex = index + 1;
+    final countX = currentIndex ~/ 10;
+    final countV = (currentIndex - countX * 10) ~/ 5;
+    final countI = currentIndex - countX * 10 - countV * 5;
+    var style = AppFonts.body.copyWith(color: AppColors.green);
+
+    var text = StringBuffer();
+    for (int i = 0; i < countX; i++) {
+      text.write('X');
+    }
+    for (int i = 0; i < countV; i++) {
+      text.write('V');
+    }
+    for (int i = 0; i < countI; i++) {
+      text.write('I');
+    }
+
+    final toLowerFont = ['VIII', 'VIIII', 'XIII', 'XIIII', 'XVI', 'XVII', 'XVIII'];
+    if (toLowerFont.contains(text.toString())) {
+      style = AppFonts.body2.copyWith(color: AppColors.green);
+    }
+
+    return SizedBox(
+      width: 20,
+      height: 20,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: AppColors.green),
+        ),
+        child: Center(
+          child: Text(
+            text.toString(),
+            style: style,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class __ComputerItemImageCryptoWidget extends StatelessWidget {
+  const __ComputerItemImageCryptoWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    context.select((MainGameViewModel vm) => vm.state.myPCs[index].miningToken);
+    final pc = context.read<MainGameViewModel>().state.myPCs[index];
+
+    final imagePath =
+        pc.miningToken == null ? AppImages.iconEmpty : AppImages.getTokenPathBySymbol(pc.miningToken!.symbol);
+    return Transform(
+      alignment: Alignment.center,
+      transform: Matrix4.rotationY(pi),
+      child: Image.asset(
+        imagePath,
+        width: 28,
+        height: 28,
+      ),
+    );
+  }
+}
+
+class __ComputerItemButtonOrMiningWidget extends StatelessWidget {
+  const __ComputerItemButtonOrMiningWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    context.select((MainGameViewModel vm) => vm.state.myPCs[index].miningToken);
+    final pc = context.read<MainGameViewModel>().state.myPCs[index];
+
+    Widget widget = Text(
+      pc.miningToken?.symbol ?? 'НАЗНАЧИТЬ',
+      style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
+    );
+    if (pc.miningToken == null) {
+      widget = TextButton(
+        onPressed: () {},
+        child: Text(
+          'НАЗНАЧИТЬ',
+          style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
+        ),
+      );
+    }
+    return widget;
+  }
+}
+
+class _OLDComputerItemWidget extends StatelessWidget {
+  const _OLDComputerItemWidget({Key? key, required this.index}) : super(key: key);
 
   final int index;
 
