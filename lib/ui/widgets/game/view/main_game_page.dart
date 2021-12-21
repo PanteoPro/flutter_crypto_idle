@@ -70,7 +70,7 @@ class _ExitModalWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isModalShow = context.select((MainGameViewModel vm) => vm.state.isModalShow);
+    final isModalShow = context.select((MainGameViewModel vm) => vm.state.isModalExitShow);
     if (!isModalShow) return const SizedBox();
     return Stack(
       children: [

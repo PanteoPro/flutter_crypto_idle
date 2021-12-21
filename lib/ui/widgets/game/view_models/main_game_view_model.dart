@@ -5,6 +5,7 @@ import 'package:crypto_idle/config.dart';
 import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/domain/entities/pc.dart';
+import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
@@ -27,42 +28,69 @@ class MainGameViewModelState {
   MainGameViewModelState({
     required this.statistics,
     required this.tokens,
+    required this.prices,
     required this.myPCs,
     required this.flat,
-    required this.isModalShow,
+    required this.isModalExitShow,
     required this.date,
     required this.money,
     required this.currentPrices,
     required this.currentClicks,
     required this.currentDelay,
+    required this.isOpenModalTokens,
+    required this.modalPCIndex,
   });
+
   MainGameViewModelState.empty({
     Statistics? statistics,
     List<Token>? tokens,
     List<PC>? myPCs,
     Flat? flat,
-    bool? isModalShow,
+    bool? isModalExitShow,
+    bool? isOpenModalTokens,
+    int? modalPCIndex,
     DateTime? date,
     this.money = 0,
     this.currentClicks = 0,
     this.currentDelay = 0,
     this.currentPrices = const {},
+    this.prices = const [],
   }) {
     this.statistics = statistics ?? Statistics.empty();
     this.tokens = tokens ?? [];
     this.myPCs = myPCs ?? [];
     this.flat = flat ?? Flat.empty();
-    this.isModalShow = isModalShow ?? false;
+    this.isModalExitShow = isModalExitShow ?? false;
+    this.isOpenModalTokens = isOpenModalTokens ?? false;
+    this.modalPCIndex = modalPCIndex ?? 0;
     this.date = date ?? DateTime.now();
   }
 
   late Statistics statistics;
   late List<Token> tokens;
+  final List<PriceToken> prices;
   late List<PC> myPCs;
   late Flat flat;
   late DateTime date;
   late double money;
   final Map<int, double> currentPrices;
+
+  bool isModalExitShow = false;
+  bool isOpenModalTokens = false;
+  int modalPCIndex = 0;
+
+  PriceToken getCurrentPriceByToken(Token token) {
+    return prices.where((price) => price.tokenId == token.id).last;
+  }
+
+  PriceToken getDataAfterPriceByToken({required Token token, required int daysAgo}) {
+    try {
+      return prices
+          .firstWhere((price) => price.date.isAfter(date.add(Duration(days: -daysAgo))) && price.tokenId == token.id);
+    } catch (e) {
+      return prices.firstWhere((price) => price.tokenId == token.id);
+    }
+  }
 
   final int currentClicks;
   final int currentDelay;
@@ -118,8 +146,6 @@ class MainGameViewModelState {
     }
     return double.parse(balance.toStringAsFixed(2));
   }
-
-  bool isModalShow = false;
 
   double get sumFlatConsume => statistics.flatConsume.sum;
   double get sumEnergyConsume => statistics.energyConsume.sum;
@@ -244,20 +270,23 @@ class MainGameViewModel extends ChangeNotifier {
     _state = MainGameViewModelState(
       statistics: _statisticsRepository.statistics,
       tokens: _tokensRepository.tokens,
+      prices: _priceTokenRepository.prices,
       flat: _flatRepository.currentFlat,
       myPCs: _pcRepository.pcs,
-      isModalShow: _state.isModalShow,
+      isModalExitShow: _state.isModalExitShow,
       date: _gameRepository.game.date,
       money: _gameRepository.game.money,
       currentPrices: currentPrices,
       currentClicks: _gameRepository.game.currentClicks,
       currentDelay: _gameRepository.game.secondsDelay,
+      isOpenModalTokens: _state.isOpenModalTokens,
+      modalPCIndex: _state.modalPCIndex,
     );
     notifyListeners();
   }
 
   void onReturnToMenuButtonPressed() {
-    _state.isModalShow = !_state.isModalShow;
+    _state.isModalExitShow = !_state.isModalExitShow;
     notifyListeners();
   }
 
@@ -266,7 +295,7 @@ class MainGameViewModel extends ChangeNotifier {
   }
 
   void onNoExitButtonPressed() {
-    _state.isModalShow = false;
+    _state.isModalExitShow = false;
     notifyListeners();
   }
 
@@ -321,5 +350,28 @@ class MainGameViewModel extends ChangeNotifier {
 
   void onStatisticButtonPressed(BuildContext context) {
     Navigator.of(context).pushNamed(GameNavigationRouteNames.mining);
+  }
+
+  Future<void> onChangeMiningToken(int tokenIndex) async {
+    final pc = _state.myPCs[_state.modalPCIndex];
+    final token = _state.tokens[tokenIndex];
+    if (pc.miningToken?.id == token.id) {
+      await _pcRepository.changeMiningToken(pc);
+    } else {
+      await _pcRepository.changeMiningToken(pc, token);
+    }
+    _state.isOpenModalTokens = false;
+    notifyListeners();
+  }
+
+  void onOpenModalButtonPressed(int index) {
+    _state.isOpenModalTokens = true;
+    _state.modalPCIndex = index;
+    notifyListeners();
+  }
+
+  void onExitModalAction() {
+    _state.isOpenModalTokens = false;
+    notifyListeners();
   }
 }

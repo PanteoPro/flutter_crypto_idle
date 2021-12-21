@@ -257,15 +257,18 @@ class _ComputersWidget extends StatelessWidget {
       child: ColoredBox(
         color: AppColors.secondGrey,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          child: ListView.separated(
-            itemCount: countPC,
-            itemBuilder: (context, index) {
-              return _ComputerItemWidget(index: index);
-            },
-            separatorBuilder: (ctx, index) {
-              return const SizedBox(height: 10);
-            },
+          padding: const EdgeInsets.only(right: 1, top: 10, bottom: 10),
+          child: Scrollbar(
+            scrollbarOrientation: ScrollbarOrientation.right,
+            child: ListView.separated(
+              itemCount: countPC,
+              itemBuilder: (context, index) {
+                return _ComputerItemWidget(index: index);
+              },
+              separatorBuilder: (ctx, index) {
+                return const SizedBox(height: 10);
+              },
+            ),
           ),
         ),
       ),
@@ -281,34 +284,37 @@ class _ComputerItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pc = context.read<MainGameViewModel>().state.myPCs[index];
-    return SizedBox(
-      height: 36,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          border: Border.all(color: AppColors.green),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 7),
-          child: Row(
-            children: [
-              CircleIndexWidget(index: index),
-              const SizedBox(width: 4),
-              Image.asset(
-                AppImages.getPcPathByName(pc.name),
-                width: 28,
-                height: 28,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                pc.name,
-                style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
-              ),
-              const Spacer(),
-              __ComputerItemImageCryptoWidget(index: index),
-              const SizedBox(width: 4),
-              __ComputerItemButtonOrMiningWidget(index: index),
-            ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: SizedBox(
+        height: 36,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            border: Border.all(color: AppColors.green),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 7),
+            child: Row(
+              children: [
+                CircleIndexWidget(index: index),
+                const SizedBox(width: 4),
+                Image.asset(
+                  AppImages.getPcPathByName(pc.name),
+                  width: 28,
+                  height: 28,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  pc.name,
+                  style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
+                ),
+                const Spacer(),
+                __ComputerItemImageCryptoWidget(index: index),
+                const SizedBox(width: 4),
+                __ComputerItemButtonOrMiningWidget(index: index),
+              ],
+            ),
           ),
         ),
       ),
@@ -348,72 +354,18 @@ class __ComputerItemButtonOrMiningWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.select((MainGameViewModel vm) => vm.state.myPCs[index].miningToken);
-    final pc = context.read<MainGameViewModel>().state.myPCs[index];
+    final vm = context.read<MainGameViewModel>();
+    final pc = vm.state.myPCs[index];
 
-    Widget widget = Text(
-      pc.miningToken != null ? 'Майнится: ${pc.miningToken?.symbol}' : 'НАЗНАЧИТЬ',
-      textAlign: TextAlign.center,
-      style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
-    );
-    if (pc.miningToken == null) {
-      widget = TextButton(
-        onPressed: () {},
+    return SizedBox(
+      width: 100,
+      child: TextButton(
+        onPressed: () => vm.onOpenModalButtonPressed(index),
         child: Text(
-          'НАЗНАЧИТЬ',
+          pc.miningToken != null ? 'Майнится: ${pc.miningToken?.symbol}' : 'НАЗНАЧИТЬ',
           textAlign: TextAlign.center,
           style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
         ),
-      );
-    }
-    return SizedBox(width: 100, child: widget);
-  }
-}
-
-class _OLDComputerItemWidget extends StatelessWidget {
-  const _OLDComputerItemWidget({Key? key, required this.index}) : super(key: key);
-
-  final int index;
-
-  @override
-  Widget build(BuildContext context) {
-    context.select((MainGameViewModel vm) => vm.state.myPCs[index].miningToken);
-    final pc = context.read<MainGameViewModel>().state.myPCs[index];
-    return SizedBox(
-      width: 90,
-      child: Column(
-        children: [
-          Stack(
-            children: [
-              SizedBox(
-                width: double.infinity,
-                child: Image.asset(
-                  AppImages.getPcPathByName(pc.name),
-                  width: 50,
-                  height: 50,
-                ),
-              ),
-              Positioned(
-                right: 5,
-                bottom: 5,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Image.asset(
-                    pc.miningToken != null
-                        ? AppImages.getTokenPathBySymbol(pc.miningToken!.symbol)
-                        : AppImages.iconEmpty,
-                    height: 24,
-                    width: 24,
-                  ),
-                ),
-              )
-            ],
-          ),
-          Text(
-            pc.name,
-            textAlign: TextAlign.center,
-            style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
-          )
-        ],
       ),
     );
   }

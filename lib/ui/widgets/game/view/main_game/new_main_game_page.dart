@@ -54,7 +54,7 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
     // Вызывается каждый раз, когда нажимается кнопка назад
     if (ModalRoute.of(context)?.isCurrent ?? false) {
       final vm = context.read<MainGameViewModel>();
-      final isModalShow = context.read<MainGameViewModel>().state.isModalShow;
+      final isModalShow = context.read<MainGameViewModel>().state.isModalExitShow;
       if (!isModalShow) {
         vm.onReturnToMenuButtonPressed();
       }
@@ -79,6 +79,7 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
               _FooterWidget(),
             ],
           ),
+          const _ModalListTokensWidget(),
           const _ModalExitWidget(),
           const ModalGameOverWidget(),
           // _ModalGameOverWidget(),

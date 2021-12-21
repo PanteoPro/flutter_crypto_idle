@@ -5,35 +5,39 @@ class _ModalListTokensWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: double.infinity,
-      child: ColoredBox(
-        color: AppColors.black50,
-        child: Center(
-          child: SizedBox(
-            height: 380,
-            width: double.infinity,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: AppColors.black,
-                border: Border.all(color: AppColors.green),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(1),
-                child: Column(
-                  children: const [
-                    _ModalHeaderWidget(),
-                    Expanded(child: _ModalListWidget()),
-                    _ModalFooterWidget(),
-                  ],
+    final isShow = context.select((MainGameViewModel vm) => vm.state.isOpenModalTokens);
+    if (isShow) {
+      return SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: ColoredBox(
+          color: AppColors.black50,
+          child: Center(
+            child: SizedBox(
+              height: 380,
+              width: double.infinity,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: AppColors.black,
+                  border: Border.all(color: AppColors.green),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(1),
+                  child: Column(
+                    children: const [
+                      _ModalHeaderWidget(),
+                      Expanded(child: _ModalListWidget()),
+                      _ModalFooterWidget(),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    }
+    return const SizedBox();
   }
 }
 
@@ -42,6 +46,8 @@ class _ModalHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pcIndex = context.select((MainGameViewModel vm) => vm.state.modalPCIndex);
+    final pc = context.read<MainGameViewModel>().state.myPCs[pcIndex];
     return ColoredBox(
       color: AppColors.secondGrey,
       child: Padding(
@@ -55,7 +61,7 @@ class _ModalHeaderWidget extends StatelessWidget {
                 style: AppFonts.main.copyWith(color: AppColors.white),
               ),
               Text(
-                'Для установки - Комп',
+                'Для установки - ${pc.name}',
                 style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
               ),
             ],
@@ -179,11 +185,18 @@ class _ModalListItemMainButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final token = context.read<MainGameViewModel>().state.tokens[index];
+    final isScam = context.select((MainGameViewModel vm) => vm.state.tokens[index].isScam);
+    final vm = context.read<MainGameViewModel>();
+
+    VoidCallback? onPressed;
+    if (!isScam) {
+      onPressed = () => vm.onChangeMiningToken(index);
+    }
+
     return GreenButtonWidget(
-      onPressed: () {},
-      text: token.isScam ? 'SCAM' : 'Выбрать',
-      color: token.isScam ? AppColors.red : AppColors.green,
+      onPressed: onPressed,
+      text: isScam ? 'SCAM' : 'Выбрать',
+      color: isScam ? AppColors.red : AppColors.green,
     );
   }
 }
@@ -236,8 +249,9 @@ class _ModalListItemOtherCurrentPriceWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final token = context.read<MainGameViewModel>().state.tokens[index];
+    final currentPrice = context.select((MainGameViewModel vm) => vm.state.getCurrentPriceByToken(token));
     return Text(
-      'Текущая цена: ${S.of(context).text_with_dollar(123.24)}',
+      'Текущая цена: ${S.of(context).text_with_dollar(currentPrice.cost.toStringAsFixed(2))}',
       style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
     );
   }
@@ -254,8 +268,10 @@ class _ModalListItemOtherMonthPriceWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final token = context.read<MainGameViewModel>().state.tokens[index];
+    final monthPrice =
+        context.select((MainGameViewModel vm) => vm.state.getDataAfterPriceByToken(token: token, daysAgo: 31));
     return Text(
-      'Цена месяц назад: ${S.of(context).text_with_dollar(123.24)}',
+      'Цена месяц назад: ${S.of(context).text_with_dollar(monthPrice.cost.toStringAsFixed(2))}',
       style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
     );
   }
@@ -266,12 +282,13 @@ class _ModalFooterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<MainGameViewModel>();
     return ColoredBox(
       color: AppColors.secondGrey,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 6),
         child: Center(
-          child: GreenButtonWidget(text: 'Отмена', onPressed: () {}),
+          child: GreenButtonWidget(text: 'Отмена', onPressed: vm.onExitModalAction),
         ),
       ),
     );
