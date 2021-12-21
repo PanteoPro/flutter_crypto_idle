@@ -18,9 +18,9 @@ class _AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       ),
       centerTitle: true,
       actions: [
-        _AppBarActionWidget(onTap: () {}, imagePath: AppImages.iconMute),
+        _AppBarActionWidget(onTap: () {}, imagePath: AppIconsImages.muteIcon),
         const SizedBox(width: 12),
-        _AppBarActionWidget(onTap: () {}, imagePath: AppImages.iconSettings),
+        _AppBarActionWidget(onTap: () {}, imagePath: AppIconsImages.settingsIcon),
         const SizedBox(width: 12),
       ],
       // bottom: PreferredSize(
@@ -87,7 +87,7 @@ class _AppBarAnimatedCalendarWidgetState extends State<_AppBarAnimatedCalendarWi
     return GestureDetector(
       onTap: () => _startAnimation(),
       child: GifImage(
-        image: const AssetImage(AppImages.iconCalendarGif),
+        image: const AssetImage(AppImages.imageCompTap),
         controller: controller,
         width: 24,
         height: 24,

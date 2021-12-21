@@ -13,6 +13,7 @@ import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/Libs/gif_lib.dart';
 import 'package:crypto_idle/Widgets/circular_widget.dart';
+import 'package:crypto_idle/resources/resources.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/day_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';

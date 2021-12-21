@@ -130,7 +130,7 @@ class _ModalListItemMainWidget extends StatelessWidget {
     final color = token.isScam
         ? AppColors.red
         : isActiveToken
-            ? AppColors.dollar
+            ? AppColors.lightGrey
             : AppColors.green;
 
     return SizedBox(
@@ -217,7 +217,7 @@ class _ModalListItemMainButtonWidget extends StatelessWidget {
       color: isScam
           ? AppColors.red
           : isActiveToken
-              ? AppColors.dollar
+              ? AppColors.lightGrey
               : AppColors.green,
     );
   }
@@ -237,7 +237,7 @@ class _ModalListItemOtherWidget extends StatelessWidget {
     final color = token.isScam
         ? AppColors.red
         : isActiveToken
-            ? AppColors.dollar
+            ? AppColors.lightGrey
             : AppColors.green;
 
     return Padding(

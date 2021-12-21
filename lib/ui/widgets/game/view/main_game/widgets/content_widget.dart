@@ -222,8 +222,8 @@ class _ActionItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 32,
-      width: 100,
+      height: 44,
+      width: 140,
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(AppColors.mainGrey),
@@ -345,10 +345,10 @@ class __ComputerItemImageCryptoWidget extends StatelessWidget {
     final pc = context.read<MainGameViewModel>().state.myPCs[index];
 
     final imagePath =
-        pc.miningToken == null ? AppImages.iconEmpty : AppImages.getTokenPathBySymbol(pc.miningToken!.symbol);
+        pc.miningToken == null ? AppIconsImages.emptyIcon : AppImages.getTokenPathBySymbol(pc.miningToken!.symbol);
     return Transform(
       alignment: Alignment.center,
-      transform: Matrix4.rotationY(pi),
+      transform: Matrix4.rotationY(imagePath == AppIconsImages.emptyIcon ? pi : 0),
       child: Image.asset(
         imagePath,
         width: 28,

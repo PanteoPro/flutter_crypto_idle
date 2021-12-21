@@ -78,7 +78,7 @@ class _FooterMainInfoPcsWidget extends StatelessWidget {
     final maxPC = context.select((MainGameViewModel vm) => vm.state.flat.countPC);
     final currentPC = context.select((MainGameViewModel vm) => vm.state.myPCs.length);
     return _FooterMainInfoItemWidget(
-      imagePath: AppImages.iconComputer,
+      imagePath: AppIconsImages.computerIcon,
       text: S.of(context).text_with_slash(currentPC, maxPC),
     );
   }
@@ -93,7 +93,7 @@ class _FooterMainInfoEnergyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final energyConsume = context.select((MainGameViewModel vm) => vm.state.energyConsume);
     return _FooterMainInfoItemWidget(
-      imagePath: AppImages.iconLightning,
+      imagePath: AppIconsImages.lightningIcon,
       text: S.of(context).text_with_energy(energyConsume),
     );
   }

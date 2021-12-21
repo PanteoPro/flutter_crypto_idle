@@ -51,7 +51,7 @@ class _BalanceCashWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Image.asset(
-          AppImages.iconCash,
+          AppIconsImages.cashIcon,
           width: 24,
           height: 24,
         ),
@@ -94,7 +94,7 @@ class _BalanceCryptoWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Image.asset(
-          AppImages.iconToken,
+          AppIconsImages.tokenIcon,
           width: 24,
           height: 24,
         ),
@@ -179,7 +179,7 @@ class _NewsFirstNewsWidget extends StatelessWidget {
     return Text(
       newsText,
       maxLines: 2,
-      style: AppFonts.news.copyWith(color: Colors.white),
+      style: AppFonts.mainLight.copyWith(color: Colors.white),
       overflow: TextOverflow.ellipsis,
     );
   }

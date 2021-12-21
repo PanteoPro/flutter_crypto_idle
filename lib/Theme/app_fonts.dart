@@ -22,7 +22,7 @@ abstract class AppFonts {
     fontFamily: 'RobotoCondensed',
   );
   static const TextStyle mainButton = TextStyle(
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: FontWeight.w400,
     fontStyle: FontStyle.normal,
     fontFamily: 'RobotoCondensed',
