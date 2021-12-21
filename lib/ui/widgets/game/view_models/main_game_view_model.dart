@@ -39,6 +39,7 @@ class MainGameViewModelState {
     required this.currentDelay,
     required this.isOpenModalTokens,
     required this.modalPCIndex,
+    this.isLoadPcs = false,
   });
 
   MainGameViewModelState.empty({
@@ -55,6 +56,7 @@ class MainGameViewModelState {
     this.currentDelay = 0,
     this.currentPrices = const {},
     this.prices = const [],
+    this.isLoadPcs = true,
   }) {
     this.statistics = statistics ?? Statistics.empty();
     this.tokens = tokens ?? [];
@@ -77,6 +79,7 @@ class MainGameViewModelState {
 
   bool isModalExitShow = false;
   bool isOpenModalTokens = false;
+  bool isLoadPcs;
   int modalPCIndex = 0;
 
   PriceToken getCurrentPriceByToken(Token token) {

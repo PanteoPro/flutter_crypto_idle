@@ -57,7 +57,7 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
               width: 170,
               height: 170,
               child: isNoData
-                  ? const CircularProgressIndicator(color: AppColors.green)
+                  ? const CircularProgressIndicator(color: AppColors.green, strokeWidth: 2)
                   : RadialPercentWidget(
                       percent: currentClicks > 0 ? percentCurrentClicks : percentCurrentDelay,
                       lineColor: AppColors.red,
@@ -251,6 +251,7 @@ class _ComputersWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final countPC = context.select((MainGameViewModel vm) => vm.state.myPCs.length);
+    final isLoadPcs = context.select((MainGameViewModel vm) => vm.state.isLoadPcs);
     return SizedBox(
       width: double.infinity,
       height: 150,
@@ -260,15 +261,23 @@ class _ComputersWidget extends StatelessWidget {
           padding: const EdgeInsets.only(right: 1, top: 10, bottom: 10),
           child: Scrollbar(
             scrollbarOrientation: ScrollbarOrientation.right,
-            child: ListView.separated(
-              itemCount: countPC,
-              itemBuilder: (context, index) {
-                return _ComputerItemWidget(index: index);
-              },
-              separatorBuilder: (ctx, index) {
-                return const SizedBox(height: 10);
-              },
-            ),
+            child: isLoadPcs
+                ? const Center(
+                    child: SizedBox(
+                      width: 150,
+                      height: 150,
+                      child: CircularProgressIndicator(color: AppColors.green, strokeWidth: 2),
+                    ),
+                  )
+                : ListView.separated(
+                    itemCount: countPC,
+                    itemBuilder: (context, index) {
+                      return _ComputerItemWidget(index: index);
+                    },
+                    separatorBuilder: (ctx, index) {
+                      return const SizedBox(height: 10);
+                    },
+                  ),
           ),
         ),
       ),
