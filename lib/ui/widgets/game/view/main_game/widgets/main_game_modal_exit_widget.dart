@@ -27,44 +27,14 @@ class _ModalExitWidget extends StatelessWidget {
                     style: AppFonts.clicker.copyWith(color: AppColors.white),
                   ),
                   const SizedBox(height: 16),
-                  SizedBox(
-                    width: 140,
-                    height: 32,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(AppColors.black),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            side: const BorderSide(
-                              color: AppColors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      child: Text('Да', style: AppFonts.main.copyWith(color: AppColors.white)),
-                    ),
+                  WhiteButtonWidget(
+                    text: 'Да',
+                    onPressed: () {},
                   ),
                   const SizedBox(height: 16),
-                  SizedBox(
-                    width: 140,
-                    height: 32,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(AppColors.black),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            side: const BorderSide(
-                              color: AppColors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      child: Text('Нет', style: AppFonts.main.copyWith(color: AppColors.white)),
-                    ),
+                  WhiteButtonWidget(
+                    text: 'Нет',
+                    onPressed: () {},
                   ),
                 ],
               ),

@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:crypto_idle/Theme/app_colors.dart';
 import 'package:crypto_idle/Theme/app_fonts.dart';
+import 'package:crypto_idle/Widgets/buttons/white_button_widget.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/app_images.dart';
@@ -22,6 +23,7 @@ part 'widgets/main_game_content_widget.dart';
 part 'widgets/main_game_footer_widget.dart';
 part 'widgets/main_game_app_bar_widget.dart';
 part 'widgets/main_game_modal_exit_widget.dart';
+part 'widgets/main_game_model_game_over_widget.dart';
 
 class MainGamePage extends StatefulWidget {
   const MainGamePage({Key? key}) : super(key: key);
@@ -68,7 +70,8 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
               _FooterWidget(),
             ],
           ),
-          _ModalExitWidget(),
+          // _ModalExitWidget(),
+          _ModalGameOverWidget(),
         ],
       ),
     );

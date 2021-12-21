@@ -29,4 +29,6 @@ class AppImages {
   static const iconDown = 'assets/images/icons/down_icon.png';
   static const iconUp = 'assets/images/icons/up_icon.png';
   static const iconEmpty = 'assets/images/icons/empty_icon.png';
+
+  static const gameOverScreen = 'assets/images/background/game_over_screen.png';
 }
