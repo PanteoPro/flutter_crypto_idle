@@ -9,17 +9,90 @@ class _ContentWidget extends StatelessWidget {
       width: double.infinity,
       child: ColoredBox(
         color: Theme.of(context).backgroundColor,
-        child: Column(
-          children: const [
-            SizedBox(height: 20),
-            _CirlceWidget(),
-            SizedBox(height: 30),
-            _ActionsWidget(),
-            SizedBox(height: 30),
-            Spacer(),
-            _ComputersWidget(),
+        child: Stack(
+          children: [
+            Column(
+              children: const [
+                SizedBox(height: 20),
+                _CirlceWidget(),
+                SizedBox(height: 30),
+                _ActionsWidget(),
+                SizedBox(height: 30),
+                Spacer(),
+                _ComputersWidget(),
+              ],
+            ),
+            const _NewsOlderNewsWidget(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _NewsOlderNewsWidget extends StatelessWidget {
+  const _NewsOlderNewsWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final news = context.select((DayStreamViewModel vm) => vm.newsListToDisplay);
+    final newsToDisplay = news.sublist(min(1, news.length), min(4, news.length));
+    final isShowNews = context.select((MainGameViewModel vm) => vm.state.isShowNews);
+    return AnimatedContainer(
+      width: double.infinity,
+      height: isShowNews ? 28 * 3 + 6 * 4 : 0,
+      color: AppColors.black90,
+      alignment: isShowNews ? Alignment.center : AlignmentDirectional.topCenter,
+      duration: const Duration(seconds: 1),
+      curve: Curves.fastOutSlowIn,
+      clipBehavior: Clip.hardEdge,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 6.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            for (final news in newsToDisplay) ...[_NewsOlderItemWidget(news: news), const SizedBox(height: 6)],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _NewsOlderItemWidget extends StatelessWidget {
+  const _NewsOlderItemWidget({Key? key, required this.news}) : super(key: key);
+
+  final News news;
+
+  @override
+  Widget build(BuildContext context) {
+    final locale = context.read<MainAppViewModel>().locale;
+    final format = DateFormat.yMd(locale.languageCode);
+    final stringDate = format.format(news.date);
+    return SizedBox(
+      height: 28,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 78,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 4, top: 2),
+              child: Text(
+                stringDate,
+                textAlign: TextAlign.right,
+                style: AppFonts.dataNews.copyWith(color: AppColors.grey),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              news.text,
+              style: AppFonts.mainPagePc.copyWith(color: AppColors.lightGrey),
+              maxLines: 2,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -57,4 +57,10 @@ abstract class AppFonts {
     fontStyle: FontStyle.normal,
     fontFamily: 'RobotoCondensed',
   );
+  static const TextStyle dataNews = TextStyle(
+    fontSize: 10,
+    fontWeight: FontWeight.w300,
+    fontStyle: FontStyle.normal,
+    fontFamily: 'RobotoCondensed',
+  );
 }

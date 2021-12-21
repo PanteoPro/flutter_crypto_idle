@@ -40,6 +40,7 @@ class MainGameViewModelState {
     required this.isOpenModalTokens,
     required this.modalPCIndex,
     this.isLoadPcs = false,
+    this.isShowNews = false,
   });
 
   MainGameViewModelState.empty({
@@ -49,6 +50,7 @@ class MainGameViewModelState {
     Flat? flat,
     bool? isModalExitShow,
     bool? isOpenModalTokens,
+    bool? isShowNews,
     int? modalPCIndex,
     DateTime? date,
     this.money = 0,
@@ -64,6 +66,7 @@ class MainGameViewModelState {
     this.flat = flat ?? Flat.empty();
     this.isModalExitShow = isModalExitShow ?? false;
     this.isOpenModalTokens = isOpenModalTokens ?? false;
+    this.isShowNews = isShowNews ?? false;
     this.modalPCIndex = modalPCIndex ?? 0;
     this.date = date ?? DateTime.now();
   }
@@ -80,6 +83,7 @@ class MainGameViewModelState {
   bool isModalExitShow = false;
   bool isOpenModalTokens = false;
   bool isLoadPcs;
+  bool isShowNews = false;
   int modalPCIndex = 0;
 
   bool isActiveTokenByTokenIndex(int index) {
@@ -298,6 +302,7 @@ class MainGameViewModel extends ChangeNotifier {
       currentDelay: _gameRepository.game.secondsDelay,
       isOpenModalTokens: _state.isOpenModalTokens,
       modalPCIndex: _state.modalPCIndex,
+      isShowNews: _state.isShowNews,
     );
     notifyListeners();
   }
@@ -393,6 +398,11 @@ class MainGameViewModel extends ChangeNotifier {
 
   void onExitModalAction() {
     _state.isOpenModalTokens = false;
+    notifyListeners();
+  }
+
+  void onShowNewsButtonPressed() {
+    _state.isShowNews = !_state.isShowNews;
     notifyListeners();
   }
 }

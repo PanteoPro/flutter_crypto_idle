@@ -8,6 +8,7 @@ import 'package:crypto_idle/Widgets/buttons/white_button_widget.dart';
 import 'package:crypto_idle/Widgets/circle_index_widget.dart';
 import 'package:crypto_idle/Widgets/game_over_widget.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
+import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/app_images.dart';

@@ -133,6 +133,7 @@ class _NewsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<MainGameViewModel>();
     return ColoredBox(
       color: AppColors.secondGrey,
       child: SizedBox(
@@ -146,13 +147,22 @@ class _NewsWidget extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Stack(
-                      children: [
-                        Text(
-                          'Новости:',
-                          style: AppFonts.main.copyWith(color: AppColors.green),
+                    GestureDetector(
+                      onTap: vm.onShowNewsButtonPressed,
+                      child: SizedBox(
+                        height: 40,
+                        child: Column(
+                          children: [
+                            Text(
+                              'Новости:',
+                              style: AppFonts.main.copyWith(color: AppColors.green),
+                            ),
+                            Expanded(
+                              child: Image.asset(AppIconsImages.downIcon, width: 19, height: 19),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                     const SizedBox(width: 6),
                     const Expanded(
