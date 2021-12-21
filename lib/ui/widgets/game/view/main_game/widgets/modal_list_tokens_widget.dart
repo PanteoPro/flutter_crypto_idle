@@ -124,19 +124,32 @@ class _ModalListItemMainWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final token = context.read<MainGameViewModel>().state.tokens[index];
+    final vm = context.read<MainGameViewModel>();
+    final token = vm.state.tokens[index];
+    final isActiveToken = vm.state.isActiveTokenByTokenIndex(index);
+    final color = token.isScam
+        ? AppColors.red
+        : isActiveToken
+            ? AppColors.dollar
+            : AppColors.green;
+
     return SizedBox(
       height: 36,
       child: DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
-          border: Border.all(color: token.isScam ? AppColors.red : AppColors.green),
+          border: Border.all(
+            color: color,
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.only(left: 7),
           child: Row(
             children: [
-              CircleIndexWidget(index: index, color: token.isScam ? AppColors.red : AppColors.green),
+              CircleIndexWidget(
+                index: index,
+                color: color,
+              ),
               const SizedBox(width: 4),
               _ModalListItemMainImageWidget(index: index),
               const SizedBox(width: 4),
@@ -187,6 +200,7 @@ class _ModalListItemMainButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final isScam = context.select((MainGameViewModel vm) => vm.state.tokens[index].isScam);
     final vm = context.read<MainGameViewModel>();
+    final isActiveToken = vm.state.isActiveTokenByTokenIndex(index);
 
     VoidCallback? onPressed;
     if (!isScam) {
@@ -195,8 +209,16 @@ class _ModalListItemMainButtonWidget extends StatelessWidget {
 
     return GreenButtonWidget(
       onPressed: onPressed,
-      text: isScam ? 'SCAM' : 'Выбрать',
-      color: isScam ? AppColors.red : AppColors.green,
+      text: isScam
+          ? 'SCAM'
+          : isActiveToken
+              ? 'АКТИВНО'
+              : 'Выбрать',
+      color: isScam
+          ? AppColors.red
+          : isActiveToken
+              ? AppColors.dollar
+              : AppColors.green,
     );
   }
 }
@@ -208,7 +230,16 @@ class _ModalListItemOtherWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final token = context.read<MainGameViewModel>().state.tokens[index];
+    final vm = context.read<MainGameViewModel>();
+    final token = vm.state.tokens[index];
+    final isActiveToken = vm.state.isActiveTokenByTokenIndex(index);
+
+    final color = token.isScam
+        ? AppColors.red
+        : isActiveToken
+            ? AppColors.dollar
+            : AppColors.green;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: SizedBox(
@@ -217,9 +248,9 @@ class _ModalListItemOtherWidget extends StatelessWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             border: Border(
-              left: BorderSide(color: token.isScam ? AppColors.red : AppColors.green),
-              right: BorderSide(color: token.isScam ? AppColors.red : AppColors.green),
-              bottom: BorderSide(color: token.isScam ? AppColors.red : AppColors.green),
+              left: BorderSide(color: color),
+              right: BorderSide(color: color),
+              bottom: BorderSide(color: color),
             ),
           ),
           child: Padding(
@@ -250,8 +281,9 @@ class _ModalListItemOtherCurrentPriceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final token = context.read<MainGameViewModel>().state.tokens[index];
     final currentPrice = context.select((MainGameViewModel vm) => vm.state.getCurrentPriceByToken(token));
+    final text = currentPrice.cost > 1 ? currentPrice.cost.toStringAsFixed(2) : currentPrice.cost.toStringAsFixed(4);
     return Text(
-      'Текущая цена: ${S.of(context).text_with_dollar(currentPrice.cost.toStringAsFixed(2))}',
+      'Текущая цена: ${S.of(context).text_with_dollar(text)}',
       style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
     );
   }
@@ -270,8 +302,9 @@ class _ModalListItemOtherMonthPriceWidget extends StatelessWidget {
     final token = context.read<MainGameViewModel>().state.tokens[index];
     final monthPrice =
         context.select((MainGameViewModel vm) => vm.state.getDataAfterPriceByToken(token: token, daysAgo: 31));
+    final text = monthPrice.cost > 1 ? monthPrice.cost.toStringAsFixed(2) : monthPrice.cost.toStringAsFixed(4);
     return Text(
-      'Цена месяц назад: ${S.of(context).text_with_dollar(monthPrice.cost.toStringAsFixed(2))}',
+      'Цена месяц назад: ${S.of(context).text_with_dollar(text)}',
       style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
     );
   }

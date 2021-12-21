@@ -82,6 +82,20 @@ class MainGameViewModelState {
   bool isLoadPcs;
   int modalPCIndex = 0;
 
+  bool isActiveTokenByTokenIndex(int index) {
+    final token = tokens[index];
+    final pc = myPCs[modalPCIndex];
+    return pc.miningToken?.id == token.id;
+  }
+
+  PC? pcByIndex(int index) {
+    for (int i = 0; i < myPCs.length; i++) {
+      if (i == index) {
+        return myPCs[i];
+      }
+    }
+  }
+
   PriceToken getCurrentPriceByToken(Token token) {
     return prices.where((price) => price.tokenId == token.id).last;
   }

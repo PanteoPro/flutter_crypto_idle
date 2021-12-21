@@ -338,7 +338,7 @@ class __ComputerItemImageCryptoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.select((MainGameViewModel vm) => vm.state.myPCs[index].miningToken);
+    context.select((MainGameViewModel vm) => vm.state.pcByIndex(index)?.miningToken);
     final pc = context.read<MainGameViewModel>().state.myPCs[index];
 
     final imagePath =
@@ -362,7 +362,7 @@ class __ComputerItemButtonOrMiningWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.select((MainGameViewModel vm) => vm.state.myPCs[index].miningToken);
+    context.select((MainGameViewModel vm) => vm.state.pcByIndex(index)?.miningToken);
     final vm = context.read<MainGameViewModel>();
     final pc = vm.state.myPCs[index];
 
