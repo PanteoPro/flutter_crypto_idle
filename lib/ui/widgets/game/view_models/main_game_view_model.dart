@@ -329,7 +329,10 @@ class MainGameViewModel extends ChangeNotifier {
   }
 
   void _subscribeOnDelayClickablePc([bool isInitial = false]) {
-    if (_gameRepository.game.secondsDelay == 0 && !isInitial || isInitial && _gameRepository.game.secondsDelay > 0) {
+    final isNotStartDelayInNotInitialSubscribe = _gameRepository.game.secondsDelay == 0 && !isInitial;
+    final isHaveDelayAndInitialSubscribe = isInitial && _gameRepository.game.secondsDelay > 0;
+    final isHaveSubscribe = _delayClickerPCSub != null;
+    if ((isNotStartDelayInNotInitialSubscribe || isHaveDelayAndInitialSubscribe) && !isHaveSubscribe) {
       final stream = Stream.periodic(const Duration(seconds: 1));
       if (!isInitial) {
         _gameRepository.restoreDelay();
@@ -344,6 +347,7 @@ class MainGameViewModel extends ChangeNotifier {
     }
     if (_gameRepository.game.secondsDelay == 0) {
       _delayClickerPCSub!.cancel();
+      _delayClickerPCSub = null;
       await _gameRepository.restoreClicks();
     }
     _updateState();

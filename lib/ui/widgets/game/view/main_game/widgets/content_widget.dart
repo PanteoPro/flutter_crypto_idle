@@ -37,6 +37,7 @@ class _CirlceWidget extends StatefulWidget {
 class _CirlceWidgetState extends State<_CirlceWidget> {
   final digitals = <Widget>[];
   final animationLength = 800;
+  var _isStartToClean = false;
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +83,7 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
     final isCritical = rndMoney == MainGameViewModel.critRandomMoney;
 
     if (isAddMoney) {
+      _isStartToClean = false;
       final color = isCritical ? AppColors.red : AppColors.dollar;
       final textStyle = isCritical ? AppFonts.critical : AppFonts.body;
       final speed = isCritical ? 1500 : 800;
@@ -91,11 +93,12 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
       setState(() {
         digitals.add(digit);
       });
-    } else {
+    } else if (!_isStartToClean) {
+      _isStartToClean = true;
       Future.delayed(const Duration(seconds: 2), () {
         digitals.clear();
       });
-    }
+    } else {}
   }
 }
 
