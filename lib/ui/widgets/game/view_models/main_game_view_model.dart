@@ -262,8 +262,7 @@ class MainGameViewModel extends ChangeNotifier {
   }
 
   void onYesExitButtonPressed(BuildContext context) {
-    final mainNavigator = context.findRootAncestorStateOfType<NavigatorState>();
-    mainNavigator?.pushReplacementNamed(MainNavigationRouteNames.menu);
+    Navigator.of(context, rootNavigator: true).pushReplacementNamed(MainNavigationRouteNames.menu);
   }
 
   void onNoExitButtonPressed() {

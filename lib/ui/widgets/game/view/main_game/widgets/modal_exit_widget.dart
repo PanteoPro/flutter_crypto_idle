@@ -5,6 +5,9 @@ class _ModalExitWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isModalShow = context.select((MainGameViewModel vm) => vm.state.isModalShow);
+    final vm = context.read<MainGameViewModel>();
+    if (!isModalShow) return const SizedBox();
     return SizedBox(
       width: double.infinity,
       height: double.infinity,
@@ -29,12 +32,12 @@ class _ModalExitWidget extends StatelessWidget {
                   const SizedBox(height: 16),
                   WhiteButtonWidget(
                     text: 'Да',
-                    onPressed: () {},
+                    onPressed: () => vm.onYesExitButtonPressed(context),
                   ),
                   const SizedBox(height: 16),
                   WhiteButtonWidget(
                     text: 'Нет',
-                    onPressed: () {},
+                    onPressed: vm.onNoExitButtonPressed,
                   ),
                 ],
               ),

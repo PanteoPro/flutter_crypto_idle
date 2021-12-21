@@ -1,4 +1,4 @@
-import 'package:crypto_idle/Widgets/game_over_modal.dart';
+import 'package:crypto_idle/Widgets/old_game_over_modal.dart';
 import 'package:crypto_idle/domain/repositories/message_manager.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/message_stream_view_model.dart';
 import 'package:flutter/material.dart';

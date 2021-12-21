@@ -60,10 +60,10 @@ class GameViewModel extends ChangeNotifier {
 
   /// Initial Repository
   Future<void> initialRepository() async {
+    _state = GameViewModelState.empty();
     await _gameRepository.init();
     await _pcRepository.init();
     await _flatRepository.init();
-    _state = GameViewModelState.empty();
     _subscriteStreams();
     updateState();
   }
@@ -92,8 +92,9 @@ class GameViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onExitGameOverPressed() {
-    _state.isModalGameOverClose = true;
-    notifyListeners();
+  void onExitGameOverPressed(BuildContext context) {
+    // _state.isModalGameOverClose = true;
+    // notifyListeners();
+    Navigator.of(context, rootNavigator: true).pushReplacementNamed('menu');
   }
 }

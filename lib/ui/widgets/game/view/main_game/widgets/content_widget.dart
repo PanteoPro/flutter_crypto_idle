@@ -306,6 +306,7 @@ class _ComputerItemWidget extends StatelessWidget {
               ),
               const Spacer(),
               __ComputerItemImageCryptoWidget(index: index),
+              const SizedBox(width: 4),
               __ComputerItemButtonOrMiningWidget(index: index),
             ],
           ),
@@ -350,7 +351,8 @@ class __ComputerItemButtonOrMiningWidget extends StatelessWidget {
     final pc = context.read<MainGameViewModel>().state.myPCs[index];
 
     Widget widget = Text(
-      pc.miningToken?.symbol ?? 'НАЗНАЧИТЬ',
+      pc.miningToken != null ? 'Майнится: ${pc.miningToken?.symbol}' : 'НАЗНАЧИТЬ',
+      textAlign: TextAlign.center,
       style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
     );
     if (pc.miningToken == null) {
@@ -358,11 +360,12 @@ class __ComputerItemButtonOrMiningWidget extends StatelessWidget {
         onPressed: () {},
         child: Text(
           'НАЗНАЧИТЬ',
+          textAlign: TextAlign.center,
           style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
         ),
       );
     }
-    return widget;
+    return SizedBox(width: 100, child: widget);
   }
 }
 

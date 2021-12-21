@@ -1,6 +1,6 @@
 import 'package:crypto_idle/Widgets/app_bar_info.dart';
 import 'package:crypto_idle/Widgets/buttons.dart';
-import 'package:crypto_idle/Widgets/game_over_modal.dart';
+import 'package:crypto_idle/Widgets/old_game_over_modal.dart';
 import 'package:crypto_idle/Widgets/header_page.dart';
 import 'package:crypto_idle/Widgets/page_wrapper.dart';
 import 'package:crypto_idle/generated/l10n.dart';

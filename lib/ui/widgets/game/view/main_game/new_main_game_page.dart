@@ -6,6 +6,7 @@ import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:crypto_idle/Widgets/buttons/green_button_widget.dart';
 import 'package:crypto_idle/Widgets/buttons/white_button_widget.dart';
 import 'package:crypto_idle/Widgets/circle_index_widget.dart';
+import 'package:crypto_idle/Widgets/game_over_widget.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/generated/l10n.dart';
@@ -26,7 +27,6 @@ part 'widgets/content_widget.dart';
 part 'widgets/footer_widget.dart';
 part 'widgets/app_bar_widget.dart';
 part 'widgets/modal_exit_widget.dart';
-part 'widgets/modal_game_over_widget.dart';
 part 'widgets/modal_list_tokens_widget.dart';
 
 class MainGamePage extends StatefulWidget {
@@ -53,7 +53,11 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
   Future<bool> didPopRoute() async {
     // Вызывается каждый раз, когда нажимается кнопка назад
     if (ModalRoute.of(context)?.isCurrent ?? false) {
-      Navigator.of(context, rootNavigator: true).pushReplacementNamed(MainNavigationRouteNames.menu);
+      final vm = context.read<MainGameViewModel>();
+      final isModalShow = context.read<MainGameViewModel>().state.isModalShow;
+      if (!isModalShow) {
+        vm.onReturnToMenuButtonPressed();
+      }
     } else {
       Navigator.of(context).pop();
     }
@@ -62,7 +66,8 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
 
   @override
   Widget build(BuildContext context) {
-    final gameOver = context.read<GameViewModel>();
+    // final gameOver = context.select((GameViewModel vm) => vm.state.gameOver);
+    // final vm = context.read<MainGameViewModel>();
     return Scaffold(
       appBar: const _AppBarWidget(),
       body: Stack(
@@ -74,9 +79,10 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
               _FooterWidget(),
             ],
           ),
-          // _ModalExitWidget(),
+          const _ModalExitWidget(),
+          const ModalGameOverWidget(),
           // _ModalGameOverWidget(),
-          _ModalListTokensWidget(),
+          // _ModalListTokensWidget(),
         ],
       ),
     );

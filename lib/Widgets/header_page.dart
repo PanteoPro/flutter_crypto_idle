@@ -38,7 +38,7 @@ class HeaderPage extends StatelessWidget {
               children: [
                 SizedBox(width: 40),
                 Expanded(
-                  child: Text(title, style: Theme.of(context).textTheme.headline1, textAlign: TextAlign.center),
+                  child: Text(title, style: Theme.of(context).textTheme.headline6, textAlign: TextAlign.center),
                 ),
               ],
             ),

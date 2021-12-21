@@ -15,7 +15,7 @@ class GameOverModalWidget extends StatelessWidget {
       return Stack(
         children: [
           GestureDetector(
-            onTap: () => vm.onExitGameOverPressed(),
+            onTap: () => vm.onExitGameOverPressed(context),
             child: Container(
               color: Colors.black.withOpacity(0.6),
             ),
