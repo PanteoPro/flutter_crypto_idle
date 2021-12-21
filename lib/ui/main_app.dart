@@ -15,7 +15,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AdaptiveTheme(
-      light: kLightTheme2,
+      light: kLightTheme,
       initial: AdaptiveThemeMode.dark,
       builder: (ThemeData light, ThemeData dark) => ChangeNotifierProvider(
         create: (_) => MainAppViewModel(),

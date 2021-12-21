@@ -292,7 +292,7 @@ class _ComputerItemWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 7),
           child: Row(
             children: [
-              __ComputerItemIndexWidget(index: index),
+              CircleIndexWidget(index: index),
               const SizedBox(width: 4),
               Image.asset(
                 AppImages.getPcPathByName(pc.name),
@@ -308,54 +308,6 @@ class _ComputerItemWidget extends StatelessWidget {
               __ComputerItemImageCryptoWidget(index: index),
               __ComputerItemButtonOrMiningWidget(index: index),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class __ComputerItemIndexWidget extends StatelessWidget {
-  const __ComputerItemIndexWidget({Key? key, required this.index}) : super(key: key);
-
-  final int index;
-
-  @override
-  Widget build(BuildContext context) {
-    final currentIndex = index + 1;
-    final countX = currentIndex ~/ 10;
-    final countV = (currentIndex - countX * 10) ~/ 5;
-    final countI = currentIndex - countX * 10 - countV * 5;
-    var style = AppFonts.body.copyWith(color: AppColors.green);
-
-    var text = StringBuffer();
-    for (int i = 0; i < countX; i++) {
-      text.write('X');
-    }
-    for (int i = 0; i < countV; i++) {
-      text.write('V');
-    }
-    for (int i = 0; i < countI; i++) {
-      text.write('I');
-    }
-
-    final toLowerFont = ['VIII', 'VIIII', 'XIII', 'XIIII', 'XVI', 'XVII', 'XVIII'];
-    if (toLowerFont.contains(text.toString())) {
-      style = AppFonts.body2.copyWith(color: AppColors.green);
-    }
-
-    return SizedBox(
-      width: 20,
-      height: 20,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: AppColors.green),
-        ),
-        child: Center(
-          child: Text(
-            text.toString(),
-            style: style,
           ),
         ),
       ),

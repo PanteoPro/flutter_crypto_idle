@@ -3,8 +3,11 @@ import 'dart:math';
 
 import 'package:crypto_idle/Theme/app_colors.dart';
 import 'package:crypto_idle/Theme/app_fonts.dart';
+import 'package:crypto_idle/Widgets/buttons/green_button_widget.dart';
 import 'package:crypto_idle/Widgets/buttons/white_button_widget.dart';
+import 'package:crypto_idle/Widgets/circle_index_widget.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
+import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/Libs/gif_lib.dart';
@@ -18,12 +21,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/src/provider.dart';
 
-part 'widgets/main_game_header_widget.dart';
-part 'widgets/main_game_content_widget.dart';
-part 'widgets/main_game_footer_widget.dart';
-part 'widgets/main_game_app_bar_widget.dart';
-part 'widgets/main_game_modal_exit_widget.dart';
-part 'widgets/main_game_model_game_over_widget.dart';
+part 'widgets/header_widget.dart';
+part 'widgets/content_widget.dart';
+part 'widgets/footer_widget.dart';
+part 'widgets/app_bar_widget.dart';
+part 'widgets/modal_exit_widget.dart';
+part 'widgets/modal_game_over_widget.dart';
+part 'widgets/modal_list_tokens_widget.dart';
 
 class MainGamePage extends StatefulWidget {
   const MainGamePage({Key? key}) : super(key: key);
@@ -71,7 +75,8 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
             ],
           ),
           // _ModalExitWidget(),
-          _ModalGameOverWidget(),
+          // _ModalGameOverWidget(),
+          _ModalListTokensWidget(),
         ],
       ),
     );
