@@ -21,6 +21,7 @@ part 'widgets/main_game_header_widget.dart';
 part 'widgets/main_game_content_widget.dart';
 part 'widgets/main_game_footer_widget.dart';
 part 'widgets/main_game_app_bar_widget.dart';
+part 'widgets/main_game_modal_exit_widget.dart';
 
 class MainGamePage extends StatefulWidget {
   const MainGamePage({Key? key}) : super(key: key);
@@ -58,11 +59,16 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
     final gameOver = context.read<GameViewModel>();
     return Scaffold(
       appBar: const _AppBarWidget(),
-      body: Column(
-        children: const [
-          _HeaderWidget(),
-          Expanded(child: _ContentWidget()),
-          _FooterWidget(),
+      body: Stack(
+        children: [
+          Column(
+            children: const [
+              _HeaderWidget(),
+              Expanded(child: _ContentWidget()),
+              _FooterWidget(),
+            ],
+          ),
+          _ModalExitWidget(),
         ],
       ),
     );
