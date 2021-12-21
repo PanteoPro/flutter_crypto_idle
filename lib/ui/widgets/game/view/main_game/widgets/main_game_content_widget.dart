@@ -59,8 +59,8 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
                   ? CircularProgressIndicator(color: Theme.of(context).hintColor)
                   : RadialPercentWidget(
                       percent: currentClicks > 0 ? percentCurrentClicks : percentCurrentDelay,
-                      lineColor: const Color.fromRGBO(217, 0, 0, 1),
-                      maxLineColor: const Color.fromRGBO(0, 210, 149, 1),
+                      lineColor: AppColors.red,
+                      maxLineColor: AppColors.green,
                       lineWidth: 2,
                       padding: 10,
                       text: currentClicks > 0 ? '$currentClicks' : delayText,
@@ -78,15 +78,18 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
   Future<void> _addMoney(MainGameViewModel vm) async {
     final rndMoney = MainGameViewModel.getRandomMoney();
     final isAddMoney = await vm.onClickerPcPressed(rndMoney);
+    final isCritical = rndMoney == MainGameViewModel.critRandomMoney;
 
     if (isAddMoney) {
-      final color = rndMoney == MainGameViewModel.critRandomMoney
-          ? const Color.fromRGBO(217, 0, 0, 1)
-          : const Color.fromRGBO(0, 210, 149, 1);
-      final speed = rndMoney == MainGameViewModel.critRandomMoney ? 1500 : 800;
-      final digit = _DigitalWidget(money: rndMoney, color: color, speed: speed);
-      digitals.add(digit);
-      setState(() {});
+      final color = isCritical ? AppColors.red : AppColors.dollar;
+      final textStyle = isCritical ? AppFonts.critical : AppFonts.body;
+      final speed = isCritical ? 1500 : 800;
+
+      final digit = _DigitalWidget(money: rndMoney, color: color, textStyle: textStyle, speed: speed);
+
+      setState(() {
+        digitals.add(digit);
+      });
     } else {
       Future.delayed(const Duration(seconds: 2), () {
         digitals.clear();
@@ -100,12 +103,14 @@ class _DigitalWidget extends StatefulWidget {
     Key? key,
     required this.money,
     required this.color,
+    required this.textStyle,
     required this.speed,
   }) : super(key: key);
 
   final double money;
   final Color color;
   final int speed;
+  final TextStyle textStyle;
 
   @override
   __DigitalWidgetState createState() => __DigitalWidgetState();
@@ -148,7 +153,7 @@ class __DigitalWidgetState extends State<_DigitalWidget> with SingleTickerProvid
       duration: Duration.zero,
       child: Text(
         '${widget.money}\$',
-        style: TextStyle(color: widget.color),
+        style: widget.textStyle.copyWith(color: widget.color),
       ),
     );
   }
@@ -239,7 +244,7 @@ class _ActionItemWidget extends StatelessWidget {
           child: Text(
             title,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.button,
+            style: AppFonts.mainButton.copyWith(color: AppColors.green),
           ),
         ),
       ),
@@ -257,7 +262,7 @@ class _ComputersWidget extends StatelessWidget {
       width: double.infinity,
       height: 100,
       child: ColoredBox(
-        color: Theme.of(context).canvasColor,
+        color: AppColors.secondGrey,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: ListView.separated(
@@ -318,7 +323,7 @@ class _ComputerItemWidget extends StatelessWidget {
           Text(
             pc.name,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 12),
+            style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
           )
         ],
       ),

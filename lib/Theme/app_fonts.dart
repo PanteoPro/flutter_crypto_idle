@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 abstract class AppFonts {
   static const TextStyle main = TextStyle(
     fontSize: 16,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w500,
     fontStyle: FontStyle.normal,
     fontFamily: 'RobotoCondensed',
   );

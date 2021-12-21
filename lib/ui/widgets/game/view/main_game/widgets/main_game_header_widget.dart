@@ -70,9 +70,17 @@ class _BalanceCashTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final money = context.select((MainGameViewModel vm) => vm.state.money);
-    return Text(
-      '${S.of(context).main_game_cash_balance_title}: ${S.of(context).text_with_dollar(money)}',
-      style: Theme.of(context).textTheme.headline3,
+    return RichText(
+      text: TextSpan(
+        text: '${S.of(context).main_game_cash_balance_title}: ',
+        style: AppFonts.main,
+        children: [
+          TextSpan(
+            text: S.of(context).text_with_dollar(money),
+            style: AppFonts.mainLight.copyWith(color: AppColors.white),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -105,9 +113,17 @@ class _BalanceCryptoTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cryptoBalance = context.select((MainGameViewModel vm) => vm.state.cryptoBalance);
-    return Text(
-      '${S.of(context).main_game_crypto_balance_title}: ${S.of(context).text_with_dollar(cryptoBalance)}',
-      style: Theme.of(context).textTheme.headline3,
+    return RichText(
+      text: TextSpan(
+        text: '${S.of(context).main_game_crypto_balance_title}: ',
+        style: AppFonts.main,
+        children: [
+          TextSpan(
+            text: S.of(context).text_with_dollar(cryptoBalance),
+            style: AppFonts.mainLight.copyWith(color: AppColors.white),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -117,35 +133,32 @@ class _NewsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: Theme.of(context).primaryColor,
-      child: SizedBox(
-        child: Column(
-          children: [
-            ColoredBox(
-              color: Theme.of(context).canvasColor,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-                child: Row(
-                  children: [
-                    Stack(
-                      children: [
-                        Text(
-                          'Новости:',
-                          style: Theme.of(context).textTheme.headline2,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(width: 6),
-                    const Expanded(
-                      child: _NewsFirstNewsWidget(),
-                    ),
-                  ],
-                ),
+    return SizedBox(
+      child: Column(
+        children: [
+          ColoredBox(
+            color: AppColors.secondGrey,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+              child: Row(
+                children: [
+                  Stack(
+                    children: [
+                      Text(
+                        'Новости:',
+                        style: AppFonts.main.copyWith(color: AppColors.green),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 6),
+                  const Expanded(
+                    child: _NewsFirstNewsWidget(),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -161,6 +174,7 @@ class _NewsFirstNewsWidget extends StatelessWidget {
     return Text(
       newsText,
       maxLines: 2,
+      style: AppFonts.news.copyWith(color: Colors.white),
       overflow: TextOverflow.ellipsis,
     );
   }

@@ -1,8 +1,26 @@
 import 'dart:math';
 
+import 'package:crypto_idle/Theme/app_colors.dart';
+import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:flutter/material.dart';
 
 class RadialPercentWidget extends StatelessWidget {
+  const RadialPercentWidget({
+    Key? key,
+    required this.child,
+    required this.percent,
+    required this.lineColor,
+    required this.maxLineColor,
+    required this.text,
+    this.fillColor = Colors.transparent,
+    this.lineWidth = 3,
+    this.freeColor = Colors.transparent,
+    this.freeLineWidth = 0,
+    this.padding = 5,
+    this.left = 20,
+    this.bottom = 20,
+  }) : super(key: key);
+
   final Widget child;
   final double percent;
 
@@ -29,22 +47,6 @@ class RadialPercentWidget extends StatelessWidget {
 
   /// for text position
   final double bottom;
-
-  const RadialPercentWidget({
-    Key? key,
-    required this.child,
-    required this.percent,
-    required this.lineColor,
-    required this.maxLineColor,
-    required this.text,
-    this.fillColor = Colors.transparent,
-    this.lineWidth = 3,
-    this.freeColor = Colors.transparent,
-    this.freeLineWidth = 0,
-    this.padding = 5,
-    this.left = 20,
-    this.bottom = 20,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +75,7 @@ class RadialPercentWidget extends StatelessWidget {
           bottom: bottom,
           child: Text(
             text,
-            style: Theme.of(context).textTheme.headline1,
+            style: AppFonts.clicker.copyWith(color: AppColors.white),
           ),
         ),
       ],

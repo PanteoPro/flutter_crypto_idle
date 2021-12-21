@@ -10,9 +10,9 @@ class _AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Row(
         mainAxisSize: MainAxisSize.min,
-        children: [
-          const _AppBarAnimatedCalendarWidget(),
-          const SizedBox(width: 4),
+        children: const [
+          _AppBarAnimatedCalendarWidget(),
+          SizedBox(width: 4),
           _DataWidget(),
         ],
       ),
@@ -49,7 +49,7 @@ class _DataWidget extends StatelessWidget {
     final format = DateFormat.yMd(locale.languageCode);
     final date = context.select((MainGameViewModel vm) => vm.state.date);
     final stringDate = format.format(date);
-    return Text(stringDate, style: Theme.of(context).textTheme.headline1);
+    return Text(stringDate, style: AppFonts.main.copyWith(color: AppColors.white));
   }
 }
 

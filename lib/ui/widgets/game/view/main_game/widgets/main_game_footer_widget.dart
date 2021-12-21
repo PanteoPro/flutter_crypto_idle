@@ -36,11 +36,11 @@ class _FooterPlaceWidget extends StatelessWidget {
       child: RichText(
         text: TextSpan(
           text: 'Место: ',
-          style: Theme.of(context).textTheme.headline1,
+          style: AppFonts.main.copyWith(color: AppColors.white),
           children: [
             TextSpan(
               text: flat.name,
-              style: Theme.of(context).textTheme.headline2,
+              style: AppFonts.main.copyWith(color: AppColors.green),
             ),
           ],
         ),
@@ -61,7 +61,7 @@ class _FooterMainInfoWidget extends StatelessWidget {
         const Spacer(),
         Text(
           'Расходы',
-          style: Theme.of(context).textTheme.headline1,
+          style: AppFonts.main.copyWith(color: AppColors.white),
         ),
       ],
     );
@@ -125,7 +125,7 @@ class _FooterMainInfoItemWidget extends StatelessWidget {
         const SizedBox(width: 2),
         Text(
           text,
-          style: Theme.of(context).textTheme.headline1,
+          style: AppFonts.main.copyWith(color: AppColors.white),
         )
       ],
     );
@@ -162,7 +162,7 @@ class _FooterOtherInfoPowerWidget extends StatelessWidget {
     final power = context.select((MainGameViewModel vm) => vm.state.powerPCs);
     return Text(
       '${S.of(context).main_game_info_power_mining_title}: ${S.of(context).text_with_power_mining(power)}',
-      style: Theme.of(context).textTheme.bodyText2,
+      style: AppFonts.mainLight.copyWith(color: AppColors.white),
     );
   }
 }
@@ -173,7 +173,10 @@ class _FooterOtherInfoFlatWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final flatConsume = context.select((MainGameViewModel vm) => vm.state.flatConsume);
-    return Text('Жилье: ${S.of(context).text_with_dollar_month(flatConsume)}');
+    return Text(
+      'Жилье: ${S.of(context).text_with_dollar_month(flatConsume)}',
+      style: AppFonts.mainLight.copyWith(color: AppColors.white),
+    );
   }
 }
 
@@ -183,6 +186,9 @@ class _FooterOtherInfoEnergyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final energyConsume = context.select((MainGameViewModel vm) => vm.state.energyConsumeCost);
-    return Text('Электричество: ${S.of(context).text_with_dollar_month(energyConsume)}');
+    return Text(
+      'Электричество: ${S.of(context).text_with_dollar_month(energyConsume)}',
+      style: AppFonts.mainLight.copyWith(color: AppColors.white),
+    );
   }
 }

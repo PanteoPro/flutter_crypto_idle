@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:crypto_idle/Theme/app_colors.dart';
+import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/app_images.dart';
