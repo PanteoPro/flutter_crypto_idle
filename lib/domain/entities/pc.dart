@@ -43,6 +43,8 @@ class PC extends HiveObject {
   @HiveField(7)
   Token? miningToken;
 
+  double get incomeCash => cost * coefIncome;
+
   PC copyWith({
     int? id,
     String? name,

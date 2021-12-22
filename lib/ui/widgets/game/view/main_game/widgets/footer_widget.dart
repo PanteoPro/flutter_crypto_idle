@@ -141,7 +141,13 @@ class _FooterOtherInfoWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const _FooterOtherInfoPowerWidget(),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            _FooterOtherInfoPowerWidget(),
+            _FooterOtherInfoIncomeWidget(),
+          ],
+        ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: const [
@@ -162,7 +168,20 @@ class _FooterOtherInfoPowerWidget extends StatelessWidget {
     final power = context.select((MainGameViewModel vm) => vm.state.powerPCs);
     return Text(
       '${S.of(context).main_game_info_power_mining_title}: ${S.of(context).text_with_power_mining(power)}',
-      style: AppFonts.mainLight.copyWith(color: AppColors.white),
+      style: AppFonts.body.copyWith(color: AppColors.white),
+    );
+  }
+}
+
+class _FooterOtherInfoIncomeWidget extends StatelessWidget {
+  const _FooterOtherInfoIncomeWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final earning = context.select((MainGameViewModel vm) => vm.state.averageEarnings);
+    return Text(
+      'Заработок за день: ${S.of(context).text_with_dollar(earning)}',
+      style: AppFonts.body.copyWith(color: AppColors.white),
     );
   }
 }
@@ -175,7 +194,7 @@ class _FooterOtherInfoFlatWidget extends StatelessWidget {
     final flatConsume = context.select((MainGameViewModel vm) => vm.state.flatConsume);
     return Text(
       'Жилье: ${S.of(context).text_with_dollar_month(flatConsume)}',
-      style: AppFonts.mainLight.copyWith(color: AppColors.white),
+      style: AppFonts.body.copyWith(color: AppColors.white),
     );
   }
 }
@@ -188,7 +207,7 @@ class _FooterOtherInfoEnergyWidget extends StatelessWidget {
     final energyConsume = context.select((MainGameViewModel vm) => vm.state.energyConsumeCost);
     return Text(
       'Электричество: ${S.of(context).text_with_dollar_month(energyConsume)}',
-      style: AppFonts.mainLight.copyWith(color: AppColors.white),
+      style: AppFonts.body.copyWith(color: AppColors.white),
     );
   }
 }

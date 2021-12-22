@@ -213,12 +213,9 @@ class DayStreamViewModel extends ChangeNotifier {
     final tokens = _tokenRepository.tokens;
     for (final pc in ownPC) {
       if (pc.miningToken != null) {
-        final coefIncome = pc.coefIncome;
-        final costPC = pc.cost;
-
         final token = tokens.firstWhere((element) => element.id == pc.miningToken!.id);
         final lastPriceToken = _priceTokenRepository.getLatestPriceByTokenId(token.id).cost;
-        final countMined = costPC * coefIncome / lastPriceToken;
+        final countMined = pc.incomeCash / lastPriceToken;
 
         await _tokenRepository.changeToken(token, count: token.count + countMined);
         await _statisticsRepository.addTokenMining(token, countMined);

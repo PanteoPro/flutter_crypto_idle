@@ -86,6 +86,14 @@ class MainGameViewModelState {
   bool isShowNews = false;
   int modalPCIndex = 0;
 
+  double get averageEarnings {
+    var result = 0.0;
+    for (final pc in myPCs) {
+      result += pc.incomeCash;
+    }
+    return double.parse(result.toStringAsFixed(2));
+  }
+
   bool isActiveTokenByTokenIndex(int index) {
     final token = tokens[index];
     final pc = myPCs[modalPCIndex];
