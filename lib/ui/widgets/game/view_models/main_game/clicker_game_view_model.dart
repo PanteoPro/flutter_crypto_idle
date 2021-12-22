@@ -26,12 +26,27 @@ class ClickerGameViewModelState {
     final secondsString = seconds < 10 ? '0$seconds' : '$seconds';
     return '$minutesString:$secondsString';
   }
+
+  double getRandomMoney() {
+    final rnd = Random();
+    final isCrit = rnd.nextDouble() <= clicker.probabilityCrit;
+    if (isCrit) {
+      return clicker.critMoney;
+    } else {
+      return double.parse(
+            (clicker.minMoney + rnd.nextDouble() * (clicker.maxMoney - clicker.minMoney)).toStringAsFixed(2),
+          ) +
+          10;
+    }
+  }
 }
 
 class ClickerGameViewModel extends ChangeNotifier {
   ClickerGameViewModel() {
     _initialRepositories();
   }
+
+  // ----- Core logic -----
 
   @override
   void dispose() {
@@ -61,6 +76,10 @@ class ClickerGameViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // END ----- Core logic -----
+
+  // ----- Fields -----
+
   var _state = ClickerGameViewModelState(clicker: Clicker.start());
   ClickerGameViewModelState get state => _state;
 
@@ -70,18 +89,9 @@ class ClickerGameViewModel extends ChangeNotifier {
 
   StreamSubscription<dynamic>? _delayClickerPCSub;
 
-  double getRandomMoney() {
-    final rnd = Random();
-    final isCrit = rnd.nextDouble() <= _state.clicker.probabilityCrit;
-    if (isCrit) {
-      return _state.clicker.critMoney;
-    } else {
-      return double.parse(
-        (_state.clicker.minMoney + rnd.nextDouble() * (_state.clicker.maxMoney - _state.clicker.minMoney))
-            .toStringAsFixed(2),
-      );
-    }
-  }
+  // END ----- Fields -----
+
+  // ----- Clicker Logic -----
 
   Future<bool> onClickerPcPressed(double rndMoney) async {
     await _clickerRepository.decreaceClick();
@@ -118,5 +128,27 @@ class ClickerGameViewModel extends ChangeNotifier {
       await _clickerRepository.restoreClicks();
     }
     _updateState();
+  }
+
+  // END ----- Clicker Logic -----
+
+  // ----- Upgrade Logic -----
+
+  Future<bool> onClickUpgradeButton() async {
+    _gameRepository.updateData();
+    final upgradeCost = _clickerRepository.clicker.upgradeCost;
+    if (_gameRepository.game.money >= upgradeCost) {
+      if (await _clickerRepository.levelUp()) {
+        _gameRepository.addMoney(-upgradeCost);
+        return true;
+      } else {
+        // max LEvel
+      }
+    } else {
+      print(
+          'not enought money. you have ${_gameRepository.game.money}, need ${_clickerRepository.clicker.upgradeCost}');
+      // not enough money
+    }
+    return false;
   }
 }

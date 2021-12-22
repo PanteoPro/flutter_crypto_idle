@@ -48,6 +48,7 @@ class ClickerRepository implements MyRepository {
         upgradeCost: upgradeCost,
       );
       await _save('levelUp');
+      return true;
     }
     return false;
   }

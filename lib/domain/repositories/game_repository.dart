@@ -27,6 +27,7 @@ class GameRepository implements MyRepository {
 
   Future<void> addMoney(double money) async {
     _game = _game.copyWith(money: double.parse((_game.money + money).toStringAsFixed(2)));
+    print(_game.money);
     await _save('Add Money');
   }
 

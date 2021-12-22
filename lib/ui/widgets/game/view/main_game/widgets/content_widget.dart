@@ -14,7 +14,7 @@ class _ContentWidget extends StatelessWidget {
             Column(
               children: const [
                 SizedBox(height: 20),
-                _CirlceWidget(),
+                _ClickerWidget(),
                 SizedBox(height: 30),
                 _ActionsWidget(),
                 SizedBox(height: 30),
@@ -25,6 +25,75 @@ class _ContentWidget extends StatelessWidget {
             const _NewsOlderNewsWidget(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ClickerWidget extends StatelessWidget {
+  const _ClickerWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = context.watch<ClickerGameViewModel>();
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                Text(
+                  'Уровень ${vm.state.clicker.level}',
+                  style: AppFonts.body2.copyWith(color: AppColors.white),
+                ),
+                GestureDetector(
+                  onTap: () => vm.onClickUpgradeButton(),
+                  child: Image.asset(AppIconsImages.upIcon, width: 32, height: 32),
+                ),
+                Text(
+                  'Улучшение',
+                  style: AppFonts.body2.copyWith(color: AppColors.white),
+                ),
+                Text(
+                  'Стоимость ${S.of(context).text_with_dollar(vm.state.clicker.upgradeCost.toStringAsFixed(2))}',
+                  style: AppFonts.body2.copyWith(color: AppColors.white),
+                ),
+              ],
+            ),
+          ),
+          const _CirlceWidget(),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  'Денег за клик:',
+                  style: AppFonts.body.copyWith(color: AppColors.white),
+                ),
+                Text(
+                  'Мин ${vm.state.clicker.minMoney}\$',
+                  style: AppFonts.body.copyWith(color: AppColors.white),
+                ),
+                Text(
+                  'Макс ${vm.state.clicker.maxMoney}\$',
+                  style: AppFonts.body.copyWith(color: AppColors.white),
+                ),
+                Text(
+                  'Крит ${vm.state.clicker.critMoney}\$',
+                  style: AppFonts.body.copyWith(color: AppColors.white),
+                ),
+                Text(
+                  'Крит ${(vm.state.clicker.probabilityCrit * 100).toStringAsFixed(0)}%',
+                  style: AppFonts.body.copyWith(color: AppColors.white),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -156,13 +225,14 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
   }
 
   Future<void> _addMoney(ClickerGameViewModel vm) async {
-    final rndMoney = vm.getRandomMoney();
+    final rndMoney = vm.state.getRandomMoney();
     final isAddMoney = await vm.onClickerPcPressed(rndMoney);
     final isCritical = rndMoney == vm.state.clicker.critMoney;
 
     if (isAddMoney) {
       _addDigit(isCritical, rndMoney);
     } else if (!_isStartToClean) {
+      _addDigit(isCritical, rndMoney);
       _cleanDigits();
     } else {}
   }
