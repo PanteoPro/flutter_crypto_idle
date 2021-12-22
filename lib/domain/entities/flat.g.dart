@@ -24,13 +24,14 @@ class FlatAdapter extends TypeAdapter<Flat> {
       countPC: fields[4] as int,
       isBuy: fields[5] as bool,
       isActive: fields[6] as bool,
+      level: fields[7] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Flat obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class FlatAdapter extends TypeAdapter<Flat> {
       ..writeByte(5)
       ..write(obj.isBuy)
       ..writeByte(6)
-      ..write(obj.isActive);
+      ..write(obj.isActive)
+      ..writeByte(7)
+      ..write(obj.level);
   }
 
   @override

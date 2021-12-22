@@ -164,6 +164,10 @@ class _BodyItemWidget extends StatelessWidget {
               if (isHavePC) _CostSellItemWidget(costSell: pc.costSell),
               _PowerItemWidget(power: pc.power),
               _EnergyItemWidget(energy: pc.energy),
+              Text(
+                'Нужен уровен помещения - ${pc.needLevel}',
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
             ],
           ),
         ),
@@ -180,7 +184,7 @@ class _CostItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text('${S.of(context).game_market_pc_cost_item_title}: ${S.of(context).text_with_dollar(cost)}',
-        style: Theme.of(context).textTheme.headline6);
+        style: Theme.of(context).textTheme.bodyText2);
   }
 }
 
@@ -192,7 +196,7 @@ class _CostSellItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text('${S.of(context).game_market_pc_cost_sell_item_title}: ${S.of(context).text_with_dollar(costSell)}',
-        style: Theme.of(context).textTheme.headline6);
+        style: Theme.of(context).textTheme.bodyText2);
   }
 }
 
@@ -204,7 +208,7 @@ class _PowerItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text('${S.of(context).game_market_pc_power_item_title}: ${S.of(context).text_with_power_mining(power)}',
-        style: Theme.of(context).textTheme.headline6);
+        style: Theme.of(context).textTheme.bodyText2);
   }
 }
 
@@ -216,7 +220,7 @@ class _EnergyItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text('${S.of(context).game_market_pc_energy_item_title}: ${S.of(context).text_with_energy(energy)}',
-        style: Theme.of(context).textTheme.headline6);
+        style: Theme.of(context).textTheme.bodyText2);
   }
 }
 
@@ -233,6 +237,8 @@ class _ButtonsItemWidget extends StatelessWidget {
     final state = context.read<GameMarketPCViewModel>().state;
     final pc = state.marketPCs[index];
     final balance = context.select((GameMarketPCViewModel vm) => vm.state.money);
+    final enoughtLevel = context.select((GameMarketPCViewModel vm) => vm.state.enoughtLevelByPC(pc));
+    final haveSpaceForNewPC = context.select((GameMarketPCViewModel vm) => vm.state.haveSpaceForNewPC());
 
     final bool haveThat = state.isHavePCById(pc.id);
     final bool enoughMoney = balance >= pc.cost;
@@ -241,7 +247,8 @@ class _ButtonsItemWidget extends StatelessWidget {
       children: [
         if (haveThat == true) _SellButtonWidget(index: index),
         const SizedBox(width: 10),
-        if (enoughMoney == true) _BuyButtonWidget(index: index),
+        if (enoughMoney == true && enoughtLevel && haveSpaceForNewPC) _BuyButtonWidget(index: index),
+        if (!enoughtLevel) const _NotEnoughtButtonWidget(),
       ],
     );
   }
@@ -262,6 +269,21 @@ class _BuyButtonWidget extends StatelessWidget {
       onPressed: () => vm.onBuyButtonPressed(index),
       title: S.of(context).game_market_pc_buy_item_title,
       color: Colors.green,
+    );
+  }
+}
+
+class _NotEnoughtButtonWidget extends StatelessWidget {
+  const _NotEnoughtButtonWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MyButton(
+      onPressed: () {},
+      title: 'Не хватате уровня помещения',
+      color: Colors.grey,
     );
   }
 }

@@ -18,16 +18,30 @@ class GameMarketPCViewModelState {
     required this.money,
     required this.marketPCs,
     required this.ownPCs,
+    required this.currentLevel,
+    required this.maxPCs,
   });
   GameMarketPCViewModelState.empty({
     this.money = 0,
     this.marketPCs = const <PC>[],
     this.ownPCs = const <PC>[],
+    this.currentLevel = 0,
+    this.maxPCs = 0,
   });
 
   final double money;
   final List<PC> ownPCs;
   final List<PC> marketPCs;
+  final int currentLevel;
+  final int maxPCs;
+
+  bool haveSpaceForNewPC() {
+    return ownPCs.length < maxPCs;
+  }
+
+  bool enoughtLevelByPC(PC pc) {
+    return currentLevel >= pc.needLevel;
+  }
 
   int getCountPCsById(int id) {
     int count = 0;
@@ -43,9 +57,20 @@ class GameMarketPCViewModelState {
     return ownPCs.any((PC pc) => pc.id == id);
   }
 
-  GameMarketPCViewModelState copyWith({double? money, List<PC>? ownPCs, List<PC>? marketPCs}) {
+  GameMarketPCViewModelState copyWith({
+    double? money,
+    List<PC>? ownPCs,
+    List<PC>? marketPCs,
+    int? currentLevel,
+    int? maxPCs,
+  }) {
     return GameMarketPCViewModelState(
-        money: money ?? this.money, ownPCs: ownPCs ?? this.ownPCs, marketPCs: marketPCs ?? this.marketPCs);
+      money: money ?? this.money,
+      ownPCs: ownPCs ?? this.ownPCs,
+      marketPCs: marketPCs ?? this.marketPCs,
+      currentLevel: currentLevel ?? this.currentLevel,
+      maxPCs: maxPCs ?? this.maxPCs,
+    );
   }
 }
 
@@ -90,24 +115,30 @@ class GameMarketPCViewModel extends ChangeNotifier {
       money: _gameRepository.game.money,
       marketPCs: _pcRepository.pcsConst,
       ownPCs: _pcRepository.pcs,
+      currentLevel: _flatRepository.currentFlat.level,
+      maxPCs: _flatRepository.currentFlat.countPC,
     );
     notifyListeners();
   }
 
   Future<void> onBuyButtonPressed(int index) async {
     final pc = _state.marketPCs[index].copyWith();
-    if (_state.money >= pc.cost) {
-      final maxCountPC = _flatRepository.flats.firstWhere((element) => element.isActive).countPC;
-      if (_state.ownPCs.length < maxCountPC) {
-        await _pcRepository.addPC(pc);
-        await _gameRepository.changeData(money: _state.money - pc.cost);
-        await _statisticsRepository.addPCConsume(pc.cost);
-        MessageManager.addMessage(text: 'Вы купили установку - ${pc.name} за ${pc.cost}\$', color: Colors.green);
+    if (_state.currentLevel >= pc.needLevel) {
+      if (_state.money >= pc.cost) {
+        final maxCountPC = _flatRepository.flats.firstWhere((element) => element.isActive).countPC;
+        if (_state.ownPCs.length < maxCountPC) {
+          await _pcRepository.addPC(pc);
+          await _gameRepository.changeData(money: _state.money - pc.cost);
+          await _statisticsRepository.addPCConsume(pc.cost);
+          MessageManager.addMessage(text: 'Вы купили установку - ${pc.name} за ${pc.cost}\$', color: Colors.green);
+        } else {
+          MessageManager.addMessage(text: 'У вас максимальное количество установок!', color: Colors.red);
+        }
       } else {
-        MessageManager.addMessage(text: 'У вас максимальное количество установок!', color: Colors.red);
+        MessageManager.addMessage(text: 'У вас недостаточно денег!', color: Colors.red);
       }
     } else {
-      MessageManager.addMessage(text: 'У вас недостаточно денег!', color: Colors.red);
+      MessageManager.addMessage(text: 'Недостающий уровень жилья');
     }
     _updateState();
   }

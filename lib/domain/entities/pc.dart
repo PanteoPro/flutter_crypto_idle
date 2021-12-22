@@ -13,6 +13,7 @@ class PC extends HiveObject {
     required this.power,
     required this.energy,
     required this.coefIncome,
+    required this.needLevel,
     this.miningToken,
   });
 
@@ -24,6 +25,7 @@ class PC extends HiveObject {
     this.energy = 0,
     this.coefIncome = 0,
     this.name = 'undefined',
+    this.needLevel = 0,
   });
 
   @HiveField(0)
@@ -42,6 +44,8 @@ class PC extends HiveObject {
   final double coefIncome;
   @HiveField(7)
   Token? miningToken;
+  @HiveField(8)
+  final int needLevel;
 
   double get incomeCash => cost * coefIncome;
 
@@ -54,6 +58,7 @@ class PC extends HiveObject {
     double? energy,
     double? coefIncome,
     Token? miningToken,
+    int? needLevel,
   }) {
     return PC(
       id: id ?? this.id,
@@ -64,6 +69,7 @@ class PC extends HiveObject {
       energy: energy ?? this.energy,
       coefIncome: coefIncome ?? this.coefIncome,
       miningToken: miningToken ?? this.miningToken,
+      needLevel: needLevel ?? this.needLevel,
     );
   }
 }

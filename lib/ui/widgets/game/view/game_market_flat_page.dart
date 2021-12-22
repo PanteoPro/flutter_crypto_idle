@@ -140,10 +140,29 @@ class _BodyItemWidget extends StatelessWidget {
               _CostItemWidget(index: index),
               _MonthItemWidget(index: index),
               _CountPCItemWidget(index: index),
+              _LevelItemWidget(index: index),
             ],
           ),
         ),
       ],
+    );
+  }
+}
+
+class _LevelItemWidget extends StatelessWidget {
+  const _LevelItemWidget({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    final level = context.read<GameMarketFlatViewModel>().state.flats[index].level;
+    return Text(
+      'Уровень помещения - $level',
+      style: Theme.of(context).textTheme.bodyText2,
     );
   }
 }
@@ -157,7 +176,7 @@ class _CostItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final cost = context.read<GameMarketFlatViewModel>().state.flats[index].cost;
     return Text('${S.of(context).game_market_flat_cost_item_title}: ${S.of(context).text_with_dollar(cost)}',
-        style: Theme.of(context).textTheme.headline6);
+        style: Theme.of(context).textTheme.bodyText2);
   }
 }
 
@@ -170,7 +189,7 @@ class _MonthItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final costMonth = context.read<GameMarketFlatViewModel>().state.flats[index].costMonth;
     return Text('${S.of(context).game_market_flat_month_item_title}: ${S.of(context).text_with_dollar(costMonth)}',
-        style: Theme.of(context).textTheme.headline6);
+        style: Theme.of(context).textTheme.bodyText2);
   }
 }
 
@@ -183,7 +202,7 @@ class _CountPCItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final countPC = context.read<GameMarketFlatViewModel>().state.flats[index].countPC;
     return Text('${S.of(context).game_market_flat_count_pc_item_title}: $countPC',
-        style: Theme.of(context).textTheme.headline6);
+        style: Theme.of(context).textTheme.bodyText2);
   }
 }
 

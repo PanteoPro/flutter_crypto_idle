@@ -12,6 +12,7 @@ class Flat extends HiveObject {
     required this.countPC,
     required this.isBuy,
     required this.isActive,
+    required this.level,
   });
   Flat.empty({
     this.id = -1,
@@ -21,6 +22,7 @@ class Flat extends HiveObject {
     this.countPC = 0,
     this.isBuy = false,
     this.isActive = false,
+    this.level = 0,
   });
 
   @HiveField(0)
@@ -37,6 +39,8 @@ class Flat extends HiveObject {
   bool isBuy;
   @HiveField(6)
   bool isActive;
+  @HiveField(7)
+  final int level;
 
   Flat copyWith({
     int? id,
@@ -46,6 +50,7 @@ class Flat extends HiveObject {
     int? countPC,
     bool? isBuy,
     bool? isActive,
+    int? level,
   }) {
     return Flat(
       id: id ?? this.id,
@@ -55,6 +60,7 @@ class Flat extends HiveObject {
       countPC: countPC ?? this.countPC,
       isBuy: isBuy ?? this.isBuy,
       isActive: isActive ?? this.isActive,
+      level: level ?? this.level,
     );
   }
 }

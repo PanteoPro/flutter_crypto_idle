@@ -108,6 +108,7 @@ abstract class InitialData {
         power: power,
         energy: energy,
         coefIncome: coefIncome,
+        needLevel: 1 + index ~/ 3,
       );
     });
     return result.toList();
@@ -124,14 +125,14 @@ abstract class InitialData {
       final isActive = index == 0 || false;
       index += 1;
       return Flat(
-        id: index,
-        name: name,
-        cost: cost,
-        costMonth: costMonth,
-        countPC: countPC,
-        isBuy: isBuy,
-        isActive: isActive,
-      );
+          id: index,
+          name: name,
+          cost: cost,
+          costMonth: costMonth,
+          countPC: countPC,
+          isBuy: isBuy,
+          isActive: isActive,
+          level: index);
     });
     return result.toList();
   }

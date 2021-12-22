@@ -33,17 +33,34 @@ class _FooterPlaceWidget extends StatelessWidget {
     final flat = context.select((MainGameViewModel vm) => vm.state.flat);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: RichText(
-        text: TextSpan(
-          text: 'Место: ',
-          style: AppFonts.main.copyWith(color: AppColors.white),
-          children: [
-            TextSpan(
-              text: flat.name,
-              style: AppFonts.main.copyWith(color: AppColors.green),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          RichText(
+            text: TextSpan(
+              text: 'Место: ',
+              style: AppFonts.main.copyWith(color: AppColors.white),
+              children: [
+                TextSpan(
+                  text: flat.name,
+                  style: AppFonts.main.copyWith(color: AppColors.green),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          RichText(
+            text: TextSpan(
+              text: 'Уровень: ',
+              style: AppFonts.main.copyWith(color: AppColors.white),
+              children: [
+                TextSpan(
+                  text: flat.level.toString(),
+                  style: AppFonts.main.copyWith(color: AppColors.green),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

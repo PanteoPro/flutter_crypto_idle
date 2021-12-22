@@ -334,10 +334,12 @@ class _ComputersWidget extends StatelessWidget {
     final countPC = context.select((MainGameViewModel vm) => vm.state.myPCs.length);
     final isLoadPcs = context.select((MainGameViewModel vm) => vm.state.isLoadPcs);
 
+    const heightItemComp = 36;
+    const heightSizedBox = 10;
     var height = 0.0;
     if (countPC > 0) {
       final count = min(countPC, 3);
-      height += count * 36 + (count - 1) * 10 + 20;
+      height += count * heightItemComp + (count - 1) * heightSizedBox + 2 * heightSizedBox;
     }
 
     return AnimatedContainer(
@@ -387,37 +389,41 @@ class _ComputerItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pc = context.read<MainGameViewModel>().state.myPCs[index];
+    final vm = context.read<MainGameViewModel>();
+    final pc = vm.state.myPCs[index];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: SizedBox(
-        height: 36,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            border: Border.all(color: AppColors.green),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 7),
-            child: Row(
-              children: [
-                CircleIndexWidget(index: index),
-                const SizedBox(width: 4),
-                Image.asset(
-                  AppImages.getPcPathByName(pc.name),
-                  width: 28,
-                  height: 28,
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  pc.name,
-                  style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
-                ),
-                const Spacer(),
-                __ComputerItemImageCryptoWidget(index: index),
-                const SizedBox(width: 4),
-                __ComputerItemButtonOrMiningWidget(index: index),
-              ],
+      child: GestureDetector(
+        onTap: () => vm.onOpenModalButtonPressed(index),
+        child: SizedBox(
+          height: 36,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              border: Border.all(color: AppColors.green),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 7),
+              child: Row(
+                children: [
+                  CircleIndexWidget(index: index),
+                  const SizedBox(width: 4),
+                  Image.asset(
+                    AppImages.getPcPathByName(pc.name),
+                    width: 28,
+                    height: 28,
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    pc.name,
+                    style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
+                  ),
+                  const Spacer(),
+                  __ComputerItemImageCryptoWidget(index: index),
+                  const SizedBox(width: 4),
+                  __ComputerItemButtonOrMiningWidget(index: index),
+                ],
+              ),
             ),
           ),
         ),
