@@ -333,32 +333,46 @@ class _ComputersWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final countPC = context.select((MainGameViewModel vm) => vm.state.myPCs.length);
     final isLoadPcs = context.select((MainGameViewModel vm) => vm.state.isLoadPcs);
-    return SizedBox(
+
+    var height = 0.0;
+    if (countPC > 0) {
+      final count = min(countPC, 3);
+      height += count * 36 + (count - 1) * 10 + 20;
+    }
+
+    return AnimatedContainer(
       width: double.infinity,
-      height: 150,
-      child: ColoredBox(
-        color: AppColors.secondGrey,
-        child: Padding(
-          padding: const EdgeInsets.only(right: 1, top: 10, bottom: 10),
-          child: Scrollbar(
-            scrollbarOrientation: ScrollbarOrientation.right,
-            child: isLoadPcs
-                ? const Center(
-                    child: SizedBox(
-                      width: 150,
-                      height: 150,
-                      child: CircularProgressIndicator(color: AppColors.green, strokeWidth: 2),
+      height: height,
+      alignment: Alignment.center,
+      duration: const Duration(seconds: 3),
+      curve: Curves.fastOutSlowIn,
+      child: SizedBox(
+        width: double.infinity,
+        height: 150,
+        child: ColoredBox(
+          color: AppColors.secondGrey,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 1, top: 10, bottom: 10),
+            child: Scrollbar(
+              scrollbarOrientation: ScrollbarOrientation.right,
+              child: isLoadPcs
+                  ? const Center(
+                      child: SizedBox(
+                        width: 150,
+                        height: 150,
+                        child: CircularProgressIndicator(color: AppColors.green, strokeWidth: 2),
+                      ),
+                    )
+                  : ListView.separated(
+                      itemCount: countPC,
+                      itemBuilder: (context, index) {
+                        return _ComputerItemWidget(index: index);
+                      },
+                      separatorBuilder: (ctx, index) {
+                        return const SizedBox(height: 10);
+                      },
                     ),
-                  )
-                : ListView.separated(
-                    itemCount: countPC,
-                    itemBuilder: (context, index) {
-                      return _ComputerItemWidget(index: index);
-                    },
-                    separatorBuilder: (ctx, index) {
-                      return const SizedBox(height: 10);
-                    },
-                  ),
+            ),
           ),
         ),
       ),
