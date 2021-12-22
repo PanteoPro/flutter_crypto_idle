@@ -21,8 +21,6 @@ class GameAdapter extends TypeAdapter<Game> {
       money: fields[1] as double,
       nick: fields[2] as String,
       date: fields[3] as DateTime,
-      currentClicks: fields[5] as int,
-      secondsDelay: fields[6] as int,
       gameOver: fields[4] as bool,
     );
   }
@@ -30,7 +28,7 @@ class GameAdapter extends TypeAdapter<Game> {
   @override
   void write(BinaryWriter writer, Game obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -40,11 +38,7 @@ class GameAdapter extends TypeAdapter<Game> {
       ..writeByte(3)
       ..write(obj.date)
       ..writeByte(4)
-      ..write(obj.gameOver)
-      ..writeByte(5)
-      ..write(obj.currentClicks)
-      ..writeByte(6)
-      ..write(obj.secondsDelay);
+      ..write(obj.gameOver);
   }
 
   @override

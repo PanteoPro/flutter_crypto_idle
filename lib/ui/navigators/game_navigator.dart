@@ -5,13 +5,14 @@ import 'package:crypto_idle/ui/widgets/game/view/game_market_flat_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/game_market_pc_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/game_mining_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/main_game/new_main_game_page.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/day_stream_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/main_game/clicker_game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/main_game/day_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_crypto_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_crypto_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_pc_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_mining_view_model.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/main_game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/main_game/main_game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/menu/view/menu_about_page.dart';
 import 'package:crypto_idle/ui/widgets/menu/view/menu_page.dart';
 import 'package:crypto_idle/ui/widgets/menu/view/menu_settings_page.dart';
@@ -54,6 +55,9 @@ class GameNavigation {
               ),
               ChangeNotifierProvider(
                 create: (_) => DayStreamViewModel(),
+              ),
+              ChangeNotifierProvider(
+                create: (_) => ClickerGameViewModel(),
               ),
             ],
             child: const MainGamePage(),

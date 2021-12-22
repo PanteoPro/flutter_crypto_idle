@@ -119,11 +119,11 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final vm = context.read<MainGameViewModel>();
-    final percentCurrentClicks = context.select((MainGameViewModel vm) => vm.state.percentCurrentClicks);
-    final currentClicks = vm.state.currentClicks;
+    final vm = context.read<ClickerGameViewModel>();
+    final percentCurrentClicks = context.select((ClickerGameViewModel vm) => vm.state.percentCurrentClicks);
+    final currentClicks = vm.state.clicker.currentClicks;
 
-    final percentCurrentDelay = context.select((MainGameViewModel vm) => vm.state.percentCurrentDelay);
+    final percentCurrentDelay = context.select((ClickerGameViewModel vm) => vm.state.percentCurrentDelay);
     final delayText = vm.state.currentDelayString;
 
     final isNoData = percentCurrentClicks == 0 && percentCurrentDelay == 1;
@@ -155,28 +155,36 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
     );
   }
 
-  Future<void> _addMoney(MainGameViewModel vm) async {
-    final rndMoney = MainGameViewModel.getRandomMoney();
+  Future<void> _addMoney(ClickerGameViewModel vm) async {
+    final rndMoney = vm.getRandomMoney();
     final isAddMoney = await vm.onClickerPcPressed(rndMoney);
-    final isCritical = rndMoney == MainGameViewModel.critRandomMoney;
+    final isCritical = rndMoney == vm.state.clicker.critMoney;
 
     if (isAddMoney) {
-      _isStartToClean = false;
-      final color = isCritical ? AppColors.red : AppColors.dollar;
-      final textStyle = isCritical ? AppFonts.critical : AppFonts.body;
-      final speed = isCritical ? 1500 : 800;
-
-      final digit = _DigitalWidget(money: rndMoney, color: color, textStyle: textStyle, speed: speed);
-
-      setState(() {
-        digitals.add(digit);
-      });
+      _addDigit(isCritical, rndMoney);
     } else if (!_isStartToClean) {
-      _isStartToClean = true;
-      Future.delayed(const Duration(seconds: 2), () {
-        digitals.clear();
-      });
+      _cleanDigits();
     } else {}
+  }
+
+  void _cleanDigits() {
+    _isStartToClean = true;
+    Future.delayed(const Duration(seconds: 2), () {
+      digitals.clear();
+    });
+  }
+
+  void _addDigit(bool isCritical, double rndMoney) {
+    _isStartToClean = false;
+    final color = isCritical ? AppColors.red : AppColors.dollar;
+    final textStyle = isCritical ? AppFonts.critical : AppFonts.body;
+    final speed = isCritical ? 1500 : 800;
+
+    final digit = _DigitalWidget(money: rndMoney, color: color, textStyle: textStyle, speed: speed);
+
+    setState(() {
+      digitals.add(digit);
+    });
   }
 }
 

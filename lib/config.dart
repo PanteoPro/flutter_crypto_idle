@@ -47,4 +47,24 @@ class AppConfig {
     165000,
     300000,
   ];
+  static double minByLevel(int level) {
+    return 0.01 + (level - 1) * 0.03;
+  }
+
+  static double maxByLevel(int level) {
+    return 0.2 + (level - 1) * 0.25;
+  }
+
+  static double critByLevel(int level) {
+    return 1 + (level - 1) * 1.25;
+  }
+
+  static double probabilityByLevel(int level) {
+    return 0.05 + (level - 1) * 0.002;
+  }
+
+  static double upgradeCostByLevel(int level) {
+    return (50 * level) *
+        ((minByLevel(level) + maxByLevel(level)) / 2 + (critByLevel(level) * probabilityByLevel(level)));
+  }
 }

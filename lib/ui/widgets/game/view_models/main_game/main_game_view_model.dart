@@ -2,11 +2,13 @@ import 'dart:async';
 import 'dart:math';
 import 'package:collection/collection.dart';
 import 'package:crypto_idle/config.dart';
+import 'package:crypto_idle/domain/entities/clicker.dart';
 import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/domain/entities/pc.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
+import 'package:crypto_idle/domain/repositories/clicker_repository.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
 import 'package:crypto_idle/domain/repositories/message_manager.dart';
@@ -35,10 +37,9 @@ class MainGameViewModelState {
     required this.date,
     required this.money,
     required this.currentPrices,
-    required this.currentClicks,
-    required this.currentDelay,
     required this.isOpenModalTokens,
     required this.modalPCIndex,
+    // required this.clicker,
     this.isLoadPcs = false,
     this.isShowNews = false,
   });
@@ -53,9 +54,8 @@ class MainGameViewModelState {
     bool? isShowNews,
     int? modalPCIndex,
     DateTime? date,
+    // Clicker? clicker,
     this.money = 0,
-    this.currentClicks = 0,
-    this.currentDelay = 0,
     this.currentPrices = const {},
     this.prices = const [],
     this.isLoadPcs = true,
@@ -69,6 +69,7 @@ class MainGameViewModelState {
     this.isShowNews = isShowNews ?? false;
     this.modalPCIndex = modalPCIndex ?? 0;
     this.date = date ?? DateTime.now();
+    // this.clicker = clicker ?? Clicker.start();
   }
 
   late Statistics statistics;
@@ -79,12 +80,27 @@ class MainGameViewModelState {
   late DateTime date;
   late double money;
   final Map<int, double> currentPrices;
+  // late Clicker clicker;
 
   bool isModalExitShow = false;
   bool isOpenModalTokens = false;
   bool isLoadPcs;
   bool isShowNews = false;
   int modalPCIndex = 0;
+
+  // double get percentCurrentClicks => clicker.currentClicks / clicker.maxClicks;
+  // double get percentCurrentDelay => (clicker.maxDelay - clicker.currentDelay) / clicker.maxDelay;
+  // String get currentDelayString {
+  //   var minutes = 0;
+  //   var seconds = 0;
+  //   if (clicker.currentClicks == 0) {
+  //     minutes = (clicker.currentDelay / 60).floor();
+  //     seconds = clicker.currentDelay - minutes * 60;
+  //   }
+  //   final minutesString = minutes < 10 ? '0$minutes' : '$minutes';
+  //   final secondsString = seconds < 10 ? '0$seconds' : '$seconds';
+  //   return '$minutesString:$secondsString';
+  // }
 
   double get averageEarnings {
     var result = 0.0;
@@ -121,22 +137,6 @@ class MainGameViewModelState {
     } catch (e) {
       return prices.firstWhere((price) => price.tokenId == token.id);
     }
-  }
-
-  final int currentClicks;
-  final int currentDelay;
-  double get percentCurrentClicks => currentClicks / Game.maxClicks;
-  double get percentCurrentDelay => (Game.maxDelay - currentDelay) / Game.maxDelay;
-  String get currentDelayString {
-    var minutes = 0;
-    var seconds = 0;
-    if (currentClicks == 0) {
-      minutes = (currentDelay / 60).floor();
-      seconds = currentDelay - minutes * 60;
-    }
-    final minutesString = minutes < 10 ? '0$minutes' : '$minutes';
-    final secondsString = seconds < 10 ? '0$seconds' : '$seconds';
-    return '$minutesString:$secondsString';
   }
 
   double get monthConsume => flatConsume + energyConsumeCost;
@@ -205,7 +205,8 @@ class MainGameViewModel extends ChangeNotifier {
     _flatStreamSub?.cancel();
     _pcStreamSub?.cancel();
     _priceTokenStreamSub?.cancel();
-    _delayClickerPCSub?.cancel();
+    // _delayClickerPCSub?.cancel();
+    // _clickerStreamSub?.cancel();
     super.dispose();
   }
 
@@ -215,12 +216,14 @@ class MainGameViewModel extends ChangeNotifier {
   final _flatRepository = FlatRepository();
   final _pcRepository = PCRepository();
   final _priceTokenRepository = PriceTokenRepository();
+  // final _clickerRepository = ClickerRepository();
   StreamSubscription<dynamic>? _gameStreamSub;
   StreamSubscription<dynamic>? _statisticsStreamSub;
   StreamSubscription<dynamic>? _tokensStreamSub;
   StreamSubscription<dynamic>? _flatStreamSub;
   StreamSubscription<dynamic>? _pcStreamSub;
   StreamSubscription<dynamic>? _priceTokenStreamSub;
+  // StreamSubscription<dynamic>? _clickerStreamSub;
 
   var _state = MainGameViewModelState.empty();
   MainGameViewModelState get state => _state;
@@ -228,21 +231,21 @@ class MainGameViewModel extends ChangeNotifier {
   static const daysUntilTheEndOfMonth = 7;
   DateTime lastNotifyDate = DateTime.now();
 
-  StreamSubscription<dynamic>? _delayClickerPCSub;
-  static const double _minRandomMoney = 0.01;
-  static const double _maxRandomMoney = 0.10;
-  static const double critRandomMoney = 100;
-  static const double _probabilityCritRandomMoney = 0.1;
-  static double getRandomMoney() {
-    final rnd = Random();
-    final isCrit = rnd.nextDouble() <= _probabilityCritRandomMoney;
-    if (isCrit) {
-      return critRandomMoney;
-    } else {
-      return double.parse(
-          (_minRandomMoney + rnd.nextDouble() * (_maxRandomMoney - _minRandomMoney)).toStringAsFixed(2));
-    }
-  }
+  // StreamSubscription<dynamic>? _delayClickerPCSub;
+  // static const double _minRandomMoney = 0.01;
+  // static const double _maxRandomMoney = 0.10;
+  // static const double critRandomMoney = 100;
+  // static const double _probabilityCritRandomMoney = 0.1;
+  // static double getRandomMoney() {
+  //   final rnd = Random();
+  //   final isCrit = rnd.nextDouble() <= _probabilityCritRandomMoney;
+  //   if (isCrit) {
+  //     return critRandomMoney;
+  //   } else {
+  //     return double.parse(
+  //         (_minRandomMoney + rnd.nextDouble() * (_maxRandomMoney - _minRandomMoney)).toStringAsFixed(2));
+  //   }
+  // }
 
   Future<void> _initialRepositories() async {
     await _gameRepository.init();
@@ -251,8 +254,9 @@ class MainGameViewModel extends ChangeNotifier {
     await _flatRepository.init();
     await _pcRepository.init();
     await _priceTokenRepository.init();
+    // await _clickerRepository.init();
     _subscriteStreams();
-    _subscribeOnDelayClickablePc(true);
+    // _subscribeOnDelayClickablePc(true);
     await _updateState();
   }
 
@@ -266,6 +270,8 @@ class MainGameViewModel extends ChangeNotifier {
     _pcStreamSub = PCRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _pcRepository));
     _priceTokenStreamSub =
         PriceTokenRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _priceTokenRepository));
+    // _clickerStreamSub =
+    //     ClickerRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _clickerRepository));
   }
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
@@ -308,11 +314,10 @@ class MainGameViewModel extends ChangeNotifier {
       date: _gameRepository.game.date,
       money: _gameRepository.game.money,
       currentPrices: currentPrices,
-      currentClicks: _gameRepository.game.currentClicks,
-      currentDelay: _gameRepository.game.secondsDelay,
       isOpenModalTokens: _state.isOpenModalTokens,
       modalPCIndex: _state.modalPCIndex,
       isShowNews: _state.isShowNews,
+      // clicker: _clickerRepository.clicker,
     );
     notifyListeners();
   }
@@ -331,42 +336,42 @@ class MainGameViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> onClickerPcPressed(double rndMoney) async {
-    await _gameRepository.decreaceClick();
-    if (_gameRepository.game.currentClicks > 0) {
-      await _gameRepository.changeData(money: _state.money + rndMoney);
-      _updateState();
-      return true;
-    } else {
-      _subscribeOnDelayClickablePc();
-    }
-    return false;
-  }
+  // Future<bool> onClickerPcPressed(double rndMoney) async {
+  //   await _clickerRepository.decreaceClick();
+  //   if (_state.clicker.currentClicks > 0) {
+  //     await _gameRepository.changeData(money: _state.money + rndMoney);
+  //     _updateState();
+  //     return true;
+  //   } else {
+  //     _subscribeOnDelayClickablePc();
+  //   }
+  //   return false;
+  // }
 
-  void _subscribeOnDelayClickablePc([bool isInitial = false]) {
-    final isNotStartDelayInNotInitialSubscribe = _gameRepository.game.secondsDelay == 0 && !isInitial;
-    final isHaveDelayAndInitialSubscribe = isInitial && _gameRepository.game.secondsDelay > 0;
-    final isHaveSubscribe = _delayClickerPCSub != null;
-    if ((isNotStartDelayInNotInitialSubscribe || isHaveDelayAndInitialSubscribe) && !isHaveSubscribe) {
-      final stream = Stream.periodic(const Duration(seconds: 1));
-      if (!isInitial) {
-        _gameRepository.restoreDelay();
-      }
-      _delayClickerPCSub = stream.listen(_checkEndDelayClickablePc);
-    }
-  }
+  // void _subscribeOnDelayClickablePc([bool isInitial = false]) {
+  //   final isNotStartDelayInNotInitialSubscribe = _state.clicker.currentDelay == 0 && !isInitial;
+  //   final isHaveDelayAndInitialSubscribe = isInitial && _state.clicker.currentDelay > 0;
+  //   final isHaveSubscribe = _delayClickerPCSub != null;
+  //   if ((isNotStartDelayInNotInitialSubscribe || isHaveDelayAndInitialSubscribe) && !isHaveSubscribe) {
+  //     final stream = Stream.periodic(const Duration(seconds: 1));
+  //     if (!isInitial) {
+  //       _clickerRepository.restoreDelay();
+  //     }
+  //     _delayClickerPCSub = stream.listen(_checkEndDelayClickablePc);
+  //   }
+  // }
 
-  Future<void> _checkEndDelayClickablePc(dynamic event) async {
-    if (_gameRepository.game.secondsDelay != 0) {
-      await _gameRepository.decreaceDelay();
-    }
-    if (_gameRepository.game.secondsDelay == 0) {
-      _delayClickerPCSub!.cancel();
-      _delayClickerPCSub = null;
-      await _gameRepository.restoreClicks();
-    }
-    _updateState();
-  }
+  // Future<void> _checkEndDelayClickablePc(dynamic event) async {
+  //   if (_state.clicker.currentDelay != 0) {
+  //     await _clickerRepository.decreaceDelay();
+  //   }
+  //   if (_state.clicker.currentDelay == 0) {
+  //     _delayClickerPCSub!.cancel();
+  //     _delayClickerPCSub = null;
+  //     await _clickerRepository.restoreClicks();
+  //   }
+  //   _updateState();
+  // }
 
   void BABLO() {
     _gameRepository.changeData(money: _state.money + 100);

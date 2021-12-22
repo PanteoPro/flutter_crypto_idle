@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:crypto_idle/config.dart';
+import 'package:crypto_idle/domain/entities/clicker.dart';
 import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/domain/entities/news.dart';
@@ -220,6 +221,7 @@ class InitialDataManager {
   static const String priceTokenBoxName = 'price_token';
   static const String statisticsBoxName = 'statistics';
   static const String newsBoxName = 'news';
+  static const String clickerBoxName = 'clicker';
 
   Future<void> init() async {
     final needResetPCData = !await _checkPCData();
@@ -262,6 +264,7 @@ class InitialDataManager {
     await Hive.deleteBoxFromDisk(priceTokenBoxName);
     await Hive.deleteBoxFromDisk(statisticsBoxName);
     await Hive.deleteBoxFromDisk(newsBoxName);
+    await Hive.deleteBoxFromDisk(clickerBoxName);
   }
 
   Future<void> registerAllAdapters() async {
@@ -272,6 +275,7 @@ class InitialDataManager {
     _registerAdapter<PriceToken>(4, PriceTokenAdapter());
     _registerAdapter<Statistics>(5, StatisticsAdapter());
     _registerAdapter<News>(6, NewsAdapter());
+    _registerAdapter<Clicker>(7, ClickerAdapter());
   }
 
   void _registerAdapter<T>(int typeID, TypeAdapter<T> adapter) {

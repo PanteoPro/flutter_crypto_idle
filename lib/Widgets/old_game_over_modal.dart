@@ -1,5 +1,5 @@
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/main_game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/main_game/main_game_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 

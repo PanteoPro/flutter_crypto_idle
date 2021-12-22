@@ -10,9 +10,9 @@ import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/ui/navigators/game_navigator.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/day_stream_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/main_game/day_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/main_game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/main_game/main_game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -363,7 +363,7 @@ class _HeaderClickerPCWidgetState extends State<_HeaderClickerPCWidget> {
             children: [
               Text('Click me'),
               GestureDetector(
-                onTap: () => gameOver ? null : _startAnimate(vm.onClickerPcPressed),
+                // onTap: () => gameOver ? null : _startAnimate(vm.onClickerPcPressed),
                 child: SizedBox(
                   width: 80,
                   height: 80,

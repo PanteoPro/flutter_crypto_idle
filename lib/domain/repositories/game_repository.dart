@@ -25,6 +25,11 @@ class GameRepository implements MyRepository {
     _game = _gameDataProvider.loadData();
   }
 
+  Future<void> addMoney(double money) async {
+    _game = _game.copyWith(money: double.parse((_game.money + money).toStringAsFixed(2)));
+    await _save('Add Money');
+  }
+
   Future<void> changeData({
     double? money,
     String? nick,
@@ -46,32 +51,6 @@ class GameRepository implements MyRepository {
     if (money != null || nick != null || date != null || gameOver != null) {
       await _save('change date');
     }
-  }
-
-  Future<bool> decreaceClick() async {
-    if (_game.currentClicks > 0) {
-      _game = _game.copyWith(currentClicks: _game.currentClicks - 1);
-      await _save('decreace click');
-      return true;
-    }
-    return false;
-  }
-
-  Future<void> decreaceDelay() async {
-    if (_game.secondsDelay > 0) {
-      _game = _game.copyWith(secondsDelay: _game.secondsDelay - 1);
-      await _save('decreace delay');
-    }
-  }
-
-  Future<void> restoreClicks() async {
-    _game = _game.copyWith(currentClicks: Game.maxClicks);
-    await _save('restore clicks');
-  }
-
-  Future<void> restoreDelay() async {
-    _game = _game.copyWith(secondsDelay: Game.maxDelay);
-    await _save('restore clicks');
   }
 
   Future<void> nextDay() async {

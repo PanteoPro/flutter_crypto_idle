@@ -1,9 +1,9 @@
 import 'package:crypto_idle/ui/navigators/game_navigator.dart';
 import 'package:crypto_idle/ui/widgets/game/view/main_game/new_main_game_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/navigator/game_navigator_widget.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/day_stream_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/main_game/day_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/main_game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/main_game/main_game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/message_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/menu/view/menu_about_page.dart';
 import 'package:crypto_idle/ui/widgets/menu/view/menu_page.dart';
