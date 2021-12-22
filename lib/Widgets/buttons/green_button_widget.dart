@@ -25,6 +25,7 @@ class GreenButtonWidget extends StatelessWidget {
         onPressed: onPressed,
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(backgroundColor),
+          padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 0)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
@@ -36,6 +37,7 @@ class GreenButtonWidget extends StatelessWidget {
         ),
         child: Text(
           text,
+          maxLines: 1,
           style: AppFonts.main.copyWith(color: AppColors.white),
         ),
       ),

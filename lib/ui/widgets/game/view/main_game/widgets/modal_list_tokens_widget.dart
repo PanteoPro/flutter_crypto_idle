@@ -255,9 +255,10 @@ class _ModalListItemOtherWidget extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 6),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 _ModalListItemOtherCurrentPriceWidget(index: index),
                 if (!token.isScam) _ModalListItemOtherMonthPriceWidget(index: index),

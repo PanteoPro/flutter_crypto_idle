@@ -38,21 +38,24 @@ class _NewsOlderNewsWidget extends StatelessWidget {
     final news = context.select((DayStreamViewModel vm) => vm.newsListToDisplay);
     final newsToDisplay = news.sublist(min(1, news.length), min(4, news.length));
     final isShowNews = context.select((MainGameViewModel vm) => vm.state.isShowNews);
-    return AnimatedContainer(
-      width: double.infinity,
-      height: isShowNews ? 28 * 3 + 6 * 4 : 0,
-      color: AppColors.black90,
+
+    return AnimatedSize(
       alignment: isShowNews ? Alignment.center : AlignmentDirectional.topCenter,
       duration: const Duration(seconds: 1),
       curve: Curves.fastOutSlowIn,
-      clipBehavior: Clip.hardEdge,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 6.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            for (final news in newsToDisplay) ...[_NewsOlderItemWidget(news: news), const SizedBox(height: 6)],
-          ],
+      child: ColoredBox(
+        color: AppColors.black90,
+        child: ConstrainedBox(
+          constraints: !isShowNews ? const BoxConstraints(maxHeight: 0) : const BoxConstraints(),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 6.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for (final news in newsToDisplay) ...[_NewsOlderItemWidget(news: news), const SizedBox(height: 6)],
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -69,8 +72,10 @@ class _NewsOlderItemWidget extends StatelessWidget {
     final locale = context.read<MainAppViewModel>().locale;
     final format = DateFormat.yMd(locale.languageCode);
     final stringDate = format.format(news.date);
-    return SizedBox(
-      height: 28,
+    // SchedulerBinding.instance
+    //     ?.addPostFrameCallback((_) => context.read<MainGameViewModel>().postFrameCallbackOlderNews(context));
+    return ConstrainedBox(
+      constraints: BoxConstraints.loose(Size(double.infinity, 28)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -443,12 +448,13 @@ class __ComputerItemButtonOrMiningWidget extends StatelessWidget {
     final pc = vm.state.myPCs[index];
 
     return SizedBox(
-      width: 100,
+      width: 120,
       child: TextButton(
         onPressed: () => vm.onOpenModalButtonPressed(index),
         child: Text(
           pc.miningToken != null ? 'Майнится: ${pc.miningToken?.symbol}' : 'НАЗНАЧИТЬ',
           textAlign: TextAlign.center,
+          maxLines: 1,
           style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
         ),
       ),

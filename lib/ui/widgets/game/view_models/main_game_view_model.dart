@@ -89,7 +89,9 @@ class MainGameViewModelState {
   double get averageEarnings {
     var result = 0.0;
     for (final pc in myPCs) {
-      result += pc.incomeCash;
+      if (pc.miningToken != null) {
+        result += pc.incomeCash;
+      }
     }
     return double.parse(result.toStringAsFixed(2));
   }
