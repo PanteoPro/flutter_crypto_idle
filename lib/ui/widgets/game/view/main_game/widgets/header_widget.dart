@@ -133,7 +133,6 @@ class _NewsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vm = context.read<MainGameViewModel>();
     return ColoredBox(
       color: AppColors.secondGrey,
       child: SizedBox(
@@ -147,28 +146,50 @@ class _NewsWidget extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GestureDetector(
-                      onTap: vm.onShowNewsButtonPressed,
-                      child: SizedBox(
-                        height: 40,
-                        child: Column(
-                          children: [
-                            Text(
-                              'Новости:',
-                              style: AppFonts.main.copyWith(color: AppColors.green),
-                            ),
-                            Expanded(
-                              child: Image.asset(AppIconsImages.downIcon, width: 19, height: 19),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    _NewsLeftRowWidget(),
                     const SizedBox(width: 6),
                     const Expanded(
                       child: _NewsFirstNewsWidget(),
                     ),
                   ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _NewsLeftRowWidget extends StatelessWidget {
+  const _NewsLeftRowWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = context.read<MainGameViewModel>();
+    final isShowNews = context.select((MainGameViewModel vm) => vm.state.isShowNews);
+
+    return GestureDetector(
+      onTap: vm.onShowNewsButtonPressed,
+      child: SizedBox(
+        height: 40,
+        child: Column(
+          children: [
+            Text(
+              'Новости:',
+              style: AppFonts.main.copyWith(color: AppColors.green),
+            ),
+            Expanded(
+              child: AnimatedRotation(
+                turns: isShowNews ? 0.5 : 0,
+                duration: Duration(milliseconds: isShowNews ? 500 : 200),
+                child: Image.asset(
+                  AppIconsImages.downIcon,
+                  width: 19,
+                  height: 19,
                 ),
               ),
             ),
