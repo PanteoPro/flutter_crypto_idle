@@ -8,11 +8,13 @@ class GreenButtonWidget extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.color = AppColors.green,
+    this.backgroundColor = AppColors.secondGrey,
   }) : super(key: key);
 
   final String text;
   final VoidCallback? onPressed;
   final Color color;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class GreenButtonWidget extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(AppColors.secondGrey),
+          backgroundColor: MaterialStateProperty.all(backgroundColor),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
