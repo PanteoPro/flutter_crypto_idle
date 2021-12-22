@@ -40,6 +40,7 @@ class MyMaterialApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final locale = context.select((MainAppViewModel vm) => vm.locale);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       locale: locale,
       theme: light,
       darkTheme: dark,

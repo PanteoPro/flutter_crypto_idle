@@ -44,7 +44,7 @@ class _NewsOlderNewsWidget extends StatelessWidget {
       duration: const Duration(seconds: 1),
       curve: Curves.fastOutSlowIn,
       child: ColoredBox(
-        color: AppColors.black90,
+        color: AppColors.black80,
         child: ConstrainedBox(
           constraints: !isShowNews ? const BoxConstraints(maxHeight: 0) : const BoxConstraints(),
           child: Padding(
