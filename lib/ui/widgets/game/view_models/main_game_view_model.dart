@@ -303,7 +303,7 @@ class MainGameViewModel extends ChangeNotifier {
       tokens: _tokensRepository.tokens,
       prices: _priceTokenRepository.prices,
       flat: _flatRepository.currentFlat,
-      myPCs: _pcRepository.pcs,
+      myPCs: _pcRepository.pcs.reversed.toList(),
       isModalExitShow: _state.isModalExitShow,
       date: _gameRepository.game.date,
       money: _gameRepository.game.money,
