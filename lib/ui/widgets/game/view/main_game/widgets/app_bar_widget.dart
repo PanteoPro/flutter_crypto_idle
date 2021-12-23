@@ -48,7 +48,15 @@ class _DataWidget extends StatelessWidget {
     final format = DateFormat.yMd(locale.languageCode);
     final date = context.select((MainGameViewModel vm) => vm.state.date);
     final stringDate = format.format(date);
-    return Text(stringDate, style: AppFonts.main.copyWith(color: AppColors.white));
+    return AnimatedSwitcher(
+      // transitionBuilder: (child, animation) => ScaleTransition(scale: animation, child: child),
+      duration: const Duration(seconds: 1),
+      child: Text(
+        stringDate,
+        key: ValueKey(stringDate),
+        style: AppFonts.main.copyWith(color: AppColors.white),
+      ),
+    );
   }
 }
 

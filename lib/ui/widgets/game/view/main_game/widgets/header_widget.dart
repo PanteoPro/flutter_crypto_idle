@@ -145,10 +145,10 @@ class _NewsWidget extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: const [
                     _NewsLeftRowWidget(),
-                    const SizedBox(width: 6),
-                    const Expanded(
+                    SizedBox(width: 6),
+                    Expanded(
                       child: _NewsFirstNewsWidget(),
                     ),
                   ],
@@ -207,11 +207,25 @@ class _NewsFirstNewsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final news = context.select((DayStreamViewModel vm) => vm.newsListToDisplay);
     final newsText = news.isEmpty ? '' : news.first.text;
-    return Text(
-      newsText,
-      maxLines: 2,
-      style: AppFonts.mainLight.copyWith(color: Colors.white),
-      overflow: TextOverflow.ellipsis,
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 500),
+      child: SizedBox(
+        key: ValueKey(newsText),
+        height: 40,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Text(
+                newsText,
+                maxLines: 2,
+                style: AppFonts.mainLight.copyWith(color: Colors.white),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -9,12 +9,44 @@ class TestWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Test Page')),
-      body: const SafeArea(
+      body: SafeArea(
         child: Center(
-          child: _ClickableCPWidget(),
+          child: Column(
+            children: const [
+              _ClickableCPWidget(),
+              _AnimatedSwitcherWidget(),
+            ],
+          ),
         ),
       ),
     );
+  }
+}
+
+class _AnimatedSwitcherWidget extends StatefulWidget {
+  const _AnimatedSwitcherWidget({Key? key}) : super(key: key);
+
+  @override
+  __AnimatedSwitcherWidgetState createState() => __AnimatedSwitcherWidgetState();
+}
+
+class __AnimatedSwitcherWidgetState extends State<_AnimatedSwitcherWidget> {
+  late Widget _myWidget;
+  @override
+  void initState() {
+    super.initState();
+    _myWidget = Text('HEllo', key: ValueKey<int>(1));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () {
+          setState(() {
+            _myWidget = Text('now hello', key: ValueKey<int>(2));
+          });
+        },
+        child: AnimatedSwitcher(duration: const Duration(seconds: 1), child: _myWidget));
   }
 }
 
