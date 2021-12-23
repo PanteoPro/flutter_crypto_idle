@@ -51,7 +51,6 @@ class ClickerGameViewModel extends ChangeNotifier {
   @override
   void dispose() {
     _delayClickerPCSub?.cancel();
-    _clickerStreamSub?.cancel();
     _gameStreamSub?.cancel();
     super.dispose();
   }
@@ -59,8 +58,6 @@ class ClickerGameViewModel extends ChangeNotifier {
   Future<void> _initialRepositories() async {
     await _clickerRepository.init();
     await _gameRepository.init();
-    _clickerStreamSub =
-        ClickerRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _clickerRepository));
     _gameStreamSub = GameRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _gameRepository));
     await _updateState();
     _subscribeOnDelayClickablePc(true);
@@ -68,14 +65,10 @@ class ClickerGameViewModel extends ChangeNotifier {
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
     if (repository.runtimeType == GameRepository) {
-      final event = data as GameRepositoryStreamEvents;
-      if (event != GameRepositoryStreamEvents.addMoney) {
+      if (data != GameRepositoryStreamEvents.clickerMoney) {
         repository.updateData();
         _updateState();
       }
-    } else {
-      repository.updateData();
-      _updateState();
     }
   }
 
@@ -95,7 +88,6 @@ class ClickerGameViewModel extends ChangeNotifier {
 
   final _clickerRepository = ClickerRepository();
   final _gameRepository = GameRepository();
-  StreamSubscription<dynamic>? _clickerStreamSub;
   StreamSubscription<GameRepositoryStreamEvents>? _gameStreamSub;
 
   StreamSubscription<dynamic>? _delayClickerPCSub;
@@ -108,12 +100,12 @@ class ClickerGameViewModel extends ChangeNotifier {
     final beforeDecreaceClicks = _clickerRepository.clicker.currentClicks;
     await _clickerRepository.decreaceClick();
     if (_clickerRepository.clicker.currentClicks > 0) {
-      await _gameRepository.addMoney(rndMoney);
+      await _gameRepository.clickerMoney(rndMoney);
       _updateState();
       return true;
     } else {
       if (beforeDecreaceClicks == 1) {
-        await _gameRepository.addMoney(rndMoney);
+        await _gameRepository.changeMoney(rndMoney);
         _updateState();
       }
       _subscribeOnDelayClickablePc();
@@ -155,7 +147,7 @@ class ClickerGameViewModel extends ChangeNotifier {
     final upgradeCost = _clickerRepository.clicker.upgradeCost;
     if (_gameRepository.game.money >= upgradeCost) {
       if (await _clickerRepository.levelUp()) {
-        _gameRepository.addMoney(-upgradeCost);
+        _gameRepository.changeMoney(-upgradeCost);
         return true;
       } else {
         // max LEvel

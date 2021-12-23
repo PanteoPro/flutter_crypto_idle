@@ -4,6 +4,8 @@ import 'package:crypto_idle/domain/data_providers/flat_data_provider.dart';
 import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 
+enum FlatRepositoryStreamEvents { addFlat, changeFlat }
+
 class FlatRepository implements MyRepository {
   final _flatDataProvider = FlatDataProvider();
   static final _streamController = StreamController<dynamic>();
@@ -34,7 +36,7 @@ class FlatRepository implements MyRepository {
   Future<void> addFlat(Flat flat) async {
     _flats.add(flat);
     await _flatDataProvider.saveData(flat);
-    _streamController.add('addFlat');
+    _streamController.add(FlatRepositoryStreamEvents.addFlat);
   }
 
   Future<void> changeFlat(Flat flat, {bool? isActive, bool? isBuy}) async {
@@ -45,6 +47,6 @@ class FlatRepository implements MyRepository {
       flat.isBuy = isBuy;
     }
     await flat.save();
-    _streamController.add('ChangeFlat');
+    _streamController.add(FlatRepositoryStreamEvents.changeFlat);
   }
 }

@@ -88,7 +88,7 @@ class GameMarketFlatViewModel extends ChangeNotifier {
         await _flatRepository.changeFlat(flat, isBuy: true, isActive: true);
         await _flatRepository.changeFlat(currentFlat, isActive: false);
 
-        await _gameRepository.changeData(money: _state.money - flat.cost);
+        await _gameRepository.changeMoney(-flat.cost);
         await _statisticsRepository.addFlatConsume(flat.cost);
         MessageManager.addMessage(text: 'Куплено жилье ${flat.name} по цене ${flat.cost}\$');
       } else {

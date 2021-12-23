@@ -27,10 +27,8 @@ class DayStreamViewModel extends ChangeNotifier {
     _gameStreamSub?.cancel();
     _pcStreamSub?.cancel();
     _tokenStreamSub?.cancel();
-    _priceTokenStreamSub?.cancel();
-    _statisticsStreamSub?.cancel();
-    _newsStreamSub?.cancel();
     _flatStreamSub?.cancel();
+    _newsStreamSub?.cancel();
     _dayStreamSub.cancel();
     super.dispose();
   }
@@ -68,10 +66,8 @@ class DayStreamViewModel extends ChangeNotifier {
   StreamSubscription<dynamic>? _gameStreamSub;
   StreamSubscription<dynamic>? _pcStreamSub;
   StreamSubscription<dynamic>? _tokenStreamSub;
-  StreamSubscription<dynamic>? _priceTokenStreamSub;
-  StreamSubscription<dynamic>? _statisticsStreamSub;
-  StreamSubscription<dynamic>? _newsStreamSub;
   StreamSubscription<dynamic>? _flatStreamSub;
+  StreamSubscription<dynamic>? _newsStreamSub;
 
   Future<void> _initialRepository() async {
     await _gameRepository.init();
@@ -90,15 +86,12 @@ class DayStreamViewModel extends ChangeNotifier {
     _pcStreamSub = PCRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _pcRepository));
     _tokenStreamSub =
         TokenRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _tokenRepository));
-    _priceTokenStreamSub =
-        PriceTokenRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _priceTokenRepository));
-    _statisticsStreamSub =
-        StatisticsRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _statisticsRepository));
+    _flatStreamSub = FlatRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _flatRepository));
     _newsStreamSub = NewsRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _newsRepository));
-    _flatStreamSub = NewsRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _flatRepository));
   }
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
+    print('Day Stream - $data ${repository.runtimeType}');
     repository.updateData();
     if (repository.runtimeType == NewsRepository) {
       _updateNews();
@@ -161,8 +154,8 @@ class DayStreamViewModel extends ChangeNotifier {
     final nowDate = _gameRepository.game.date;
     final prevDate = nowDate.add(const Duration(days: -1));
     if (nowDate.day < prevDate.day) {
-      await _gameRepository.changeData(money: _gameRepository.game.money - _flatConsume);
-      await _gameRepository.changeData(money: _gameRepository.game.money - _energyConsumeCost);
+      await _gameRepository.changeMoney(-_flatConsume);
+      await _gameRepository.changeMoney(-_energyConsumeCost);
       _newsRepository.createNewsByMonthyPayments(flat: _flatConsume, energy: _energyConsumeCost, date: nowDate);
       isNotificateUntilTheEndOfMonth = false;
     }
@@ -211,6 +204,8 @@ class DayStreamViewModel extends ChangeNotifier {
   Future<void> _miningDay() async {
     final ownPC = _pcRepository.pcs;
     final tokens = _tokenRepository.tokens;
+    _priceTokenRepository.updateData();
+    _statisticsRepository.updateData();
     for (final pc in ownPC) {
       if (pc.miningToken != null) {
         final token = tokens.firstWhere((element) => element.id == pc.miningToken!.id);

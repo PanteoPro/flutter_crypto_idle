@@ -6,6 +6,12 @@ import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/initial_data.dart';
 
+enum TokenRepositoryStreamEvent {
+  addToken,
+  deleteToken,
+  changeToken,
+}
+
 class TokenRepository implements MyRepository {
   final _tokenDataProvider = TokenDataProvider();
   static final _streamController = StreamController<dynamic>();
@@ -34,13 +40,13 @@ class TokenRepository implements MyRepository {
   Future<void> addToken(Token token) async {
     await _tokenDataProvider.saveData(token);
     updateData();
-    _streamController.add('Addtoken');
+    _streamController.add(TokenRepositoryStreamEvent.addToken);
   }
 
   Future<void> deleteToken(Token token) async {
     await _tokenDataProvider.deleteToken(token);
     updateData();
-    _streamController.add('DeleteToken');
+    _streamController.add(TokenRepositoryStreamEvent.deleteToken);
   }
 
   Future<void> changeToken(Token token, {double? count, bool? isScam}) async {
@@ -52,7 +58,7 @@ class TokenRepository implements MyRepository {
     }
     if (count != null || isScam != null) {
       await token.save();
-      _streamController.add('ChangeToken');
+      _streamController.add(TokenRepositoryStreamEvent.changeToken);
     }
   }
 

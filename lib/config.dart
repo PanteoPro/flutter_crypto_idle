@@ -48,15 +48,15 @@ class AppConfig {
     300000,
   ];
   static double minByLevel(int level) {
-    return 0.01 + (level - 1) * 0.03;
+    return double.parse((0.01 + (level - 1) * 0.03).toStringAsExponential(2));
   }
 
   static double maxByLevel(int level) {
-    return 0.2 + (level - 1) * 0.25;
+    return double.parse((0.2 + (level - 1) * 0.25).toStringAsExponential(2));
   }
 
   static double critByLevel(int level) {
-    return 1 + (level - 1) * 1.25;
+    return double.parse((1 + (level - 1) * 1.25).toStringAsExponential(2));
   }
 
   static double probabilityByLevel(int level) {

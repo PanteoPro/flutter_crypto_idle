@@ -5,6 +5,8 @@ import 'package:crypto_idle/domain/data_providers/clicker_data_provider.dart';
 import 'package:crypto_idle/domain/entities/clicker.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 
+enum ClickerRepositoryStreamEvents { levelUp, decreaceClick, decreaceDelay, resetClicks, resetDelay }
+
 class ClickerRepository implements MyRepository {
   final _clickerDataProvider = ClickerDataProvider();
   static final _streamController = StreamController<dynamic>();
@@ -25,10 +27,10 @@ class ClickerRepository implements MyRepository {
     _clicker = _clickerDataProvider.loadData();
   }
 
-  Future<void> _save(String message) async {
+  Future<void> _save(ClickerRepositoryStreamEvents event) async {
     await _clickerDataProvider.saveData(_clicker);
     updateData();
-    _streamController.add(message);
+    _streamController.add(event);
   }
 
   Future<bool> levelUp() async {
@@ -47,7 +49,7 @@ class ClickerRepository implements MyRepository {
         probabilityCrit: probabilityCrit,
         upgradeCost: upgradeCost,
       );
-      await _save('levelUp');
+      await _save(ClickerRepositoryStreamEvents.levelUp);
       return true;
     }
     return false;
@@ -56,7 +58,7 @@ class ClickerRepository implements MyRepository {
   Future<bool> decreaceClick() async {
     if (_clicker.currentClicks > 0) {
       _clicker = _clicker.copyWith(currentClicks: _clicker.currentClicks - 1);
-      await _save('decreace click');
+      await _save(ClickerRepositoryStreamEvents.decreaceClick);
       return true;
     }
     return false;
@@ -65,17 +67,17 @@ class ClickerRepository implements MyRepository {
   Future<void> decreaceDelay() async {
     if (_clicker.currentDelay > 0) {
       _clicker = _clicker.copyWith(secondsDelay: _clicker.currentDelay - 1);
-      await _save('decreace delay');
+      await _save(ClickerRepositoryStreamEvents.decreaceDelay);
     }
   }
 
   Future<void> restoreClicks() async {
     _clicker = _clicker.copyWith(currentClicks: _clicker.maxClicks);
-    await _save('restore clicks');
+    await _save(ClickerRepositoryStreamEvents.resetClicks);
   }
 
   Future<void> restoreDelay() async {
     _clicker = _clicker.copyWith(secondsDelay: _clicker.maxDelay);
-    await _save('restore clicks');
+    await _save(ClickerRepositoryStreamEvents.resetDelay);
   }
 }

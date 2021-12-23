@@ -5,6 +5,8 @@ import 'package:crypto_idle/domain/entities/pc.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 
+enum PCRepositoryStreamEvents { addPc, sellPc, changeMiningToken }
+
 class PCRepository implements MyRepository {
   final _pcDataProvider = PCDataProvider();
   static final _streamController = StreamController<dynamic>();
@@ -40,14 +42,14 @@ class PCRepository implements MyRepository {
   Future<void> addPC(PC pc) async {
     await _pcDataProvider.saveData(pc);
     updateData();
-    _streamController.add('addPC');
+    _streamController.add(PCRepositoryStreamEvents.addPc);
   }
 
   Future<bool> sellPC(PC pc) async {
     final result = await _pcDataProvider.deletePC(pc);
     if (result) {
       updateData();
-      _streamController.add('sellPC');
+      _streamController.add(PCRepositoryStreamEvents.sellPc);
     }
     return result;
   }
@@ -55,6 +57,6 @@ class PCRepository implements MyRepository {
   Future<void> changeMiningToken(PC pc, [Token? token]) async {
     pc.miningToken = token;
     await pc.save();
-    _streamController.add('change mining token');
+    _streamController.add(PCRepositoryStreamEvents.changeMiningToken);
   }
 }

@@ -37,64 +37,87 @@ class _ClickerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vm = context.watch<ClickerGameViewModel>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: const [
           Expanded(
-            child: Column(
-              children: [
-                Text(
-                  'Уровень ${vm.state.clicker.level}',
-                  style: AppFonts.body2.copyWith(color: AppColors.white),
-                ),
-                GestureDetector(
-                  onTap: () => vm.onClickUpgradeButton(),
-                  child: Image.asset(AppIconsImages.upIcon, width: 32, height: 32),
-                ),
-                Text(
-                  'Улучшение',
-                  style: AppFonts.body2.copyWith(color: AppColors.white),
-                ),
-                Text(
-                  'Стоимость ${S.of(context).text_with_dollar(vm.state.clicker.upgradeCost.toStringAsFixed(2))}',
-                  style: AppFonts.body2.copyWith(color: AppColors.white),
-                ),
-              ],
-            ),
+            child: _ClickerUpgradeWidget(),
           ),
-          const _CirlceWidget(),
+          _CirlceWidget(),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  'Денег за клик:',
-                  style: AppFonts.body.copyWith(color: AppColors.white),
-                ),
-                Text(
-                  'Мин ${vm.state.clicker.minMoney}\$',
-                  style: AppFonts.body.copyWith(color: AppColors.white),
-                ),
-                Text(
-                  'Макс ${vm.state.clicker.maxMoney}\$',
-                  style: AppFonts.body.copyWith(color: AppColors.white),
-                ),
-                Text(
-                  'Крит ${vm.state.clicker.critMoney}\$',
-                  style: AppFonts.body.copyWith(color: AppColors.white),
-                ),
-                Text(
-                  'Крит ${(vm.state.clicker.probabilityCrit * 100).toStringAsFixed(0)}%',
-                  style: AppFonts.body.copyWith(color: AppColors.white),
-                ),
-              ],
-            ),
+            child: _ClickerInfoWidget(),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ClickerInfoWidget extends StatelessWidget {
+  const _ClickerInfoWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = context.watch<ClickerGameViewModel>();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text(
+          'Денег за клик:',
+          style: AppFonts.body.copyWith(color: AppColors.white),
+        ),
+        Text(
+          'Мин ${vm.state.clicker.minMoney}\$',
+          style: AppFonts.body.copyWith(color: AppColors.white),
+        ),
+        Text(
+          'Макс ${vm.state.clicker.maxMoney}\$',
+          style: AppFonts.body.copyWith(color: AppColors.white),
+        ),
+        Text(
+          'Крит ${vm.state.clicker.critMoney}\$',
+          style: AppFonts.body.copyWith(color: AppColors.white),
+        ),
+        Text(
+          'Крит ${(vm.state.clicker.probabilityCrit * 100).toStringAsFixed(0)}%',
+          style: AppFonts.body.copyWith(color: AppColors.white),
+        ),
+      ],
+    );
+  }
+}
+
+class _ClickerUpgradeWidget extends StatelessWidget {
+  const _ClickerUpgradeWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = context.watch<ClickerGameViewModel>();
+    return Column(
+      children: [
+        Text(
+          'Уровень ${vm.state.clicker.level}',
+          style: AppFonts.body2.copyWith(color: AppColors.white),
+        ),
+        GestureDetector(
+          onTap: () => vm.onClickUpgradeButton(),
+          child: Image.asset(AppIconsImages.upIcon, width: 32, height: 32),
+        ),
+        Text(
+          'Улучшение',
+          style: AppFonts.body2.copyWith(color: AppColors.white),
+        ),
+        Text(
+          'Стоимость ${S.of(context).text_with_dollar(vm.state.clicker.upgradeCost.toStringAsFixed(2))}',
+          style: AppFonts.body2.copyWith(color: AppColors.white),
+        ),
+      ],
     );
   }
 }
@@ -196,6 +219,7 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
     final delayText = vm.state.currentDelayString;
 
     final isNoData = percentCurrentClicks == 0 && percentCurrentDelay == 1;
+
     return Center(
       child: Stack(
         children: [

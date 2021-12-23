@@ -107,7 +107,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
             final lastPrice = _state.getLastPrice().cost;
             final income = double.parse((volume * lastPrice).toStringAsFixed(2));
 
-            await _gameRepository.changeData(money: _gameRepository.game.money + income);
+            await _gameRepository.changeMoney(income);
             await _tokenRepository.changeToken(_state.token!, count: _state.token!.count - volume);
             await _statisticsRepository.addTokenEarn(_state.token!, income);
             volumeSellTextController.text = '';
@@ -140,7 +140,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
             final lastPrice = _state.getLastPrice().cost;
             final countTokens = double.parse((volume / lastPrice).toStringAsFixed(8));
 
-            await _gameRepository.changeData(money: _gameRepository.game.money - volume);
+            await _gameRepository.changeMoney(-volume);
             await _tokenRepository.changeToken(_state.token!, count: _state.token!.count + countTokens);
             volumeBuyTextController.text = '';
             MessageManager.addMessage(

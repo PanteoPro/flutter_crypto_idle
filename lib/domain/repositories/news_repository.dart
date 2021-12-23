@@ -85,6 +85,10 @@ class _NewsRepositoryParams {
   ];
 }
 
+enum NewsRepositoryStreamEvents {
+  addNews,
+}
+
 class NewsRepository extends MyRepository {
   final _newsDataProvider = NewsDataProvider();
   final _tokenDataProvider = TokenDataProvider();
@@ -121,7 +125,7 @@ class NewsRepository extends MyRepository {
 
   Future<void> addNews(News news) async {
     await _newsDataProvider.saveData(news);
-    _streamController.add('Add News');
+    _streamController.add(NewsRepositoryStreamEvents.addNews);
   }
 
   // Get new if dateNow after lastGeneratedDate + waitDays
