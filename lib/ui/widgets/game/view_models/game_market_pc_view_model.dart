@@ -127,8 +127,8 @@ class GameMarketPCViewModel extends ChangeNotifier {
       if (_state.money >= pc.cost) {
         final maxCountPC = _flatRepository.flats.firstWhere((element) => element.isActive).countPC;
         if (_state.ownPCs.length < maxCountPC) {
-          await _pcRepository.addPC(pc);
           await _gameRepository.changeMoney(-pc.cost);
+          await _pcRepository.addPC(pc);
           await _statisticsRepository.addPCConsume(pc.cost);
           MessageManager.addMessage(text: 'Вы купили установку - ${pc.name} за ${pc.cost}\$', color: Colors.green);
         } else {
@@ -146,7 +146,7 @@ class GameMarketPCViewModel extends ChangeNotifier {
   Future<void> onSellButtonPressed(int index) async {
     final pc = _state.marketPCs[index];
     if (await _pcRepository.sellPC(pc)) {
-      await _gameRepository.changeMoney(-pc.costSell);
+      await _gameRepository.changeMoney(pc.costSell);
       MessageManager.addMessage(text: 'Вы продали установку - ${pc.name} за ${pc.costSell}\$', color: Colors.green);
     } else {
       MessageManager.addMessage(text: 'Вы не можете продать, то чего у вас нет', color: Colors.red);

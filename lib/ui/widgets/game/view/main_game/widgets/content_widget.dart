@@ -11,6 +11,7 @@ class _ContentWidget extends StatelessWidget {
         color: Theme.of(context).backgroundColor,
         child: Stack(
           children: [
+            const _ContentBackgroundImageWidget(),
             Column(
               children: const [
                 SizedBox(height: 20),
@@ -26,6 +27,35 @@ class _ContentWidget extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _ContentBackgroundImageWidget extends StatelessWidget {
+  const _ContentBackgroundImageWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: Image.asset(
+            AppBackgroundImages.tempContent2,
+            fit: BoxFit.cover,
+          ),
+        ),
+        const SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: ColoredBox(
+            color: AppColors.black80,
+          ),
+        ),
+      ],
     );
   }
 }

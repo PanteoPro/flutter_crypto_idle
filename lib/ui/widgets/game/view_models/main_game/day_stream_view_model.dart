@@ -91,7 +91,6 @@ class DayStreamViewModel extends ChangeNotifier {
   }
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
-    print('Day Stream - $data ${repository.runtimeType}');
     repository.updateData();
     if (repository.runtimeType == NewsRepository) {
       _updateNews();
