@@ -41,7 +41,9 @@ class MainGameViewModelState {
     required this.modalPCIndex,
     this.isLoadPcs = false,
     this.isShowNews = false,
-  });
+  }) {
+    sortTokens();
+  }
 
   MainGameViewModelState.empty({
     Statistics? statistics,
@@ -70,7 +72,7 @@ class MainGameViewModelState {
   }
 
   late Statistics statistics;
-  late List<Token> tokens;
+  List<Token> tokens = [];
   final List<PriceToken> prices;
   late List<PC> myPCs;
   late Flat flat;
@@ -83,6 +85,21 @@ class MainGameViewModelState {
   bool isLoadPcs;
   bool isShowNews = false;
   int modalPCIndex = 0;
+
+  void sortTokens() {
+    final scamTokens = tokens.where((element) => element.isScam).toList();
+    final normalTokens = tokens.where((element) => !element.isScam).toList();
+    normalTokens.sort((a, b) => b.dateCreated.compareTo(a.dateCreated));
+    tokens = [...normalTokens, ...scamTokens];
+  }
+
+  void openModalTokens() {
+    isOpenModalTokens = true;
+  }
+
+  void closeModalTokens() {
+    isOpenModalTokens = false;
+  }
 
   double get averageEarnings {
     var result = 0.0;
@@ -264,7 +281,7 @@ class MainGameViewModel extends ChangeNotifier {
     }
     _state = MainGameViewModelState(
       statistics: _statisticsRepository.statistics,
-      tokens: _tokensRepository.tokens,
+      tokens: [..._tokensRepository.tokens],
       prices: _priceTokenRepository.prices,
       flat: _flatRepository.currentFlat,
       myPCs: _pcRepository.pcs.reversed.toList(),
@@ -323,13 +340,13 @@ class MainGameViewModel extends ChangeNotifier {
   }
 
   void onOpenModalButtonPressed(int index) {
-    _state.isOpenModalTokens = true;
+    _state.openModalTokens();
     _state.modalPCIndex = index;
     notifyListeners();
   }
 
   void onExitModalAction() {
-    _state.isOpenModalTokens = false;
+    _state.closeModalTokens();
     notifyListeners();
   }
 

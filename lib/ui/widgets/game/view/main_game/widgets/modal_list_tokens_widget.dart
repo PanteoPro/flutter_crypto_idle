@@ -138,9 +138,10 @@ class _ModalListItemMainWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.read<MainGameViewModel>();
+    final isScam = context.select((MainGameViewModel vm) => vm.state.tokens[index].isScam);
     final token = vm.state.tokens[index];
     final isActiveToken = vm.state.isActiveTokenByTokenIndex(index);
-    final color = token.isScam
+    final color = isScam
         ? AppColors.red
         : isActiveToken
             ? AppColors.dollar
@@ -245,10 +246,10 @@ class _ModalListItemOtherWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.read<MainGameViewModel>();
-    final token = vm.state.tokens[index];
+    final isScam = context.select((MainGameViewModel vm) => vm.state.tokens[index].isScam);
     final isActiveToken = vm.state.isActiveTokenByTokenIndex(index);
 
-    final color = token.isScam
+    final color = isScam
         ? AppColors.red
         : isActiveToken
             ? AppColors.dollar
@@ -274,7 +275,7 @@ class _ModalListItemOtherWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 _ModalListItemOtherCurrentPriceWidget(index: index),
-                if (!token.isScam) _ModalListItemOtherMonthPriceWidget(index: index),
+                if (!isScam) _ModalListItemOtherMonthPriceWidget(index: index),
               ],
             ),
           ),
