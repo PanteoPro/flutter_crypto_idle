@@ -39,7 +39,6 @@ class MainGameViewModelState {
     required this.currentPrices,
     required this.isOpenModalTokens,
     required this.modalPCIndex,
-    // required this.clicker,
     this.isLoadPcs = false,
     this.isShowNews = false,
   });
@@ -54,7 +53,6 @@ class MainGameViewModelState {
     bool? isShowNews,
     int? modalPCIndex,
     DateTime? date,
-    // Clicker? clicker,
     this.money = 0,
     this.currentPrices = const {},
     this.prices = const [],
@@ -69,7 +67,6 @@ class MainGameViewModelState {
     this.isShowNews = isShowNews ?? false;
     this.modalPCIndex = modalPCIndex ?? 0;
     this.date = date ?? DateTime.now();
-    // this.clicker = clicker ?? Clicker.start();
   }
 
   late Statistics statistics;
@@ -80,27 +77,12 @@ class MainGameViewModelState {
   late DateTime date;
   late double money;
   final Map<int, double> currentPrices;
-  // late Clicker clicker;
 
   bool isModalExitShow = false;
   bool isOpenModalTokens = false;
   bool isLoadPcs;
   bool isShowNews = false;
   int modalPCIndex = 0;
-
-  // double get percentCurrentClicks => clicker.currentClicks / clicker.maxClicks;
-  // double get percentCurrentDelay => (clicker.maxDelay - clicker.currentDelay) / clicker.maxDelay;
-  // String get currentDelayString {
-  //   var minutes = 0;
-  //   var seconds = 0;
-  //   if (clicker.currentClicks == 0) {
-  //     minutes = (clicker.currentDelay / 60).floor();
-  //     seconds = clicker.currentDelay - minutes * 60;
-  //   }
-  //   final minutesString = minutes < 10 ? '0$minutes' : '$minutes';
-  //   final secondsString = seconds < 10 ? '0$seconds' : '$seconds';
-  //   return '$minutesString:$secondsString';
-  // }
 
   double get averageEarnings {
     var result = 0.0;
@@ -205,8 +187,6 @@ class MainGameViewModel extends ChangeNotifier {
     _flatStreamSub?.cancel();
     _pcStreamSub?.cancel();
     _priceTokenStreamSub?.cancel();
-    // _delayClickerPCSub?.cancel();
-    // _clickerStreamSub?.cancel();
     super.dispose();
   }
 
@@ -216,36 +196,18 @@ class MainGameViewModel extends ChangeNotifier {
   final _flatRepository = FlatRepository();
   final _pcRepository = PCRepository();
   final _priceTokenRepository = PriceTokenRepository();
-  // final _clickerRepository = ClickerRepository();
   StreamSubscription<dynamic>? _gameStreamSub;
   StreamSubscription<dynamic>? _statisticsStreamSub;
   StreamSubscription<dynamic>? _tokensStreamSub;
   StreamSubscription<dynamic>? _flatStreamSub;
   StreamSubscription<dynamic>? _pcStreamSub;
   StreamSubscription<dynamic>? _priceTokenStreamSub;
-  // StreamSubscription<dynamic>? _clickerStreamSub;
 
   var _state = MainGameViewModelState.empty();
   MainGameViewModelState get state => _state;
 
   static const daysUntilTheEndOfMonth = 7;
   DateTime lastNotifyDate = DateTime.now();
-
-  // StreamSubscription<dynamic>? _delayClickerPCSub;
-  // static const double _minRandomMoney = 0.01;
-  // static const double _maxRandomMoney = 0.10;
-  // static const double critRandomMoney = 100;
-  // static const double _probabilityCritRandomMoney = 0.1;
-  // static double getRandomMoney() {
-  //   final rnd = Random();
-  //   final isCrit = rnd.nextDouble() <= _probabilityCritRandomMoney;
-  //   if (isCrit) {
-  //     return critRandomMoney;
-  //   } else {
-  //     return double.parse(
-  //         (_minRandomMoney + rnd.nextDouble() * (_maxRandomMoney - _minRandomMoney)).toStringAsFixed(2));
-  //   }
-  // }
 
   Future<void> _initialRepositories() async {
     await _gameRepository.init();
@@ -254,9 +216,7 @@ class MainGameViewModel extends ChangeNotifier {
     await _flatRepository.init();
     await _pcRepository.init();
     await _priceTokenRepository.init();
-    // await _clickerRepository.init();
     _subscriteStreams();
-    // _subscribeOnDelayClickablePc(true);
     await _updateState();
   }
 
@@ -270,8 +230,6 @@ class MainGameViewModel extends ChangeNotifier {
     _pcStreamSub = PCRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _pcRepository));
     _priceTokenStreamSub =
         PriceTokenRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _priceTokenRepository));
-    // _clickerStreamSub =
-    //     ClickerRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _clickerRepository));
   }
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
@@ -334,47 +292,6 @@ class MainGameViewModel extends ChangeNotifier {
   void onNoExitButtonPressed() {
     _state.isModalExitShow = false;
     notifyListeners();
-  }
-
-  // Future<bool> onClickerPcPressed(double rndMoney) async {
-  //   await _clickerRepository.decreaceClick();
-  //   if (_state.clicker.currentClicks > 0) {
-  //     await _gameRepository.changeData(money: _state.money + rndMoney);
-  //     _updateState();
-  //     return true;
-  //   } else {
-  //     _subscribeOnDelayClickablePc();
-  //   }
-  //   return false;
-  // }
-
-  // void _subscribeOnDelayClickablePc([bool isInitial = false]) {
-  //   final isNotStartDelayInNotInitialSubscribe = _state.clicker.currentDelay == 0 && !isInitial;
-  //   final isHaveDelayAndInitialSubscribe = isInitial && _state.clicker.currentDelay > 0;
-  //   final isHaveSubscribe = _delayClickerPCSub != null;
-  //   if ((isNotStartDelayInNotInitialSubscribe || isHaveDelayAndInitialSubscribe) && !isHaveSubscribe) {
-  //     final stream = Stream.periodic(const Duration(seconds: 1));
-  //     if (!isInitial) {
-  //       _clickerRepository.restoreDelay();
-  //     }
-  //     _delayClickerPCSub = stream.listen(_checkEndDelayClickablePc);
-  //   }
-  // }
-
-  // Future<void> _checkEndDelayClickablePc(dynamic event) async {
-  //   if (_state.clicker.currentDelay != 0) {
-  //     await _clickerRepository.decreaceDelay();
-  //   }
-  //   if (_state.clicker.currentDelay == 0) {
-  //     _delayClickerPCSub!.cancel();
-  //     _delayClickerPCSub = null;
-  //     await _clickerRepository.restoreClicks();
-  //   }
-  //   _updateState();
-  // }
-
-  void BABLO() {
-    _gameRepository.changeData(money: _state.money + 100);
   }
 
   void onBuyPcButtonPressed(BuildContext context) {

@@ -4,11 +4,13 @@ import 'package:crypto_idle/domain/data_providers/game_data_provider.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 
+enum GameRepositoryStreamEvents { addMoney, changeDate, nextDay }
+
 class GameRepository implements MyRepository {
   final _gameDataProvider = GameDataProvider();
 
-  static final _streamController = StreamController<dynamic>();
-  static Stream<dynamic>? stream;
+  static final _streamController = StreamController<GameRepositoryStreamEvents>();
+  static Stream<GameRepositoryStreamEvents>? stream;
 
   var _game = Game.empty(date: DateTime(0));
   Game get game => _game;
@@ -28,7 +30,7 @@ class GameRepository implements MyRepository {
   Future<void> addMoney(double money) async {
     _game = _game.copyWith(money: double.parse((_game.money + money).toStringAsFixed(2)));
     print(_game.money);
-    await _save('Add Money');
+    await _save(GameRepositoryStreamEvents.addMoney);
   }
 
   Future<void> changeData({
@@ -50,18 +52,18 @@ class GameRepository implements MyRepository {
       _game = _game.copyWith(gameOver: gameOver);
     }
     if (money != null || nick != null || date != null || gameOver != null) {
-      await _save('change date');
+      await _save(GameRepositoryStreamEvents.changeDate);
     }
   }
 
   Future<void> nextDay() async {
     _game = _game.copyWith(date: _game.date.add(const Duration(days: 1)));
-    await _save('next day');
+    await _save(GameRepositoryStreamEvents.nextDay);
   }
 
-  Future<void> _save(String message) async {
+  Future<void> _save(GameRepositoryStreamEvents event) async {
     await _gameDataProvider.saveData(_game);
     updateData();
-    _streamController.add(message);
+    _streamController.add(event);
   }
 }

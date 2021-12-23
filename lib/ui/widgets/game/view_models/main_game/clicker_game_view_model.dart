@@ -52,6 +52,7 @@ class ClickerGameViewModel extends ChangeNotifier {
   void dispose() {
     _delayClickerPCSub?.cancel();
     _clickerStreamSub?.cancel();
+    _gameStreamSub?.cancel();
     super.dispose();
   }
 
@@ -60,13 +61,22 @@ class ClickerGameViewModel extends ChangeNotifier {
     await _gameRepository.init();
     _clickerStreamSub =
         ClickerRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _clickerRepository));
+    _gameStreamSub = GameRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _gameRepository));
     await _updateState();
     _subscribeOnDelayClickablePc(true);
   }
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
-    repository.updateData();
-    _updateState();
+    if (repository.runtimeType == GameRepository) {
+      final event = data as GameRepositoryStreamEvents;
+      if (event != GameRepositoryStreamEvents.addMoney) {
+        repository.updateData();
+        _updateState();
+      }
+    } else {
+      repository.updateData();
+      _updateState();
+    }
   }
 
   Future<void> _updateState() async {
@@ -86,6 +96,7 @@ class ClickerGameViewModel extends ChangeNotifier {
   final _clickerRepository = ClickerRepository();
   final _gameRepository = GameRepository();
   StreamSubscription<dynamic>? _clickerStreamSub;
+  StreamSubscription<GameRepositoryStreamEvents>? _gameStreamSub;
 
   StreamSubscription<dynamic>? _delayClickerPCSub;
 
@@ -94,12 +105,17 @@ class ClickerGameViewModel extends ChangeNotifier {
   // ----- Clicker Logic -----
 
   Future<bool> onClickerPcPressed(double rndMoney) async {
+    final beforeDecreaceClicks = _clickerRepository.clicker.currentClicks;
     await _clickerRepository.decreaceClick();
     if (_clickerRepository.clicker.currentClicks > 0) {
       await _gameRepository.addMoney(rndMoney);
       _updateState();
       return true;
     } else {
+      if (beforeDecreaceClicks == 1) {
+        await _gameRepository.addMoney(rndMoney);
+        _updateState();
+      }
       _subscribeOnDelayClickablePc();
     }
     return false;

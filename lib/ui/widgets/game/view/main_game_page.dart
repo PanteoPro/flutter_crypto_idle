@@ -51,7 +51,6 @@ class MainGamePageOLD extends StatelessWidget {
                   children: const [
                     _MainWidget(),
                     // _PrototypeOfNewsWidget(),
-                    ______BUTTONMONEY______(),
                   ],
                 ),
               ),
@@ -129,26 +128,6 @@ class _ExitModalButtonsWidget extends StatelessWidget {
             child: MyButton(
                 color: Theme.of(context).splashColor, onPressed: vm.onNoExitButtonPressed, title: 'Остаться в игре')),
       ],
-    );
-  }
-}
-
-class ______BUTTONMONEY______ extends StatelessWidget {
-  const ______BUTTONMONEY______({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      top: 200,
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Center(
-          child: ElevatedButton(
-            onPressed: context.read<MainGameViewModel>().BABLO,
-            child: Text('БАБЛО'),
-          ),
-        ),
-      ),
     );
   }
 }
