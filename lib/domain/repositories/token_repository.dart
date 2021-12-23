@@ -9,7 +9,8 @@ import 'package:crypto_idle/initial_data.dart';
 enum TokenRepositoryStreamEvent {
   addToken,
   deleteToken,
-  changeToken,
+  changeCount,
+  scamToken,
 }
 
 class TokenRepository implements MyRepository {
@@ -49,17 +50,16 @@ class TokenRepository implements MyRepository {
     _streamController.add(TokenRepositoryStreamEvent.deleteToken);
   }
 
-  Future<void> changeToken(Token token, {double? count, bool? isScam}) async {
-    if (count != null) {
-      token.count = double.parse(count.toStringAsFixed(8));
-    }
-    if (isScam != null) {
-      token.isScam = isScam;
-    }
-    if (count != null || isScam != null) {
-      await token.save();
-      _streamController.add(TokenRepositoryStreamEvent.changeToken);
-    }
+  Future<void> changeCountByToken(Token token, double count) async {
+    token.count = double.parse(count.toStringAsFixed(8));
+    await token.save();
+    _streamController.add(TokenRepositoryStreamEvent.changeCount);
+  }
+
+  Future<void> setScamToken(Token token) async {
+    token.isScam = true;
+    await token.save();
+    _streamController.add(TokenRepositoryStreamEvent.scamToken);
   }
 
   /// Creating token - NoT ADD

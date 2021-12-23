@@ -108,7 +108,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
             final income = double.parse((volume * lastPrice).toStringAsFixed(2));
 
             await _gameRepository.changeMoney(income);
-            await _tokenRepository.changeToken(_state.token!, count: _state.token!.count - volume);
+            await _tokenRepository.changeCountByToken(_state.token!, _state.token!.count - volume);
             await _statisticsRepository.addTokenEarn(_state.token!, income);
             volumeSellTextController.text = '';
             MessageManager.addMessage(
@@ -141,7 +141,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
             final countTokens = double.parse((volume / lastPrice).toStringAsFixed(8));
 
             await _gameRepository.changeMoney(-volume);
-            await _tokenRepository.changeToken(_state.token!, count: _state.token!.count + countTokens);
+            await _tokenRepository.changeCountByToken(_state.token!, _state.token!.count + countTokens);
             volumeBuyTextController.text = '';
             MessageManager.addMessage(
               text: 'Куплено $countTokens ${_state.token!.symbol} по цене $lastPrice. Вы потратили $volume\$',

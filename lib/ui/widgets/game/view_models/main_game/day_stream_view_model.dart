@@ -212,7 +212,7 @@ class DayStreamViewModel extends ChangeNotifier {
         final lastPriceToken = _priceTokenRepository.getLatestPriceByTokenId(token.id).cost;
         final countMined = pc.incomeCash / lastPriceToken;
 
-        await _tokenRepository.changeToken(token, count: token.count + countMined);
+        await _tokenRepository.changeCountByToken(token, token.count + countMined);
         await _statisticsRepository.addTokenMining(token, countMined);
       }
     }
@@ -301,7 +301,7 @@ class DayStreamViewModel extends ChangeNotifier {
         final newPrice = price.cost * percentChange;
         newPrices.add(price.copyWith(cost: newPrice, date: currentDate));
         if (newPrice == 0) {
-          _tokenRepository.changeToken(currentToken, isScam: true);
+          _tokenRepository.setScamToken(currentToken);
         }
       }
     }
