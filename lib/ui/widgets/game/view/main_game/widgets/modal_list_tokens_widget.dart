@@ -72,8 +72,15 @@ class _ModalHeaderWidget extends StatelessWidget {
   }
 }
 
-class _ModalListWidget extends StatelessWidget {
+class _ModalListWidget extends StatefulWidget {
   const _ModalListWidget({Key? key}) : super(key: key);
+
+  @override
+  State<_ModalListWidget> createState() => _ModalListWidgetState();
+}
+
+class _ModalListWidgetState extends State<_ModalListWidget> {
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -81,12 +88,18 @@ class _ModalListWidget extends StatelessWidget {
     return ColoredBox(
       color: AppColors.mainGrey,
       child: Padding(
-        padding: const EdgeInsets.only(right: 1),
+        padding: const EdgeInsets.only(right: 4, top: 10, bottom: 10),
         child: Scrollbar(
+          controller: _scrollController,
+          isAlwaysShown: true,
           scrollbarOrientation: ScrollbarOrientation.right,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            padding: const EdgeInsets.only(
+              left: 12,
+              right: 12 - 4,
+            ),
             child: ListView.separated(
+              controller: _scrollController,
               itemBuilder: (ctx, index) => _ModalListItemWidget(index: index),
               separatorBuilder: (ctx, index) => const SizedBox(height: 16),
               itemCount: countTokens,

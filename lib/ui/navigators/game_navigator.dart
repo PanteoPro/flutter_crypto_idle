@@ -1,9 +1,9 @@
 import 'package:crypto_idle/domain/entities/token.dart';
-import 'package:crypto_idle/ui/widgets/game/view/game_crypto_page.dart';
-import 'package:crypto_idle/ui/widgets/game/view/game_market_crypto_page.dart';
-import 'package:crypto_idle/ui/widgets/game/view/game_market_flat_page.dart';
-import 'package:crypto_idle/ui/widgets/game/view/game_market_pc_page.dart';
-import 'package:crypto_idle/ui/widgets/game/view/game_mining_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view/old/game_crypto_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view/old/game_market_crypto_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view/old/game_market_flat_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view/old/game_market_pc_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view/old/game_mining_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/main_game/new_main_game_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/clicker_game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/day_stream_view_model.dart';

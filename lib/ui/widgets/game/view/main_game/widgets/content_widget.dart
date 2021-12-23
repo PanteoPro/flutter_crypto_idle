@@ -404,13 +404,19 @@ class _ActionItemWidget extends StatelessWidget {
   }
 }
 
-class _ComputersWidget extends StatelessWidget {
+class _ComputersWidget extends StatefulWidget {
   const _ComputersWidget({Key? key}) : super(key: key);
+
+  @override
+  State<_ComputersWidget> createState() => _ComputersWidgetState();
+}
+
+class _ComputersWidgetState extends State<_ComputersWidget> {
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     final countPC = context.select((MainGameViewModel vm) => vm.state.myPCs.length);
-    final isLoadPcs = context.select((MainGameViewModel vm) => vm.state.isLoadPcs);
 
     const heightItemComp = 36;
     const heightSizedBox = 10;
@@ -434,24 +440,19 @@ class _ComputersWidget extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(right: 1, top: 10, bottom: 10),
             child: Scrollbar(
+              isAlwaysShown: true,
+              controller: _scrollController,
               scrollbarOrientation: ScrollbarOrientation.right,
-              child: isLoadPcs
-                  ? const Center(
-                      child: SizedBox(
-                        width: 150,
-                        height: 150,
-                        child: CircularProgressIndicator(color: AppColors.green, strokeWidth: 2),
-                      ),
-                    )
-                  : ListView.separated(
-                      itemCount: countPC,
-                      itemBuilder: (context, index) {
-                        return _ComputerItemWidget(index: index);
-                      },
-                      separatorBuilder: (ctx, index) {
-                        return const SizedBox(height: 10);
-                      },
-                    ),
+              child: ListView.separated(
+                controller: _scrollController,
+                itemCount: countPC,
+                itemBuilder: (context, index) {
+                  return _ComputerItemWidget(index: index);
+                },
+                separatorBuilder: (ctx, index) {
+                  return const SizedBox(height: 10);
+                },
+              ),
             ),
           ),
         ),
