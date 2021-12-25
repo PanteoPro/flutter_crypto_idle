@@ -1,4 +1,4 @@
-import 'package:crypto_idle/ui/widgets/game/view/main_game/main_game_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view/main/main_game_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/navigator/game_navigator_widget.dart';
 import 'package:crypto_idle/ui/widgets/menu/view/menu_about_page.dart';
 import 'package:crypto_idle/ui/widgets/menu/view/menu_page.dart';

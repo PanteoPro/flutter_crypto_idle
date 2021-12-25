@@ -3,8 +3,7 @@ import 'dart:math';
 
 import 'package:crypto_idle/Theme/app_colors.dart';
 import 'package:crypto_idle/Theme/app_fonts.dart';
-import 'package:crypto_idle/Widgets/buttons/green_button_widget.dart';
-import 'package:crypto_idle/Widgets/buttons/white_button_widget.dart';
+import 'package:crypto_idle/Widgets/buttons/game_button_widget.dart';
 import 'package:crypto_idle/Widgets/circle_index_widget.dart';
 import 'package:crypto_idle/Widgets/game_over_widget.dart';
 import 'package:crypto_idle/Widgets/page_wrapper.dart';

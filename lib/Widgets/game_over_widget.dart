@@ -1,6 +1,6 @@
 import 'package:crypto_idle/Theme/app_colors.dart';
 import 'package:crypto_idle/Theme/app_fonts.dart';
-import 'package:crypto_idle/Widgets/buttons/white_button_widget.dart';
+import 'package:crypto_idle/Widgets/buttons/game_button_widget.dart';
 import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/resources/resources.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
@@ -49,12 +49,12 @@ class ModalGameOverWidget extends StatelessWidget {
                               style: AppFonts.clicker.copyWith(color: AppColors.white),
                             ),
                             const SizedBox(height: 16),
-                            WhiteButtonWidget(
+                            GameButtonWidget.white(
                               text: 'В главное меню',
                               onPressed: () => vm.onExitGameOverPressed(context),
                             ),
                             const SizedBox(height: 16),
-                            WhiteButtonWidget(
+                            GameButtonWidget.white(
                               text: 'Статистика',
                               onPressed: () {},
                             ),

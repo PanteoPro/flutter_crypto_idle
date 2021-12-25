@@ -431,32 +431,7 @@ class _ActionItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 44,
-      width: 140,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          // backgroundColor: MaterialStateProperty.all(AppColors.mainGrey),
-          // backgroundColor: MaterialStateProperty.all(Colors.transparent),
-          backgroundColor: MaterialStateProperty.all(Colors.white24),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50),
-              side: const BorderSide(
-                color: AppColors.white,
-              ),
-            ),
-          ),
-          padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 9, horizontal: 10)),
-        ),
-        onPressed: onPressed,
-        child: Text(
-          title,
-          textAlign: TextAlign.center,
-          style: AppFonts.mainButton.copyWith(color: AppColors.white),
-        ),
-      ),
-    );
+    return GameButtonWidget.game(text: title, onPressed: onPressed);
   }
 }
 

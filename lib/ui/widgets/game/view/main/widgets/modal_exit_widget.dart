@@ -30,12 +30,12 @@ class _ModalExitWidget extends StatelessWidget {
                     style: AppFonts.clicker.copyWith(color: AppColors.white),
                   ),
                   const SizedBox(height: 16),
-                  WhiteButtonWidget(
+                  GameButtonWidget.white(
                     text: 'Да',
                     onPressed: () => vm.onYesExitButtonPressed(context),
                   ),
                   const SizedBox(height: 16),
-                  WhiteButtonWidget(
+                  GameButtonWidget.white(
                     text: 'Нет',
                     onPressed: vm.onNoExitButtonPressed,
                   ),

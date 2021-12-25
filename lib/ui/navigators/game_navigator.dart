@@ -1,8 +1,8 @@
 import 'package:crypto_idle/domain/entities/token.dart';
-import 'package:crypto_idle/ui/widgets/game/view/main_game/main_game_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view/main/main_game_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view/market_flat/market_flat_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/old/game_crypto_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/old/game_market_crypto_page.dart';
-import 'package:crypto_idle/ui/widgets/game/view/old/game_market_flat_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/old/game_market_pc_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/old/game_mining_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_crypto_view_model.dart';
@@ -69,7 +69,7 @@ class GameNavigation {
         return MaterialPageRoute(
           builder: (ctx) => ChangeNotifierProvider(
             create: (_) => GameMarketFlatViewModel(),
-            child: const GameMarketFlatPage(),
+            child: const MarketFlatPage(),
           ),
         );
       case GameNavigationRouteNames.crypto:

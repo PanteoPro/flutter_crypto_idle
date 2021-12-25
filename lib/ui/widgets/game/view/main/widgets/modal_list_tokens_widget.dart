@@ -221,14 +221,14 @@ class _ModalListItemMainButtonWidget extends StatelessWidget {
       onPressed = () => vm.onChangeMiningToken(index);
     }
 
-    return GreenButtonWidget(
+    return GameButtonWidget.tokenSelect(
       onPressed: onPressed,
       text: isScam
           ? 'SCAM'
           : isActiveToken
               ? 'АКТИВНО'
               : 'Выбрать',
-      color: isScam
+      borderColor: isScam
           ? AppColors.red
           : isActiveToken
               ? AppColors.dollar
@@ -337,7 +337,12 @@ class _ModalFooterWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 6),
         child: Center(
-          child: GreenButtonWidget(text: 'Отмена', onPressed: vm.onExitModalAction),
+          child: GameButtonWidget.tokenSelect(
+            text: 'Отмена',
+            onPressed: vm.onExitModalAction,
+            font: AppFonts.main,
+            backgroundColor: AppColors.secondGrey,
+          ),
         ),
       ),
     );
