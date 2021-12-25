@@ -1,4 +1,4 @@
-part of '../new_main_game_page.dart';
+part of '../main_game_page.dart';
 
 class _ModalExitWidget extends StatelessWidget {
   const _ModalExitWidget({Key? key}) : super(key: key);

@@ -1,4 +1,4 @@
-part of '../new_main_game_page.dart';
+part of '../main_game_page.dart';
 
 class _ModalListTokensWidget extends StatelessWidget {
   const _ModalListTokensWidget({Key? key}) : super(key: key);

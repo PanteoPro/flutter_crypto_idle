@@ -1,23 +1,18 @@
 import 'package:crypto_idle/domain/entities/token.dart';
+import 'package:crypto_idle/ui/widgets/game/view/main_game/main_game_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/old/game_crypto_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/old/game_market_crypto_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/old/game_market_flat_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/old/game_market_pc_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/old/game_mining_page.dart';
-import 'package:crypto_idle/ui/widgets/game/view/main_game/new_main_game_page.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/main_game/clicker_game_view_model.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/main_game/day_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_crypto_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_crypto_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_pc_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_mining_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/main_game/clicker_game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/main_game/day_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/main_game_view_model.dart';
-import 'package:crypto_idle/ui/widgets/menu/view/menu_about_page.dart';
-import 'package:crypto_idle/ui/widgets/menu/view/menu_page.dart';
-import 'package:crypto_idle/ui/widgets/menu/view/menu_settings_page.dart';
-import 'package:crypto_idle/ui/widgets/menu/view/test_page.dart';
-import 'package:crypto_idle/ui/widgets/menu/view_models/menu_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,7 +1,14 @@
-part of '../new_main_game_page.dart';
+import 'package:crypto_idle/Theme/app_colors.dart';
+import 'package:crypto_idle/Theme/app_fonts.dart';
+import 'package:crypto_idle/generated/l10n.dart';
+import 'package:crypto_idle/resources/resources.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/main_game/main_game_view_model.dart';
 
-class _FooterWidget extends StatelessWidget {
-  const _FooterWidget({Key? key}) : super(key: key);
+import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
+
+class GameFooterWidget extends StatelessWidget {
+  const GameFooterWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

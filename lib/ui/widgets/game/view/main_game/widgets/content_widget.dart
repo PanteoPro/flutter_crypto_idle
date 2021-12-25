@@ -1,4 +1,4 @@
-part of '../new_main_game_page.dart';
+part of '../main_game_page.dart';
 
 class _ContentWidget extends StatelessWidget {
   const _ContentWidget({Key? key}) : super(key: key);
@@ -263,7 +263,7 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
                   : RadialPercentWidget(
                       percent: currentClicks > 0 ? percentCurrentClicks : percentCurrentDelay,
                       lineColor: AppColors.red,
-                      maxLineColor: AppColors.green,
+                      maxLineColor: AppColors.dollar,
                       lineWidth: 2,
                       paddingForChild: 15,
                       text: currentClicks > 0 ? '$currentClicks' : delayText,
@@ -436,12 +436,14 @@ class _ActionItemWidget extends StatelessWidget {
       width: 140,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(AppColors.mainGrey),
+          // backgroundColor: MaterialStateProperty.all(AppColors.mainGrey),
+          // backgroundColor: MaterialStateProperty.all(Colors.transparent),
+          backgroundColor: MaterialStateProperty.all(Colors.white24),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
               side: const BorderSide(
-                color: AppColors.green,
+                color: AppColors.white,
               ),
             ),
           ),
@@ -451,7 +453,7 @@ class _ActionItemWidget extends StatelessWidget {
         child: Text(
           title,
           textAlign: TextAlign.center,
-          style: AppFonts.mainButton.copyWith(color: AppColors.green),
+          style: AppFonts.mainButton.copyWith(color: AppColors.white),
         ),
       ),
     );

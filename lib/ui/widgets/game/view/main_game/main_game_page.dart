@@ -16,11 +16,14 @@ import 'package:crypto_idle/Libs/gif_lib.dart';
 import 'package:crypto_idle/Widgets/circular_widget.dart';
 import 'package:crypto_idle/resources/resources.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
+import 'package:crypto_idle/ui/widgets/game/view/general/game_app_bar_widget.dart';
+import 'package:crypto_idle/ui/widgets/game/view/general/game_footer_widget.dart';
+import 'package:crypto_idle/ui/widgets/game/view/general/game_header_balance_widget.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/clicker_game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/day_stream_view_model.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/main_game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
@@ -28,8 +31,6 @@ import 'package:provider/src/provider.dart';
 
 part 'widgets/header_widget.dart';
 part 'widgets/content_widget.dart';
-part 'widgets/footer_widget.dart';
-part 'widgets/app_bar_widget.dart';
 part 'widgets/modal_exit_widget.dart';
 part 'widgets/modal_list_tokens_widget.dart';
 
@@ -73,14 +74,14 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
     // final gameOver = context.select((GameViewModel vm) => vm.state.gameOver);
     // final vm = context.read<MainGameViewModel>();
     return Scaffold(
-      appBar: const _AppBarWidget(),
+      appBar: const GameAppBarWidget(),
       body: Stack(
         children: [
           Column(
             children: const [
               _HeaderWidget(),
               Expanded(child: _ContentWidget()),
-              _FooterWidget(),
+              GameFooterWidget(),
             ],
           ),
           const _ModalListTokensWidget(),

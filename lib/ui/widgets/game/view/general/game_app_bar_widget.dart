@@ -1,7 +1,17 @@
-part of '../new_main_game_page.dart';
+import 'package:crypto_idle/Libs/gif_lib.dart';
+import 'package:crypto_idle/Theme/app_colors.dart';
+import 'package:crypto_idle/Theme/app_fonts.dart';
+import 'package:crypto_idle/resources/app_images.dart';
+import 'package:crypto_idle/resources/resources.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/main_game/main_game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
 
-class _AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
-  const _AppBarWidget({
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/src/provider.dart';
+
+class GameAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
+  const GameAppBarWidget({
     Key? key,
   }) : super(key: key);
 
