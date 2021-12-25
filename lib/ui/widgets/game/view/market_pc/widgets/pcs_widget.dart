@@ -6,12 +6,20 @@ class _PCsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final countPCs = context.select((GameMarketPCViewModel vm) => vm.state.marketPCs.length);
-    return ListView.separated(
-      itemCount: countPCs,
-      itemBuilder: (ctx, index) {
-        return _PCItemWidget(index: index);
-      },
-      separatorBuilder: (ctx, index) => const SizedBox(height: 16),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 1),
+      child: Scrollbar(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: ListView.separated(
+            itemCount: countPCs,
+            itemBuilder: (ctx, index) {
+              return _PCItemWidget(index: index);
+            },
+            separatorBuilder: (ctx, index) => const SizedBox(height: 16),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -154,7 +162,20 @@ class _ButtonsWidget extends StatelessWidget {
             onPressed: () => vm.onBuyButtonPressed(index),
             textColor: AppColors.white,
           ),
-        if (isSellButton && isBuyButton) const SizedBox(height: 6),
+        if (isSellButton && isBuyButton || !isSellButton) const SizedBox(height: 6),
+        if (!isSellButton)
+          const GameButtonWidget.buy(
+            text: 'Продать',
+            borderColor: AppColors.lightGrey,
+            textColor: AppColors.lightGrey,
+          ),
+        if (!isBuyButton && !isLevelButton)
+          const GameButtonWidget.buy(
+            text: 'Купить',
+            borderColor: AppColors.lightGrey,
+            textColor: AppColors.lightGrey,
+          ),
+        if (!isBuyButton && !isLevelButton) const SizedBox(height: 6),
         if (isSellButton)
           GameButtonWidget.buy(
             text: 'Продать',
@@ -162,12 +183,14 @@ class _ButtonsWidget extends StatelessWidget {
             borderColor: AppColors.red,
             textColor: AppColors.white,
           ),
+        if (!isBuyButton && !isSellButton) const SizedBox(height: 6),
         if (isLevelButton)
           const GameButtonWidget.buy(
-            text: 'Уровень',
+            text: 'Купить',
             borderColor: AppColors.lightGrey,
             textColor: AppColors.lightGrey,
           ),
+        // if (!isSellButton) const SizedBox(height: 25),
       ],
     );
   }
@@ -182,6 +205,7 @@ class _OtherContentWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final pc = context.read<GameMarketPCViewModel>().state.marketPCs[index];
     final countHave = context.select((GameMarketPCViewModel vm) => vm.state.getCountPCsById(pc.id));
+    final enoughtLevel = context.select((GameMarketPCViewModel vm) => vm.state.enoughtLevelByPC(pc));
     return DecoratedBox(
       decoration: const BoxDecoration(
           border: Border(
@@ -191,19 +215,46 @@ class _OtherContentWidget extends StatelessWidget {
         padding: const EdgeInsets.only(top: 4),
         child: Row(
           children: [
-            Text(
-              'У вас имеется: $countHave штук',
-              style: AppFonts.mainButton.copyWith(
-                color: AppColors.lightGrey,
+            if (enoughtLevel) ...[
+              Text(
+                'У вас имеется: $countHave штук',
+                style: AppFonts.mainButton.copyWith(
+                  color: AppColors.lightGrey,
+                ),
               ),
-            ),
-            const Spacer(),
-            Text(
-              'Уровень: ${pc.needLevel}',
-              style: AppFonts.mainButton.copyWith(
-                color: AppColors.lightGrey,
+              const Spacer(),
+              Text(
+                'Уровень: ${pc.needLevel}',
+                style: AppFonts.mainButton.copyWith(
+                  color: AppColors.lightGrey,
+                ),
               ),
-            ),
+            ],
+            if (!enoughtLevel) ...[
+              Spacer(),
+              RichText(
+                text: TextSpan(
+                  text: 'Для покупки необходим ',
+                  style: AppFonts.mainButton.copyWith(
+                    color: AppColors.lightGrey,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: '${pc.needLevel} уровень ',
+                      style: AppFonts.mainButton.copyWith(
+                        color: AppColors.red,
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'помещения',
+                      style: AppFonts.mainButton.copyWith(
+                        color: AppColors.lightGrey,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
           ],
         ),
       ),

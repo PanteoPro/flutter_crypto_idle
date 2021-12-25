@@ -44,7 +44,7 @@ class _ContentBackgroundImageWidget extends StatelessWidget {
           width: double.infinity,
           height: double.infinity,
           child: Image.asset(
-            AppBackgroundImages.tempContent2,
+            AppBackgroundImages.parentsApartment1,
             fit: BoxFit.cover,
           ),
         ),
@@ -265,7 +265,7 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
                       lineColor: AppColors.red,
                       maxLineColor: AppColors.dollar,
                       lineWidth: 2,
-                      paddingForChild: 15,
+                      paddingForChild: 20,
                       text: currentClicks > 0 ? '$currentClicks' : delayText,
                       left: currentClicks > 0 ? 10 : 5,
                       child: Image.asset(AppImages.imageCompTap),
