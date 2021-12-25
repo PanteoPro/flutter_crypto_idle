@@ -1,8 +1,7 @@
 import 'dart:math';
 
-import 'package:crypto_idle/Widgets/buttons.dart';
-import 'package:crypto_idle/Widgets/old_game_over_modal.dart';
-import 'package:crypto_idle/Widgets/header_page.dart';
+import 'package:crypto_idle/Widgets/old_buttons.dart';
+import 'package:crypto_idle/Widgets/old_header_page.dart';
 import 'package:crypto_idle/Widgets/page_wrapper.dart';
 import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
@@ -11,7 +10,7 @@ import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/ui/navigators/game_navigator.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/day_stream_view_model.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/main_game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +53,6 @@ class MainGamePageOLD extends StatelessWidget {
                   ],
                 ),
               ),
-              const GameOverModalWidget(),
               const _ExitModalWidget(),
             ],
           ),
@@ -438,7 +436,7 @@ class _BalanceCryptoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final money = context.select((MainGameViewModel vm) => vm.state.cryptoBalance);
+    final money = context.select((GameViewModel vm) => vm.state.cryptoBalance);
     return Column(
       children: <Widget>[
         Text(
@@ -624,7 +622,7 @@ class _CurrentInfoPowerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final value = context.select((MainGameViewModel vm) => vm.state.powerPCs);
+    final value = context.select((GameViewModel vm) => vm.state.powerPCs);
     return _InfoItemWidget(
       title: S.of(context).main_game_info_power_mining_title,
       value: S.of(context).text_with_power_mining(value),

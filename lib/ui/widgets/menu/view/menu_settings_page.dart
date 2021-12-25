@@ -1,4 +1,4 @@
-import 'package:crypto_idle/Widgets/buttons.dart';
+import 'package:crypto_idle/Widgets/old_buttons.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
 import 'package:flutter/material.dart';

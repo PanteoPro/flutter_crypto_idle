@@ -1,22 +1,36 @@
-import 'package:crypto_idle/Widgets/old_game_over_modal.dart';
+import 'package:crypto_idle/Widgets/game_over_widget.dart';
 import 'package:crypto_idle/domain/repositories/message_manager.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/message_stream_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view/general/game_app_bar_widget.dart';
+import 'package:crypto_idle/ui/widgets/game/view/general/game_footer_widget.dart';
+import 'package:crypto_idle/ui/widgets/game/view/general/game_header_balance_widget.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/global/message_stream_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PageWrapperWidget extends StatelessWidget {
-  const PageWrapperWidget({Key? key, required this.child}) : super(key: key);
+  const PageWrapperWidget({Key? key, required this.child, this.modalWindows}) : super(key: key);
 
   final Widget child;
+  final List<Widget>? modalWindows;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        child,
-        const _MessageBlockWidget(),
-        const GameOverModalWidget(),
-      ],
+    return Scaffold(
+      appBar: const GameAppBarWidget(),
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              const GameHeaderWidget(),
+              Expanded(child: child),
+              const GameFooterWidget(),
+            ],
+          ),
+          const _MessageBlockWidget(),
+          if (modalWindows != null) ...?modalWindows,
+          const ModalGameOverWidget(),
+        ],
+      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:crypto_idle/Theme/app_colors.dart';
 import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/resources/resources.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/main_game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
 
@@ -56,7 +57,7 @@ class _DataWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final locale = context.read<MainAppViewModel>().locale;
     final format = DateFormat.yMd(locale.languageCode);
-    final date = context.select((MainGameViewModel vm) => vm.state.date);
+    final date = context.select((GameViewModel vm) => vm.state.date);
     final stringDate = format.format(date);
     return AnimatedSwitcher(
       // transitionBuilder: (child, animation) => ScaleTransition(scale: animation, child: child),

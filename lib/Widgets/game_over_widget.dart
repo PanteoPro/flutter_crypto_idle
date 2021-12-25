@@ -3,7 +3,7 @@ import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:crypto_idle/Widgets/buttons/white_button_widget.dart';
 import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/resources/resources.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 

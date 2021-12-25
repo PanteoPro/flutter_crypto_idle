@@ -101,16 +101,6 @@ class MainGameViewModelState {
     isOpenModalTokens = false;
   }
 
-  double get averageEarnings {
-    var result = 0.0;
-    for (final pc in myPCs) {
-      if (pc.miningToken != null) {
-        result += pc.incomeCash;
-      }
-    }
-    return double.parse(result.toStringAsFixed(2));
-  }
-
   bool isActiveTokenByTokenIndex(int index) {
     final token = tokens[index];
     final pc = myPCs[modalPCIndex];
@@ -155,26 +145,8 @@ class MainGameViewModelState {
     return double.parse(energy.toStringAsFixed(2));
   }
 
-  double get powerPCs {
-    var power = 0.0;
-    for (final element in myPCs) {
-      if (element.miningToken != null) {
-        power += element.power;
-      }
-    }
-    return power;
-  }
-
   double getPriceByToken(Token token) {
     return currentPrices[token.id]!;
-  }
-
-  double get cryptoBalance {
-    double balance = 0;
-    for (final Token token in tokens) {
-      balance += getPriceByToken(token) * token.count;
-    }
-    return double.parse(balance.toStringAsFixed(2));
   }
 
   double get sumFlatConsume => statistics.flatConsume.sum;

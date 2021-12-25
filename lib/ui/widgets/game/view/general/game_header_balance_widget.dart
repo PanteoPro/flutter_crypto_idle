@@ -2,6 +2,7 @@ import 'package:crypto_idle/Theme/app_colors.dart';
 import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/resources.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/main_game_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -82,7 +83,7 @@ class _BalanceCashTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final money = context.select((MainGameViewModel vm) => vm.state.money);
+    final money = context.select((GameViewModel vm) => vm.state.money);
     return RichText(
       text: TextSpan(
         text: '${S.of(context).main_game_cash_balance_title}: ',
@@ -125,7 +126,7 @@ class _BalanceCryptoTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cryptoBalance = context.select((MainGameViewModel vm) => vm.state.cryptoBalance);
+    final cryptoBalance = context.select((GameViewModel vm) => vm.state.cryptoBalance);
     return RichText(
       text: TextSpan(
         text: '${S.of(context).main_game_crypto_balance_title}: ',

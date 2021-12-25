@@ -7,6 +7,7 @@ import 'package:crypto_idle/Widgets/buttons/green_button_widget.dart';
 import 'package:crypto_idle/Widgets/buttons/white_button_widget.dart';
 import 'package:crypto_idle/Widgets/circle_index_widget.dart';
 import 'package:crypto_idle/Widgets/game_over_widget.dart';
+import 'package:crypto_idle/Widgets/page_wrapper.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
@@ -29,7 +30,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/src/provider.dart';
 
-part 'widgets/header_widget.dart';
+part 'widgets/news_widget.dart';
 part 'widgets/content_widget.dart';
 part 'widgets/modal_exit_widget.dart';
 part 'widgets/modal_list_tokens_widget.dart';
@@ -73,22 +74,15 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
   Widget build(BuildContext context) {
     // final gameOver = context.select((GameViewModel vm) => vm.state.gameOver);
     // final vm = context.read<MainGameViewModel>();
-    return Scaffold(
-      appBar: const GameAppBarWidget(),
-      body: Stack(
-        children: [
-          Column(
-            children: const [
-              _HeaderWidget(),
-              Expanded(child: _ContentWidget()),
-              GameFooterWidget(),
-            ],
-          ),
-          const _ModalListTokensWidget(),
-          const _ModalExitWidget(),
-          const ModalGameOverWidget(),
-          // _ModalGameOverWidget(),
-          // _ModalListTokensWidget(),
+    return PageWrapperWidget(
+      modalWindows: const [
+        _ModalListTokensWidget(),
+        _ModalExitWidget(),
+      ],
+      child: Column(
+        children: const [
+          _NewsWidget(),
+          Expanded(child: _ContentWidget()),
         ],
       ),
     );

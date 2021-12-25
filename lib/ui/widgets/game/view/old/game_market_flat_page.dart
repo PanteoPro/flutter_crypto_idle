@@ -1,10 +1,9 @@
-import 'package:crypto_idle/Widgets/app_bar_info.dart';
-import 'package:crypto_idle/Widgets/buttons.dart';
-import 'package:crypto_idle/Widgets/header_page.dart';
+import 'package:crypto_idle/Widgets/old_buttons.dart';
+import 'package:crypto_idle/Widgets/old_header_page.dart';
 import 'package:crypto_idle/Widgets/page_wrapper.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_model.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +13,7 @@ class GameMarketFlatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GameAppBar(),
+      // appBar: const GameAppBar(),
       body: SafeArea(
         child: ColoredBox(
           color: Theme.of(context).backgroundColor,

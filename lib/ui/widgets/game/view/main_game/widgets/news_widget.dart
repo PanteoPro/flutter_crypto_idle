@@ -1,18 +1,5 @@
 part of '../main_game_page.dart';
 
-class _HeaderWidget extends StatelessWidget {
-  const _HeaderWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const GameHeaderWidget(
-      childrenInColumn: [
-        _NewsWidget(),
-      ],
-    );
-  }
-}
-
 class _NewsWidget extends StatelessWidget {
   const _NewsWidget({Key? key}) : super(key: key);
 

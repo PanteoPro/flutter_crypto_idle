@@ -2,6 +2,7 @@ import 'package:crypto_idle/Theme/app_colors.dart';
 import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/resources.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/main_game_view_model.dart';
 
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class _FooterPlaceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final flat = context.select((MainGameViewModel vm) => vm.state.flat);
+    final flat = context.select((GameViewModel vm) => vm.state.currentFlat);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
@@ -99,8 +100,8 @@ class _FooterMainInfoPcsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final maxPC = context.select((MainGameViewModel vm) => vm.state.flat.countPC);
-    final currentPC = context.select((MainGameViewModel vm) => vm.state.myPCs.length);
+    final maxPC = context.select((GameViewModel vm) => vm.state.maxCountPC);
+    final currentPC = context.select((GameViewModel vm) => vm.state.currentCountPC);
     return _FooterMainInfoItemWidget(
       imagePath: AppIconsImages.computerIcon,
       text: S.of(context).text_with_slash(currentPC, maxPC),
@@ -115,7 +116,7 @@ class _FooterMainInfoEnergyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final energyConsume = context.select((MainGameViewModel vm) => vm.state.energyConsume);
+    final energyConsume = context.select((GameViewModel vm) => vm.state.energyConsume);
     return _FooterMainInfoItemWidget(
       imagePath: AppIconsImages.lightningIcon,
       text: S.of(context).text_with_energy(energyConsume),
@@ -189,7 +190,7 @@ class _FooterOtherInfoPowerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final power = context.select((MainGameViewModel vm) => vm.state.powerPCs);
+    final power = context.select((GameViewModel vm) => vm.state.powerPCs);
     return Text(
       '${S.of(context).main_game_info_power_mining_title}: ${S.of(context).text_with_power_mining(power)}',
       style: AppFonts.body.copyWith(color: AppColors.white),
@@ -202,7 +203,7 @@ class _FooterOtherInfoIncomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final earning = context.select((MainGameViewModel vm) => vm.state.averageEarnings);
+    final earning = context.select((GameViewModel vm) => vm.state.averageEarnings);
     return Text(
       'Заработок за день: ${S.of(context).text_with_dollar(earning)}',
       style: AppFonts.body.copyWith(color: AppColors.white),
@@ -215,7 +216,7 @@ class _FooterOtherInfoFlatWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final flatConsume = context.select((MainGameViewModel vm) => vm.state.flatConsume);
+    final flatConsume = context.select((GameViewModel vm) => vm.state.flatConsume);
     return Text(
       'Жилье: ${S.of(context).text_with_dollar_month(flatConsume)}',
       style: AppFonts.body.copyWith(color: AppColors.white),
@@ -228,7 +229,7 @@ class _FooterOtherInfoEnergyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final energyConsume = context.select((MainGameViewModel vm) => vm.state.energyConsumeCost);
+    final energyConsume = context.select((GameViewModel vm) => vm.state.energyConsumeCost);
     return Text(
       'Электричество: ${S.of(context).text_with_dollar_month(energyConsume)}',
       style: AppFonts.body.copyWith(color: AppColors.white),
