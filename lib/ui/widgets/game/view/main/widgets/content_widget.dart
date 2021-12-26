@@ -38,21 +38,22 @@ class _ContentBackgroundImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final flat = context.select((MainGameViewModel vm) => vm.state.flat);
     return Stack(
       children: [
         SizedBox(
           width: double.infinity,
           height: double.infinity,
           child: Image.asset(
-            AppBackgroundImages.parentsApartment1,
+            AppImages.getFlatPathByName(flat.name),
             fit: BoxFit.cover,
           ),
         ),
-        const SizedBox(
+        SizedBox(
           width: double.infinity,
           height: double.infinity,
           child: ColoredBox(
-            color: AppColors.black80,
+            color: AppColors.mainGrey.withOpacity(0.7),
           ),
         ),
       ],
@@ -238,6 +239,7 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
   final digitals = <Widget>[];
   final animationLength = 800;
   var _isStartToClean = false;
+  double padding = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -265,7 +267,7 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
                       lineColor: AppColors.red,
                       maxLineColor: AppColors.dollar,
                       lineWidth: 2,
-                      paddingForChild: 20,
+                      paddingForChild: padding,
                       text: currentClicks > 0 ? '$currentClicks' : delayText,
                       left: currentClicks > 0 ? 10 : 5,
                       child: Image.asset(AppImages.imageCompTap),
@@ -283,12 +285,23 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
     final isAddMoney = await vm.onClickerPcPressed(rndMoney);
     final isCritical = rndMoney == vm.state.clicker.critMoney;
 
+    _tappedAnimate();
+
     if (isAddMoney) {
       _addDigit(isCritical, rndMoney);
     } else if (!_isStartToClean) {
       _addDigit(isCritical, rndMoney);
       _cleanDigits();
     } else {}
+  }
+
+  void _tappedAnimate() {
+    padding = 25;
+    Future.delayed(const Duration(milliseconds: 200), () {
+      setState(() {
+        padding = 20;
+      });
+    });
   }
 
   void _cleanDigits() {
@@ -467,7 +480,7 @@ class _ComputersWidgetState extends State<_ComputersWidget> {
         width: double.infinity,
         height: 150,
         child: ColoredBox(
-          color: AppColors.secondGrey,
+          color: AppColors.black50,
           child: Padding(
             padding: const EdgeInsets.only(right: 1, top: 10, bottom: 10),
             child: Scrollbar(

@@ -36,7 +36,7 @@ class ClickerGameViewModelState {
       return double.parse(
             (clicker.minMoney + rnd.nextDouble() * (clicker.maxMoney - clicker.minMoney)).toStringAsFixed(2),
           ) +
-          10;
+          100;
     }
   }
 }

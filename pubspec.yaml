@@ -69,6 +69,7 @@ flutter:
   assets:
     - assets/images/tokens/
     - assets/images/pcs/
+    - assets/images/flats/
     - assets/images/icons/
     - assets/images/background/
   # An image asset can refer to one or more resolution-specific "variants", see

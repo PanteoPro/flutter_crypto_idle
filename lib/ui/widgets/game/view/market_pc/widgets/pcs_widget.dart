@@ -162,20 +162,13 @@ class _ButtonsWidget extends StatelessWidget {
             onPressed: () => vm.onBuyButtonPressed(index),
             textColor: AppColors.white,
           ),
-        if (isSellButton && isBuyButton || !isSellButton) const SizedBox(height: 6),
-        if (!isSellButton)
-          const GameButtonWidget.buy(
-            text: 'Продать',
-            borderColor: AppColors.lightGrey,
-            textColor: AppColors.lightGrey,
-          ),
-        if (!isBuyButton && !isLevelButton)
+        if (!isBuyButton)
           const GameButtonWidget.buy(
             text: 'Купить',
             borderColor: AppColors.lightGrey,
             textColor: AppColors.lightGrey,
           ),
-        if (!isBuyButton && !isLevelButton) const SizedBox(height: 6),
+        const SizedBox(height: 6),
         if (isSellButton)
           GameButtonWidget.buy(
             text: 'Продать',
@@ -183,14 +176,12 @@ class _ButtonsWidget extends StatelessWidget {
             borderColor: AppColors.red,
             textColor: AppColors.white,
           ),
-        if (!isBuyButton && !isSellButton) const SizedBox(height: 6),
-        if (isLevelButton)
+        if (!isSellButton)
           const GameButtonWidget.buy(
-            text: 'Купить',
+            text: 'Продать',
             borderColor: AppColors.lightGrey,
             textColor: AppColors.lightGrey,
           ),
-        // if (!isSellButton) const SizedBox(height: 25),
       ],
     );
   }

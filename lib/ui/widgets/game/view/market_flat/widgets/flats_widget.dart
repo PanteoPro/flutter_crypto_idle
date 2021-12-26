@@ -23,18 +23,31 @@ class _FlatItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: AppColors.secondGrey,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: Row(
-          children: [
-            _LevelWidget(index: index),
-            Expanded(child: _DescriptionWidget(index: index)),
-            _ButtonWidget(index: index),
-          ],
+    final flatName = context.read<GameMarketFlatViewModel>().state.flats[index].name;
+    return Stack(
+      children: [
+        DecoratedBox(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                AppImages.getFlatPathByName(flatName),
+              ),
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Row(
+              children: [
+                _LevelWidget(index: index),
+                Expanded(child: _DescriptionWidget(index: index)),
+                _ButtonWidget(index: index),
+              ],
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 }
