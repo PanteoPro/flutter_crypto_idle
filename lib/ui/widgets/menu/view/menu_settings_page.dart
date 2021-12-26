@@ -1,4 +1,4 @@
-import 'package:crypto_idle/Widgets/old_buttons.dart';
+import 'package:crypto_idle/Widgets/buttons/game_button_widget.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
 import 'package:flutter/material.dart';
@@ -45,21 +45,13 @@ class _ContentWidget extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(
-              width: double.infinity,
-              child: MyButton(
-                color: Theme.of(context).splashColor,
-                onPressed: vm.setLocaleRu,
-                title: S.of(context).menu_settings_swap_ru_button_title,
-              ),
+            GameButtonWidget.menuSmall(
+              onPressed: vm.setLocaleRu,
+              text: S.of(context).menu_settings_swap_ru_button_title,
             ),
-            SizedBox(
-              width: double.infinity,
-              child: MyButton(
-                color: Theme.of(context).splashColor,
-                onPressed: vm.setLocaleEn,
-                title: S.of(context).menu_settings_swap_en_button_title,
-              ),
+            GameButtonWidget.menuSmall(
+              onPressed: vm.setLocaleEn,
+              text: S.of(context).menu_settings_swap_en_button_title,
             ),
           ],
         ),

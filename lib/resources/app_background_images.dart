@@ -5,6 +5,5 @@ class AppBackgroundImages {
 
   static const String gameOverScreen =
       'assets/images/background/game_over_screen.png';
-  static const String parentsApartment1 =
-      'assets/images/background/Parents apartment 1.png';
+  static const String menuCircle = 'assets/images/background/menu_circle.png';
 }

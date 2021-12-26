@@ -1,5 +1,9 @@
-import 'package:crypto_idle/Widgets/old_buttons.dart';
+import 'dart:async';
+import 'dart:math';
+
+import 'package:crypto_idle/Widgets/buttons/game_button_widget.dart';
 import 'package:crypto_idle/generated/l10n.dart';
+import 'package:crypto_idle/resources/resources.dart';
 import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
 import 'package:crypto_idle/ui/widgets/menu/view_models/menu_view_model.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +18,7 @@ class MenuWidget extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          S.of(context).menu_title,
+          S.of(context).menu_game_title,
           style: const TextStyle(fontSize: 24),
         ),
         centerTitle: true,
@@ -24,10 +28,58 @@ class MenuWidget extends StatelessWidget {
         child: Stack(
           children: const [
             _BackgroundWidget(),
-            _ContentWidget(),
+            Positioned(
+              top: 50,
+              bottom: 50,
+              left: 0,
+              child: _CircleBackgroundWidget(),
+            ),
+            _ButtonsWidget(),
             Positioned(bottom: 5, left: 5, child: _VersionWidget()),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _CircleBackgroundWidget extends StatefulWidget {
+  const _CircleBackgroundWidget({Key? key}) : super(key: key);
+
+  @override
+  __CircleBackgroundWidgetState createState() => __CircleBackgroundWidgetState();
+}
+
+class __CircleBackgroundWidgetState extends State<_CircleBackgroundWidget> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 10),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.stop();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (_, child) {
+        return Transform.rotate(
+          angle: _controller.value * 2 * pi,
+          child: child,
+        );
+      },
+      child: Image.asset(
+        AppBackgroundImages.menuCircle,
       ),
     );
   }
@@ -44,92 +96,61 @@ class _BackgroundWidget extends StatelessWidget {
   }
 }
 
-class _ContentWidget extends StatelessWidget {
-  const _ContentWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: const [
-          _TitleWidget(),
-          SizedBox(height: 10),
-          _ButtonsWidget(),
-        ],
-      ),
-    );
-  }
-}
-
-class _TitleWidget extends StatelessWidget {
-  const _TitleWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(S.of(context).menu_game_title);
-  }
-}
-
 class _ButtonsWidget extends StatelessWidget {
   const _ButtonsWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final vm = context.watch<MenuViewModel>();
+    final vm = context.read<MenuViewModel>();
+    final playMenu = context.select((MenuViewModel vm) => vm.state.playMenu);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 80),
-      child: Column(
-        children: [
-          if (!vm.isEndGame)
-            SizedBox(
-              width: double.infinity,
-              child: MyButton(
-                  color: Theme.of(context).splashColor,
-                  onPressed: vm.onContinueGameButtonPressed,
-                  title: S.of(context).menu_free_continue_button_title),
-            ),
-          SizedBox(
-            width: double.infinity,
-            child: MyButton(
-                color: Theme.of(context).splashColor,
-                onPressed: vm.onFreeGameButtonPressed,
-                title: S.of(context).menu_free_button_title),
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: MyButton(
-              color: Theme.of(context).splashColor,
-              onPressed: vm.onSettingsButtonPressed,
-              title: S.of(context).menu_settings_button_title,
-            ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: MyButton(
-              color: Theme.of(context).splashColor,
-              onPressed: vm.onAboutButtonPressed,
-              title: S.of(context).menu_about_button_title,
-            ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: MyButton(
-              color: Theme.of(context).splashColor,
-              onPressed: vm.onTestPressed,
-              title: 'TEST PAGE',
-            ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: MyButton(
-              color: Theme.of(context).splashColor,
-              onPressed: vm.onNewDesignPressed,
-              title: 'New Design',
-            ),
-          ),
-        ],
+    var buttons = <Widget>[];
+    if (!playMenu) {
+      buttons.addAll([
+        GameButtonWidget.menuSmall(
+          text: 'ИГРАТЬ',
+          onPressed: vm.onPlayButtonPressed,
+        ),
+        const SizedBox(height: 16),
+        GameButtonWidget.menuSmall(
+          text: 'НАСТРОЙКИ',
+          onPressed: vm.onSettingsButtonPressed,
+        ),
+        const SizedBox(height: 16),
+        GameButtonWidget.menuSmall(
+          text: 'АВТОРЫ',
+          onPressed: vm.onAboutButtonPressed,
+        ),
+      ]);
+    } else {
+      buttons.addAll([
+        GameButtonWidget.menuBig(
+          text: 'ПРОДОЛЖИТЬ',
+          onPressed: vm.onContinueGameButtonPressed,
+        ),
+        const SizedBox(height: 16),
+        GameButtonWidget.menuBig(
+          text: 'НОВАЯ ИГРА',
+          onPressed: vm.onFreeGameButtonPressed,
+        ),
+        const SizedBox(height: 16),
+        GameButtonWidget.menuBig(
+          text: 'НАЗАД',
+          onPressed: vm.onBackFromPlayButtonPressed,
+        ),
+      ]);
+    }
+
+    return SizedBox(
+      height: double.infinity,
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 30),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: buttons,
+        ),
       ),
     );
   }

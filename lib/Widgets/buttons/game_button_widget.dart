@@ -63,6 +63,30 @@ class GameButtonWidget extends StatelessWidget {
     this.backgroundColor = AppColors.secondGrey,
   }) : super(key: key);
 
+  const GameButtonWidget.menuSmall({
+    Key? key,
+    required this.text,
+    this.onPressed,
+    this.height = 40,
+    this.width = 150,
+    this.font = AppFonts.clicker,
+    this.borderColor = AppColors.green,
+    this.textColor = AppColors.green,
+    this.backgroundColor = AppColors.mainGrey,
+  }) : super(key: key);
+
+  const GameButtonWidget.menuBig({
+    Key? key,
+    required this.text,
+    this.onPressed,
+    this.height = 40,
+    this.width = 180,
+    this.font = AppFonts.clicker,
+    this.borderColor = AppColors.green,
+    this.textColor = AppColors.green,
+    this.backgroundColor = AppColors.mainGrey,
+  }) : super(key: key);
+
   final String text;
   final VoidCallback? onPressed;
   final Color borderColor;

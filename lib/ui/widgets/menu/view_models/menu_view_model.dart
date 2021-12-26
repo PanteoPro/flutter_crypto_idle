@@ -8,10 +8,16 @@ import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.d
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
+class MenuViewModelState {
+  bool playMenu = false;
+}
+
 class MenuViewModel extends ChangeNotifier {
   MenuViewModel(this.context) {
     initialRepositories();
   }
+
+  final state = MenuViewModelState();
 
   final _gameRepository = GameRepository();
   Future<void> initialRepositories() async {
@@ -48,19 +54,21 @@ class MenuViewModel extends ChangeNotifier {
     Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.game);
   }
 
+  void onPlayButtonPressed() {
+    state.playMenu = true;
+    notifyListeners();
+  }
+
+  void onBackFromPlayButtonPressed() {
+    state.playMenu = false;
+    notifyListeners();
+  }
+
   void onSettingsButtonPressed() {
     Navigator.of(context).pushNamed(MainNavigationRouteNames.menuSettings);
   }
 
   void onAboutButtonPressed() {
     Navigator.of(context).pushNamed(MainNavigationRouteNames.menuAbout);
-  }
-
-  void onTestPressed() {
-    Navigator.of(context).pushNamed(MainNavigationRouteNames.test);
-  }
-
-  void onNewDesignPressed() {
-    Navigator.of(context).pushNamed(MainNavigationRouteNames.newDesign);
   }
 }
