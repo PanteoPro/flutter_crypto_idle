@@ -12,6 +12,7 @@ import 'package:crypto_idle/domain/repositories/clicker_repository.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
 import 'package:crypto_idle/domain/repositories/message_manager.dart';
+import 'package:crypto_idle/domain/repositories/music_manager.dart';
 
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
@@ -275,6 +276,8 @@ class MainGameViewModel extends ChangeNotifier {
   }
 
   void onYesExitButtonPressed(BuildContext context) {
+    MusicManager.stopMain();
+    MusicManager.playMenu();
     Navigator.of(context, rootNavigator: true).pushReplacementNamed(MainNavigationRouteNames.menu);
   }
 

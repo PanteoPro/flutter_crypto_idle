@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:crypto_idle/domain/entities/statistics.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/message_manager.dart';
+import 'package:crypto_idle/domain/repositories/music_manager.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/music_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:crypto_idle/domain/entities/pc.dart';
@@ -122,6 +124,7 @@ class GameMarketPCViewModel extends ChangeNotifier {
   }
 
   Future<void> onBuyButtonPressed(int index) async {
+    MusicManager.playMoney();
     final pc = _state.marketPCs[index].copyWith();
     if (_state.currentLevel >= pc.needLevel) {
       if (_state.money >= pc.cost) {
@@ -144,6 +147,7 @@ class GameMarketPCViewModel extends ChangeNotifier {
   }
 
   Future<void> onSellButtonPressed(int index) async {
+    MusicManager.playMoney();
     final pc = _state.marketPCs[index];
     if (await _pcRepository.sellPC(pc)) {
       await _gameRepository.changeMoney(pc.costSell);

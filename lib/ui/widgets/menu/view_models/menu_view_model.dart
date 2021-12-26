@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
+import 'package:crypto_idle/domain/repositories/music_manager.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/initial_data.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
@@ -43,6 +44,8 @@ class MenuViewModel extends ChangeNotifier {
     // }
     final dataManager = InitialDataManager();
     await dataManager.registerAllAdapters();
+    MusicManager.stopMenu();
+    MusicManager.playMain();
     Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.game);
   }
 
@@ -50,6 +53,8 @@ class MenuViewModel extends ChangeNotifier {
     final dataManager = InitialDataManager();
     await dataManager.deleteBoxesFromDisk();
     await dataManager.init();
+    MusicManager.stopMenu();
+    MusicManager.playMain();
     Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.game);
   }
 

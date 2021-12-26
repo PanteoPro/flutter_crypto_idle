@@ -5,6 +5,7 @@ import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/global/message_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
+import 'package:crypto_idle/ui/widgets/music_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -17,8 +18,16 @@ class MainApp extends StatelessWidget {
     return AdaptiveTheme(
       light: kLightTheme,
       initial: AdaptiveThemeMode.dark,
-      builder: (ThemeData light, ThemeData dark) => ChangeNotifierProvider(
-        create: (_) => MainAppViewModel(),
+      builder: (ThemeData light, ThemeData dark) => MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => MainAppViewModel(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => MusicViewModel(),
+            lazy: false,
+          ),
+        ],
         child: MyMaterialApp(light, dark),
       ),
     );

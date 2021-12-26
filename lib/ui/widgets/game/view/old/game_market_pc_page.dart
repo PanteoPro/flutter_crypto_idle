@@ -264,7 +264,7 @@ class _BuyButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = context.read<GameMarketPCViewModel>();
     return MyButton(
-      onPressed: () => vm.onBuyButtonPressed(index),
+      onPressed: () {},
       title: S.of(context).game_market_pc_buy_item_title,
       color: Colors.green,
     );
@@ -298,7 +298,7 @@ class _SellButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = context.read<GameMarketPCViewModel>();
     return MyButton(
-      onPressed: () => vm.onSellButtonPressed(index),
+      onPressed: () {},
       title: S.of(context).game_market_pc_sell_item_title,
       color: Colors.red,
     );

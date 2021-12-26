@@ -1,4 +1,5 @@
 import 'package:crypto_idle/domain/repositories/message_manager.dart';
+import 'package:crypto_idle/domain/repositories/music_manager.dart';
 import 'package:crypto_idle/initial_data.dart';
 import 'package:crypto_idle/ui/main_app.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:hive_flutter/adapters.dart';
 Future<void> main() async {
   await Hive.initFlutter();
   MessageManager.init();
+  MusicManager.init();
 
   // final dataManager = InitialDataManager();
   // await dataManager.deleteBoxesFromDisk();

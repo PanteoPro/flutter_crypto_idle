@@ -4,10 +4,12 @@ import 'dart:math';
 import 'package:crypto_idle/Theme/app_colors.dart';
 import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:crypto_idle/Widgets/buttons/game_button_widget.dart';
+import 'package:crypto_idle/domain/repositories/music_manager.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/resources.dart';
 import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
 import 'package:crypto_idle/ui/widgets/menu/view_models/menu_view_model.dart';
+import 'package:crypto_idle/ui/widgets/music_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -52,15 +54,30 @@ class _AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       ),
       centerTitle: true,
       automaticallyImplyLeading: false,
-      actions: [
-        _AppBarActionWidget(onTap: () {}, imagePath: AppIconsImages.unmuteIcon),
-        const SizedBox(width: 12),
+      actions: const [
+        _MuteActionWidget(),
+        SizedBox(width: 12),
       ],
     );
   }
 
   @override
   Size get preferredSize => const Size.fromHeight(32);
+}
+
+class _MuteActionWidget extends StatelessWidget {
+  const _MuteActionWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final isMute = context.select((MusicViewModel vm) => vm.isMute);
+    final action = isMute ? () => MusicManager.unmute() : () => MusicManager.mute();
+    // final action = isPlayMenu ? () => MusicManager.stopMenu() : () => MusicManager.playMenu();
+    final image = isMute ? AppIconsImages.unmuteIcon : AppIconsImages.muteIcon;
+    return _AppBarActionWidget(onTap: action, imagePath: image);
+  }
 }
 
 class _AppBarActionWidget extends StatelessWidget {
