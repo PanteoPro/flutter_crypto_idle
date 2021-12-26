@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:crypto_idle/Theme/app_colors.dart';
+import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:crypto_idle/Widgets/buttons/game_button_widget.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/resources.dart';
@@ -156,6 +158,11 @@ class _ButtonsWidget extends StatelessWidget {
           text: 'АВТОРЫ',
           onPressed: vm.onAboutButtonPressed,
         ),
+        const SizedBox(height: 16),
+        GameButtonWidget.menuSmall(
+          text: 'ТЕСТ',
+          onPressed: vm.onTestPage,
+        ),
       ]);
     } else {
       buttons.addAll([
@@ -199,6 +206,7 @@ class _VersionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       'Version: 1.0.0',
+      style: AppFonts.body.copyWith(color: AppColors.white),
     );
   }
 }

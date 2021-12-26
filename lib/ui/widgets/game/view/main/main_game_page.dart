@@ -31,6 +31,11 @@ import 'package:provider/src/provider.dart';
 
 part 'widgets/news_widget.dart';
 part 'widgets/content_widget.dart';
+part 'widgets/content_widgets/clicker_widget.dart';
+part 'widgets/content_widgets/actions_widget.dart';
+part 'widgets/content_widgets/computers_widget.dart';
+part 'widgets/content_widgets/news_widget.dart';
+part 'widgets/content_widgets/background_widget.dart';
 part 'widgets/modal_exit_widget.dart';
 part 'widgets/modal_list_tokens_widget.dart';
 

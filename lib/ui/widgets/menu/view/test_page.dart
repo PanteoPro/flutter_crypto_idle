@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class TestWidget extends StatelessWidget {
   const TestWidget({Key? key}) : super(key: key);
@@ -10,14 +11,74 @@ class TestWidget extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Test Page')),
       body: SafeArea(
-        child: Center(
-          child: Column(
-            children: const [
-              _ClickableCPWidget(),
-              _AnimatedSwitcherWidget(),
-            ],
-          ),
+        child: Column(
+          children: [
+            _ClickerWidget(),
+            Expanded(child: Container(color: Colors.greenAccent)),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+GlobalKey _globalKey = GlobalKey();
+
+class _ClickerWidget extends StatelessWidget {
+  const _ClickerWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      key: _globalKey,
+      children: [
+        Expanded(
+          child: _HeighterWidget(),
+        ),
+        SizedBox(width: 220, height: 180, child: Container(color: Colors.black)),
+        Expanded(child: Container(height: 20, color: Colors.blue)),
+      ],
+    );
+  }
+}
+
+class _HeighterWidget extends StatefulWidget {
+  const _HeighterWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<_HeighterWidget> createState() => _HeighterWidgetState();
+}
+
+class _HeighterWidgetState extends State<_HeighterWidget> {
+  double height = 0.0;
+
+  @override
+  void initState() {
+    SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
+      height = _globalKey.currentContext!.size!.height;
+      print('the new height is $height');
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: height,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            color: Colors.red,
+            height: 90,
+          ),
+          Text('hello'),
+        ],
       ),
     );
   }

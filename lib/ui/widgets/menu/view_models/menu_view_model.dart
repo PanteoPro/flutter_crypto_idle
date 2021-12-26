@@ -70,4 +70,8 @@ class MenuViewModel extends ChangeNotifier {
   void onAboutButtonPressed() {
     Navigator.of(context).pushNamed(MainNavigationRouteNames.menuAbout);
   }
+
+  void onTestPage() {
+    Navigator.of(context).pushNamed(MainNavigationRouteNames.test);
+  }
 }
