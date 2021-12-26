@@ -103,6 +103,8 @@ class _ButtonsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = context.read<MenuViewModel>();
     final playMenu = context.select((MenuViewModel vm) => vm.state.playMenu);
+    final isEndGame = context.select((MenuViewModel vm) => vm.state.isEndGame);
+    final isHaveGame = context.select((MenuViewModel vm) => vm.state.isHaveGame);
 
     var buttons = <Widget>[];
     if (!playMenu) {
@@ -124,10 +126,11 @@ class _ButtonsWidget extends StatelessWidget {
       ]);
     } else {
       buttons.addAll([
-        GameButtonWidget.menuBig(
-          text: 'ПРОДОЛЖИТЬ',
-          onPressed: vm.onContinueGameButtonPressed,
-        ),
+        if (!isEndGame && isHaveGame)
+          GameButtonWidget.menuBig(
+            text: 'ПРОДОЛЖИТЬ',
+            onPressed: vm.onContinueGameButtonPressed,
+          ),
         const SizedBox(height: 16),
         GameButtonWidget.menuBig(
           text: 'НОВАЯ ИГРА',

@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 
 class MenuViewModelState {
   bool playMenu = false;
+  bool isEndGame = true;
+  bool isHaveGame = false;
 }
 
 class MenuViewModel extends ChangeNotifier {
@@ -22,11 +24,10 @@ class MenuViewModel extends ChangeNotifier {
   final _gameRepository = GameRepository();
   Future<void> initialRepositories() async {
     await _gameRepository.init();
-    isEndGame = _gameRepository.game.gameOver;
+    state.isEndGame = _gameRepository.game.gameOver;
+    state.isHaveGame = _gameRepository.game.date != DateTime(0);
     notifyListeners();
   }
-
-  bool isEndGame = true;
 
   final BuildContext context;
 
@@ -42,7 +43,6 @@ class MenuViewModel extends ChangeNotifier {
     // }
     final dataManager = InitialDataManager();
     await dataManager.registerAllAdapters();
-    // await context.read<GameViewModel>().initialRepository();
     Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.game);
   }
 
@@ -50,7 +50,6 @@ class MenuViewModel extends ChangeNotifier {
     final dataManager = InitialDataManager();
     await dataManager.deleteBoxesFromDisk();
     await dataManager.init();
-    // await context.read<GameViewModel>().initialRepository();
     Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.game);
   }
 

@@ -249,6 +249,8 @@ class InitialDataManager {
       await _deleteBoxFromDisk(statisticsBoxName);
       await _initStatisticsData();
     }
+
+    await _initGameData();
   }
 
   Future<void> _deleteBoxFromDisk(String nameBox) async {
@@ -355,5 +357,19 @@ class InitialDataManager {
       return false;
     }
     return true;
+  }
+
+  Future<void> _initGameData() async {
+    _registerAdapter<Game>(0, GameAdapter());
+    final box = await Hive.openBox<Game>(gameBoxName);
+    box.put(
+      'main',
+      Game(
+        id: 1,
+        money: 0,
+        nick: 'User',
+        date: DateTime.now(),
+      ),
+    );
   }
 }
