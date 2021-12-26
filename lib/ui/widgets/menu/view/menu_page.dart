@@ -16,14 +16,7 @@ class MenuWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     context.select((MainAppViewModel vm) => vm.locale);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          S.of(context).menu_game_title,
-          style: const TextStyle(fontSize: 24),
-        ),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-      ),
+      appBar: const _AppBarWidget(),
       body: SafeArea(
         child: Stack(
           children: const [
@@ -39,6 +32,46 @@ class MenuWidget extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
+  const _AppBarWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(
+        S.of(context).menu_game_title,
+        style: const TextStyle(fontSize: 24),
+      ),
+      centerTitle: true,
+      automaticallyImplyLeading: false,
+      actions: [
+        _AppBarActionWidget(onTap: () {}, imagePath: AppIconsImages.unmuteIcon),
+        const SizedBox(width: 12),
+      ],
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(32);
+}
+
+class _AppBarActionWidget extends StatelessWidget {
+  const _AppBarActionWidget({Key? key, required this.imagePath, required this.onTap}) : super(key: key);
+
+  final VoidCallback onTap;
+  final String imagePath;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Image.asset(imagePath, width: 20, height: 20),
     );
   }
 }

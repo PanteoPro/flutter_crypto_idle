@@ -22,25 +22,16 @@ class GameAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         mainAxisSize: MainAxisSize.min,
         children: const [
-          // _AppBarAnimatedCalendarWidget(),
-          // SizedBox(width: 4),
           _DataWidget(),
         ],
       ),
       centerTitle: true,
       actions: [
-        _AppBarActionWidget(onTap: () {}, imagePath: AppIconsImages.muteIcon),
+        _AppBarActionWidget(onTap: () {}, imagePath: AppIconsImages.unmuteIcon),
         const SizedBox(width: 12),
         _AppBarActionWidget(onTap: () {}, imagePath: AppIconsImages.settingsIcon),
         const SizedBox(width: 12),
       ],
-      // bottom: PreferredSize(
-      //   preferredSize: const Size.fromHeight(2),
-      //   child: Container(
-      //     color: Colors.black,
-      //     height: 1,
-      //   ),
-      // ),
     );
   }
 
@@ -60,56 +51,11 @@ class _DataWidget extends StatelessWidget {
     final date = context.select((GameViewModel vm) => vm.state.date);
     final stringDate = format.format(date);
     return AnimatedSwitcher(
-      // transitionBuilder: (child, animation) => ScaleTransition(scale: animation, child: child),
       duration: const Duration(seconds: 1),
       child: Text(
         stringDate,
         key: ValueKey(stringDate),
         style: AppFonts.main.copyWith(color: AppColors.white),
-      ),
-    );
-  }
-}
-
-class _AppBarAnimatedCalendarWidget extends StatefulWidget {
-  const _AppBarAnimatedCalendarWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<_AppBarAnimatedCalendarWidget> createState() => _AppBarAnimatedCalendarWidgetState();
-}
-
-class _AppBarAnimatedCalendarWidgetState extends State<_AppBarAnimatedCalendarWidget> with TickerProviderStateMixin {
-  late GifController controller;
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    controller = GifController(vsync: this);
-    // WidgetsBinding.instance!.addPostFrameCallback((_) => _startAnimation());
-  }
-
-  void _startAnimation() {
-    controller.value = 0;
-    controller.animateTo(27, duration: Duration(milliseconds: 900));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _startAnimation(),
-      child: GifImage(
-        image: const AssetImage(AppImages.imageCompTap),
-        controller: controller,
-        width: 24,
-        height: 24,
       ),
     );
   }
