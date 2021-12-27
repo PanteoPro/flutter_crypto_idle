@@ -113,6 +113,7 @@
     "game_market_pc_title": "Покупка установок",
     "game_market_pc_info_cost": "Стоимость",
     "game_market_pc_info_cost_sell": "Стоимость при продаже",
+    "game_market_pc_info_cost_sell_minus": "электр",
     "game_market_pc_info_power": "Мощность",
     "game_market_pc_info_energy": "Потребление",
     "game_market_pc_info_count": "У вас имеется: {value} штук",

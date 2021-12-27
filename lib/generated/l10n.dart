@@ -1020,6 +1020,16 @@ class S {
     );
   }
 
+  /// `electr`
+  String get game_market_pc_info_cost_sell_minus {
+    return Intl.message(
+      'electr',
+      name: 'game_market_pc_info_cost_sell_minus',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Power`
   String get game_market_pc_info_power {
     return Intl.message(

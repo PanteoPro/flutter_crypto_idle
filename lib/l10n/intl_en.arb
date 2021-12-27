@@ -113,6 +113,8 @@
     "game_market_pc_title": "Buy computers",
     "game_market_pc_info_cost": "Price",
     "game_market_pc_info_cost_sell": "Selling price",
+    "game_market_pc_info_cost_sell_minus": "electr",
+
     "game_market_pc_info_power": "Power",
     "game_market_pc_info_energy": "Electricity",
     "game_market_pc_info_count": "You have: {value} pieces",

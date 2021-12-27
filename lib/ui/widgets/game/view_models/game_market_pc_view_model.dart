@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:crypto_idle/config.dart';
 import 'package:crypto_idle/domain/entities/statistics.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/message_manager.dart';
@@ -17,6 +18,7 @@ import 'package:flutter/material.dart';
 
 class GameMarketPCViewModelState {
   GameMarketPCViewModelState({
+    required this.date,
     required this.money,
     required this.marketPCs,
     required this.ownPCs,
@@ -29,13 +31,28 @@ class GameMarketPCViewModelState {
     this.ownPCs = const <PC>[],
     this.currentLevel = 0,
     this.maxPCs = 0,
-  });
+  }) {
+    date = DateTime(0);
+  }
 
+  late DateTime date;
   final double money;
   final List<PC> ownPCs;
   final List<PC> marketPCs;
   final int currentLevel;
   final int maxPCs;
+
+  /// energy cost if date > 5 day in start month
+  double ifEnergyCostByPc(PC pc) {
+    double result = 0;
+    final monthAfterPay = date.add(Duration(days: -date.day + 5));
+    if (date.isAfter(monthAfterPay)) {
+      result = pc.energy / AppConfig.kVisualEnergy * AppConfig.kEnergyPc;
+    }
+    return result;
+  }
+
+  double _energyCostByPc(PC pc) => pc.energy / AppConfig.kVisualEnergy * AppConfig.kEnergyPc;
 
   bool haveSpaceForNewPC() {
     return ownPCs.length < maxPCs;
@@ -65,8 +82,10 @@ class GameMarketPCViewModelState {
     List<PC>? marketPCs,
     int? currentLevel,
     int? maxPCs,
+    DateTime? date,
   }) {
     return GameMarketPCViewModelState(
+      date: date ?? this.date,
       money: money ?? this.money,
       ownPCs: ownPCs ?? this.ownPCs,
       marketPCs: marketPCs ?? this.marketPCs,
@@ -110,10 +129,12 @@ class GameMarketPCViewModel extends ChangeNotifier {
 
   Future<void> _updateRepoByChangeEvent(dynamic data, MyRepository repository) async {
     repository.updateData();
+    _updateState();
   }
 
   Future<void> _updateState() async {
     _state = GameMarketPCViewModelState(
+      date: _gameRepository.game.date,
       money: _gameRepository.game.money,
       marketPCs: _pcRepository.pcsConst,
       ownPCs: _pcRepository.pcs,
@@ -150,7 +171,8 @@ class GameMarketPCViewModel extends ChangeNotifier {
     final pc = _state.marketPCs[index];
     if (await _pcRepository.sellPC(pc)) {
       MusicManager.playSell();
-      await _gameRepository.changeMoney(pc.costSell);
+      final finalEarnings = pc.costSell - state.ifEnergyCostByPc(pc);
+      await _gameRepository.changeMoney(finalEarnings);
       MessageManager.addMessage(text: 'Вы продали установку - ${pc.name} за ${pc.costSell}\$', color: Colors.green);
     } else {
       MessageManager.addMessage(text: 'Вы не можете продать, то чего у вас нет', color: Colors.red);

@@ -126,10 +126,22 @@ class _InformationSellCostWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final pc = context.read<GameMarketPCViewModel>().state.marketPCs[index];
     final isHavePC = context.select((GameMarketPCViewModel vm) => vm.state.isHavePCById(pc.id));
+    final energyCost = context.select((GameMarketPCViewModel vm) => vm.state.ifEnergyCostByPc(pc));
+
     if (!isHavePC) return const SizedBox();
-    return Text(
-      '${S.of(context).game_market_pc_info_cost_sell}: ${S.of(context).text_with_dollar(pc.costSell)}',
-      style: AppFonts.mainButton.copyWith(color: AppColors.white),
+    return RichText(
+      text: TextSpan(
+        text: '${S.of(context).game_market_pc_info_cost_sell}: ${S.of(context).text_with_dollar(pc.costSell)} ',
+        style: AppFonts.mainButton.copyWith(color: AppColors.white),
+        children: [
+          if (energyCost != 0)
+            TextSpan(
+              text:
+                  '-${S.of(context).text_with_dollar(energyCost)} ${S.of(context).game_market_pc_info_cost_sell_minus}',
+              style: AppFonts.mainButton.copyWith(color: AppColors.red),
+            ),
+        ],
+      ),
     );
   }
 }

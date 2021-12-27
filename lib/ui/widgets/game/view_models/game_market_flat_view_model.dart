@@ -108,18 +108,36 @@ class GameMarketFlatViewModel extends ChangeNotifier {
     _updateState();
   }
 
+  int _getMaxLevelPc() {
+    final pcs = _pcRepository.pcs;
+    int level = 1;
+    for (final pc in pcs) {
+      if (pc.needLevel > level) {
+        level = pc.needLevel;
+      }
+    }
+    return level;
+  }
+
   Future<void> onActivateButtonPressed(int index) async {
     final flat = _state.flats[index];
     final currentFlat = _state.currentFlat();
     if (!flat.isActive && flat.isBuy) {
       final currentCountPC = _pcRepository.pcs.length;
       if (currentCountPC <= flat.countPC) {
-        await _flatRepository.changeFlat(currentFlat, isActive: false);
-        await _flatRepository.changeFlat(flat, isActive: true);
-        MessageManager.addMessage(
-          text: 'Вы переехали в ${flat.name}',
-          color: Colors.yellow,
-        );
+        if (_getMaxLevelPc() <= flat.level) {
+          await _flatRepository.changeFlat(currentFlat, isActive: false);
+          await _flatRepository.changeFlat(flat, isActive: true);
+          MessageManager.addMessage(
+            text: 'Вы переехали в ${flat.name}',
+            color: Colors.yellow,
+          );
+        } else {
+          MessageManager.addMessage(
+            text: 'Ваши компьютеры выше уровнем, чем в помещнии ${flat.name}',
+            color: Colors.red,
+          );
+        }
       } else {
         MessageManager.addMessage(
           text: 'Ваше текущее количество установок больше, чем максимальное количество установок в новом жилье',

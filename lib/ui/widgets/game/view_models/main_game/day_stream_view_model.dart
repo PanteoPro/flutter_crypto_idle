@@ -42,9 +42,7 @@ class DayStreamViewModel extends ChangeNotifier {
   double get _energyConsume {
     var energy = 0.0;
     for (final element in _pcRepository.pcs) {
-      if (element.miningToken != null) {
-        energy += element.energy;
-      }
+      energy += element.energy;
     }
     return double.parse(energy.toStringAsFixed(2));
   }

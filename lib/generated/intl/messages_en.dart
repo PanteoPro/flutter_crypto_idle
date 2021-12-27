@@ -158,6 +158,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Price"),
         "game_market_pc_info_cost_sell":
             MessageLookupByLibrary.simpleMessage("Selling price"),
+        "game_market_pc_info_cost_sell_minus":
+            MessageLookupByLibrary.simpleMessage("electr"),
         "game_market_pc_info_count": m1,
         "game_market_pc_info_energy":
             MessageLookupByLibrary.simpleMessage("Electricity"),
