@@ -222,7 +222,7 @@ class _OtherContentWidget extends StatelessWidget {
               ),
             ],
             if (!enoughtLevel) ...[
-              Spacer(),
+              const Spacer(),
               RichText(
                 text: TextSpan(
                   text: S.of(context).game_market_pc_info_no_level_1,

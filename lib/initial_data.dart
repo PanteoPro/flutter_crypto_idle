@@ -368,7 +368,7 @@ class InitialDataManager {
         id: 1,
         money: 0,
         nick: 'User',
-        date: DateTime.now(),
+        date: DateTime.now().add(Duration(days: 3)),
       ),
     );
   }

@@ -14,7 +14,16 @@ enum MusicManagerStreamEvents {
   playMenu,
   stopMenu,
 
-  playMoney,
+  playGameOver,
+
+  playBuy,
+  playSell,
+  playNews,
+  playNewToken,
+  playScamToken,
+  playSelectToken,
+  playClick,
+  playClickPc,
 }
 
 class MusicManager {
@@ -58,8 +67,40 @@ class MusicManager {
     _playSound(MusicManagerStreamEvents.stopMenu);
   }
 
-  static void playMoney() {
-    _playSound(MusicManagerStreamEvents.playMoney);
+  static void playGameOver() {
+    _playSound(MusicManagerStreamEvents.playGameOver);
+  }
+
+  static void playBuy() {
+    _playSound(MusicManagerStreamEvents.playBuy);
+  }
+
+  static void playSell() {
+    _playSound(MusicManagerStreamEvents.playSell);
+  }
+
+  static void playNews() {
+    _playSound(MusicManagerStreamEvents.playNews);
+  }
+
+  static void playNewToken() {
+    _playSound(MusicManagerStreamEvents.playNewToken);
+  }
+
+  static void playScamToken() {
+    _playSound(MusicManagerStreamEvents.playScamToken);
+  }
+
+  static void playSelectToken() {
+    _playSound(MusicManagerStreamEvents.playSelectToken);
+  }
+
+  static void playClick() {
+    _playSound(MusicManagerStreamEvents.playClick);
+  }
+
+  static void playClickPc() {
+    _playSound(MusicManagerStreamEvents.playClickPc);
   }
 
   static void _playSound(MusicManagerStreamEvents event) {

@@ -81,7 +81,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "game_global_footer_income":
             MessageLookupByLibrary.simpleMessage("Заработок за день"),
         "game_global_footer_level":
-            MessageLookupByLibrary.simpleMessage("Уровень"),
+            MessageLookupByLibrary.simpleMessage("Уровень места"),
         "game_global_footer_place":
             MessageLookupByLibrary.simpleMessage("Место"),
         "game_global_footer_power":

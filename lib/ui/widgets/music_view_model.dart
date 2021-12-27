@@ -38,8 +38,26 @@ class MusicViewModel extends ChangeNotifier {
       case MusicManagerStreamEvents.stopMenu:
         isPlayMenu = false;
         break;
-      case MusicManagerStreamEvents.playMoney:
-        _playMoney();
+      case MusicManagerStreamEvents.playGameOver:
+        _playGameOver();
+        break;
+      case MusicManagerStreamEvents.playBuy:
+        _playBuy();
+        break;
+      case MusicManagerStreamEvents.playSell:
+        _playBuy();
+        break;
+      case MusicManagerStreamEvents.playNews:
+        break;
+      case MusicManagerStreamEvents.playNewToken:
+        break;
+      case MusicManagerStreamEvents.playScamToken:
+        break;
+      case MusicManagerStreamEvents.playSelectToken:
+        break;
+      case MusicManagerStreamEvents.playClick:
+        break;
+      case MusicManagerStreamEvents.playClickPc:
         break;
       case MusicManagerStreamEvents.mute:
         isMute = true;
@@ -68,8 +86,13 @@ class MusicViewModel extends ChangeNotifier {
     if (!isMute) {
       if (isPlayMain) {
         _startMainMusic();
-      } else if (isPlayMenu) {
+      } else {
+        _endMainMusic();
+      }
+      if (isPlayMenu) {
         _startMenuMusic();
+      } else {
+        _endMenuMusic();
       }
     } else {
       _endMainMusic();
@@ -118,7 +141,11 @@ class MusicViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _playMoney() async {
+  Future<void> _playGameOver() async {
+    await _playSound(AppAudio.gameOver);
+  }
+
+  Future<void> _playBuy() async {
     await _playSound(AppAudio.money);
   }
 

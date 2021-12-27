@@ -68,10 +68,10 @@
     "menu_button_new_game": "NEW GAME",
     "menu_button_continue_game": "CONTINUE",
 
-    "game_global_app_bar_cash": "CASH",
+    "game_global_app_bar_cash": "Cash",
     "game_global_app_bar_crypto": "Cryptocurrency",
     "game_global_footer_place": "Place",
-    "game_global_footer_level": "Level",
+    "game_global_footer_level": "Level place",
     "game_global_footer_consume": "Costs",
     "game_global_footer_power": "Power",
     "game_global_footer_income": "Daily earnings",

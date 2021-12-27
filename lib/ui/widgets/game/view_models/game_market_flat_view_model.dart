@@ -86,7 +86,7 @@ class GameMarketFlatViewModel extends ChangeNotifier {
     if (_state.money >= flat.cost) {
       final currentCountPC = _pcRepository.pcs.length;
       if (currentCountPC <= flat.countPC) {
-        MusicManager.playMoney();
+        MusicManager.playBuy();
         await _flatRepository.changeFlat(flat, isBuy: true, isActive: true);
         await _flatRepository.changeFlat(currentFlat, isActive: false);
 

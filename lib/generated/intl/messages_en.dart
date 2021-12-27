@@ -68,7 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Market Sell"),
         "game_crypto_title": MessageLookupByLibrary.simpleMessage("Crypto"),
         "game_global_app_bar_cash":
-            MessageLookupByLibrary.simpleMessage("CASH"),
+            MessageLookupByLibrary.simpleMessage("Cash"),
         "game_global_app_bar_crypto":
             MessageLookupByLibrary.simpleMessage("Cryptocurrency"),
         "game_global_footer_consume":
@@ -80,7 +80,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "game_global_footer_income":
             MessageLookupByLibrary.simpleMessage("Daily earnings"),
         "game_global_footer_level":
-            MessageLookupByLibrary.simpleMessage("Level"),
+            MessageLookupByLibrary.simpleMessage("Level place"),
         "game_global_footer_place":
             MessageLookupByLibrary.simpleMessage("Place"),
         "game_global_footer_power":

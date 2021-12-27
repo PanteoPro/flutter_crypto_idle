@@ -620,10 +620,10 @@ class S {
     );
   }
 
-  /// `CASH`
+  /// `Cash`
   String get game_global_app_bar_cash {
     return Intl.message(
-      'CASH',
+      'Cash',
       name: 'game_global_app_bar_cash',
       desc: '',
       args: [],
@@ -650,10 +650,10 @@ class S {
     );
   }
 
-  /// `Level`
+  /// `Level place`
   String get game_global_footer_level {
     return Intl.message(
-      'Level',
+      'Level place',
       name: 'game_global_footer_level',
       desc: '',
       args: [],

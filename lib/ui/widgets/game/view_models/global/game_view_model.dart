@@ -165,6 +165,9 @@ class GameViewModel extends ChangeNotifier {
     for (final token in currentTokens) {
       currentPrices[token.id] = _priceTokensRepository.getLatestPriceByTokenId(token.id).cost;
     }
+
+    _endGameSound();
+
     _state = GameViewModelState(
       tokens: _tokensRepository.tokens,
       myPCs: _pcRepository.pcs,
@@ -176,6 +179,13 @@ class GameViewModel extends ChangeNotifier {
       isModalGameOverClose: _state.isModalGameOverClose,
     );
     notifyListeners();
+  }
+
+  void _endGameSound() {
+    if (_state.gameOver != _gameRepository.game.gameOver) {
+      MusicManager.stopMain();
+      MusicManager.playGameOver();
+    }
   }
 
   void onExitGameOverPressed(BuildContext context) {
