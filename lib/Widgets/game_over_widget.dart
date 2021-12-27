@@ -1,6 +1,7 @@
 import 'package:crypto_idle/Theme/app_colors.dart';
 import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:crypto_idle/Widgets/buttons/game_button_widget.dart';
+import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/resources/resources.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
@@ -45,17 +46,18 @@ class ModalGameOverWidget extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              'ВЫ ПРОИГРАЛИ',
+                              S.of(context).game_global_modal_game_over_title,
+                              textAlign: TextAlign.center,
                               style: AppFonts.clicker.copyWith(color: AppColors.white),
                             ),
                             const SizedBox(height: 16),
                             GameButtonWidget.white(
-                              text: 'В главное меню',
+                              text: S.of(context).game_global_modal_game_over_return,
                               onPressed: () => vm.onExitGameOverPressed(context),
                             ),
                             const SizedBox(height: 16),
                             GameButtonWidget.white(
-                              text: 'Статистика',
+                              text: S.of(context).game_global_modal_game_over_statistic,
                               onPressed: () {},
                             ),
                           ],

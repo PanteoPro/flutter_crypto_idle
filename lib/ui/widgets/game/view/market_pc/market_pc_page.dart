@@ -39,7 +39,7 @@ class _TitlePage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8, bottom: 16),
       child: Text(
-        'Покупка установок',
+        S.of(context).game_market_pc_title,
         style: AppFonts.main.copyWith(color: AppColors.white),
       ),
     );

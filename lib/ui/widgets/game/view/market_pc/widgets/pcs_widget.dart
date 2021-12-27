@@ -92,16 +92,16 @@ class _InformationWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Мощность: ${S.of(context).text_with_power_mining(pc.power)}',
-                  style: AppFonts.mainButton.copyWith(color: AppColors.white),
-                ),
-                Text(
-                  'Стоимость: ${S.of(context).text_with_dollar(pc.cost)}',
+                  '${S.of(context).game_market_pc_info_cost}: ${S.of(context).text_with_dollar(pc.cost)}',
                   style: AppFonts.mainButton.copyWith(color: AppColors.white),
                 ),
                 _InformationSellCostWidget(index: index),
                 Text(
-                  'Потребление: ${S.of(context).text_with_energy(pc.energy)}',
+                  '${S.of(context).game_market_pc_info_power}: ${S.of(context).text_with_power_mining(pc.power)}',
+                  style: AppFonts.mainButton.copyWith(color: AppColors.white),
+                ),
+                Text(
+                  '${S.of(context).game_market_pc_info_energy}: ${S.of(context).text_with_energy(pc.energy)}',
                   style: AppFonts.mainButton.copyWith(color: AppColors.white),
                 ),
               ],
@@ -128,7 +128,7 @@ class _InformationSellCostWidget extends StatelessWidget {
     final isHavePC = context.select((GameMarketPCViewModel vm) => vm.state.isHavePCById(pc.id));
     if (!isHavePC) return const SizedBox();
     return Text(
-      'Стоимиость при продаже: ${S.of(context).text_with_dollar(pc.costSell)}',
+      '${S.of(context).game_market_pc_info_cost_sell}: ${S.of(context).text_with_dollar(pc.costSell)}',
       style: AppFonts.mainButton.copyWith(color: AppColors.white),
     );
   }
@@ -158,27 +158,27 @@ class _ButtonsWidget extends StatelessWidget {
       children: [
         if (isBuyButton)
           GameButtonWidget.buy(
-            text: 'Купить',
+            text: S.of(context).game_market_pc_button_buy,
             onPressed: () => vm.onBuyButtonPressed(index),
             textColor: AppColors.white,
           ),
         if (!isBuyButton)
-          const GameButtonWidget.buy(
-            text: 'Купить',
+          GameButtonWidget.buy(
+            text: S.of(context).game_market_pc_button_buy,
             borderColor: AppColors.lightGrey,
             textColor: AppColors.lightGrey,
           ),
         const SizedBox(height: 6),
         if (isSellButton)
           GameButtonWidget.buy(
-            text: 'Продать',
+            text: S.of(context).game_market_pc_button_sell,
             onPressed: () => vm.onSellButtonPressed(index),
             borderColor: AppColors.red,
             textColor: AppColors.white,
           ),
         if (!isSellButton)
-          const GameButtonWidget.buy(
-            text: 'Продать',
+          GameButtonWidget.buy(
+            text: S.of(context).game_market_pc_button_sell,
             borderColor: AppColors.lightGrey,
             textColor: AppColors.lightGrey,
           ),
@@ -208,14 +208,14 @@ class _OtherContentWidget extends StatelessWidget {
           children: [
             if (enoughtLevel) ...[
               Text(
-                'У вас имеется: $countHave штук',
+                S.of(context).game_market_pc_info_count(countHave),
                 style: AppFonts.mainButton.copyWith(
                   color: AppColors.lightGrey,
                 ),
               ),
               const Spacer(),
               Text(
-                'Уровень: ${pc.needLevel}',
+                S.of(context).game_market_pc_info_level(pc.needLevel),
                 style: AppFonts.mainButton.copyWith(
                   color: AppColors.lightGrey,
                 ),
@@ -225,19 +225,19 @@ class _OtherContentWidget extends StatelessWidget {
               Spacer(),
               RichText(
                 text: TextSpan(
-                  text: 'Для покупки необходим ',
+                  text: S.of(context).game_market_pc_info_no_level_1,
                   style: AppFonts.mainButton.copyWith(
                     color: AppColors.lightGrey,
                   ),
                   children: [
                     TextSpan(
-                      text: '${pc.needLevel} уровень ',
+                      text: S.of(context).game_market_pc_info_no_level_2(pc.needLevel),
                       style: AppFonts.mainButton.copyWith(
                         color: AppColors.red,
                       ),
                     ),
                     TextSpan(
-                      text: 'помещения',
+                      text: S.of(context).game_market_pc_info_no_level_3,
                       style: AppFonts.mainButton.copyWith(
                         color: AppColors.lightGrey,
                       ),

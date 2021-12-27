@@ -65,7 +65,7 @@ class _LevelWidget extends StatelessWidget {
       child: RotatedBox(
         quarterTurns: 3,
         child: Text(
-          'LVL $level',
+          '${S.of(context).game_market_flat_info_level} $level',
           style: AppFonts.body2.copyWith(color: AppColors.white),
         ),
       ),
@@ -118,7 +118,7 @@ class _MaxPcFlatWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final countPC = context.read<GameMarketFlatViewModel>().state.flats[index].countPC;
     return Text(
-      'Максимум установок: $countPC',
+      '${S.of(context).game_market_flat_info_count_pc}: $countPC',
       style: AppFonts.mainButton.copyWith(color: AppColors.white),
     );
   }
@@ -138,14 +138,14 @@ class _CostsFlatWidget extends StatelessWidget {
         SizedBox(
           width: 110,
           child: Text(
-            'Стоимость: $cost',
+            '${S.of(context).game_market_flat_info_cost}: $cost',
             textAlign: TextAlign.left,
             style: AppFonts.mainButton.copyWith(color: AppColors.white),
           ),
         ),
         const SizedBox(width: 4),
         Text(
-          'Ежемесячная плата: $monthCost',
+          '${S.of(context).game_market_flat_info_month_cost}: $monthCost',
           style: AppFonts.mainButton.copyWith(color: AppColors.white),
         ),
       ],
@@ -167,10 +167,10 @@ class _ButtonWidget extends StatelessWidget {
     final money = context.select((GameMarketFlatViewModel vm) => vm.state.money);
 
     final text = isActive
-        ? 'АКТИВНО'
+        ? S.of(context).game_market_flat_status_active_title
         : isBuy
-            ? 'ПРИОБРЕТЕНО'
-            : 'ПРИОБРЕСТИ';
+            ? S.of(context).game_market_flat_button_have
+            : S.of(context).game_market_flat_button_buy;
 
     final color = isActive
         ? AppColors.lightGrey

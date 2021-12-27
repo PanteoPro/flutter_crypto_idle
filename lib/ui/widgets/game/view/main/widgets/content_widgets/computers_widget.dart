@@ -147,7 +147,9 @@ class __ComputerItemButtonOrMiningWidget extends StatelessWidget {
       child: TextButton(
         onPressed: () => vm.onOpenModalButtonPressed(index),
         child: Text(
-          pc.miningToken != null ? 'Майнится: ${pc.miningToken?.symbol}' : 'НАЗНАЧИТЬ',
+          pc.miningToken != null
+              ? '${S.of(context).game_main_pcs_mining}: ${pc.miningToken?.symbol}'
+              : S.of(context).game_main_pcs_assign,
           textAlign: TextAlign.center,
           maxLines: 1,
           style: AppFonts.mainPagePc.copyWith(color: AppColors.white),

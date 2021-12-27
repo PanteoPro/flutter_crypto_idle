@@ -3,7 +3,6 @@ import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/resources.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/main_game/main_game_view_model.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
@@ -46,7 +45,7 @@ class _FooterPlaceWidget extends StatelessWidget {
         children: [
           RichText(
             text: TextSpan(
-              text: 'Место: ',
+              text: '${S.of(context).game_global_footer_place}: ',
               style: AppFonts.main.copyWith(color: AppColors.white),
               children: [
                 TextSpan(
@@ -58,7 +57,7 @@ class _FooterPlaceWidget extends StatelessWidget {
           ),
           RichText(
             text: TextSpan(
-              text: 'Уровень: ',
+              text: '${S.of(context).game_global_footer_level}: ',
               style: AppFonts.main.copyWith(color: AppColors.white),
               children: [
                 TextSpan(
@@ -85,7 +84,7 @@ class _FooterMainInfoWidget extends StatelessWidget {
         const _FooterMainInfoEnergyWidget(),
         const Spacer(),
         Text(
-          'Расходы',
+          S.of(context).game_global_footer_consume,
           style: AppFonts.main.copyWith(color: AppColors.white),
         ),
       ],
@@ -192,7 +191,7 @@ class _FooterOtherInfoPowerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final power = context.select((GameViewModel vm) => vm.state.powerPCs);
     return Text(
-      '${S.of(context).main_game_info_power_mining_title}: ${S.of(context).text_with_power_mining(power)}',
+      '${S.of(context).game_global_footer_power}: ${S.of(context).text_with_power_mining(power)}',
       style: AppFonts.body.copyWith(color: AppColors.white),
     );
   }
@@ -205,7 +204,7 @@ class _FooterOtherInfoIncomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final earning = context.select((GameViewModel vm) => vm.state.averageEarnings);
     return Text(
-      'Заработок за день: ${S.of(context).text_with_dollar(earning)}',
+      '${S.of(context).game_global_footer_income}: ${S.of(context).text_with_dollar(earning)}',
       style: AppFonts.body.copyWith(color: AppColors.white),
     );
   }
@@ -218,7 +217,7 @@ class _FooterOtherInfoFlatWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final flatConsume = context.select((GameViewModel vm) => vm.state.flatConsume);
     return Text(
-      'Жилье: ${S.of(context).text_with_dollar_month(flatConsume)}',
+      '${S.of(context).game_global_footer_consume_flat}: ${S.of(context).text_with_dollar_month(flatConsume)}',
       style: AppFonts.body.copyWith(color: AppColors.white),
     );
   }
@@ -231,7 +230,7 @@ class _FooterOtherInfoEnergyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final energyConsume = context.select((GameViewModel vm) => vm.state.energyConsumeCost);
     return Text(
-      'Электричество: ${S.of(context).text_with_dollar_month(energyConsume)}',
+      '${S.of(context).game_global_footer_consume_energy}: ${S.of(context).text_with_dollar_month(energyConsume)}',
       style: AppFonts.body.copyWith(color: AppColors.white),
     );
   }

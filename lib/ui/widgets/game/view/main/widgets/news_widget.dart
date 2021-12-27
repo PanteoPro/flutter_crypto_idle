@@ -51,7 +51,7 @@ class _NewsLeftRowWidget extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              'Новости:',
+              S.of(context).game_main_news,
               style: AppFonts.main.copyWith(color: AppColors.green),
             ),
             Expanded(

@@ -57,11 +57,11 @@ class _ModalHeaderWidget extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                'Выберите криптовалюту',
+                S.of(context).game_main_modal_tokens_title,
                 style: AppFonts.main.copyWith(color: AppColors.white),
               ),
               Text(
-                'Для установки - ${pc.name}',
+                S.of(context).game_main_modal_tokens_sub_title(pc.name),
                 style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
               ),
             ],
@@ -224,10 +224,10 @@ class _ModalListItemMainButtonWidget extends StatelessWidget {
     return GameButtonWidget.tokenSelect(
       onPressed: onPressed,
       text: isScam
-          ? 'SCAM'
+          ? S.of(context).game_main_modal_tokens_button_scam
           : isActiveToken
-              ? 'АКТИВНО'
-              : 'Выбрать',
+              ? S.of(context).game_main_modal_tokens_button_active
+              : S.of(context).game_main_modal_tokens_button_select,
       borderColor: isScam
           ? AppColors.red
           : isActiveToken
@@ -299,7 +299,7 @@ class _ModalListItemOtherCurrentPriceWidget extends StatelessWidget {
     final currentPrice = context.select((MainGameViewModel vm) => vm.state.getCurrentPriceByToken(token));
     final text = currentPrice.cost > 1 ? currentPrice.cost.toStringAsFixed(2) : currentPrice.cost.toStringAsFixed(4);
     return Text(
-      'Текущая цена: ${S.of(context).text_with_dollar(text)}',
+      '${S.of(context).game_main_modal_tokens_info_current_cost}: ${S.of(context).text_with_dollar(text)}',
       style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
     );
   }
@@ -320,7 +320,7 @@ class _ModalListItemOtherMonthPriceWidget extends StatelessWidget {
         context.select((MainGameViewModel vm) => vm.state.getDataAfterPriceByToken(token: token, daysAgo: 31));
     final text = monthPrice.cost > 1 ? monthPrice.cost.toStringAsFixed(2) : monthPrice.cost.toStringAsFixed(4);
     return Text(
-      'Цена месяц назад: ${S.of(context).text_with_dollar(text)}',
+      '${S.of(context).game_main_modal_tokens_info_month_cost}: ${S.of(context).text_with_dollar(text)}',
       style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
     );
   }
@@ -338,7 +338,7 @@ class _ModalFooterWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 6),
         child: Center(
           child: GameButtonWidget.tokenSelect(
-            text: 'Отмена',
+            text: S.of(context).game_main_modal_tokens_exit,
             onPressed: vm.onExitModalAction,
             font: AppFonts.main,
             backgroundColor: AppColors.secondGrey,

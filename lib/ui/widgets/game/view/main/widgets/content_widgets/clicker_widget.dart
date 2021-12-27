@@ -57,23 +57,23 @@ class _ClickerInfoWidgetState extends State<_ClickerInfoWidget> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            'Денег за клик:',
+            '${S.of(context).game_main_upgrade_info_title}:',
             style: AppFonts.body.copyWith(color: AppColors.white),
           ),
           Text(
-            'Мин ${vm.state.clicker.minMoney}\$',
+            '${S.of(context).game_main_upgrade_info_min} ${vm.state.clicker.minMoney}\$',
             style: AppFonts.body.copyWith(color: AppColors.white),
           ),
           Text(
-            'Макс ${vm.state.clicker.maxMoney}\$',
+            '${S.of(context).game_main_upgrade_info_max} ${vm.state.clicker.maxMoney}\$',
             style: AppFonts.body.copyWith(color: AppColors.white),
           ),
           Text(
-            'Крит ${vm.state.clicker.critMoney}\$',
+            '${S.of(context).game_main_upgrade_info_critical} ${vm.state.clicker.critMoney}\$',
             style: AppFonts.body.copyWith(color: AppColors.white),
           ),
           Text(
-            'Крит ${(vm.state.clicker.probabilityCrit * 100).toStringAsFixed(0)}%',
+            '${S.of(context).game_main_upgrade_info_critical_probability} ${(vm.state.clicker.probabilityCrit * 100).toStringAsFixed(0)}%',
             style: AppFonts.body.copyWith(color: AppColors.white),
           ),
         ],
@@ -114,7 +114,7 @@ class _ClickerUpgradeWidgetState extends State<_ClickerUpgradeWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Улучшение',
+            S.of(context).game_main_upgrade_title,
             style: AppFonts.body2.copyWith(color: AppColors.white),
           ),
           const SizedBox(height: 4),
@@ -124,7 +124,7 @@ class _ClickerUpgradeWidgetState extends State<_ClickerUpgradeWidget> {
           ),
           const SizedBox(height: 4),
           Text(
-            'LVL: ${clickerVM.state.clicker.level}',
+            '${S.of(context).game_main_upgrade_level}: ${clickerVM.state.clicker.level}',
             style: AppFonts.body2.copyWith(color: AppColors.white),
           ),
         ],

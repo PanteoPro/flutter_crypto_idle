@@ -20,23 +20,29 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(value) => "You have ${value} el";
+  static String m0(value) => "To install - ${value}";
 
-  static String m1(symbol) => "Mining ${symbol}";
+  static String m1(value) => "You have: ${value} pieces";
 
-  static String m2(symbol) => "Earn on ${symbol}";
+  static String m2(value) => "Level ${value}";
 
-  static String m3(symbol) => "Mining ${symbol}";
+  static String m3(value) => "${value} level ";
 
-  static String m4(value) => "${value}\$";
+  static String m4(symbol) => "Mining ${symbol}";
 
-  static String m5(value) => "${value}\$/month";
+  static String m5(symbol) => "Earn on ${symbol}";
 
-  static String m6(value) => "${value} V/h";
+  static String m6(symbol) => "Mining ${symbol}";
 
-  static String m7(value) => "${value} U/dex";
+  static String m7(value) => "${value}\$";
 
-  static String m8(value1, value2) => "${value1}/${value2}";
+  static String m8(value) => "${value}\$/month";
+
+  static String m9(value) => "${value} V/h";
+
+  static String m10(value) => "${value} U/dex";
+
+  static String m11(value1, value2) => "${value1}/${value2}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -61,36 +67,110 @@ class MessageLookup extends MessageLookupByLibrary {
         "game_crypto_market_fast_sell_title":
             MessageLookupByLibrary.simpleMessage("Market Sell"),
         "game_crypto_title": MessageLookupByLibrary.simpleMessage("Crypto"),
-        "game_market_flat_buy_item_title":
-            MessageLookupByLibrary.simpleMessage("Buy"),
-        "game_market_flat_change_item_title":
-            MessageLookupByLibrary.simpleMessage("Change"),
-        "game_market_flat_cost_item_title":
-            MessageLookupByLibrary.simpleMessage("Cost"),
-        "game_market_flat_count_pc_item_title":
-            MessageLookupByLibrary.simpleMessage("Count PC"),
-        "game_market_flat_month_item_title":
-            MessageLookupByLibrary.simpleMessage("Monthly Fee"),
-        "game_market_flat_own_item_title":
-            MessageLookupByLibrary.simpleMessage("Own"),
-        "game_market_flat_status_active_title":
-            MessageLookupByLibrary.simpleMessage("Active"),
-        "game_market_flat_title": MessageLookupByLibrary.simpleMessage("Flat"),
-        "game_market_pc_buy_item_title":
-            MessageLookupByLibrary.simpleMessage("Buy"),
-        "game_market_pc_cost_item_title":
-            MessageLookupByLibrary.simpleMessage("Cost"),
-        "game_market_pc_cost_sell_item_title":
-            MessageLookupByLibrary.simpleMessage("Selling value"),
-        "game_market_pc_energy_item_title":
-            MessageLookupByLibrary.simpleMessage("Energy consume"),
-        "game_market_pc_power_item_title":
+        "game_global_app_bar_cash":
+            MessageLookupByLibrary.simpleMessage("CASH"),
+        "game_global_app_bar_crypto":
+            MessageLookupByLibrary.simpleMessage("Cryptocurrency"),
+        "game_global_footer_consume":
+            MessageLookupByLibrary.simpleMessage("Costs"),
+        "game_global_footer_consume_energy":
+            MessageLookupByLibrary.simpleMessage("Electricity"),
+        "game_global_footer_consume_flat":
+            MessageLookupByLibrary.simpleMessage("Place"),
+        "game_global_footer_income":
+            MessageLookupByLibrary.simpleMessage("Daily earnings"),
+        "game_global_footer_level":
+            MessageLookupByLibrary.simpleMessage("Level"),
+        "game_global_footer_place":
+            MessageLookupByLibrary.simpleMessage("Place"),
+        "game_global_footer_power":
             MessageLookupByLibrary.simpleMessage("Power"),
-        "game_market_pc_sell_item_title":
+        "game_global_modal_game_over_return":
+            MessageLookupByLibrary.simpleMessage("To the main menu"),
+        "game_global_modal_game_over_statistic":
+            MessageLookupByLibrary.simpleMessage("Statistics"),
+        "game_global_modal_game_over_title":
+            MessageLookupByLibrary.simpleMessage("YOU LOST"),
+        "game_main_actions_buy_flat":
+            MessageLookupByLibrary.simpleMessage("Buy a place"),
+        "game_main_actions_buy_pc":
+            MessageLookupByLibrary.simpleMessage("Buy computers"),
+        "game_main_actions_crypto_wallet":
+            MessageLookupByLibrary.simpleMessage("Cryptocurrency"),
+        "game_main_actions_statistics":
+            MessageLookupByLibrary.simpleMessage("Statistics"),
+        "game_main_modal_exit_no": MessageLookupByLibrary.simpleMessage("No"),
+        "game_main_modal_exit_title": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to go to the menu?"),
+        "game_main_modal_exit_yes": MessageLookupByLibrary.simpleMessage("Yes"),
+        "game_main_modal_tokens_button_active":
+            MessageLookupByLibrary.simpleMessage("ACTIVELY"),
+        "game_main_modal_tokens_button_scam":
+            MessageLookupByLibrary.simpleMessage("SCAM"),
+        "game_main_modal_tokens_button_select":
+            MessageLookupByLibrary.simpleMessage("Select"),
+        "game_main_modal_tokens_exit":
+            MessageLookupByLibrary.simpleMessage("Cancel"),
+        "game_main_modal_tokens_info_current_cost":
+            MessageLookupByLibrary.simpleMessage("Current price"),
+        "game_main_modal_tokens_info_month_cost":
+            MessageLookupByLibrary.simpleMessage("Price a month ago"),
+        "game_main_modal_tokens_sub_title": m0,
+        "game_main_modal_tokens_title":
+            MessageLookupByLibrary.simpleMessage("Choose a cryptocurrency"),
+        "game_main_news": MessageLookupByLibrary.simpleMessage("News"),
+        "game_main_pcs_assign": MessageLookupByLibrary.simpleMessage("ASSIGN"),
+        "game_main_pcs_mining": MessageLookupByLibrary.simpleMessage("Mined"),
+        "game_main_upgrade_info_critical":
+            MessageLookupByLibrary.simpleMessage("Crit"),
+        "game_main_upgrade_info_critical_probability":
+            MessageLookupByLibrary.simpleMessage("Crit"),
+        "game_main_upgrade_info_max":
+            MessageLookupByLibrary.simpleMessage("Max"),
+        "game_main_upgrade_info_min":
+            MessageLookupByLibrary.simpleMessage("Min"),
+        "game_main_upgrade_info_title":
+            MessageLookupByLibrary.simpleMessage("Money per click"),
+        "game_main_upgrade_level": MessageLookupByLibrary.simpleMessage("LVL"),
+        "game_main_upgrade_title":
+            MessageLookupByLibrary.simpleMessage("Upgrade"),
+        "game_market_flat_button_buy":
+            MessageLookupByLibrary.simpleMessage("BUY"),
+        "game_market_flat_button_have":
+            MessageLookupByLibrary.simpleMessage("ACQUIRED"),
+        "game_market_flat_info_cost":
+            MessageLookupByLibrary.simpleMessage("Price"),
+        "game_market_flat_info_count_pc":
+            MessageLookupByLibrary.simpleMessage("Number of computers"),
+        "game_market_flat_info_level":
+            MessageLookupByLibrary.simpleMessage("LVL"),
+        "game_market_flat_info_month_cost":
+            MessageLookupByLibrary.simpleMessage("Monthly Fee"),
+        "game_market_flat_status_active_title":
+            MessageLookupByLibrary.simpleMessage("ACTIVELY"),
+        "game_market_flat_title":
+            MessageLookupByLibrary.simpleMessage("Buy a place"),
+        "game_market_pc_button_buy":
+            MessageLookupByLibrary.simpleMessage("Buy"),
+        "game_market_pc_button_sell":
             MessageLookupByLibrary.simpleMessage("Sell"),
+        "game_market_pc_info_cost":
+            MessageLookupByLibrary.simpleMessage("Price"),
+        "game_market_pc_info_cost_sell":
+            MessageLookupByLibrary.simpleMessage("Selling price"),
+        "game_market_pc_info_count": m1,
+        "game_market_pc_info_energy":
+            MessageLookupByLibrary.simpleMessage("Electricity"),
+        "game_market_pc_info_level": m2,
+        "game_market_pc_info_no_level_1":
+            MessageLookupByLibrary.simpleMessage("To purchase you need "),
+        "game_market_pc_info_no_level_2": m3,
+        "game_market_pc_info_no_level_3":
+            MessageLookupByLibrary.simpleMessage("place"),
+        "game_market_pc_info_power":
+            MessageLookupByLibrary.simpleMessage("Power"),
         "game_market_pc_title":
-            MessageLookupByLibrary.simpleMessage("Mining pc"),
-        "game_market_pc_you_have_item_title": m0,
+            MessageLookupByLibrary.simpleMessage("Buy computers"),
         "game_mining_module_pc_mining_empty_title":
             MessageLookupByLibrary.simpleMessage("Nothing"),
         "game_mining_module_pc_mining_title":
@@ -99,7 +179,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Power"),
         "game_mining_module_pc_title":
             MessageLookupByLibrary.simpleMessage("Your pc"),
-        "game_mining_module_title": m1,
+        "game_mining_module_title": m4,
         "game_mining_month_price_title":
             MessageLookupByLibrary.simpleMessage("Month price"),
         "game_mining_now_price_title":
@@ -140,8 +220,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Payment for housing"),
         "main_game_month_title":
             MessageLookupByLibrary.simpleMessage("Monthly expenses"),
-        "main_game_stat_earn_on_crypto_title": m2,
-        "main_game_stat_mining_on_crypto_title": m3,
+        "main_game_stat_earn_on_crypto_title": m5,
+        "main_game_stat_mining_on_crypto_title": m6,
         "main_game_stat_spend_all_title":
             MessageLookupByLibrary.simpleMessage("Spend all time"),
         "main_game_stat_spend_energy_title":
@@ -158,27 +238,25 @@ class MessageLookup extends MessageLookupByLibrary {
             "The application is created for flutter."),
         "manu_about_title":
             MessageLookupByLibrary.simpleMessage("About the author"),
-        "menu_about_button_title":
-            MessageLookupByLibrary.simpleMessage("About the author"),
-        "menu_company_button_title":
-            MessageLookupByLibrary.simpleMessage("Start company"),
-        "menu_free_button_title":
-            MessageLookupByLibrary.simpleMessage("Start new free play"),
-        "menu_free_continue_button_title":
-            MessageLookupByLibrary.simpleMessage("Continue free play"),
-        "menu_game_title": MessageLookupByLibrary.simpleMessage("Crypto IDLE"),
-        "menu_settings_button_title":
-            MessageLookupByLibrary.simpleMessage("Settings"),
+        "menu_app_bar": MessageLookupByLibrary.simpleMessage("CRYPTO IDLE"),
+        "menu_button_authors": MessageLookupByLibrary.simpleMessage("AUTHORS"),
+        "menu_button_back": MessageLookupByLibrary.simpleMessage("BACK"),
+        "menu_button_continue_game":
+            MessageLookupByLibrary.simpleMessage("CONTINUE"),
+        "menu_button_new_game":
+            MessageLookupByLibrary.simpleMessage("NEW GAME"),
+        "menu_button_play": MessageLookupByLibrary.simpleMessage("PLAY"),
+        "menu_button_settings":
+            MessageLookupByLibrary.simpleMessage("SETTINGS"),
         "menu_settings_swap_en_button_title":
             MessageLookupByLibrary.simpleMessage("Change to language EN"),
         "menu_settings_swap_ru_button_title":
             MessageLookupByLibrary.simpleMessage("Change to language RU"),
         "menu_settings_title": MessageLookupByLibrary.simpleMessage("Settings"),
-        "menu_title": MessageLookupByLibrary.simpleMessage("Menu"),
-        "text_with_dollar": m4,
-        "text_with_dollar_month": m5,
-        "text_with_energy": m6,
-        "text_with_power_mining": m7,
-        "text_with_slash": m8
+        "text_with_dollar": m7,
+        "text_with_dollar_month": m8,
+        "text_with_energy": m9,
+        "text_with_power_mining": m10,
+        "text_with_slash": m11
       };
 }

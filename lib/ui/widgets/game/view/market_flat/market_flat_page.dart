@@ -2,6 +2,7 @@ import 'package:crypto_idle/Theme/app_colors.dart';
 import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:crypto_idle/Widgets/buttons/game_button_widget.dart';
 import 'package:crypto_idle/Widgets/page_wrapper.dart';
+import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_model.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class _TitlePage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8, bottom: 16),
       child: Text(
-        'Покупка помещений',
+        S.of(context).game_market_flat_title,
         style: AppFonts.main.copyWith(color: AppColors.white),
       ),
     );

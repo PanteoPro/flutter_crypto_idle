@@ -15,12 +15,12 @@ class _ActionsWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               _ActionItemWidget(
-                title: 'Купить установки',
+                title: S.of(context).game_main_actions_buy_pc,
                 onPressed: () => vm.onBuyPcButtonPressed(context),
               ),
               const SizedBox(width: 12),
               _ActionItemWidget(
-                title: 'Купить помещение',
+                title: S.of(context).game_main_actions_buy_flat,
                 onPressed: () => vm.onBuyFlatButtonPressed(context),
               ),
             ],
@@ -30,12 +30,12 @@ class _ActionsWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               _ActionItemWidget(
-                title: 'Криптовалюта',
+                title: S.of(context).game_main_actions_crypto_wallet,
                 onPressed: () => vm.onWalletButtonPressed(context),
               ),
               const SizedBox(width: 12),
               _ActionItemWidget(
-                title: 'Статистика',
+                title: S.of(context).game_main_actions_statistics,
                 onPressed: () => vm.onStatisticButtonPressed(context),
               ),
             ],

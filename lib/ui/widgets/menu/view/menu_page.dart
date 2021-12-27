@@ -49,7 +49,7 @@ class _AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(
-        S.of(context).menu_game_title,
+        S.of(context).menu_app_bar,
         style: const TextStyle(fontSize: 24),
       ),
       centerTitle: true,
@@ -161,17 +161,17 @@ class _ButtonsWidget extends StatelessWidget {
     if (!playMenu) {
       buttons.addAll([
         GameButtonWidget.menuSmall(
-          text: 'ИГРАТЬ',
+          text: S.of(context).menu_button_play,
           onPressed: vm.onPlayButtonPressed,
         ),
         const SizedBox(height: 16),
         GameButtonWidget.menuSmall(
-          text: 'НАСТРОЙКИ',
+          text: S.of(context).menu_button_settings,
           onPressed: vm.onSettingsButtonPressed,
         ),
         const SizedBox(height: 16),
         GameButtonWidget.menuSmall(
-          text: 'АВТОРЫ',
+          text: S.of(context).menu_button_authors,
           onPressed: vm.onAboutButtonPressed,
         ),
         const SizedBox(height: 16),
@@ -184,17 +184,17 @@ class _ButtonsWidget extends StatelessWidget {
       buttons.addAll([
         if (!isEndGame && isHaveGame)
           GameButtonWidget.menuBig(
-            text: 'ПРОДОЛЖИТЬ',
+            text: S.of(context).menu_button_continue_game,
             onPressed: vm.onContinueGameButtonPressed,
           ),
         const SizedBox(height: 16),
         GameButtonWidget.menuBig(
-          text: 'НОВАЯ ИГРА',
+          text: S.of(context).menu_button_new_game,
           onPressed: vm.onFreeGameButtonPressed,
         ),
         const SizedBox(height: 16),
         GameButtonWidget.menuBig(
-          text: 'НАЗАД',
+          text: S.of(context).menu_button_back,
           onPressed: vm.onBackFromPlayButtonPressed,
         ),
       ]);

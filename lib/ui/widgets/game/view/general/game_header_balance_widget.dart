@@ -86,7 +86,7 @@ class _BalanceCashTextWidget extends StatelessWidget {
     final money = context.select((GameViewModel vm) => vm.state.money);
     return RichText(
       text: TextSpan(
-        text: '${S.of(context).main_game_cash_balance_title}: ',
+        text: '${S.of(context).game_global_app_bar_cash}: ',
         style: AppFonts.main,
         children: [
           TextSpan(
@@ -129,7 +129,7 @@ class _BalanceCryptoTextWidget extends StatelessWidget {
     final cryptoBalance = context.select((GameViewModel vm) => vm.state.cryptoBalance);
     return RichText(
       text: TextSpan(
-        text: '${S.of(context).main_game_crypto_balance_title}: ',
+        text: '${S.of(context).game_global_app_bar_crypto}: ',
         style: AppFonts.main,
         children: [
           TextSpan(

@@ -270,166 +270,6 @@ class S {
     );
   }
 
-  /// `Mining pc`
-  String get game_market_pc_title {
-    return Intl.message(
-      'Mining pc',
-      name: 'game_market_pc_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Cost`
-  String get game_market_pc_cost_item_title {
-    return Intl.message(
-      'Cost',
-      name: 'game_market_pc_cost_item_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Selling value`
-  String get game_market_pc_cost_sell_item_title {
-    return Intl.message(
-      'Selling value',
-      name: 'game_market_pc_cost_sell_item_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Power`
-  String get game_market_pc_power_item_title {
-    return Intl.message(
-      'Power',
-      name: 'game_market_pc_power_item_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Energy consume`
-  String get game_market_pc_energy_item_title {
-    return Intl.message(
-      'Energy consume',
-      name: 'game_market_pc_energy_item_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `You have {value} el`
-  String game_market_pc_you_have_item_title(Object value) {
-    return Intl.message(
-      'You have $value el',
-      name: 'game_market_pc_you_have_item_title',
-      desc: '',
-      args: [value],
-    );
-  }
-
-  /// `Buy`
-  String get game_market_pc_buy_item_title {
-    return Intl.message(
-      'Buy',
-      name: 'game_market_pc_buy_item_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Sell`
-  String get game_market_pc_sell_item_title {
-    return Intl.message(
-      'Sell',
-      name: 'game_market_pc_sell_item_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Flat`
-  String get game_market_flat_title {
-    return Intl.message(
-      'Flat',
-      name: 'game_market_flat_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Cost`
-  String get game_market_flat_cost_item_title {
-    return Intl.message(
-      'Cost',
-      name: 'game_market_flat_cost_item_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Monthly Fee`
-  String get game_market_flat_month_item_title {
-    return Intl.message(
-      'Monthly Fee',
-      name: 'game_market_flat_month_item_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Count PC`
-  String get game_market_flat_count_pc_item_title {
-    return Intl.message(
-      'Count PC',
-      name: 'game_market_flat_count_pc_item_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Own`
-  String get game_market_flat_own_item_title {
-    return Intl.message(
-      'Own',
-      name: 'game_market_flat_own_item_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Change`
-  String get game_market_flat_change_item_title {
-    return Intl.message(
-      'Change',
-      name: 'game_market_flat_change_item_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Buy`
-  String get game_market_flat_buy_item_title {
-    return Intl.message(
-      'Buy',
-      name: 'game_market_flat_buy_item_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Active`
-  String get game_market_flat_status_active_title {
-    return Intl.message(
-      'Active',
-      name: 'game_market_flat_status_active_title',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Crypto`
   String get game_crypto_title {
     return Intl.message(
@@ -630,76 +470,6 @@ class S {
     );
   }
 
-  /// `Menu`
-  String get menu_title {
-    return Intl.message(
-      'Menu',
-      name: 'menu_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Crypto IDLE`
-  String get menu_game_title {
-    return Intl.message(
-      'Crypto IDLE',
-      name: 'menu_game_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Start company`
-  String get menu_company_button_title {
-    return Intl.message(
-      'Start company',
-      name: 'menu_company_button_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Continue free play`
-  String get menu_free_continue_button_title {
-    return Intl.message(
-      'Continue free play',
-      name: 'menu_free_continue_button_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Start new free play`
-  String get menu_free_button_title {
-    return Intl.message(
-      'Start new free play',
-      name: 'menu_free_button_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Settings`
-  String get menu_settings_button_title {
-    return Intl.message(
-      'Settings',
-      name: 'menu_settings_button_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `About the author`
-  String get menu_about_button_title {
-    return Intl.message(
-      'About the author',
-      name: 'menu_about_button_title',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Settings`
   String get menu_settings_title {
     return Intl.message(
@@ -775,6 +545,646 @@ class S {
     return Intl.message(
       'Count pcs',
       name: 'game_app_bar_info_count_pc_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CRYPTO IDLE`
+  String get menu_app_bar {
+    return Intl.message(
+      'CRYPTO IDLE',
+      name: 'menu_app_bar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PLAY`
+  String get menu_button_play {
+    return Intl.message(
+      'PLAY',
+      name: 'menu_button_play',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SETTINGS`
+  String get menu_button_settings {
+    return Intl.message(
+      'SETTINGS',
+      name: 'menu_button_settings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `AUTHORS`
+  String get menu_button_authors {
+    return Intl.message(
+      'AUTHORS',
+      name: 'menu_button_authors',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `BACK`
+  String get menu_button_back {
+    return Intl.message(
+      'BACK',
+      name: 'menu_button_back',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `NEW GAME`
+  String get menu_button_new_game {
+    return Intl.message(
+      'NEW GAME',
+      name: 'menu_button_new_game',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CONTINUE`
+  String get menu_button_continue_game {
+    return Intl.message(
+      'CONTINUE',
+      name: 'menu_button_continue_game',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CASH`
+  String get game_global_app_bar_cash {
+    return Intl.message(
+      'CASH',
+      name: 'game_global_app_bar_cash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cryptocurrency`
+  String get game_global_app_bar_crypto {
+    return Intl.message(
+      'Cryptocurrency',
+      name: 'game_global_app_bar_crypto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Place`
+  String get game_global_footer_place {
+    return Intl.message(
+      'Place',
+      name: 'game_global_footer_place',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Level`
+  String get game_global_footer_level {
+    return Intl.message(
+      'Level',
+      name: 'game_global_footer_level',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Costs`
+  String get game_global_footer_consume {
+    return Intl.message(
+      'Costs',
+      name: 'game_global_footer_consume',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Power`
+  String get game_global_footer_power {
+    return Intl.message(
+      'Power',
+      name: 'game_global_footer_power',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Daily earnings`
+  String get game_global_footer_income {
+    return Intl.message(
+      'Daily earnings',
+      name: 'game_global_footer_income',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Place`
+  String get game_global_footer_consume_flat {
+    return Intl.message(
+      'Place',
+      name: 'game_global_footer_consume_flat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Electricity`
+  String get game_global_footer_consume_energy {
+    return Intl.message(
+      'Electricity',
+      name: 'game_global_footer_consume_energy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `YOU LOST`
+  String get game_global_modal_game_over_title {
+    return Intl.message(
+      'YOU LOST',
+      name: 'game_global_modal_game_over_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To the main menu`
+  String get game_global_modal_game_over_return {
+    return Intl.message(
+      'To the main menu',
+      name: 'game_global_modal_game_over_return',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Statistics`
+  String get game_global_modal_game_over_statistic {
+    return Intl.message(
+      'Statistics',
+      name: 'game_global_modal_game_over_statistic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `News`
+  String get game_main_news {
+    return Intl.message(
+      'News',
+      name: 'game_main_news',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upgrade`
+  String get game_main_upgrade_title {
+    return Intl.message(
+      'Upgrade',
+      name: 'game_main_upgrade_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `LVL`
+  String get game_main_upgrade_level {
+    return Intl.message(
+      'LVL',
+      name: 'game_main_upgrade_level',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Money per click`
+  String get game_main_upgrade_info_title {
+    return Intl.message(
+      'Money per click',
+      name: 'game_main_upgrade_info_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Min`
+  String get game_main_upgrade_info_min {
+    return Intl.message(
+      'Min',
+      name: 'game_main_upgrade_info_min',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Max`
+  String get game_main_upgrade_info_max {
+    return Intl.message(
+      'Max',
+      name: 'game_main_upgrade_info_max',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Crit`
+  String get game_main_upgrade_info_critical {
+    return Intl.message(
+      'Crit',
+      name: 'game_main_upgrade_info_critical',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Crit`
+  String get game_main_upgrade_info_critical_probability {
+    return Intl.message(
+      'Crit',
+      name: 'game_main_upgrade_info_critical_probability',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Buy computers`
+  String get game_main_actions_buy_pc {
+    return Intl.message(
+      'Buy computers',
+      name: 'game_main_actions_buy_pc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Buy a place`
+  String get game_main_actions_buy_flat {
+    return Intl.message(
+      'Buy a place',
+      name: 'game_main_actions_buy_flat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cryptocurrency`
+  String get game_main_actions_crypto_wallet {
+    return Intl.message(
+      'Cryptocurrency',
+      name: 'game_main_actions_crypto_wallet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Statistics`
+  String get game_main_actions_statistics {
+    return Intl.message(
+      'Statistics',
+      name: 'game_main_actions_statistics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ASSIGN`
+  String get game_main_pcs_assign {
+    return Intl.message(
+      'ASSIGN',
+      name: 'game_main_pcs_assign',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mined`
+  String get game_main_pcs_mining {
+    return Intl.message(
+      'Mined',
+      name: 'game_main_pcs_mining',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose a cryptocurrency`
+  String get game_main_modal_tokens_title {
+    return Intl.message(
+      'Choose a cryptocurrency',
+      name: 'game_main_modal_tokens_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To install - {value}`
+  String game_main_modal_tokens_sub_title(Object value) {
+    return Intl.message(
+      'To install - $value',
+      name: 'game_main_modal_tokens_sub_title',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `Cancel`
+  String get game_main_modal_tokens_exit {
+    return Intl.message(
+      'Cancel',
+      name: 'game_main_modal_tokens_exit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current price`
+  String get game_main_modal_tokens_info_current_cost {
+    return Intl.message(
+      'Current price',
+      name: 'game_main_modal_tokens_info_current_cost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price a month ago`
+  String get game_main_modal_tokens_info_month_cost {
+    return Intl.message(
+      'Price a month ago',
+      name: 'game_main_modal_tokens_info_month_cost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ACTIVELY`
+  String get game_main_modal_tokens_button_active {
+    return Intl.message(
+      'ACTIVELY',
+      name: 'game_main_modal_tokens_button_active',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select`
+  String get game_main_modal_tokens_button_select {
+    return Intl.message(
+      'Select',
+      name: 'game_main_modal_tokens_button_select',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SCAM`
+  String get game_main_modal_tokens_button_scam {
+    return Intl.message(
+      'SCAM',
+      name: 'game_main_modal_tokens_button_scam',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to go to the menu?`
+  String get game_main_modal_exit_title {
+    return Intl.message(
+      'Are you sure you want to go to the menu?',
+      name: 'game_main_modal_exit_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes`
+  String get game_main_modal_exit_yes {
+    return Intl.message(
+      'Yes',
+      name: 'game_main_modal_exit_yes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No`
+  String get game_main_modal_exit_no {
+    return Intl.message(
+      'No',
+      name: 'game_main_modal_exit_no',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Buy computers`
+  String get game_market_pc_title {
+    return Intl.message(
+      'Buy computers',
+      name: 'game_market_pc_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price`
+  String get game_market_pc_info_cost {
+    return Intl.message(
+      'Price',
+      name: 'game_market_pc_info_cost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selling price`
+  String get game_market_pc_info_cost_sell {
+    return Intl.message(
+      'Selling price',
+      name: 'game_market_pc_info_cost_sell',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Power`
+  String get game_market_pc_info_power {
+    return Intl.message(
+      'Power',
+      name: 'game_market_pc_info_power',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Electricity`
+  String get game_market_pc_info_energy {
+    return Intl.message(
+      'Electricity',
+      name: 'game_market_pc_info_energy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have: {value} pieces`
+  String game_market_pc_info_count(Object value) {
+    return Intl.message(
+      'You have: $value pieces',
+      name: 'game_market_pc_info_count',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `Level {value}`
+  String game_market_pc_info_level(Object value) {
+    return Intl.message(
+      'Level $value',
+      name: 'game_market_pc_info_level',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `To purchase you need `
+  String get game_market_pc_info_no_level_1 {
+    return Intl.message(
+      'To purchase you need ',
+      name: 'game_market_pc_info_no_level_1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{value} level `
+  String game_market_pc_info_no_level_2(Object value) {
+    return Intl.message(
+      '$value level ',
+      name: 'game_market_pc_info_no_level_2',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `place`
+  String get game_market_pc_info_no_level_3 {
+    return Intl.message(
+      'place',
+      name: 'game_market_pc_info_no_level_3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Buy`
+  String get game_market_pc_button_buy {
+    return Intl.message(
+      'Buy',
+      name: 'game_market_pc_button_buy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sell`
+  String get game_market_pc_button_sell {
+    return Intl.message(
+      'Sell',
+      name: 'game_market_pc_button_sell',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Buy a place`
+  String get game_market_flat_title {
+    return Intl.message(
+      'Buy a place',
+      name: 'game_market_flat_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price`
+  String get game_market_flat_info_cost {
+    return Intl.message(
+      'Price',
+      name: 'game_market_flat_info_cost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Monthly Fee`
+  String get game_market_flat_info_month_cost {
+    return Intl.message(
+      'Monthly Fee',
+      name: 'game_market_flat_info_month_cost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Number of computers`
+  String get game_market_flat_info_count_pc {
+    return Intl.message(
+      'Number of computers',
+      name: 'game_market_flat_info_count_pc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `LVL`
+  String get game_market_flat_info_level {
+    return Intl.message(
+      'LVL',
+      name: 'game_market_flat_info_level',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ACQUIRED`
+  String get game_market_flat_button_have {
+    return Intl.message(
+      'ACQUIRED',
+      name: 'game_market_flat_button_have',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `BUY`
+  String get game_market_flat_button_buy {
+    return Intl.message(
+      'BUY',
+      name: 'game_market_flat_button_buy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ACTIVELY`
+  String get game_market_flat_status_active_title {
+    return Intl.message(
+      'ACTIVELY',
+      name: 'game_market_flat_status_active_title',
       desc: '',
       args: [],
     );
