@@ -47,6 +47,12 @@ class MusicViewModel extends ChangeNotifier {
       case MusicManagerStreamEvents.unmute:
         isMute = false;
         break;
+      case MusicManagerStreamEvents.pause:
+        _pause();
+        break;
+      case MusicManagerStreamEvents.resume:
+        _resume();
+        break;
     }
     if (message == MusicManagerStreamEvents.mute ||
         message == MusicManagerStreamEvents.unmute ||
@@ -81,6 +87,14 @@ class MusicViewModel extends ChangeNotifier {
   var isPlayMain = false;
   var isPlayMenu = true;
   var isMute = false;
+
+  Future<void> _pause() async {
+    await _playerMain?.pause();
+  }
+
+  Future<void> _resume() async {
+    await _playerMain?.resume();
+  }
 
   Future<void> _startMainMusic() async {
     await _playerMain?.stop();

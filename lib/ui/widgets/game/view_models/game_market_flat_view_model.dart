@@ -4,6 +4,7 @@ import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
 import 'package:crypto_idle/domain/repositories/message_manager.dart';
+import 'package:crypto_idle/domain/repositories/music_manager.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
 import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
@@ -85,6 +86,7 @@ class GameMarketFlatViewModel extends ChangeNotifier {
     if (_state.money >= flat.cost) {
       final currentCountPC = _pcRepository.pcs.length;
       if (currentCountPC <= flat.countPC) {
+        MusicManager.playMoney();
         await _flatRepository.changeFlat(flat, isBuy: true, isActive: true);
         await _flatRepository.changeFlat(currentFlat, isActive: false);
 

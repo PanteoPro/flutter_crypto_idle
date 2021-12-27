@@ -50,7 +50,7 @@ class _MuteActionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMute = context.select((MusicViewModel vm) => vm.isMute);
     final action = isMute ? () => MusicManager.unmute() : () => MusicManager.mute();
-    final image = isMute ? AppIconsImages.unmuteIcon : AppIconsImages.muteIcon;
+    final image = isMute ? AppIconsImages.muteIcon : AppIconsImages.unmuteIcon;
     return _AppBarActionWidget(onTap: action, imagePath: image);
   }
 }

@@ -7,6 +7,7 @@ import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
+import 'package:crypto_idle/domain/repositories/music_manager.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
@@ -180,6 +181,8 @@ class GameViewModel extends ChangeNotifier {
   void onExitGameOverPressed(BuildContext context) {
     // _state.isModalGameOverClose = true;
     // notifyListeners();
+    MusicManager.stopMain();
+    MusicManager.playMenu();
     Navigator.of(context, rootNavigator: true).pushReplacementNamed('menu');
   }
 }

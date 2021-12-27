@@ -124,12 +124,12 @@ class GameMarketPCViewModel extends ChangeNotifier {
   }
 
   Future<void> onBuyButtonPressed(int index) async {
-    MusicManager.playMoney();
     final pc = _state.marketPCs[index].copyWith();
     if (_state.currentLevel >= pc.needLevel) {
       if (_state.money >= pc.cost) {
         final maxCountPC = _flatRepository.flats.firstWhere((element) => element.isActive).countPC;
         if (_state.ownPCs.length < maxCountPC) {
+          MusicManager.playMoney();
           await _gameRepository.changeMoney(-pc.cost);
           await _pcRepository.addPC(pc);
           await _statisticsRepository.addPCConsume(pc.cost);
@@ -147,9 +147,9 @@ class GameMarketPCViewModel extends ChangeNotifier {
   }
 
   Future<void> onSellButtonPressed(int index) async {
-    MusicManager.playMoney();
     final pc = _state.marketPCs[index];
     if (await _pcRepository.sellPC(pc)) {
+      MusicManager.playMoney();
       await _gameRepository.changeMoney(pc.costSell);
       MessageManager.addMessage(text: 'Вы продали установку - ${pc.name} за ${pc.costSell}\$', color: Colors.green);
     } else {

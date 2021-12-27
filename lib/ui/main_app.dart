@@ -1,5 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:crypto_idle/Theme/themes.dart';
+import 'package:crypto_idle/domain/repositories/music_manager.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
@@ -34,16 +35,46 @@ class MainApp extends StatelessWidget {
   }
 }
 
-class MyMaterialApp extends StatelessWidget {
+class MyMaterialApp extends StatefulWidget {
   MyMaterialApp(
     this.light,
     this.dark, [
     Key? key,
   ]) : super(key: key);
 
-  final mainNavigation = MainNavigation();
   final ThemeData light;
   final ThemeData dark;
+
+  @override
+  State<MyMaterialApp> createState() => _MyMaterialAppState();
+}
+
+class _MyMaterialAppState extends State<MyMaterialApp> with WidgetsBindingObserver {
+  final mainNavigation = MainNavigation();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
+  }
+
+  late AppLifecycleState _notification;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive) {
+      MusicManager.pause();
+    } else if (state == AppLifecycleState.resumed) {
+      MusicManager.resume();
+    }
+    print(state);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +82,8 @@ class MyMaterialApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       locale: locale,
-      theme: light,
-      darkTheme: dark,
+      theme: widget.light,
+      darkTheme: widget.dark,
       localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
         S.delegate,
         GlobalMaterialLocalizations.delegate,
