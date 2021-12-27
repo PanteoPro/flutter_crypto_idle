@@ -192,11 +192,11 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
     final isAddMoney = await vm.onClickerPcPressed(rndMoney);
     final isCritical = rndMoney == vm.state.clicker.critMoney;
 
-    _tappedAnimate();
-
     if (isAddMoney) {
+      _tappedAnimate();
       _addDigit(isCritical, rndMoney);
     } else if (!_isStartToClean) {
+      _tappedAnimate();
       _addDigit(isCritical, rndMoney);
       _cleanDigits();
     } else {}
