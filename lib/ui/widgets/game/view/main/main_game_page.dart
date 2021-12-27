@@ -62,10 +62,13 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     final dvm = context.read<DayStreamViewModel>();
+    final cvm = context.read<ClickerGameViewModel>();
     if (state == AppLifecycleState.inactive) {
       dvm.pauseDayStream();
+      cvm.pauseDelayClicker();
     } else if (state == AppLifecycleState.resumed) {
       dvm.resumeDayStream();
+      cvm.resumeDelayClicker();
     }
   }
 

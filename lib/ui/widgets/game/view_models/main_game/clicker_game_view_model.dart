@@ -96,6 +96,14 @@ class ClickerGameViewModel extends ChangeNotifier {
 
   // ----- Clicker Logic -----
 
+  void pauseDelayClicker() {
+    _delayClickerPCSub?.pause();
+  }
+
+  void resumeDelayClicker() {
+    _delayClickerPCSub?.resume();
+  }
+
   Future<bool> onClickerPcPressed(double rndMoney) async {
     final beforeDecreaceClicks = _clickerRepository.clicker.currentClicks;
     await _clickerRepository.decreaceClick();
