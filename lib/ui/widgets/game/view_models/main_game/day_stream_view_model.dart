@@ -111,6 +111,14 @@ class DayStreamViewModel extends ChangeNotifier {
     _dayStreamSub = dayStream.listen(_newDay);
   }
 
+  void pauseDayStream() {
+    _dayStreamSub.pause();
+  }
+
+  void resumeDayStream() {
+    _dayStreamSub.resume();
+  }
+
   Future<void> _newDay(dynamic numberDaySession) async {
     await _gameRepository.nextDay();
     await _miningDay();

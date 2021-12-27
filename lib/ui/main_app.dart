@@ -64,8 +64,6 @@ class _MyMaterialAppState extends State<MyMaterialApp> with WidgetsBindingObserv
     super.dispose();
   }
 
-  late AppLifecycleState _notification;
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.inactive) {
@@ -73,7 +71,6 @@ class _MyMaterialAppState extends State<MyMaterialApp> with WidgetsBindingObserv
     } else if (state == AppLifecycleState.resumed) {
       MusicManager.resume();
     }
-    print(state);
   }
 
   @override

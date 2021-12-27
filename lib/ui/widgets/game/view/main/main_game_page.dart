@@ -60,6 +60,16 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final dvm = context.read<DayStreamViewModel>();
+    if (state == AppLifecycleState.inactive) {
+      dvm.pauseDayStream();
+    } else if (state == AppLifecycleState.resumed) {
+      dvm.resumeDayStream();
+    }
+  }
+
+  @override
   Future<bool> didPopRoute() async {
     // Вызывается каждый раз, когда нажимается кнопка назад
     if (ModalRoute.of(context)?.isCurrent ?? false) {
