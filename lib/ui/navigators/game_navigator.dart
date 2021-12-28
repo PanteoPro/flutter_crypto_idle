@@ -4,11 +4,13 @@ import 'package:crypto_idle/ui/widgets/game/view/market_crypto/market_crypto_pag
 import 'package:crypto_idle/ui/widgets/game/view/market_flat/market_flat_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/market_pc/market_pc_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/old/game_crypto_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view/statistics/game_statistics_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_crypto_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_crypto_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_pc_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_mining_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/game_statistics_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/clicker_game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/day_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/main_game_view_model.dart';
@@ -21,6 +23,7 @@ abstract class GameNavigationRouteNames {
   static const marketFlat = '/market_flat';
   static const crypto = '/crypto';
   static const marketCrypto = '/crypto/market';
+  static const statistics = '/statistics';
 }
 
 class GameNavigation {
@@ -75,6 +78,13 @@ class GameNavigation {
           builder: (ctx) => ChangeNotifierProvider(
             create: (_) => GameCryptoViewModel(),
             child: const GameCryptoPage(),
+          ),
+        );
+      case GameNavigationRouteNames.statistics:
+        return MaterialPageRoute(
+          builder: (ctx) => ChangeNotifierProvider(
+            create: (_) => GameStatisticsViewModel(),
+            child: const GameStatisticsPage(),
           ),
         );
       default:
