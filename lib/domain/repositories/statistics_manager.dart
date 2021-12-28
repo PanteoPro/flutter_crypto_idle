@@ -33,7 +33,6 @@ class StatisticsManager {
   static Stream<dynamic>? stream;
 
   static void sendMessageStream(StatisticsManagerStreamEvents message) {
-    print(message);
     _streamController.add(message);
   }
 

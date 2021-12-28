@@ -175,9 +175,18 @@ class GameMarketPCViewModel extends ChangeNotifier {
     final pc = _state.marketPCs[index];
     if (await _pcRepository.sellPC(pc)) {
       MusicManager.playSell();
-      final finalEarnings = pc.costSell - state.ifEnergyCostByPc(pc);
+      final energyConsume = state.ifEnergyCostByPc(pc);
+      final finalEarnings = pc.costSell - energyConsume;
       await _gameRepository.changeMoney(finalEarnings);
       MessageManager.addMessage(text: 'Вы продали установку - ${pc.name} за ${pc.costSell}\$', color: Colors.green);
+      if (energyConsume > 0) {
+        StatisticsManager.sendMessageStream(
+          StatisticsManagerStreamEvents(
+            state: StatisticsManagerStreamState.addEnergyConsume,
+            value: energyConsume,
+          ),
+        );
+      }
     } else {
       MessageManager.addMessage(text: 'Вы не можете продать, то чего у вас нет', color: Colors.red);
     }
