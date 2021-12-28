@@ -116,7 +116,9 @@ class MusicViewModel extends ChangeNotifier {
   }
 
   Future<void> _resume() async {
-    await _playerMain?.resume();
+    if (!isMute){
+      await _playerMain?.resume();
+    }
   }
 
   Future<void> _startMainMusic() async {

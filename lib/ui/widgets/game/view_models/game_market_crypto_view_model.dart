@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
@@ -10,19 +13,31 @@ import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class GameMarketCryptoViewModelState {
-  GameMarketCryptoViewModelState({required this.token, required this.prices});
-  GameMarketCryptoViewModelState.empty({this.token, this.prices = const []});
+  GameMarketCryptoViewModelState({
+    required this.token,
+    required this.prices,
+    this.percentBuy = 0,
+    this.percentSell = 0,
+  });
+  GameMarketCryptoViewModelState.empty({
+    this.token,
+    this.prices = const [],
+    this.percentBuy = 0,
+    this.percentSell = 0,
+  });
 
   final Token? token;
   final List<PriceToken> prices;
+  double percentBuy;
+  double percentSell;
 
   PriceToken getLastPrice() {
     return prices.where((element) => element.tokenId == token?.id).last;
   }
+
+  double get dollarAsset => token != null ? token!.count * getLastPrice().cost : 0;
 }
 
 class GameMarketCryptoViewModel extends ChangeNotifier {
@@ -90,6 +105,8 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
     _state = GameMarketCryptoViewModelState(
       token: token,
       prices: _priceTokenRepository.pricesByTokenId(token.id),
+      percentBuy: _state.percentBuy,
+      percentSell: _state.percentSell,
     );
     // if (volumeBuyTextController.text.isEmpty) {
     //   volumeBuyTextController.text = _state.getLastPrice().cost.toString();
@@ -168,6 +185,16 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
 
   void onChangeBuyVolumeButtonPressed(PercentButton choice) {
     volumeBuyTextController.text = (choice.value * (_gameRepository.game.money)).toStringAsFixed(2);
+  }
+
+  void onChangeSliderBuy(double newValue) {
+    _state.percentBuy = newValue;
+    notifyListeners();
+  }
+
+  void onChangeSliderSell(double newValue) {
+    _state.percentSell = newValue;
+    notifyListeners();
   }
 }
 

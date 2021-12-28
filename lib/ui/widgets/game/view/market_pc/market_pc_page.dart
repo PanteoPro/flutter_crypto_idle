@@ -22,7 +22,7 @@ class MarketPCPage extends StatelessWidget {
         color: AppColors.mainGrey,
         child: Column(
           children: const [
-            _TitlePage(),
+            _TitleWidget(),
             Expanded(child: _PCsWidget()),
           ],
         ),
@@ -31,8 +31,8 @@ class MarketPCPage extends StatelessWidget {
   }
 }
 
-class _TitlePage extends StatelessWidget {
-  const _TitlePage({Key? key}) : super(key: key);
+class _TitleWidget extends StatelessWidget {
+  const _TitleWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
