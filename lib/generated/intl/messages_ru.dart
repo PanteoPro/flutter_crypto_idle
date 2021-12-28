@@ -28,21 +28,19 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(value) => "${value} уровень ";
 
-  static String m4(symbol) => "Майнинг ${symbol}";
+  static String m4(symbol) => "Заработано на ${symbol}";
 
-  static String m5(symbol) => "Заработано на ${symbol}";
+  static String m5(symbol) => "Добыто ${symbol}";
 
-  static String m6(symbol) => "Добыто ${symbol}";
+  static String m6(value) => "${value}\$";
 
-  static String m7(value) => "${value}\$";
+  static String m7(value) => "${value}\$/мес";
 
-  static String m8(value) => "${value}\$/мес";
+  static String m8(value) => "${value} Ват/ч";
 
-  static String m9(value) => "${value} Ват/ч";
+  static String m9(value) => "${value} U/dex";
 
-  static String m10(value) => "${value} U/dex";
-
-  static String m11(value1, value2) => "${value1}/${value2}";
+  static String m10(value1, value2) => "${value1}/${value2}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -54,18 +52,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Общая стоимость"),
         "game_crypto_helper_title": MessageLookupByLibrary.simpleMessage(
             "Нажми на криптовалюту, чтобы продать"),
-        "game_crypto_market_balance_title":
-            MessageLookupByLibrary.simpleMessage("На кошельке"),
-        "game_crypto_market_cost_title":
-            MessageLookupByLibrary.simpleMessage("Текущая цена"),
-        "game_crypto_market_count_buy_input_title":
-            MessageLookupByLibrary.simpleMessage("Количество для покупки"),
-        "game_crypto_market_count_sell_input_title":
-            MessageLookupByLibrary.simpleMessage("Количество для продажи"),
-        "game_crypto_market_fast_buy_title":
-            MessageLookupByLibrary.simpleMessage("Купить мгновенно"),
-        "game_crypto_market_fast_sell_title":
-            MessageLookupByLibrary.simpleMessage("Продать мгновенно"),
         "game_crypto_title":
             MessageLookupByLibrary.simpleMessage("Криптовалюты"),
         "game_global_app_bar_cash":
@@ -137,6 +123,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "game_main_upgrade_level": MessageLookupByLibrary.simpleMessage("LVL"),
         "game_main_upgrade_title":
             MessageLookupByLibrary.simpleMessage("Улучшение"),
+        "game_market_crypto_available":
+            MessageLookupByLibrary.simpleMessage("Доступно"),
+        "game_market_crypto_buy_button":
+            MessageLookupByLibrary.simpleMessage("КУПИТЬ"),
+        "game_market_crypto_buy_title":
+            MessageLookupByLibrary.simpleMessage("Покупка"),
+        "game_market_crypto_sell_button":
+            MessageLookupByLibrary.simpleMessage("ПРОДАТЬ"),
+        "game_market_crypto_sell_title":
+            MessageLookupByLibrary.simpleMessage("Продажа"),
         "game_market_flat_button_buy":
             MessageLookupByLibrary.simpleMessage("ПРИОБРЕСТИ"),
         "game_market_flat_button_have":
@@ -176,26 +172,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Мощность"),
         "game_market_pc_title":
             MessageLookupByLibrary.simpleMessage("Покупка установок"),
-        "game_mining_module_pc_mining_empty_title":
-            MessageLookupByLibrary.simpleMessage("Ничего"),
-        "game_mining_module_pc_mining_title":
-            MessageLookupByLibrary.simpleMessage("Майнит"),
-        "game_mining_module_pc_power_title":
-            MessageLookupByLibrary.simpleMessage("Мощность"),
-        "game_mining_module_pc_title":
-            MessageLookupByLibrary.simpleMessage("Ваши установки"),
-        "game_mining_module_title": m4,
-        "game_mining_month_price_title":
-            MessageLookupByLibrary.simpleMessage("М. назад"),
-        "game_mining_now_price_title":
-            MessageLookupByLibrary.simpleMessage("Текущая"),
-        "game_mining_set_pc_title":
-            MessageLookupByLibrary.simpleMessage("Назначить"),
-        "game_mining_title": MessageLookupByLibrary.simpleMessage("Майнинг"),
-        "game_mining_week_price_title":
-            MessageLookupByLibrary.simpleMessage("Н. назад"),
-        "game_mining_year_price_title":
-            MessageLookupByLibrary.simpleMessage("Г. назад"),
         "main_game_action_buy_flat_title":
             MessageLookupByLibrary.simpleMessage("Купить помещение"),
         "main_game_action_buy_pc_title":
@@ -226,8 +202,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Оплата жилья"),
         "main_game_month_title":
             MessageLookupByLibrary.simpleMessage("Ежемесячные расходы"),
-        "main_game_stat_earn_on_crypto_title": m5,
-        "main_game_stat_mining_on_crypto_title": m6,
+        "main_game_stat_earn_on_crypto_title": m4,
+        "main_game_stat_mining_on_crypto_title": m5,
         "main_game_stat_spend_all_title":
             MessageLookupByLibrary.simpleMessage("Потрачено за все время"),
         "main_game_stat_spend_energy_title":
@@ -259,10 +235,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Поменять на язык RU"),
         "menu_settings_title":
             MessageLookupByLibrary.simpleMessage("Настройки"),
-        "text_with_dollar": m7,
-        "text_with_dollar_month": m8,
-        "text_with_energy": m9,
-        "text_with_power_mining": m10,
-        "text_with_slash": m11
+        "text_with_dollar": m6,
+        "text_with_dollar_month": m7,
+        "text_with_energy": m8,
+        "text_with_power_mining": m9,
+        "text_with_slash": m10
       };
 }

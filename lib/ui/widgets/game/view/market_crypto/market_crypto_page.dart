@@ -77,6 +77,7 @@ class _CurrentBalance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tokenSymbol = context.read<GameMarketCryptoViewModel>().state.token?.symbol;
     final currentDollars = context.select((GameMarketCryptoViewModel vm) => vm.state.dollarAsset);
     final count = context.select((GameMarketCryptoViewModel vm) => vm.state.token?.count);
     return Row(
@@ -84,12 +85,16 @@ class _CurrentBalance extends StatelessWidget {
       children: [
         RichText(
           text: TextSpan(
-            text: 'Доступно: ',
+            text: '${S.of(context).game_market_crypto_available}: ',
             style: AppFonts.main.copyWith(color: AppColors.white),
             children: [
               TextSpan(
-                text: count?.toStringAsFixed(8),
+                text: '${count?.toStringAsFixed(8)} ',
                 style: AppFonts.mainLight.copyWith(color: AppColors.white),
+              ),
+              TextSpan(
+                text: tokenSymbol,
+                style: AppFonts.body2.copyWith(color: AppColors.white),
               )
             ],
           ),

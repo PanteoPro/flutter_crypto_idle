@@ -30,24 +30,7 @@
     "game_crypto_cost_header_title": "Balance",
     "game_crypto_helper_title": "Click on cryptocurrency to sell",
 
-    "game_mining_title": "Mining",
-    "game_mining_now_price_title": "Now price",
-    "game_mining_week_price_title": "Week price",
-    "game_mining_month_price_title": "Month price",
-    "game_mining_year_price_title": "Year price",
-    "game_mining_set_pc_title": "Choose PC",
-    "game_mining_module_title": "Mining {symbol}",
-    "game_mining_module_pc_title": "Your pc",
-    "game_mining_module_pc_power_title": "Power",
-    "game_mining_module_pc_mining_title": "Mining",
-    "game_mining_module_pc_mining_empty_title": "Nothing",
-
-    "game_crypto_market_cost_title": "Current cost",
-    "game_crypto_market_fast_sell_title": "Market Sell",
-    "game_crypto_market_fast_buy_title": "Market Buy",
-    "game_crypto_market_count_sell_input_title": "Quantity for sale",
-    "game_crypto_market_count_buy_input_title": "Purchase quantity",
-    "game_crypto_market_balance_title": "Balance",
+    
 
     "menu_settings_title": "Settings",
     "menu_settings_swap_ru_button_title": "Change to language RU",
@@ -133,6 +116,12 @@
     "game_market_flat_button_have": "ACQUIRED",
     "game_market_flat_button_buy": "BUY",
     "game_market_flat_status_active_title": "ACTIVELY",
+
+    "game_market_crypto_available": "Available",
+    "game_market_crypto_buy_title": "Purchase",
+    "game_market_crypto_buy_button": "BUY",
+    "game_market_crypto_sell_title": "Sale",
+    "game_market_crypto_sell_button": "SELL",
 
     "text_with_dollar": "{value}$",
     "text_with_dollar_month": "{value}$/month",

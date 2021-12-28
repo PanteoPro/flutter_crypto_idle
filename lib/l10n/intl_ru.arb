@@ -30,24 +30,7 @@
     "game_crypto_cost_header_title": "Общая стоимость",
     "game_crypto_helper_title": "Нажми на криптовалюту, чтобы продать",
 
-    "game_mining_title": "Майнинг",
-    "game_mining_now_price_title": "Текущая",
-    "game_mining_week_price_title": "Н. назад",
-    "game_mining_month_price_title": "М. назад",
-    "game_mining_year_price_title": "Г. назад",
-    "game_mining_set_pc_title": "Назначить",
-    "game_mining_module_title": "Майнинг {symbol}",
-    "game_mining_module_pc_title": "Ваши установки",
-    "game_mining_module_pc_power_title": "Мощность",
-    "game_mining_module_pc_mining_title": "Майнит",
-    "game_mining_module_pc_mining_empty_title": "Ничего",
-
-    "game_crypto_market_cost_title": "Текущая цена",
-    "game_crypto_market_fast_sell_title": "Продать мгновенно",
-    "game_crypto_market_fast_buy_title": "Купить мгновенно",
-    "game_crypto_market_count_sell_input_title": "Количество для продажи",
-    "game_crypto_market_count_buy_input_title": "Количество для покупки",
-    "game_crypto_market_balance_title": "На кошельке",
+    
 
     "menu_settings_title": "Настройки",
     "menu_settings_swap_ru_button_title": "Поменять на язык RU",
@@ -132,6 +115,12 @@
     "game_market_flat_button_have": "ПРИОБРЕТЕНО",
     "game_market_flat_button_buy": "ПРИОБРЕСТИ",
     "game_market_flat_status_active_title": "АКТИВНО",
+
+    "game_market_crypto_available": "Доступно",
+    "game_market_crypto_buy_title": "Покупка",
+    "game_market_crypto_buy_button": "КУПИТЬ",
+    "game_market_crypto_sell_title": "Продажа",
+    "game_market_crypto_sell_button": "ПРОДАТЬ",
 
     "text_with_dollar": "{value}$",
     "text_with_dollar_month": "{value}$/мес",

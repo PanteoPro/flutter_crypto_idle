@@ -297,7 +297,7 @@ class MainGameViewModel extends ChangeNotifier {
   }
 
   void onStatisticButtonPressed(BuildContext context) {
-    Navigator.of(context).pushNamed(GameNavigationRouteNames.mining);
+    // Navigator.of(context).pushNamed(GameNavigationRouteNames.mining);
   }
 
   Future<void> onChangeMiningToken(int tokenIndex) async {

@@ -4,8 +4,6 @@ import 'package:crypto_idle/ui/widgets/game/view/market_crypto/market_crypto_pag
 import 'package:crypto_idle/ui/widgets/game/view/market_flat/market_flat_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/market_pc/market_pc_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/old/game_crypto_page.dart';
-import 'package:crypto_idle/ui/widgets/game/view/old/game_market_crypto_page.dart';
-import 'package:crypto_idle/ui/widgets/game/view/old/game_mining_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_crypto_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_crypto_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_model.dart';
@@ -23,7 +21,6 @@ abstract class GameNavigationRouteNames {
   static const marketFlat = '/market_flat';
   static const crypto = '/crypto';
   static const marketCrypto = '/crypto/market';
-  static const mining = '/mining';
 }
 
 class GameNavigation {
@@ -78,14 +75,6 @@ class GameNavigation {
           builder: (ctx) => ChangeNotifierProvider(
             create: (_) => GameCryptoViewModel(),
             child: const GameCryptoPage(),
-          ),
-        );
-
-      case GameNavigationRouteNames.mining:
-        return MaterialPageRoute(
-          builder: (ctx) => ChangeNotifierProvider(
-            create: (_) => GameMiningViewModel(),
-            child: const GameMiningPage(),
           ),
         );
       default:

@@ -30,7 +30,7 @@ class _MarketBuyWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Покупка',
+                    S.of(context).game_market_crypto_buy_title,
                     style: AppFonts.main.copyWith(color: AppColors.white),
                   ),
                   const _MarketBuySumDollarWidget(),
@@ -65,7 +65,7 @@ class _MarketBuyButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 12),
       child: GameButtonWidget.buy(
-        text: 'КУПИТЬ',
+        text: S.of(context).game_market_crypto_buy_button,
         onPressed: isActive ? vm.onBuyNowButtonPressed : null,
         backgroundColor: AppColors.mainGrey,
         textColor: isActive ? AppColors.white : AppColors.grey,
@@ -136,7 +136,7 @@ class _MarketSellWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Продажа',
+                    S.of(context).game_market_crypto_sell_title,
                     style: AppFonts.main.copyWith(color: AppColors.white),
                   ),
                   const _MarketSellSumDollarWidget(),
@@ -172,7 +172,7 @@ class _MarketSellButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 12),
       child: GameButtonWidget.buy(
-        text: 'ПРОДАТЬ',
+        text: S.of(context).game_market_crypto_sell_button,
         onPressed: isActive ? vm.onSellNowButtonPressed : null,
         backgroundColor: AppColors.mainGrey,
         textColor: isActive ? AppColors.white : AppColors.grey,

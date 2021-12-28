@@ -28,21 +28,19 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(value) => "${value} level ";
 
-  static String m4(symbol) => "Mining ${symbol}";
+  static String m4(symbol) => "Earn on ${symbol}";
 
-  static String m5(symbol) => "Earn on ${symbol}";
+  static String m5(symbol) => "Mining ${symbol}";
 
-  static String m6(symbol) => "Mining ${symbol}";
+  static String m6(value) => "${value}\$";
 
-  static String m7(value) => "${value}\$";
+  static String m7(value) => "${value}\$/month";
 
-  static String m8(value) => "${value}\$/month";
+  static String m8(value) => "${value} V/h";
 
-  static String m9(value) => "${value} V/h";
+  static String m9(value) => "${value} U/dex";
 
-  static String m10(value) => "${value} U/dex";
-
-  static String m11(value1, value2) => "${value1}/${value2}";
+  static String m10(value1, value2) => "${value1}/${value2}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -54,18 +52,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Balance"),
         "game_crypto_helper_title": MessageLookupByLibrary.simpleMessage(
             "Click on cryptocurrency to sell"),
-        "game_crypto_market_balance_title":
-            MessageLookupByLibrary.simpleMessage("Balance"),
-        "game_crypto_market_cost_title":
-            MessageLookupByLibrary.simpleMessage("Current cost"),
-        "game_crypto_market_count_buy_input_title":
-            MessageLookupByLibrary.simpleMessage("Purchase quantity"),
-        "game_crypto_market_count_sell_input_title":
-            MessageLookupByLibrary.simpleMessage("Quantity for sale"),
-        "game_crypto_market_fast_buy_title":
-            MessageLookupByLibrary.simpleMessage("Market Buy"),
-        "game_crypto_market_fast_sell_title":
-            MessageLookupByLibrary.simpleMessage("Market Sell"),
         "game_crypto_title": MessageLookupByLibrary.simpleMessage("Crypto"),
         "game_global_app_bar_cash":
             MessageLookupByLibrary.simpleMessage("Cash"),
@@ -134,6 +120,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "game_main_upgrade_level": MessageLookupByLibrary.simpleMessage("LVL"),
         "game_main_upgrade_title":
             MessageLookupByLibrary.simpleMessage("Upgrade"),
+        "game_market_crypto_available":
+            MessageLookupByLibrary.simpleMessage("Available"),
+        "game_market_crypto_buy_button":
+            MessageLookupByLibrary.simpleMessage("BUY"),
+        "game_market_crypto_buy_title":
+            MessageLookupByLibrary.simpleMessage("Purchase"),
+        "game_market_crypto_sell_button":
+            MessageLookupByLibrary.simpleMessage("SELL"),
+        "game_market_crypto_sell_title":
+            MessageLookupByLibrary.simpleMessage("Sale"),
         "game_market_flat_button_buy":
             MessageLookupByLibrary.simpleMessage("BUY"),
         "game_market_flat_button_have":
@@ -173,26 +169,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Power"),
         "game_market_pc_title":
             MessageLookupByLibrary.simpleMessage("Buy computers"),
-        "game_mining_module_pc_mining_empty_title":
-            MessageLookupByLibrary.simpleMessage("Nothing"),
-        "game_mining_module_pc_mining_title":
-            MessageLookupByLibrary.simpleMessage("Mining"),
-        "game_mining_module_pc_power_title":
-            MessageLookupByLibrary.simpleMessage("Power"),
-        "game_mining_module_pc_title":
-            MessageLookupByLibrary.simpleMessage("Your pc"),
-        "game_mining_module_title": m4,
-        "game_mining_month_price_title":
-            MessageLookupByLibrary.simpleMessage("Month price"),
-        "game_mining_now_price_title":
-            MessageLookupByLibrary.simpleMessage("Now price"),
-        "game_mining_set_pc_title":
-            MessageLookupByLibrary.simpleMessage("Choose PC"),
-        "game_mining_title": MessageLookupByLibrary.simpleMessage("Mining"),
-        "game_mining_week_price_title":
-            MessageLookupByLibrary.simpleMessage("Week price"),
-        "game_mining_year_price_title":
-            MessageLookupByLibrary.simpleMessage("Year price"),
         "main_game_action_buy_flat_title":
             MessageLookupByLibrary.simpleMessage("Buy flat"),
         "main_game_action_buy_pc_title":
@@ -222,8 +198,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Payment for housing"),
         "main_game_month_title":
             MessageLookupByLibrary.simpleMessage("Monthly expenses"),
-        "main_game_stat_earn_on_crypto_title": m5,
-        "main_game_stat_mining_on_crypto_title": m6,
+        "main_game_stat_earn_on_crypto_title": m4,
+        "main_game_stat_mining_on_crypto_title": m5,
         "main_game_stat_spend_all_title":
             MessageLookupByLibrary.simpleMessage("Spend all time"),
         "main_game_stat_spend_energy_title":
@@ -255,10 +231,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "menu_settings_swap_ru_button_title":
             MessageLookupByLibrary.simpleMessage("Change to language RU"),
         "menu_settings_title": MessageLookupByLibrary.simpleMessage("Settings"),
-        "text_with_dollar": m7,
-        "text_with_dollar_month": m8,
-        "text_with_energy": m9,
-        "text_with_power_mining": m10,
-        "text_with_slash": m11
+        "text_with_dollar": m6,
+        "text_with_dollar_month": m7,
+        "text_with_energy": m8,
+        "text_with_power_mining": m9,
+        "text_with_slash": m10
       };
 }

@@ -300,176 +300,6 @@ class S {
     );
   }
 
-  /// `Mining`
-  String get game_mining_title {
-    return Intl.message(
-      'Mining',
-      name: 'game_mining_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Now price`
-  String get game_mining_now_price_title {
-    return Intl.message(
-      'Now price',
-      name: 'game_mining_now_price_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Week price`
-  String get game_mining_week_price_title {
-    return Intl.message(
-      'Week price',
-      name: 'game_mining_week_price_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Month price`
-  String get game_mining_month_price_title {
-    return Intl.message(
-      'Month price',
-      name: 'game_mining_month_price_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Year price`
-  String get game_mining_year_price_title {
-    return Intl.message(
-      'Year price',
-      name: 'game_mining_year_price_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Choose PC`
-  String get game_mining_set_pc_title {
-    return Intl.message(
-      'Choose PC',
-      name: 'game_mining_set_pc_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Mining {symbol}`
-  String game_mining_module_title(Object symbol) {
-    return Intl.message(
-      'Mining $symbol',
-      name: 'game_mining_module_title',
-      desc: '',
-      args: [symbol],
-    );
-  }
-
-  /// `Your pc`
-  String get game_mining_module_pc_title {
-    return Intl.message(
-      'Your pc',
-      name: 'game_mining_module_pc_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Power`
-  String get game_mining_module_pc_power_title {
-    return Intl.message(
-      'Power',
-      name: 'game_mining_module_pc_power_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Mining`
-  String get game_mining_module_pc_mining_title {
-    return Intl.message(
-      'Mining',
-      name: 'game_mining_module_pc_mining_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Nothing`
-  String get game_mining_module_pc_mining_empty_title {
-    return Intl.message(
-      'Nothing',
-      name: 'game_mining_module_pc_mining_empty_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Current cost`
-  String get game_crypto_market_cost_title {
-    return Intl.message(
-      'Current cost',
-      name: 'game_crypto_market_cost_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Market Sell`
-  String get game_crypto_market_fast_sell_title {
-    return Intl.message(
-      'Market Sell',
-      name: 'game_crypto_market_fast_sell_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Market Buy`
-  String get game_crypto_market_fast_buy_title {
-    return Intl.message(
-      'Market Buy',
-      name: 'game_crypto_market_fast_buy_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Quantity for sale`
-  String get game_crypto_market_count_sell_input_title {
-    return Intl.message(
-      'Quantity for sale',
-      name: 'game_crypto_market_count_sell_input_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Purchase quantity`
-  String get game_crypto_market_count_buy_input_title {
-    return Intl.message(
-      'Purchase quantity',
-      name: 'game_crypto_market_count_buy_input_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Balance`
-  String get game_crypto_market_balance_title {
-    return Intl.message(
-      'Balance',
-      name: 'game_crypto_market_balance_title',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Settings`
   String get menu_settings_title {
     return Intl.message(
@@ -1195,6 +1025,56 @@ class S {
     return Intl.message(
       'ACTIVELY',
       name: 'game_market_flat_status_active_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Available`
+  String get game_market_crypto_available {
+    return Intl.message(
+      'Available',
+      name: 'game_market_crypto_available',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Purchase`
+  String get game_market_crypto_buy_title {
+    return Intl.message(
+      'Purchase',
+      name: 'game_market_crypto_buy_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `BUY`
+  String get game_market_crypto_buy_button {
+    return Intl.message(
+      'BUY',
+      name: 'game_market_crypto_buy_button',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sale`
+  String get game_market_crypto_sell_title {
+    return Intl.message(
+      'Sale',
+      name: 'game_market_crypto_sell_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SELL`
+  String get game_market_crypto_sell_button {
+    return Intl.message(
+      'SELL',
+      name: 'game_market_crypto_sell_button',
       desc: '',
       args: [],
     );
