@@ -201,10 +201,10 @@ class _TradeWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           const _TradeVolumeBuyWidget(),
-          _TradeChangeVolumeButtonsWidget(clickHandler: vm.onChangeBuyVolumeButtonPressed),
+          // _TradeChangeVolumeButtonsWidget(clickHandler: vm.onChangeBuyVolumeButtonPressed),
           const SizedBox(height: 10),
           const _TradeVolumeSellWidget(),
-          _TradeChangeVolumeButtonsWidget(clickHandler: vm.onChangeSellVolumeButtonPressed),
+          // _TradeChangeVolumeButtonsWidget(clickHandler: vm.onChangeSellVolumeButtonPressed),
           const SizedBox(height: 10),
           const _TradeButtonsWidget(),
         ],
@@ -250,7 +250,7 @@ class _TradeVolumeBuyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = context.read<GameMarketCryptoViewModel>();
     return TextField(
-      controller: vm.volumeBuyTextController,
+      // controller: vm.volumeBuyTextController,
       decoration: InputDecoration(
         label: Text(S.of(context).game_crypto_market_count_buy_input_title),
         labelStyle: TextStyle(color: Theme.of(context).primaryColor),
@@ -274,7 +274,7 @@ class _TradeVolumeSellWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = context.read<GameMarketCryptoViewModel>();
     return TextField(
-      controller: vm.volumeSellTextController,
+      // controller: vm.volumeSellTextController,
       decoration: InputDecoration(
         label: Text(S.of(context).game_crypto_market_count_sell_input_title),
         labelStyle: TextStyle(color: Theme.of(context).primaryColor),

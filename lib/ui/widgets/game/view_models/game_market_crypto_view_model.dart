@@ -16,18 +16,21 @@ import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.d
 
 class GameMarketCryptoViewModelState {
   GameMarketCryptoViewModelState({
+    required this.money,
     required this.token,
     required this.prices,
     this.percentBuy = 0,
     this.percentSell = 0,
   });
   GameMarketCryptoViewModelState.empty({
+    this.money = 0,
     this.token,
     this.prices = const [],
     this.percentBuy = 0,
     this.percentSell = 0,
   });
 
+  final double money;
   final Token? token;
   final List<PriceToken> prices;
   double percentBuy;
@@ -38,6 +41,12 @@ class GameMarketCryptoViewModelState {
   }
 
   double get dollarAsset => token != null ? token!.count * getLastPrice().cost : 0;
+
+  double get buyVolumeDollar => double.parse((percentBuy * money).toStringAsFixed(2));
+  double get buyVolumeToken => double.parse((buyVolumeDollar / getLastPrice().cost).toStringAsFixed(8));
+
+  double get sellVolumeDollar => double.parse((sellVolumeToken * getLastPrice().cost).toStringAsFixed(2));
+  double get sellVolumeToken => double.parse((percentSell * (token?.count ?? 0)).toStringAsFixed(8));
 }
 
 class GameMarketCryptoViewModel extends ChangeNotifier {
@@ -67,10 +76,6 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
   // State Data
   var _state = GameMarketCryptoViewModelState.empty();
   GameMarketCryptoViewModelState get state => _state;
-
-  // Controllers
-  final volumeBuyTextController = TextEditingController();
-  final volumeSellTextController = TextEditingController();
 
   /// initial repositories
   Future<void> _initialRepositories() async {
@@ -103,6 +108,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
   void _updateState() {
     final token = _tokenRepository.tokens.firstWhere((element) => element.id == _state.token?.id);
     _state = GameMarketCryptoViewModelState(
+      money: _gameRepository.game.money,
       token: token,
       prices: _priceTokenRepository.pricesByTokenId(token.id),
       percentBuy: _state.percentBuy,
@@ -116,28 +122,24 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
 
   Future<void> onSellNowButtonPressed() async {
     if (_state.token != null) {
-      if (volumeSellTextController.text.isNotEmpty) {
-        var volume = double.tryParse(volumeSellTextController.text);
-        if (volume != null) {
-          volume = max(min(volume, _state.token!.count), 0);
-          if (volume > 0) {
-            final lastPrice = _state.getLastPrice().cost;
-            final income = double.parse((volume * lastPrice).toStringAsFixed(2));
+      if (_state.percentSell > 0) {
+        var volume = _state.sellVolumeToken;
+        volume = max(min(volume, _state.token!.count), 0);
+        if (volume > 0) {
+          final lastPrice = _state.getLastPrice().cost;
+          final income = double.parse((volume * lastPrice).toStringAsFixed(2));
 
-            await _gameRepository.changeMoney(income);
-            await _tokenRepository.changeCountByToken(_state.token!, _state.token!.count - volume);
-            await _statisticsRepository.addTokenEarn(_state.token!, income);
-            volumeSellTextController.text = '';
-            MessageManager.addMessage(
-              text: 'Продано $volume ${_state.token!.symbol} по цене $lastPrice, вы получили $income\$',
-              color: Colors.red,
-            );
-            _updateState();
-          } else {
-            // not Enought tokens
-          }
+          await _gameRepository.changeMoney(income);
+          await _tokenRepository.changeCountByToken(_state.token!, _state.token!.count - volume);
+          await _statisticsRepository.addTokenEarn(_state.token!, income);
+          _state.percentSell = 0;
+          MessageManager.addMessage(
+            text: 'Продано $volume ${_state.token!.symbol} по цене $lastPrice, вы получили $income\$',
+            color: Colors.red,
+          );
+          _updateState();
         } else {
-          print('Enter num digits');
+          // not Enought tokens
         }
       } else {
         print('Enter volume!');
@@ -149,8 +151,8 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
 
   Future<void> onBuyNowButtonPressed() async {
     if (_state.token != null) {
-      if (volumeBuyTextController.text.isNotEmpty) {
-        var volume = double.tryParse(volumeBuyTextController.text);
+      if (_state.percentBuy > 0) {
+        var volume = _state.buyVolumeDollar;
         if (volume != null) {
           volume = max(min(volume, _gameRepository.game.money), 0);
           if (volume > 0) {
@@ -159,7 +161,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
 
             await _gameRepository.changeMoney(-volume);
             await _tokenRepository.changeCountByToken(_state.token!, _state.token!.count + countTokens);
-            volumeBuyTextController.text = '';
+            _state.percentBuy = 0;
             MessageManager.addMessage(
               text: 'Куплено $countTokens ${_state.token!.symbol} по цене $lastPrice. Вы потратили $volume\$',
               color: Colors.green,
@@ -177,14 +179,6 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
     } else {
       // erorr message
     }
-  }
-
-  void onChangeSellVolumeButtonPressed(PercentButton choice) {
-    volumeSellTextController.text = (choice.value * (_state.token?.count ?? 0)).toStringAsFixed(8);
-  }
-
-  void onChangeBuyVolumeButtonPressed(PercentButton choice) {
-    volumeBuyTextController.text = (choice.value * (_gameRepository.game.money)).toStringAsFixed(2);
   }
 
   void onChangeSliderBuy(double newValue) {
