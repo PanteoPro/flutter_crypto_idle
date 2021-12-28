@@ -5,11 +5,13 @@ class _ConsumeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final buyPCs = context.read<GameStatisticsViewModel>().statistics.buyPCs.sum;
+    final buyFlats = context.read<GameStatisticsViewModel>().statistics.buyFlats.sum;
     return Column(
       children: [
-        _ItemWidget(title: 'Потрачено на покупки ПК', value: '470.00\$'),
+        _ItemWidget(title: 'Потрачено на покупки ПК', value: S.of(context).text_with_dollar(buyPCs)),
         SizedBox(height: 4),
-        _ItemWidget(title: 'Потрачено на покупки жилья', value: '470.00\$'),
+        _ItemWidget(title: 'Потрачено на покупки жилья', value: S.of(context).text_with_dollar(buyFlats)),
         SizedBox(height: 4),
         _ConsumeEnergyWidget(),
         SizedBox(height: 4),
@@ -26,7 +28,8 @@ class _ConsumeEnergyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _ItemWidget(title: 'Потрачено на электричество', value: '470.00\$');
+    final consumeEnergy = context.select((GameStatisticsViewModel vm) => vm.statistics.energyConsume).sum;
+    return _ItemWidget(title: 'Потрачено на электричество', value: S.of(context).text_with_dollar(consumeEnergy));
   }
 }
 
@@ -37,6 +40,7 @@ class _ConsumeFlatWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _ItemWidget(title: 'Потрачено на жилье', value: '470.00\$');
+    final flatConsume = context.select((GameStatisticsViewModel vm) => vm.statistics.flatConsume).sum;
+    return _ItemWidget(title: 'Потрачено на жилье', value: S.of(context).text_with_dollar(flatConsume));
   }
 }

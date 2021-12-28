@@ -10,7 +10,7 @@ import 'package:crypto_idle/ui/widgets/game/view_models/game_market_crypto_view_
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_pc_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_mining_view_model.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/game_statistics_view_model.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/global/game_statistics_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/clicker_game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/day_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/main_game_view_model.dart';
@@ -82,10 +82,7 @@ class GameNavigation {
         );
       case GameNavigationRouteNames.statistics:
         return MaterialPageRoute(
-          builder: (ctx) => ChangeNotifierProvider(
-            create: (_) => GameStatisticsViewModel(),
-            child: const GameStatisticsPage(),
-          ),
+          builder: (ctx) => const GameStatisticsPage(),
         );
       default:
         return MaterialPageRoute(builder: (_) => const Text('Game Navigation Error!'));

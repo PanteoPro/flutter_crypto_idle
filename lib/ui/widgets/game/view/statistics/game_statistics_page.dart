@@ -2,7 +2,11 @@ import 'package:crypto_idle/Theme/app_colors.dart';
 import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:crypto_idle/Widgets/page_wrapper.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
+import 'package:crypto_idle/generated/l10n.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/global/game_statistics_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
 
 part 'widgets/consume_widget.dart';
 part 'widgets/deals_widget.dart';

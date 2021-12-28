@@ -17,12 +17,15 @@ class StatisticsAdapter extends TypeAdapter<Statistics> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Statistics(
-      energyConsume: (fields[0] as List).cast<double>(),
-      flatConsume: (fields[1] as List).cast<double>(),
-      pcConsume: (fields[2] as List).cast<double>(),
-      tokenEarn: (fields[3] as Map).map((dynamic k, dynamic v) =>
+      buyPCs: (fields[0] as List).cast<double>(),
+      buyFlats: (fields[1] as List).cast<double>(),
+      energyConsume: (fields[2] as List).cast<double>(),
+      flatConsume: (fields[3] as List).cast<double>(),
+      dealsBuyVolume: (fields[4] as List).cast<double>(),
+      dealsSellVolume: (fields[5] as List).cast<double>(),
+      tokenEarn: (fields[6] as Map).map((dynamic k, dynamic v) =>
           MapEntry(k as int, (v as List).cast<double>())),
-      tokenMining: (fields[4] as Map).map((dynamic k, dynamic v) =>
+      tokenMining: (fields[7] as Map).map((dynamic k, dynamic v) =>
           MapEntry(k as int, (v as List).cast<double>())),
     );
   }
@@ -30,16 +33,22 @@ class StatisticsAdapter extends TypeAdapter<Statistics> {
   @override
   void write(BinaryWriter writer, Statistics obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(8)
       ..writeByte(0)
-      ..write(obj.energyConsume)
+      ..write(obj.buyPCs)
       ..writeByte(1)
-      ..write(obj.flatConsume)
+      ..write(obj.buyFlats)
       ..writeByte(2)
-      ..write(obj.pcConsume)
+      ..write(obj.energyConsume)
       ..writeByte(3)
-      ..write(obj.tokenEarn)
+      ..write(obj.flatConsume)
       ..writeByte(4)
+      ..write(obj.dealsBuyVolume)
+      ..writeByte(5)
+      ..write(obj.dealsSellVolume)
+      ..writeByte(6)
+      ..write(obj.tokenEarn)
+      ..writeByte(7)
       ..write(obj.tokenMining);
   }
 

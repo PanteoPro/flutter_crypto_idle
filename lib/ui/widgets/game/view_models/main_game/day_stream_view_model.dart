@@ -12,6 +12,7 @@ import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/news_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
+import 'package:crypto_idle/domain/repositories/statistics_manager.dart';
 import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:flutter/cupertino.dart';
@@ -59,7 +60,6 @@ class DayStreamViewModel extends ChangeNotifier {
   final _tokenRepository = TokenRepository();
   final _pcRepository = PCRepository();
   final _newsRepository = NewsRepository();
-  final _statisticsRepository = StatisticsRepository();
   final _flatRepository = FlatRepository();
   StreamSubscription<dynamic>? _gameStreamSub;
   StreamSubscription<dynamic>? _pcStreamSub;
@@ -72,7 +72,6 @@ class DayStreamViewModel extends ChangeNotifier {
     await _pcRepository.init();
     await _tokenRepository.init();
     await _priceTokenRepository.init();
-    await _statisticsRepository.init();
     await _newsRepository.init();
     await _flatRepository.init();
     _updateNews();
@@ -163,6 +162,18 @@ class DayStreamViewModel extends ChangeNotifier {
       await _gameRepository.changeMoney(-_energyConsumeCost);
       _newsRepository.createNewsByMonthyPayments(flat: _flatConsume, energy: _energyConsumeCost, date: nowDate);
       isNotificateUntilTheEndOfMonth = false;
+      StatisticsManager.sendMessageStream(
+        StatisticsManagerStreamEvents(
+          state: StatisticsManagerStreamState.addFlatConsume,
+          value: _flatConsume,
+        ),
+      );
+      StatisticsManager.sendMessageStream(
+        StatisticsManagerStreamEvents(
+          state: StatisticsManagerStreamState.addEnergyConsume,
+          value: _energyConsumeCost,
+        ),
+      );
     }
   }
 
@@ -210,7 +221,6 @@ class DayStreamViewModel extends ChangeNotifier {
     final ownPC = _pcRepository.pcs;
     final tokens = _tokenRepository.tokens;
     _priceTokenRepository.updateData();
-    _statisticsRepository.updateData();
     for (final pc in ownPC) {
       if (pc.miningToken != null) {
         final token = tokens.firstWhere((element) => element.id == pc.miningToken!.id);
@@ -218,7 +228,13 @@ class DayStreamViewModel extends ChangeNotifier {
         final countMined = pc.incomeCash / lastPriceToken;
 
         await _tokenRepository.changeCountByToken(token, token.count + countMined);
-        await _statisticsRepository.addTokenMining(token, countMined);
+        StatisticsManager.sendMessageStream(
+          StatisticsManagerStreamEvents(
+            state: StatisticsManagerStreamState.addTokenMining,
+            token: token,
+            value: countMined,
+          ),
+        );
       }
     }
   }

@@ -6,6 +6,7 @@ import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/message_manager.dart';
 import 'package:crypto_idle/domain/repositories/music_manager.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
+import 'package:crypto_idle/domain/repositories/statistics_manager.dart';
 import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/music_view_model.dart';
@@ -108,7 +109,6 @@ class GameMarketPCViewModel extends ChangeNotifier {
   final _pcRepository = PCRepository();
   final _flatRepository = FlatRepository();
   final _gameRepository = GameRepository();
-  final _statisticsRepository = StatisticsRepository();
   StreamSubscription<dynamic>? _gameStreamSub;
 
   var _state = GameMarketPCViewModelState.empty();
@@ -118,7 +118,6 @@ class GameMarketPCViewModel extends ChangeNotifier {
     await _pcRepository.init();
     await _gameRepository.init();
     await _flatRepository.init();
-    await _statisticsRepository.init();
     _subscriteStreams();
     _updateState();
   }
@@ -153,7 +152,12 @@ class GameMarketPCViewModel extends ChangeNotifier {
           MusicManager.playBuy();
           await _gameRepository.changeMoney(-pc.cost);
           await _pcRepository.addPC(pc);
-          await _statisticsRepository.addPCConsume(pc.cost);
+          StatisticsManager.sendMessageStream(
+            StatisticsManagerStreamEvents(
+              state: StatisticsManagerStreamState.addBuyPCs,
+              value: pc.cost,
+            ),
+          );
           MessageManager.addMessage(text: 'Вы купили установку - ${pc.name} за ${pc.cost}\$', color: Colors.green);
         } else {
           MessageManager.addMessage(text: 'У вас максимальное количество установок!', color: Colors.red);

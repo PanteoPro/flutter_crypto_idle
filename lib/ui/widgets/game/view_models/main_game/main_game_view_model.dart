@@ -29,7 +29,6 @@ import 'package:flutter/material.dart';
 
 class MainGameViewModelState {
   MainGameViewModelState({
-    required this.statistics,
     required this.tokens,
     required this.prices,
     required this.myPCs,
@@ -47,7 +46,6 @@ class MainGameViewModelState {
   }
 
   MainGameViewModelState.empty({
-    Statistics? statistics,
     List<Token>? tokens,
     List<PC>? myPCs,
     Flat? flat,
@@ -61,7 +59,6 @@ class MainGameViewModelState {
     this.prices = const [],
     this.isLoadPcs = true,
   }) {
-    this.statistics = statistics ?? Statistics.empty();
     this.tokens = tokens ?? [];
     this.myPCs = myPCs ?? [];
     this.flat = flat ?? Flat.empty();
@@ -72,7 +69,6 @@ class MainGameViewModelState {
     this.date = date ?? DateTime.now();
   }
 
-  late Statistics statistics;
   List<Token> tokens = [];
   final List<PriceToken> prices;
   late List<PC> myPCs;
@@ -147,19 +143,6 @@ class MainGameViewModelState {
   double getPriceByToken(Token token) {
     return currentPrices[token.id]!;
   }
-
-  double get sumFlatConsume => statistics.flatConsume.sum;
-  double get sumEnergyConsume => statistics.energyConsume.sum;
-  double get sumPCConsume => statistics.pcConsume.sum;
-  double get sumConsume => sumFlatConsume + sumEnergyConsume + sumPCConsume;
-
-  double earnTokensByTokenId(int tokenId) {
-    return statistics.tokenEarn[tokenId]?.sum ?? 0;
-  }
-
-  double miningTokensByTokenId(int tokenId) {
-    return statistics.tokenMining[tokenId]?.sum ?? 0;
-  }
 }
 
 class MainGameViewModel extends ChangeNotifier {
@@ -170,7 +153,6 @@ class MainGameViewModel extends ChangeNotifier {
   @override
   void dispose() {
     _gameStreamSub?.cancel();
-    _statisticsStreamSub?.cancel();
     _tokensStreamSub?.cancel();
     _flatStreamSub?.cancel();
     _pcStreamSub?.cancel();
@@ -179,13 +161,11 @@ class MainGameViewModel extends ChangeNotifier {
   }
 
   final _gameRepository = GameRepository();
-  final _statisticsRepository = StatisticsRepository();
   final _tokensRepository = TokenRepository();
   final _flatRepository = FlatRepository();
   final _pcRepository = PCRepository();
   final _priceTokenRepository = PriceTokenRepository();
   StreamSubscription<dynamic>? _gameStreamSub;
-  StreamSubscription<dynamic>? _statisticsStreamSub;
   StreamSubscription<dynamic>? _tokensStreamSub;
   StreamSubscription<dynamic>? _flatStreamSub;
   StreamSubscription<dynamic>? _pcStreamSub;
@@ -199,7 +179,6 @@ class MainGameViewModel extends ChangeNotifier {
 
   Future<void> _initialRepositories() async {
     await _gameRepository.init();
-    await _statisticsRepository.init();
     await _tokensRepository.init();
     await _flatRepository.init();
     await _pcRepository.init();
@@ -210,8 +189,6 @@ class MainGameViewModel extends ChangeNotifier {
 
   void _subscriteStreams() {
     _gameStreamSub = GameRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _gameRepository));
-    _statisticsStreamSub =
-        StatisticsRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _statisticsRepository));
     _tokensStreamSub =
         TokenRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _tokensRepository));
     _flatStreamSub = FlatRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _flatRepository));
@@ -251,7 +228,6 @@ class MainGameViewModel extends ChangeNotifier {
       currentPrices[token.id] = _priceTokenRepository.getLatestPriceByTokenId(token.id).cost;
     }
     _state = MainGameViewModelState(
-      statistics: _statisticsRepository.statistics,
       tokens: [..._tokensRepository.tokens],
       prices: _priceTokenRepository.prices,
       flat: _flatRepository.currentFlat,

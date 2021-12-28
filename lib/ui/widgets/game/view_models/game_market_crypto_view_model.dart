@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:crypto_idle/domain/repositories/statistics_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -68,7 +69,6 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
   final _tokenRepository = TokenRepository();
   final _priceTokenRepository = PriceTokenRepository();
   final _gameRepository = GameRepository();
-  final _statisticsRepository = StatisticsRepository();
   StreamSubscription<dynamic>? _tokenStreamSub;
   StreamSubscription<dynamic>? _priceStreamSub;
   StreamSubscription<dynamic>? _gameStreamSub;
@@ -82,7 +82,6 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
     await _tokenRepository.init();
     await _priceTokenRepository.init();
     await _gameRepository.init();
-    await _statisticsRepository.init();
     _updateState();
   }
 
@@ -131,7 +130,19 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
 
           await _gameRepository.changeMoney(income);
           await _tokenRepository.changeCountByToken(_state.token!, _state.token!.count - volume);
-          await _statisticsRepository.addTokenEarn(_state.token!, income);
+          StatisticsManager.sendMessageStream(
+            StatisticsManagerStreamEvents(
+              state: StatisticsManagerStreamState.addDealsSellVolume,
+              value: income,
+            ),
+          );
+          StatisticsManager.sendMessageStream(
+            StatisticsManagerStreamEvents(
+              state: StatisticsManagerStreamState.addTokenEarn,
+              value: income,
+              token: _state.token,
+            ),
+          );
           _state.percentSell = 0;
           MessageManager.addMessage(
             text: 'Продано $volume ${_state.token!.symbol} по цене $lastPrice, вы получили $income\$',
@@ -162,6 +173,13 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
             await _gameRepository.changeMoney(-volume);
             await _tokenRepository.changeCountByToken(_state.token!, _state.token!.count + countTokens);
             _state.percentBuy = 0;
+            StatisticsManager.sendMessageStream(
+              StatisticsManagerStreamEvents(
+                state: StatisticsManagerStreamState.addDealsBuyVolume,
+                value: volume,
+                token: _state.token,
+              ),
+            );
             MessageManager.addMessage(
               text: 'Куплено $countTokens ${_state.token!.symbol} по цене $lastPrice. Вы потратили $volume\$',
               color: Colors.green,

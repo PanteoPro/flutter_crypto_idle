@@ -5,9 +5,12 @@ part 'statistics.g.dart';
 @HiveType(typeId: 5)
 class Statistics extends HiveObject {
   Statistics({
+    required this.buyPCs,
+    required this.buyFlats,
     required this.energyConsume,
     required this.flatConsume,
-    required this.pcConsume,
+    required this.dealsBuyVolume,
+    required this.dealsSellVolume,
     required this.tokenEarn,
     required this.tokenMining,
   });
@@ -15,18 +18,30 @@ class Statistics extends HiveObject {
 
   /// In $
   @HiveField(0)
-  List<double> energyConsume = [];
+  List<double> buyPCs = [];
 
   /// In $
   @HiveField(1)
-  List<double> flatConsume = [];
+  List<double> buyFlats = [];
 
   /// In $
   @HiveField(2)
-  List<double> pcConsume = [];
+  List<double> energyConsume = [];
 
+  /// In $
   @HiveField(3)
-  Map<int, List<double>> tokenEarn = {};
+  List<double> flatConsume = [];
+
+  /// In $
   @HiveField(4)
+  List<double> dealsBuyVolume = [];
+
+  /// In $
+  @HiveField(5)
+  List<double> dealsSellVolume = [];
+
+  @HiveField(6)
+  Map<int, List<double>> tokenEarn = {};
+  @HiveField(7)
   Map<int, List<double>> tokenMining = {};
 }

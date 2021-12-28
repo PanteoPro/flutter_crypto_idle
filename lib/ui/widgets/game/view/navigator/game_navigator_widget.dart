@@ -1,4 +1,5 @@
 import 'package:crypto_idle/ui/navigators/game_navigator.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/global/game_statistics_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/global/message_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/music_view_model.dart';
@@ -22,6 +23,10 @@ class _GameNavigatorWidgetState extends State<GameNavigatorWidget> {
           lazy: false,
         ),
         ChangeNotifierProvider(create: (_) => MessageStreamViewModel()),
+        ChangeNotifierProvider(
+          create: (_) => GameStatisticsViewModel(),
+          lazy: false,
+        ),
       ],
       child: Navigator(
         onGenerateRoute: GameNavigation.onGenerateRoute,

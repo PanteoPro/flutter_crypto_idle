@@ -4,8 +4,7 @@ import 'package:crypto_idle/domain/data_providers/statistics_data_provider.dart'
 import 'package:crypto_idle/domain/entities/statistics.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
-
-enum StatisticsRepositoryStreamEvents { addEnergyConsume, addFlatConsume, addPcConsume, addEarnCash, addEarnMining }
+import 'package:crypto_idle/domain/repositories/statistics_manager.dart';
 
 class StatisticsRepository implements MyRepository {
   final _statisticsDataProvider = StatisticsDataProvider();
@@ -28,25 +27,40 @@ class StatisticsRepository implements MyRepository {
     _statistics = _statisticsDataProvider.loadData();
   }
 
-  Future<void> addEnergyConsume(List<double> energyConsume) async {
-    _statistics.energyConsume.addAll(energyConsume);
+  Future<void> _save(StatisticsManagerStreamState event) async {
     await _statisticsDataProvider.saveData(_statistics);
     updateData();
-    _streamController.add(StatisticsRepositoryStreamEvents.addEnergyConsume);
+    _streamController.add(event);
+  }
+
+  Future<void> addBuyPCs(double pcCost) async {
+    _statistics.buyPCs.add(pcCost);
+    await _save(StatisticsManagerStreamState.addBuyPCs);
+  }
+
+  Future<void> addBuyFlats(double flatCost) async {
+    _statistics.buyFlats.add(flatCost);
+    await _save(StatisticsManagerStreamState.addBuyFlats);
+  }
+
+  Future<void> addEnergyConsume(double energyConsume) async {
+    _statistics.energyConsume.add(energyConsume);
+    await _save(StatisticsManagerStreamState.addEnergyConsume);
   }
 
   Future<void> addFlatConsume(double flatConsume) async {
     _statistics.flatConsume.add(flatConsume);
-    await _statisticsDataProvider.saveData(_statistics);
-    updateData();
-    _streamController.add(StatisticsRepositoryStreamEvents.addFlatConsume);
+    await _save(StatisticsManagerStreamState.addFlatConsume);
   }
 
-  Future<void> addPCConsume(double pcConsume) async {
-    _statistics.pcConsume.add(pcConsume);
-    await _statisticsDataProvider.saveData(_statistics);
-    updateData();
-    _streamController.add(StatisticsRepositoryStreamEvents.addPcConsume);
+  Future<void> addDealsBuyVolume(double dealVolume) async {
+    _statistics.dealsBuyVolume.add(dealVolume);
+    await _save(StatisticsManagerStreamState.addDealsBuyVolume);
+  }
+
+  Future<void> addDealsSellVolume(double dealVolume) async {
+    _statistics.dealsSellVolume.add(dealVolume);
+    await _save(StatisticsManagerStreamState.addDealsSellVolume);
   }
 
   Future<void> addTokenEarn(Token token, double earnCash) async {
@@ -54,9 +68,7 @@ class StatisticsRepository implements MyRepository {
       _statistics.tokenEarn[token.id] = [];
     }
     _statistics.tokenEarn[token.id]?.add(earnCash);
-    await _statisticsDataProvider.saveData(_statistics);
-    updateData();
-    _streamController.add(StatisticsRepositoryStreamEvents.addEarnCash);
+    await _save(StatisticsManagerStreamState.addTokenEarn);
   }
 
   Future<void> addTokenMining(Token token, double miningValue) async {
@@ -64,8 +76,6 @@ class StatisticsRepository implements MyRepository {
       _statistics.tokenMining[token.id] = [];
     }
     _statistics.tokenMining[token.id]?.add(miningValue);
-    await _statisticsDataProvider.saveData(_statistics);
-    updateData();
-    _streamController.add(StatisticsRepositoryStreamEvents.addEarnMining);
+    await _save(StatisticsManagerStreamState.addTokenMining);
   }
 }
