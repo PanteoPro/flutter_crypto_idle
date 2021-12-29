@@ -43,6 +43,7 @@ class GameStatisticsViewModel extends ChangeNotifier {
   Future<void> initRepositories() async {
     await _statisticsRepository.init();
     await _tokensRepository.init();
+    print('Tokens Init');
     _tokenStreamSub =
         TokenRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _tokensRepository));
     _updateState();
@@ -62,6 +63,7 @@ class GameStatisticsViewModel extends ChangeNotifier {
 
   @override
   void dispose() {
+    _tokenStreamSub?.cancel();
     _messageStreamSub?.cancel();
     super.dispose();
   }
