@@ -13,6 +13,7 @@ class Statistics extends HiveObject {
     required this.dealsSellVolume,
     required this.tokenEarn,
     required this.tokenMining,
+    required this.clickerEarn,
   });
   Statistics.empty();
 
@@ -44,4 +45,12 @@ class Statistics extends HiveObject {
   Map<int, List<double>> tokenEarn = {};
   @HiveField(7)
   Map<int, List<double>> tokenMining = {};
+  @HiveField(8)
+  int clickedPC = 0;
+  @HiveField(9)
+  List<double> clickerEarn = [];
+  @HiveField(10)
+  int clickedPCCrits = 0;
+  @HiveField(11)
+  int countDays = 0;
 }

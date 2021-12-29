@@ -5,6 +5,7 @@ import 'package:crypto_idle/domain/entities/clicker.dart';
 import 'package:crypto_idle/domain/repositories/clicker_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
+import 'package:crypto_idle/domain/repositories/statistics_manager.dart';
 import 'package:flutter/cupertino.dart';
 
 class ClickerGameViewModelState {
@@ -106,7 +107,26 @@ class ClickerGameViewModel extends ChangeNotifier {
 
   Future<bool> onClickerPcPressed(double rndMoney) async {
     final beforeDecreaceClicks = _clickerRepository.clicker.currentClicks;
-    await _clickerRepository.decreaceClick();
+    if (await _clickerRepository.decreaceClick()) {
+      StatisticsManager.sendMessageStream(
+        StatisticsManagerStreamEvents(
+          state: StatisticsManagerStreamState.addClickerPc,
+        ),
+      );
+      StatisticsManager.sendMessageStream(
+        StatisticsManagerStreamEvents(
+          state: StatisticsManagerStreamState.addClickerEarn,
+          value: rndMoney,
+        ),
+      );
+      if (rndMoney == _clickerRepository.clicker.critMoney) {
+        StatisticsManager.sendMessageStream(
+          StatisticsManagerStreamEvents(
+            state: StatisticsManagerStreamState.addClickerCrit,
+          ),
+        );
+      }
+    }
     if (_clickerRepository.clicker.currentClicks > 0) {
       await _gameRepository.clickerMoney(rndMoney);
       _updateState();

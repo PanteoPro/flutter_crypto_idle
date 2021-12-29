@@ -14,11 +14,15 @@ class _CryptoWidget extends StatelessWidget {
       try {
         final mining = tokensMiningMap[token.id];
         final miningSum = mining!.sum.toStringAsFixed(8);
-        final widget = _ItemWidget(title: 'Добыто ${token.symbol}', value: miningSum);
+        final widget = _ItemWidget(
+          title: 'Добыто ${token.symbol}',
+          value: miningSum,
+          symbol: token.symbol,
+        );
         children.add(widget);
         children.add(const SizedBox(height: 4));
       } catch (_) {
-        final widget = _ItemWidget(title: 'Добыто ${token.symbol}', value: 0.toStringAsFixed(8));
+        final widget = _ItemWidget(title: 'Добыто ${token.symbol}', value: 0.toStringAsFixed(8), symbol: token.symbol);
         children.add(widget);
         children.add(const SizedBox(height: 4));
       }
@@ -36,6 +40,8 @@ class _CryptoWidget extends StatelessWidget {
         children.add(widget);
         children.add(const SizedBox(height: 4));
       }
+
+      children.add(const SizedBox(height: 8));
     }
 
     // for (final tokenID in tokensMiningMap.keys) {

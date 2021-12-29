@@ -26,6 +26,7 @@ class GameStatisticsViewModelState {
   // for context.select
   String get energyConsume => statistics.energyConsume.sum.toStringAsFixed(2);
   String get flatConsume => statistics.flatConsume.sum.toStringAsFixed(2);
+  String get daysCount => statistics.countDays.toString();
   Map<int, List<double>> get tokenEarn => statistics.tokenEarn;
   Map<int, List<double>> get tokenMining => statistics.tokenMining;
 
@@ -94,6 +95,18 @@ class GameStatisticsViewModel extends ChangeNotifier {
           break;
         case StatisticsManagerStreamState.addTokenMining:
           await _statisticsRepository.addTokenMining(event.token!, event.value as double);
+          break;
+        case StatisticsManagerStreamState.addClickerPc:
+          await _statisticsRepository.addClickerPc();
+          break;
+        case StatisticsManagerStreamState.addClickerEarn:
+          await _statisticsRepository.addClickerEarn(event.value as double);
+          break;
+        case StatisticsManagerStreamState.addClickerCrit:
+          await _statisticsRepository.addClickerCrit();
+          break;
+        case StatisticsManagerStreamState.addDays:
+          await _statisticsRepository.addDays();
           break;
       }
     }

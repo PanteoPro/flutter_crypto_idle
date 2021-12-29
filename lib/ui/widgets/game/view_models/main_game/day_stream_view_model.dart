@@ -117,6 +117,7 @@ class DayStreamViewModel extends ChangeNotifier {
   }
 
   Future<void> _newDay(dynamic numberDaySession) async {
+    _addStatisticsDay();
     await _gameRepository.nextDay();
     await _miningDay();
     await _newsDay();
@@ -128,6 +129,14 @@ class DayStreamViewModel extends ChangeNotifier {
     if (_isMoneyGone()) {
       await _gameEnd();
     }
+  }
+
+  void _addStatisticsDay() {
+    StatisticsManager.sendMessageStream(
+      StatisticsManagerStreamEvents(
+        state: StatisticsManagerStreamState.addDays,
+      ),
+    );
   }
 
   void _reminderAboutMonthyPayments() {

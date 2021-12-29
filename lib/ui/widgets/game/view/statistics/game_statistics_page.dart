@@ -3,12 +3,14 @@ import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:crypto_idle/Widgets/page_wrapper.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/generated/l10n.dart';
+import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/global/game_statistics_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';
 
 part 'widgets/consume_widget.dart';
+part 'widgets/other_widget.dart';
 part 'widgets/deals_widget.dart';
 part 'widgets/crypto_widget.dart';
 
@@ -35,6 +37,10 @@ class GameStatisticsPage extends StatelessWidget {
                     _HeaderWidget(title: 'Сделки'),
                     const SizedBox(height: 6),
                     _DealsWidget(),
+                    const SizedBox(height: 12),
+                    _HeaderWidget(title: 'Остальное'),
+                    const SizedBox(height: 6),
+                    _OtherWidget(),
                     const SizedBox(height: 12),
                     _HeaderWidget(title: 'Криптовалюты'),
                     const SizedBox(height: 6),
@@ -100,17 +106,23 @@ class _ItemWidget extends StatelessWidget {
     Key? key,
     required this.title,
     required this.value,
+    this.symbol,
   }) : super(key: key);
 
   final String title;
   final String value;
+  final String? symbol;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(title, style: AppFonts.body.copyWith(color: AppColors.white)),
+        if (symbol != null) ...[
+          SizedBox(width: 4),
+          Image.asset(AppImages.getTokenPathBySymbol(symbol!), width: 12, height: 12),
+        ],
+        Spacer(),
         Text(value, style: AppFonts.body.copyWith(color: AppColors.white)),
       ],
     );

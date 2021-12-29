@@ -27,13 +27,17 @@ class StatisticsAdapter extends TypeAdapter<Statistics> {
           MapEntry(k as int, (v as List).cast<double>())),
       tokenMining: (fields[7] as Map).map((dynamic k, dynamic v) =>
           MapEntry(k as int, (v as List).cast<double>())),
-    );
+      clickerEarn: (fields[9] as List).cast<double>(),
+    )
+      ..clickedPC = fields[8] as int
+      ..clickedPCCrits = fields[10] as int
+      ..countDays = fields[11] as int;
   }
 
   @override
   void write(BinaryWriter writer, Statistics obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.buyPCs)
       ..writeByte(1)
@@ -49,7 +53,15 @@ class StatisticsAdapter extends TypeAdapter<Statistics> {
       ..writeByte(6)
       ..write(obj.tokenEarn)
       ..writeByte(7)
-      ..write(obj.tokenMining);
+      ..write(obj.tokenMining)
+      ..writeByte(8)
+      ..write(obj.clickedPC)
+      ..writeByte(9)
+      ..write(obj.clickerEarn)
+      ..writeByte(10)
+      ..write(obj.clickedPCCrits)
+      ..writeByte(11)
+      ..write(obj.countDays);
   }
 
   @override

@@ -11,12 +11,17 @@ enum StatisticsManagerStreamState {
   addDealsSellVolume,
   addTokenEarn,
   addTokenMining,
+
+  addClickerPc,
+  addClickerEarn,
+  addClickerCrit,
+  addDays,
 }
 
 class StatisticsManagerStreamEvents {
   StatisticsManagerStreamEvents({
     required this.state,
-    required this.value,
+    this.value,
     this.token,
   });
   final StatisticsManagerStreamState state;

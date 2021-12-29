@@ -78,4 +78,29 @@ class StatisticsRepository implements MyRepository {
     _statistics.tokenMining[token.id]?.add(miningValue);
     await _save(StatisticsManagerStreamState.addTokenMining);
   }
+
+  // addClickerPc,
+  // addClickerEarn,
+  // addClickerCrit,
+  // addDays,
+
+  Future<void> addClickerPc() async {
+    _statistics.clickedPC += 1;
+    await _save(StatisticsManagerStreamState.addClickerPc);
+  }
+
+  Future<void> addClickerEarn(double earn) async {
+    _statistics.clickerEarn.add(earn);
+    await _save(StatisticsManagerStreamState.addClickerEarn);
+  }
+
+  Future<void> addClickerCrit() async {
+    _statistics.clickedPCCrits += 1;
+    await _save(StatisticsManagerStreamState.addClickerCrit);
+  }
+
+  Future<void> addDays() async {
+    _statistics.countDays += 1;
+    await _save(StatisticsManagerStreamState.addDays);
+  }
 }
