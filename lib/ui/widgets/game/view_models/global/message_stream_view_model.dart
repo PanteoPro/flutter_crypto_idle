@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:crypto_idle/domain/repositories/message_manager.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class MessageStreamViewModel extends ChangeNotifier {
   MessageStreamViewModel() {

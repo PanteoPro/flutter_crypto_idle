@@ -6,7 +6,7 @@ import 'package:crypto_idle/domain/repositories/clicker_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/statistics_manager.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ClickerGameViewModelState {
   ClickerGameViewModelState({

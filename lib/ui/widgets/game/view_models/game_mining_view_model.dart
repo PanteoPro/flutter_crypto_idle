@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'package:crypto_idle/domain/entities/pc.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';

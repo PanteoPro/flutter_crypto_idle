@@ -31,11 +31,11 @@ class GameAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         ],
       ),
       centerTitle: true,
-      actions: [
-        const _MuteActionWidget(),
-        const SizedBox(width: 12),
-        _AppBarActionWidget(onTap: () {}, imagePath: AppIconsImages.settingsIcon),
-        const SizedBox(width: 12),
+      actions: const [
+        // const _MuteActionWidget(),
+        SizedBox(width: 12),
+        _SettingsActionWidget(),
+        SizedBox(width: 12),
       ],
       automaticallyImplyLeading: isShowBackArrow,
     );
@@ -45,6 +45,18 @@ class GameAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(32);
 }
 
+class _SettingsActionWidget extends StatelessWidget {
+  const _SettingsActionWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = context.read<GameViewModel>();
+    return _AppBarActionWidget(onTap: vm.onSettingsButtonPressed, imagePath: AppIconsImages.settingsIcon);
+  }
+}
+
 class _MuteActionWidget extends StatelessWidget {
   const _MuteActionWidget({
     Key? key,
@@ -52,9 +64,17 @@ class _MuteActionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMute = context.select((MusicViewModel vm) => vm.isMute);
-    final action = isMute ? () => MusicManager.unmute() : () => MusicManager.mute();
-    final image = isMute ? AppIconsImages.muteIcon : AppIconsImages.unmuteIcon;
+    final vm = context.read<MusicViewModel>();
+
+    final isMuteMusic = context.select((MusicViewModel vm) => vm.isMuteMusic);
+    final isMuteSound = context.select((MusicViewModel vm) => vm.isMuteSound);
+
+    // MusicManager.mute(); MusicManager.unmute();
+    final action = () {
+      vm.onChangeMuteMusic(!isMuteMusic);
+      vm.onChangeMuteSound(!isMuteSound);
+    };
+    final image = isMuteMusic && isMuteSound ? AppIconsImages.muteIcon : AppIconsImages.unmuteIcon;
     return _AppBarActionWidget(onTap: action, imagePath: image);
   }
 }

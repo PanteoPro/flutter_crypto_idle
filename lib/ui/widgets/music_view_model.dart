@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:crypto_idle/domain/repositories/music_manager.dart';
 import 'package:crypto_idle/resources/app_audio.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class MusicViewModel extends ChangeNotifier {
   MusicViewModel() {
@@ -60,10 +60,12 @@ class MusicViewModel extends ChangeNotifier {
       case MusicManagerStreamEvents.playClickPc:
         break;
       case MusicManagerStreamEvents.mute:
-        isMute = true;
+        isMuteMusic = true;
+        isMuteSound = true;
         break;
       case MusicManagerStreamEvents.unmute:
-        isMute = false;
+        isMuteMusic = false;
+        isMuteSound = false;
         break;
       case MusicManagerStreamEvents.pause:
         _pause();
@@ -83,7 +85,8 @@ class MusicViewModel extends ChangeNotifier {
   }
 
   void _checkToPlay() {
-    if (!isMute) {
+    print(isMuteMusic);
+    if (!isMuteMusic) {
       if (isPlayMain) {
         _startMainMusic();
       } else {
@@ -98,6 +101,7 @@ class MusicViewModel extends ChangeNotifier {
       _endMainMusic();
       _endMenuMusic();
     }
+    notifyListeners();
   }
 
   /// Audio player variables
@@ -109,21 +113,50 @@ class MusicViewModel extends ChangeNotifier {
 
   var isPlayMain = false;
   var isPlayMenu = true;
-  var isMute = false;
+
+  var isMuteMusic = false;
+  var isMuteSound = false;
+
+  var musicVolume = 1.0;
+  var soundVolume = 1.0;
+
+  void onChangeMuteMusic(bool value) {
+    isMuteMusic = value;
+    print(isMuteMusic);
+    notifyListeners();
+    _checkToPlay();
+  }
+
+  void onChangeMuteSound(bool value) {
+    isMuteSound = value;
+    notifyListeners();
+  }
+
+  void onChangeVolumeMusic(double volume) {
+    musicVolume = volume;
+    _playerMain?.setVolume(musicVolume);
+    notifyListeners();
+  }
+
+  void onChangeVolumeSound(double volume) {
+    soundVolume = volume;
+    _playerSounds?.setVolume(soundVolume);
+    notifyListeners();
+  }
 
   Future<void> _pause() async {
     await _playerMain?.pause();
   }
 
   Future<void> _resume() async {
-    if (!isMute){
+    if (!isMuteMusic) {
       await _playerMain?.resume();
     }
   }
 
   Future<void> _startMainMusic() async {
     await _playerMain?.stop();
-    _playerMain = await _playerCacheMain.loop(AppAudio.main);
+    _playerMain = await _playerCacheMain.loop(AppAudio.main, volume: musicVolume);
     notifyListeners();
   }
 
@@ -134,7 +167,7 @@ class MusicViewModel extends ChangeNotifier {
 
   Future<void> _startMenuMusic() async {
     await _playerMain?.stop();
-    _playerMain = await _playerCacheMain.loop(AppAudio.menu);
+    _playerMain = await _playerCacheMain.loop(AppAudio.menu, volume: musicVolume);
     notifyListeners();
   }
 
@@ -152,8 +185,8 @@ class MusicViewModel extends ChangeNotifier {
   }
 
   Future<void> _playSound(String soundPath) async {
-    if (!isMute) {
-      _playerSounds = await _playerCacheSounds.play(soundPath);
+    if (!isMuteSound) {
+      _playerSounds = await _playerCacheSounds.play(soundPath, volume: soundVolume);
     }
   }
 }

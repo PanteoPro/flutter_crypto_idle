@@ -13,7 +13,7 @@ import 'package:crypto_idle/domain/repositories/pc_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:crypto_idle/ui/navigators/game_navigator.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class GameViewModelState {
   GameViewModelState({
@@ -24,12 +24,14 @@ class GameViewModelState {
     required this.currentFlat,
     required this.gameOver,
     required this.isModalGameOverClose,
+    required this.isShowSettings,
     required this.myPCs,
   });
   GameViewModelState.empty({
     this.money = 0,
     this.gameOver = false,
     this.isModalGameOverClose = false,
+    this.isShowSettings = false,
   }) {
     date = DateTime(0);
     tokens = [];
@@ -44,6 +46,7 @@ class GameViewModelState {
   late Map<int, double> currentPrices;
   final bool gameOver;
   bool isModalGameOverClose;
+  bool isShowSettings;
   late List<PC> myPCs;
   late Flat currentFlat;
 
@@ -176,6 +179,7 @@ class GameViewModel extends ChangeNotifier {
       currentFlat: _flatRepository.currentFlat,
       gameOver: _gameRepository.game.gameOver,
       isModalGameOverClose: _state.isModalGameOverClose,
+      isShowSettings: _state.isShowSettings,
     );
     notifyListeners();
   }
@@ -199,5 +203,10 @@ class GameViewModel extends ChangeNotifier {
     state.isModalGameOverClose = true;
     notifyListeners();
     Navigator.of(context).pushNamed(GameNavigationRouteNames.statistics, arguments: false);
+  }
+
+  void onSettingsButtonPressed() {
+    _state.isShowSettings = !_state.isShowSettings;
+    notifyListeners();
   }
 }

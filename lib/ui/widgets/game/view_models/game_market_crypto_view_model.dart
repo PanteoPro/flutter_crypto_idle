@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:crypto_idle/domain/repositories/statistics_manager.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:crypto_idle/domain/entities/price_token.dart';

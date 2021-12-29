@@ -1,4 +1,5 @@
 import 'package:crypto_idle/Widgets/game_over_widget.dart';
+import 'package:crypto_idle/Widgets/settings_modal_widget.dart';
 import 'package:crypto_idle/domain/repositories/message_manager.dart';
 import 'package:crypto_idle/ui/widgets/game/view/general/game_app_bar_widget.dart';
 import 'package:crypto_idle/ui/widgets/game/view/general/game_footer_widget.dart';
@@ -29,6 +30,7 @@ class PageWrapperWidget extends StatelessWidget {
             ],
           ),
           const _MessageBlockWidget(),
+          const SettingsModalWidget(),
           if (modalWindows != null) ...?modalWindows,
           const ModalGameOverWidget(),
         ],

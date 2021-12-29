@@ -21,7 +21,7 @@ import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:crypto_idle/initial_data.dart';
 import 'package:crypto_idle/ui/navigators/game_navigator.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'package:crypto_idle/domain/entities/statistics.dart';
 import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
