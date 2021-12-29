@@ -3,6 +3,7 @@ part of 'resources.dart';
 class AppIconsImages {
   AppIconsImages._();
 
+  static const String backArrow = 'assets/images/icons/back_arrow.png';
   static const String cashIcon = 'assets/images/icons/cash_icon.png';
   static const String checkboxActive =
       'assets/images/icons/checkbox_active.png';

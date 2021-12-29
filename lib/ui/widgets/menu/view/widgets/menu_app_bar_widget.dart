@@ -17,13 +17,22 @@ class MenuAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final canPop = Navigator.of(context).canPop();
     return AppBar(
       title: Text(
         S.of(context).menu_app_bar,
         style: const TextStyle(fontSize: 24),
       ),
       centerTitle: true,
-      automaticallyImplyLeading: automaticallyImplyLeading,
+      automaticallyImplyLeading: false,
+      leading: automaticallyImplyLeading && canPop
+          ? _AppBarActionWidget(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              imagePath: AppIconsImages.backArrow,
+            )
+          : null,
       actions: isShowActions
           ? const [
               _MuteActionWidget(),

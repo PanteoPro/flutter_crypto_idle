@@ -23,6 +23,7 @@ class GameAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final canPop = Navigator.of(context).canPop();
     return AppBar(
       title: Row(
         mainAxisSize: MainAxisSize.min,
@@ -31,13 +32,21 @@ class GameAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         ],
       ),
       centerTitle: true,
+      leading: isShowBackArrow && canPop
+          ? _AppBarActionWidget(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              imagePath: AppIconsImages.backArrow,
+            )
+          : null,
       actions: const [
         // const _MuteActionWidget(),
         SizedBox(width: 12),
         _SettingsActionWidget(),
         SizedBox(width: 12),
       ],
-      automaticallyImplyLeading: isShowBackArrow,
+      automaticallyImplyLeading: false,
     );
   }
 
