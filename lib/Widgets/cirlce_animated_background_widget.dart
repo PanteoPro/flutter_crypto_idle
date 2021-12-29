@@ -4,10 +4,17 @@ import 'package:crypto_idle/resources/resources.dart';
 import 'package:flutter/material.dart';
 
 class CircleAnimatedBackgroundWidget extends StatefulWidget {
-  const CircleAnimatedBackgroundWidget({Key? key, this.imagePath, this.child, this.size}) : super(key: key);
+  const CircleAnimatedBackgroundWidget({
+    Key? key,
+    this.imagePath,
+    this.child,
+    this.size,
+    this.isReverse = false,
+  }) : super(key: key);
   final String? imagePath;
   final Widget? child;
   final double? size;
+  final bool isReverse;
 
   @override
   _CircleAnimatedBackgroundWidgetState createState() => _CircleAnimatedBackgroundWidgetState();
@@ -43,7 +50,7 @@ class _CircleAnimatedBackgroundWidgetState extends State<CircleAnimatedBackgroun
             animation: _controller,
             builder: (_, child) {
               return Transform.rotate(
-                angle: _controller.value * 2 * pi,
+                angle: _controller.value * 2 * pi * (widget.isReverse ? -1 : 1),
                 child: child,
               );
             },

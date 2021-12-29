@@ -62,6 +62,7 @@ class _ContentWidget extends StatelessWidget {
           right: -50,
           bottom: -50,
           child: CircleAnimatedBackgroundWidget(
+            isReverse: true,
             size: 400,
             imagePath: AppBackgroundImages.circleRed,
             child: Column(

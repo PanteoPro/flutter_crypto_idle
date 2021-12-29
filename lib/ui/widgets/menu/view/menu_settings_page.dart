@@ -17,6 +17,10 @@ class MenuSettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const padding = 50.0;
+    const appBarHeight = 32;
+    final sizeCircle = MediaQuery.of(context).size.height - padding * 2 - appBarHeight;
+    final diffirence = sizeCircle - MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: const MenuAppBarWidget(isShowActions: false),
       body: SafeArea(
@@ -24,11 +28,12 @@ class MenuSettingsPage extends StatelessWidget {
           children: [
             const _BackgroundWidget(),
             Positioned(
-              top: 30,
-              bottom: 30,
-              left: -MediaQuery.of(context).size.width / 2,
-              right: -MediaQuery.of(context).size.width / 2,
-              child: const CircleAnimatedBackgroundWidget(),
+              top: padding,
+              bottom: padding,
+              left: -diffirence / 2,
+              child: CircleAnimatedBackgroundWidget(
+                size: sizeCircle,
+              ),
             ),
             const _ContentWidget(),
           ],
