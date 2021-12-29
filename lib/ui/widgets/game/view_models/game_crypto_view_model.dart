@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/domain/repositories/message_manager.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
@@ -7,7 +10,20 @@ import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
 import 'package:crypto_idle/ui/navigators/game_navigator.dart';
 import 'package:crypto_idle/ui/navigators/main_navigator.dart';
-import 'package:flutter/cupertino.dart';
+
+class GameCryptoViewModelStateTokenWithPercent {
+  GameCryptoViewModelStateTokenWithPercent({
+    required this.token,
+    required this.percent,
+    required this.color,
+  });
+  final Token token;
+  final double percent;
+  final Color color;
+
+  @override
+  String toString() => 'TokenWithPercent(percent: $percent, color: $color)';
+}
 
 class GameCryptoViewModelState {
   GameCryptoViewModelState({required this.tokens, required this.currentPrices}) {
@@ -18,6 +34,48 @@ class GameCryptoViewModelState {
   final List<Token> tokens;
   final Map<int, double> currentPrices;
   List<Token> filtered = [];
+
+  List<GameCryptoViewModelStateTokenWithPercent> get getTokensWithPercent {
+    const colors = [
+      Colors.red,
+      Colors.green,
+      Colors.blue,
+      Colors.orange,
+      Colors.grey,
+    ];
+    final list = <GameCryptoViewModelStateTokenWithPercent>[];
+    final sumTokens = getBalance();
+    var colorId = 0;
+    for (final token in filtered) {
+      final cost = getPriceByToken(token) * token.count;
+      if (cost != 0) {
+        list.add(
+          GameCryptoViewModelStateTokenWithPercent(
+            token: token,
+            percent: cost / sumTokens,
+            color: colors[colorId > 4 ? 0 : colorId],
+          ),
+        );
+        colorId++;
+      }
+    }
+    list.sort((a, b) => b.percent.compareTo(a.percent));
+    if (list.length > 4) {
+      final other = list.sublist(4);
+      var sumOther = 0.0;
+      for (final token in other) {
+        sumOther += getPriceByToken(token.token) * token.token.count;
+      }
+      list.removeRange(4, list.length);
+      list.add(GameCryptoViewModelStateTokenWithPercent(
+          token: Token.empty(symbol: 'Other'), percent: sumOther / sumTokens, color: colors.last));
+    } else {
+      list.add(GameCryptoViewModelStateTokenWithPercent(
+          token: Token.empty(symbol: 'Other'), percent: 0, color: colors.last));
+    }
+
+    return list;
+  }
 
   double getPriceByToken(Token token) {
     return currentPrices[token.id]!;

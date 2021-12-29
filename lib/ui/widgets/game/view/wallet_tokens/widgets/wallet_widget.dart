@@ -68,31 +68,34 @@ class _AssetsListItemWidget extends StatelessWidget {
     final vm = context.read<GameCryptoViewModel>();
     return GestureDetector(
       onTap: () => vm.onTokenPressed(context, vm.state.filtered[index]),
-      child: Row(
-        children: [
-          _AssetsListItemImageWidget(index: index),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _AssetsListItemSymbolWidget(index: index),
-                    _AssetsListItemCountWidget(index: index),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _AssetsListItemFullNameWidget(index: index),
-                    _AssetsListItemDollarWidget(index: index),
-                  ],
-                ),
-              ],
+      child: ColoredBox(
+        color: Colors.transparent,
+        child: Row(
+          children: [
+            _AssetsListItemImageWidget(index: index),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _AssetsListItemSymbolWidget(index: index),
+                      _AssetsListItemCountWidget(index: index),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _AssetsListItemFullNameWidget(index: index),
+                      _AssetsListItemDollarWidget(index: index),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

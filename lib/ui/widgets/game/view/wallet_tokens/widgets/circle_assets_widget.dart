@@ -37,60 +37,27 @@ class _CircleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tokens = context.select((GameCryptoViewModel vm) => vm.state.getTokensWithPercent);
+
     return SizedBox(
       height: 100,
       width: 100,
       child: SfCircularChart(
         margin: const EdgeInsets.all(0),
         series: <CircularSeries>[
-          DoughnutSeries<GDPData, String>(
+          DoughnutSeries<GameCryptoViewModelStateTokenWithPercent, String>(
             animationDuration: 0,
             innerRadius: '70%',
             radius: '100%',
-            dataSource: getChartData(),
-            pointColorMapper: (GDPData data, _) => data.color,
-            xValueMapper: (GDPData data, _) => data.symbol,
-            yValueMapper: (GDPData data, _) => data.percent,
+            dataSource: tokens,
+            pointColorMapper: (GameCryptoViewModelStateTokenWithPercent data, _) => data.color,
+            xValueMapper: (GameCryptoViewModelStateTokenWithPercent data, _) => data.token.symbol,
+            yValueMapper: (GameCryptoViewModelStateTokenWithPercent data, _) => data.percent,
           ),
         ],
       ),
-      // child: CircularAssetsWidget(
-      //   percents: [
-      //     0.5,
-      //     0.5,
-      //   ],
-      //   colors: [
-      //     Colors.green,
-      //     Colors.blue,
-      //   ],
-      //   lineColor: Colors.red,
-      //   maxLineColor: Colors.green,
-      //   text: 'hello',
-      // ),
     );
   }
-
-  List<GDPData> getChartData() {
-    final chartData = <GDPData>[
-      GDPData(symbol: 'AWE', percent: 0.32, color: Colors.green),
-      GDPData(symbol: 'CAT', percent: 0.18, color: Colors.blue),
-      GDPData(symbol: 'ZZL', percent: 0.10, color: Colors.red),
-      GDPData(symbol: 'DOG', percent: 0.10, color: Colors.orange),
-      GDPData(symbol: 'Other', percent: 0.3, color: Colors.grey),
-    ];
-    return chartData;
-  }
-}
-
-class GDPData {
-  GDPData({
-    required this.symbol,
-    required this.percent,
-    required this.color,
-  });
-  final String symbol;
-  final double percent;
-  final Color color;
 }
 
 class _AssetsWidget extends StatelessWidget {
@@ -98,39 +65,15 @@ class _AssetsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tokens = context.select((GameCryptoViewModel vm) => vm.state.getTokensWithPercent);
+    final children =
+        tokens.map((e) => _AssetItemWidget(color: e.color, symbol: e.token.symbol, percent: e.percent)).toList();
+    final a = [...children];
     return SizedBox(
       width: 100,
       child: Column(
-        children: const [
-          _AssetItemWidget(
-            color: Colors.blue,
-            symbol: 'TOK',
-            percent: 0.52234124,
-          ),
-          SizedBox(height: 6),
-          _AssetItemWidget(
-            color: Colors.blue,
-            symbol: 'TOK',
-            percent: 0.52234124,
-          ),
-          SizedBox(height: 6),
-          _AssetItemWidget(
-            color: Colors.blue,
-            symbol: 'TOK',
-            percent: 0.52234124,
-          ),
-          SizedBox(height: 6),
-          _AssetItemWidget(
-            color: Colors.blue,
-            symbol: 'TOK',
-            percent: 0.52234124,
-          ),
-          SizedBox(height: 6),
-          _AssetItemWidget(
-            color: Colors.grey,
-            symbol: 'TOK',
-            percent: 0.02234124,
-          ),
+        children: [
+          for (var i = 0; i < children.length; i++) ...[children[i], SizedBox(height: i == children.length - 1 ? 0 : 6)]
         ],
       ),
     );
