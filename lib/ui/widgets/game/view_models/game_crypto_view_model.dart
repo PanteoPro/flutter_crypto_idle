@@ -26,14 +26,32 @@ class GameCryptoViewModelStateTokenWithPercent {
 }
 
 class GameCryptoViewModelState {
-  GameCryptoViewModelState({required this.tokens, required this.currentPrices}) {
+  GameCryptoViewModelState({
+    required this.tokens,
+    required this.currentPrices,
+    required this.isHideNullBalance,
+  }) {
     _filterTokens();
   }
-  GameCryptoViewModelState.empty({this.tokens = const [], this.currentPrices = const {}});
+  GameCryptoViewModelState.empty({
+    this.tokens = const [],
+    this.currentPrices = const {},
+    this.isHideNullBalance = false,
+  });
 
   final List<Token> tokens;
   final Map<int, double> currentPrices;
-  List<Token> filtered = [];
+  List<Token> _filtered = [];
+  bool isHideNullBalance;
+
+  int get filteredLength => _filtered.length;
+
+  Token getFilteredToken(int index) {
+    if (_filtered.length > index) {
+      return _filtered[index];
+    }
+    return Token.empty();
+  }
 
   List<GameCryptoViewModelStateTokenWithPercent> get getTokensWithPercent {
     const colors = [
@@ -46,7 +64,7 @@ class GameCryptoViewModelState {
     final list = <GameCryptoViewModelStateTokenWithPercent>[];
     final sumTokens = getBalance();
     var colorId = 0;
-    for (final token in filtered) {
+    for (final token in _filtered) {
       final cost = getPriceByToken(token) * token.count;
       if (cost != 0) {
         list.add(
@@ -120,13 +138,16 @@ class GameCryptoViewModelState {
     var sortedKeys = toSort.keys.toList(growable: false)..sort((k1, k2) => toSort[k1]!.compareTo(toSort[k2]!));
     sortedKeys = sortedKeys.reversed.toList();
     // final filt = sortedKeys.map((key) => toSort[key]).toList();
-    filtered = [];
+    _filtered = [];
     for (final filtToken in sortedKeys) {
       // if (filtToken != null) {
-      filtered.add(filtToken);
+      _filtered.add(filtToken);
       // }
     }
-    filtered.addAll(scamTokens);
+    _filtered.addAll(scamTokens);
+    if (isHideNullBalance) {
+      _filtered = _filtered.where((element) => element.count != 0).toList();
+    }
   }
 }
 
@@ -191,11 +212,17 @@ class GameCryptoViewModel extends ChangeNotifier {
     _state = GameCryptoViewModelState(
       tokens: currentTokens,
       currentPrices: currentPrices,
+      isHideNullBalance: _state.isHideNullBalance,
     );
     notifyListeners();
   }
 
   void onTokenPressed(BuildContext context, Token token) {
     Navigator.of(context).pushNamed(GameNavigationRouteNames.marketCrypto, arguments: token);
+  }
+
+  void onHideNullBalanceButtonPressed() {
+    _state.isHideNullBalance = !_state.isHideNullBalance;
+    _updateState();
   }
 }

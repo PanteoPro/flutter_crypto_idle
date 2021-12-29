@@ -84,7 +84,7 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
         vm.onReturnToMenuButtonPressed();
       }
     } else if (vm.state.gameOver) {
-      Navigator.of(context, rootNavigator: true).pushReplacementNamed(MainNavigationRouteNames.menu);
+      context.read<MainGameViewModel>().onYesExitButtonPressed(context);
     } else {
       Navigator.of(context).pop();
     }

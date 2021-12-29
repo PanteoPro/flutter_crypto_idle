@@ -48,7 +48,6 @@ class GameStatisticsViewModel extends ChangeNotifier {
   Future<void> initRepositories() async {
     await _statisticsRepository.init();
     await _tokensRepository.init();
-    print('Tokens Init');
     _tokenStreamSub =
         TokenRepository.stream?.listen((dynamic data) => _updateRepoByChangeEvent(data, _tokensRepository));
     _updateState();

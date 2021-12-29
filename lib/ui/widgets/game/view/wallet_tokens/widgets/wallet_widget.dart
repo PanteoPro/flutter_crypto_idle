@@ -26,20 +26,25 @@ class _CheckerNullBalancesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Image.asset(
-          AppIconsImages.checkboxInactive,
-          width: 12,
-          height: 12,
-        ),
-        SizedBox(width: 4),
-        Text(
-          'Скрыть нулевые балансы',
-          style: AppFonts.body.copyWith(color: AppColors.lightGrey),
-        ),
-      ],
+    final vm = context.read<GameCryptoViewModel>();
+    final isHideNullBallance = context.select((GameCryptoViewModel vm) => vm.state.isHideNullBalance);
+    return GestureDetector(
+      onTap: vm.onHideNullBalanceButtonPressed,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            isHideNullBallance ? AppIconsImages.checkboxActive : AppIconsImages.checkboxInactive,
+            width: 12,
+            height: 12,
+          ),
+          SizedBox(width: 4),
+          Text(
+            'Скрыть нулевые балансы',
+            style: AppFonts.body.copyWith(color: isHideNullBallance ? AppColors.green : AppColors.lightGrey),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -49,7 +54,7 @@ class _AssetsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tokensLenght = context.select((GameCryptoViewModel vm) => vm.state.filtered.length);
+    final tokensLenght = context.select((GameCryptoViewModel vm) => vm.state.filteredLength);
     return ListView.separated(
       itemCount: tokensLenght,
       itemBuilder: (_, index) => _AssetsListItemWidget(index: index),
@@ -67,7 +72,7 @@ class _AssetsListItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = context.read<GameCryptoViewModel>();
     return GestureDetector(
-      onTap: () => vm.onTokenPressed(context, vm.state.filtered[index]),
+      onTap: () => vm.onTokenPressed(context, vm.state.getFilteredToken(index)),
       child: ColoredBox(
         color: Colors.transparent,
         child: Row(
@@ -111,7 +116,7 @@ class _AssetsListItemImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final token = context.select((GameCryptoViewModel vm) => vm.state.filtered[index]);
+    final token = context.select((GameCryptoViewModel vm) => vm.state.getFilteredToken(index));
     return Image.asset(AppImages.getTokenPathBySymbol(token.symbol), width: 24, height: 24);
   }
 }
@@ -126,7 +131,7 @@ class _AssetsListItemFullNameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final token = context.select((GameCryptoViewModel vm) => vm.state.filtered[index]);
+    final token = context.select((GameCryptoViewModel vm) => vm.state.getFilteredToken(index));
     return Text(
       token.fullName,
       style: AppFonts.body.copyWith(color: token.isScam ? AppColors.red : AppColors.lightGrey),
@@ -144,7 +149,7 @@ class _AssetsListItemSymbolWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final token = context.select((GameCryptoViewModel vm) => vm.state.filtered[index]);
+    final token = context.select((GameCryptoViewModel vm) => vm.state.getFilteredToken(index));
     return Text(
       token.symbol,
       style: AppFonts.main.copyWith(color: token.isScam ? AppColors.red : AppColors.white),
@@ -159,9 +164,9 @@ class _AssetsListItemCountWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.select((GameCryptoViewModel vm) => vm.state.filtered[index].count);
+    context.select((GameCryptoViewModel vm) => vm.state.getFilteredToken(index).count);
     final vm = context.read<GameCryptoViewModel>();
-    final token = vm.state.filtered[index];
+    final token = vm.state.getFilteredToken(index);
     final countToken = token.count;
 
     return Text(
@@ -178,7 +183,7 @@ class _AssetsListItemDollarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final token = context.read<GameCryptoViewModel>().state.filtered[index];
+    final token = context.read<GameCryptoViewModel>().state.getFilteredToken(index);
     final costInDollars = context.select((GameCryptoViewModel vm) => vm.state.getCostByToken(token));
 
     return Text(

@@ -196,7 +196,6 @@ class GameViewModel extends ChangeNotifier {
   }
 
   void onGoStatisticGameOverPressed(BuildContext context) {
-    print("go");
     state.isModalGameOverClose = true;
     notifyListeners();
     Navigator.of(context).pushNamed(GameNavigationRouteNames.statistics, arguments: false);
