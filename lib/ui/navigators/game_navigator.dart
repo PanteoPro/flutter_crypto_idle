@@ -5,6 +5,7 @@ import 'package:crypto_idle/ui/widgets/game/view/market_flat/market_flat_page.da
 import 'package:crypto_idle/ui/widgets/game/view/market_pc/market_pc_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/old/game_crypto_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/statistics/game_statistics_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view/wallet_tokens/wallet_tokens_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_crypto_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_crypto_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_model.dart';
@@ -21,7 +22,7 @@ abstract class GameNavigationRouteNames {
   static const main = '/';
   static const marketPC = '/market_pc';
   static const marketFlat = '/market_flat';
-  static const crypto = '/crypto';
+  static const wallet = '/crypto';
   static const marketCrypto = '/crypto/market';
   static const statistics = '/statistics';
 }
@@ -73,11 +74,11 @@ class GameNavigation {
             child: const MarketFlatPage(),
           ),
         );
-      case GameNavigationRouteNames.crypto:
+      case GameNavigationRouteNames.wallet:
         return MaterialPageRoute(
           builder: (ctx) => ChangeNotifierProvider(
             create: (_) => GameCryptoViewModel(),
-            child: const GameCryptoPage(),
+            child: const WalletTokensPage(),
           ),
         );
       case GameNavigationRouteNames.statistics:

@@ -269,7 +269,7 @@ class MainGameViewModel extends ChangeNotifier {
   }
 
   void onWalletButtonPressed(BuildContext context) {
-    Navigator.of(context).pushNamed(GameNavigationRouteNames.crypto);
+    Navigator.of(context).pushNamed(GameNavigationRouteNames.wallet);
   }
 
   void onStatisticButtonPressed(BuildContext context) {

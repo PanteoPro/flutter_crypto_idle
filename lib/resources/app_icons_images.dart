@@ -4,6 +4,10 @@ class AppIconsImages {
   AppIconsImages._();
 
   static const String cashIcon = 'assets/images/icons/cash_icon.png';
+  static const String checkboxActive =
+      'assets/images/icons/checkbox_active.png';
+  static const String checkboxInactive =
+      'assets/images/icons/checkbox_inactive.png';
   static const String computerIcon = 'assets/images/icons/computer_icon.png';
   static const String dollarIcon = 'assets/images/icons/dollar_icon.png';
   static const String downIcon = 'assets/images/icons/down_icon.png';

@@ -1,5 +1,4 @@
 import 'package:crypto_idle/initial_data.dart';
-import 'package:crypto_idle/resources/resources.dart';
 
 class AppImages {
   static String getTokenPathBySymbol(String symbol) {
@@ -11,8 +10,10 @@ class AppImages {
     final index = InitialDataNames.namePCs.indexWhere((pcName) => pcName == name);
     const mainPath = 'assets/images/pcs/';
     if (index == -1) return '${mainPath}1.png';
-    if (index >= 2) return '${mainPath}1.png';
-    return '$mainPath${index + 1}.png';
+    if (index == 0 || index == 1 || index == 2 || index == 3 || index == 10 || index == 15 || index == 19) {
+      return '$mainPath${index + 1}.png';
+    }
+    return '${mainPath}1.png';
   }
 
   static String getFlatPathByName(String name) {
