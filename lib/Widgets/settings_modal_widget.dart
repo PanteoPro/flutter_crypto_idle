@@ -67,10 +67,18 @@ class _SoundWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Звуки', style: AppFonts.main.copyWith(color: AppColors.white)),
-        SizedBox(width: 5),
-        const _SliderSoundWidget(),
-        const _SwitcherSoundWidget(),
+        Expanded(
+          flex: 2,
+          child: Text(
+            'Звуки',
+            style: AppFonts.main.copyWith(color: AppColors.white),
+            textAlign: TextAlign.right,
+          ),
+        ),
+        const SizedBox(width: 5),
+        const Expanded(flex: 4, child: _SliderSoundWidget()),
+        const Expanded(child: _SwitcherSoundWidget()),
+        const Spacer(),
       ],
     );
   }
@@ -118,13 +126,18 @@ class _MusicWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          'Музыка',
-          style: AppFonts.main.copyWith(color: AppColors.white),
+        Expanded(
+          flex: 2,
+          child: Text(
+            'Музыка',
+            style: AppFonts.main.copyWith(color: AppColors.white),
+            textAlign: TextAlign.right,
+          ),
         ),
-        SizedBox(width: 5),
-        const _SliderMusicWidget(),
-        const _SwitcherMusicWidget(),
+        const SizedBox(width: 5),
+        const Expanded(flex: 4, child: _SliderMusicWidget()),
+        const Expanded(child: _SwitcherMusicWidget()),
+        const Spacer(),
       ],
     );
   }
