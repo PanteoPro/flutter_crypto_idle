@@ -10,15 +10,27 @@ class _ConsumeWidget extends StatelessWidget {
     return Column(
       children: [
         _ItemWidget(title: 'Потрачено на покупки ПК', value: S.of(context).text_with_dollar(buyPCs.toStringAsFixed(2))),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         _ItemWidget(
             title: 'Потрачено на покупки жилья', value: S.of(context).text_with_dollar(buyFlats.toStringAsFixed(2))),
-        SizedBox(height: 4),
-        _ConsumeEnergyWidget(),
-        SizedBox(height: 4),
-        _ConsumeFlatWidget(),
+        const SizedBox(height: 4),
+        const _ConsumeEnergyWidget(),
+        const SizedBox(height: 4),
+        const _ConsumeFlatWidget(),
+        const SizedBox(height: 4),
+        const _ConsumeAllWidget(),
       ],
     );
+  }
+}
+
+class _ConsumeAllWidget extends StatelessWidget {
+  const _ConsumeAllWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final sumConsume = context.select((GameStatisticsViewModel vm) => vm.state.sumConsume);
+    return _ItemWidget(title: 'Сумма', value: S.of(context).text_with_dollar(sumConsume));
   }
 }
 

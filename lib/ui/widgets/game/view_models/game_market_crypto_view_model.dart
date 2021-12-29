@@ -38,7 +38,7 @@ class GameMarketCryptoViewModelState {
   double percentSell;
 
   PriceToken getLastPrice() {
-    return prices.where((element) => element.tokenId == token?.id).last;
+    return prices.isNotEmpty ? prices.where((element) => element.tokenId == token?.id).last : PriceToken.empty();
   }
 
   double get dollarAsset => token != null ? token!.count * getLastPrice().cost : 0;

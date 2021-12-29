@@ -181,7 +181,6 @@ class MyPainter extends CustomPainter {
         paint,
       );
       final linePadding = lineWidth / (pi * 50);
-      print(linePadding);
       prevLinePadding = linePadding;
       prevPosition += 2 * pi * percent + linePadding;
     }

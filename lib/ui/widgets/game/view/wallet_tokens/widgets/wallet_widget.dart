@@ -178,12 +178,8 @@ class _AssetsListItemDollarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.select((GameCryptoViewModel vm) => vm.state.currentPrices);
-
-    final vm = context.read<GameCryptoViewModel>();
-    final token = vm.state.filtered[index];
-    final countToken = token.count;
-    final costInDollars = vm.state.getPriceByToken(token) * countToken;
+    final token = context.read<GameCryptoViewModel>().state.filtered[index];
+    final costInDollars = context.select((GameCryptoViewModel vm) => vm.state.getCostByToken(token));
 
     return Text(
       S.of(context).text_with_dollar(costInDollars.toStringAsFixed(2)),

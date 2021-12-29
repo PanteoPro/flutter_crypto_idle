@@ -24,6 +24,10 @@ class GameStatisticsViewModelState {
   late List<Token> tokens;
 
   // for context.select
+  String get sumConsume =>
+      (statistics.energyConsume.sum + statistics.flatConsume.sum + statistics.buyPCs.sum + statistics.buyFlats.sum)
+          .toStringAsFixed(2);
+
   String get energyConsume => statistics.energyConsume.sum.toStringAsFixed(2);
   String get flatConsume => statistics.flatConsume.sum.toStringAsFixed(2);
   String get daysCount => statistics.countDays.toString();

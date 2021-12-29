@@ -69,12 +69,30 @@ class GameCryptoViewModelState {
       list.removeRange(4, list.length);
       list.add(GameCryptoViewModelStateTokenWithPercent(
           token: Token.empty(symbol: 'Other'), percent: sumOther / sumTokens, color: colors.last));
+    } else if (list.isEmpty) {
+      list.add(
+        GameCryptoViewModelStateTokenWithPercent(
+          token: Token.empty(symbol: 'Other'),
+          percent: 1,
+          color: colors.last,
+        ),
+      );
     } else {
-      list.add(GameCryptoViewModelStateTokenWithPercent(
-          token: Token.empty(symbol: 'Other'), percent: 0, color: colors.last));
+      list.add(
+        GameCryptoViewModelStateTokenWithPercent(
+          token: Token.empty(symbol: 'Other'),
+          percent: 0,
+          color: colors.last,
+        ),
+      );
     }
 
     return list;
+  }
+
+  double getCostByToken(Token token) {
+    final price = getPriceByToken(token);
+    return token.count * price;
   }
 
   double getPriceByToken(Token token) {

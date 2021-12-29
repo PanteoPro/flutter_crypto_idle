@@ -28,7 +28,7 @@ class _ChartWidgetState extends State<_ChartWidget> {
             ),
       );
     }
-    final lastPrice = prices.last;
+    final lastPrice = prices.isNotEmpty ? prices.last : PriceToken.empty();
     chartData.addAll([
       SalesData(lastPrice.date.add(const Duration(days: 1)), null),
       SalesData(lastPrice.date.add(const Duration(days: 2)), null),

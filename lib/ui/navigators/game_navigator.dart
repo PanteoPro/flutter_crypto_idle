@@ -1,5 +1,6 @@
 import 'package:crypto_idle/domain/entities/token.dart';
 import 'package:crypto_idle/ui/widgets/game/view/main/main_game_page.dart';
+import 'package:crypto_idle/ui/widgets/game/view/market_crypto/market_crypto_navigator_controller.dart';
 import 'package:crypto_idle/ui/widgets/game/view/market_crypto/market_crypto_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/market_flat/market_flat_page.dart';
 import 'package:crypto_idle/ui/widgets/game/view/market_pc/market_pc_page.dart';
@@ -28,20 +29,19 @@ abstract class GameNavigationRouteNames {
 }
 
 class GameNavigation {
+  static GameMarketCryptoViewModel? gmcvm;
+
   static String get initialRoute => GameNavigationRouteNames.main;
 
   static Route<Object> onGenerateRoute(RouteSettings settings) {
+    gmcvm?.dispose();
+    gmcvm = null;
     switch (settings.name) {
       case GameNavigationRouteNames.marketCrypto:
         final arguments = settings.arguments;
-        // ignore: unnecessary_cast
-        final token = arguments is Token ? arguments as Token : Token.empty();
-        final viewModel = GameMarketCryptoViewModel(token: token);
+        final token = arguments is Token ? arguments : Token.empty();
         return MaterialPageRoute(
-          builder: (context) => ChangeNotifierProvider.value(
-            value: viewModel,
-            child: const MarketCryptoPage(),
-          ),
+          builder: (context) => MarketCryptoNavigatorController(token: token),
         );
       case GameNavigationRouteNames.main:
         return MaterialPageRoute(
