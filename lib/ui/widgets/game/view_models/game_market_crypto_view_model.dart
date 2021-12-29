@@ -44,7 +44,8 @@ class GameMarketCryptoViewModelState {
   double get dollarAsset => token != null ? token!.count * getLastPrice().cost : 0;
 
   double get buyVolumeDollar => double.parse((percentBuy * money).toStringAsFixed(2));
-  double get buyVolumeToken => double.parse((buyVolumeDollar / getLastPrice().cost).toStringAsFixed(8));
+  double get buyVolumeToken =>
+      !token!.isScam ? double.parse((buyVolumeDollar / getLastPrice().cost).toStringAsFixed(8)) : 0;
 
   double get sellVolumeDollar => double.parse((sellVolumeToken * getLastPrice().cost).toStringAsFixed(2));
   double get sellVolumeToken => double.parse((percentSell * (token?.count ?? 0)).toStringAsFixed(8));
@@ -200,13 +201,17 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
   }
 
   void onChangeSliderBuy(double newValue) {
-    _state.percentBuy = newValue;
-    notifyListeners();
+    if (!_state.token!.isScam) {
+      _state.percentBuy = newValue;
+      notifyListeners();
+    }
   }
 
   void onChangeSliderSell(double newValue) {
-    _state.percentSell = newValue;
-    notifyListeners();
+    if (!_state.token!.isScam) {
+      _state.percentSell = newValue;
+      notifyListeners();
+    }
   }
 }
 

@@ -98,9 +98,9 @@ class _MarketBuySumTokenWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final buyToken2 = context.select((GameMarketCryptoViewModel vm) => vm.state.buyVolumeToken);
+    final buyToken = context.select((GameMarketCryptoViewModel vm) => vm.state.buyVolumeToken);
     return Text(
-      buyToken2.toString(),
+      buyToken.toStringAsFixed(8),
       textAlign: TextAlign.right,
       style: AppFonts.body.copyWith(color: AppColors.white),
     );
@@ -209,7 +209,7 @@ class _MarketSellSumTokenWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final sellVolume = context.select((GameMarketCryptoViewModel vm) => vm.state.sellVolumeToken);
     return Text(
-      sellVolume.toString(),
+      sellVolume.toStringAsFixed(8),
       textAlign: TextAlign.right,
       style: AppFonts.body.copyWith(color: AppColors.white),
     );
