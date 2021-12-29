@@ -81,8 +81,10 @@ class GameNavigation {
           ),
         );
       case GameNavigationRouteNames.statistics:
+        final arguments = settings.arguments;
+        final isShowBackArrow = arguments is bool ? arguments : true;
         return MaterialPageRoute(
-          builder: (ctx) => const GameStatisticsPage(),
+          builder: (ctx) => GameStatisticsPage(isShowBackArrow: isShowBackArrow),
         );
       default:
         return MaterialPageRoute(builder: (_) => const Text('Game Navigation Error!'));

@@ -16,7 +16,10 @@ import 'package:provider/src/provider.dart';
 class GameAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   const GameAppBarWidget({
     Key? key,
+    this.isShowBackArrow = true,
   }) : super(key: key);
+
+  final bool isShowBackArrow;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +37,7 @@ class GameAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         _AppBarActionWidget(onTap: () {}, imagePath: AppIconsImages.settingsIcon),
         const SizedBox(width: 12),
       ],
+      automaticallyImplyLeading: isShowBackArrow,
     );
   }
 

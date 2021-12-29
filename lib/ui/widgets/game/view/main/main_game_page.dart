@@ -19,6 +19,7 @@ import 'package:crypto_idle/ui/navigators/main_navigator.dart';
 import 'package:crypto_idle/ui/widgets/game/view/general/game_app_bar_widget.dart';
 import 'package:crypto_idle/ui/widgets/game/view/general/game_footer_widget.dart';
 import 'package:crypto_idle/ui/widgets/game/view/general/game_header_balance_widget.dart';
+import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/clicker_game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/day_stream_view_model.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/main_game/main_game_view_model.dart';
@@ -75,12 +76,15 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
   @override
   Future<bool> didPopRoute() async {
     // Вызывается каждый раз, когда нажимается кнопка назад
+    final vm = context.read<GameViewModel>();
     if (ModalRoute.of(context)?.isCurrent ?? false) {
       final vm = context.read<MainGameViewModel>();
       final isModalShow = context.read<MainGameViewModel>().state.isModalExitShow;
       if (!isModalShow) {
         vm.onReturnToMenuButtonPressed();
       }
+    } else if (vm.state.gameOver) {
+      Navigator.of(context, rootNavigator: true).pushReplacementNamed(MainNavigationRouteNames.menu);
     } else {
       Navigator.of(context).pop();
     }

@@ -12,6 +12,7 @@ import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/pc_repository.dart';
 import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
 import 'package:crypto_idle/domain/repositories/token_repository.dart';
+import 'package:crypto_idle/ui/navigators/game_navigator.dart';
 import 'package:flutter/cupertino.dart';
 
 class GameViewModelState {
@@ -192,5 +193,12 @@ class GameViewModel extends ChangeNotifier {
     MusicManager.stopMain();
     MusicManager.playMenu();
     Navigator.of(context, rootNavigator: true).pushReplacementNamed('menu');
+  }
+
+  void onGoStatisticGameOverPressed(BuildContext context) {
+    print("go");
+    state.isModalGameOverClose = true;
+    notifyListeners();
+    Navigator.of(context).pushNamed(GameNavigationRouteNames.statistics, arguments: false);
   }
 }

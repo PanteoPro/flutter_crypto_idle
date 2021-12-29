@@ -58,7 +58,7 @@ class ModalGameOverWidget extends StatelessWidget {
                             const SizedBox(height: 16),
                             GameButtonWidget.white(
                               text: S.of(context).game_global_modal_game_over_statistic,
-                              onPressed: () {},
+                              onPressed: () => vm.onGoStatisticGameOverPressed(context),
                             ),
                           ],
                         ),

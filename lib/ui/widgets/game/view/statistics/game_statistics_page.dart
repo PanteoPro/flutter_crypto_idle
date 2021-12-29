@@ -15,11 +15,14 @@ part 'widgets/deals_widget.dart';
 part 'widgets/crypto_widget.dart';
 
 class GameStatisticsPage extends StatelessWidget {
-  const GameStatisticsPage({Key? key}) : super(key: key);
+  const GameStatisticsPage({Key? key, this.isShowBackArrow = true}) : super(key: key);
+
+  final bool isShowBackArrow;
 
   @override
   Widget build(BuildContext context) {
     return PageWrapperWidget(
+      isShowBackArrow: isShowBackArrow,
       child: ColoredBox(
         color: AppColors.mainGrey,
         child: Padding(

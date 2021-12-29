@@ -8,15 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PageWrapperWidget extends StatelessWidget {
-  const PageWrapperWidget({Key? key, required this.child, this.modalWindows}) : super(key: key);
+  const PageWrapperWidget({Key? key, required this.child, this.modalWindows, this.isShowBackArrow = true})
+      : super(key: key);
 
   final Widget child;
   final List<Widget>? modalWindows;
+  final bool isShowBackArrow;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GameAppBarWidget(),
+      appBar: GameAppBarWidget(isShowBackArrow: isShowBackArrow),
       body: Stack(
         children: [
           Column(
