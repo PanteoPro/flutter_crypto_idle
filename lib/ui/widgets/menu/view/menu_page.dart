@@ -79,11 +79,11 @@ class _ButtonsWidget extends StatelessWidget {
           text: S.of(context).menu_button_authors,
           onPressed: vm.onAboutButtonPressed,
         ),
-        const SizedBox(height: 16),
-        GameButtonWidget.menuSmall(
-          text: 'ТЕСТ',
-          onPressed: vm.onTestPage,
-        ),
+        // const SizedBox(height: 16),
+        // GameButtonWidget.menuSmall(
+        //   text: 'ТЕСТ',
+        //   onPressed: vm.onTestPage,
+        // ),
       ]);
     } else {
       buttons.addAll([

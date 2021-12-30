@@ -19,7 +19,7 @@ class RadialPercentWidget extends StatelessWidget {
     this.padding = 0,
     this.paddingForChild = 10,
     this.left = 20,
-    this.bottom = 20,
+    this.bottom = 10,
   }) : super(key: key);
 
   final Widget child;
