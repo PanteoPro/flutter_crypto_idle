@@ -15,6 +15,7 @@ class AppIconsImages {
   static const String emptyIcon = 'assets/images/icons/empty_icon.png';
   static const String emptyIcon2 = 'assets/images/icons/empty_icon_2.png';
   static const String en = 'assets/images/icons/en.png';
+  static const String exit = 'assets/images/icons/exit.png';
   static const String lightningIcon = 'assets/images/icons/lightning_icon.png';
   static const String lock = 'assets/images/icons/lock.png';
   static const String muteIcon = 'assets/images/icons/mute_icon.png';
@@ -24,5 +25,6 @@ class AppIconsImages {
   static const String tokenIcon = 'assets/images/icons/token_icon.png';
   static const String unmuteIcon = 'assets/images/icons/unmute_icon.png';
   static const String upgrade = 'assets/images/icons/upgrade.png';
+  static const String upgradeArrow = 'assets/images/icons/upgrade_arrow.png';
   static const String upIcon = 'assets/images/icons/up_icon.png';
 }

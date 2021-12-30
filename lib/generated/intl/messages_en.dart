@@ -98,6 +98,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "game_main_modal_tokens_sub_title": m0,
         "game_main_modal_tokens_title":
             MessageLookupByLibrary.simpleMessage("Choose a cryptocurrency"),
+        "game_main_modal_upgrade_button":
+            MessageLookupByLibrary.simpleMessage("Level Up"),
+        "game_main_modal_upgrade_cost":
+            MessageLookupByLibrary.simpleMessage("Cost"),
+        "game_main_modal_upgrade_crit":
+            MessageLookupByLibrary.simpleMessage("Critical:"),
+        "game_main_modal_upgrade_level":
+            MessageLookupByLibrary.simpleMessage("Current Level"),
+        "game_main_modal_upgrade_max":
+            MessageLookupByLibrary.simpleMessage("Maximum:"),
+        "game_main_modal_upgrade_min":
+            MessageLookupByLibrary.simpleMessage("Minimum:"),
+        "game_main_modal_upgrade_probability_crit":
+            MessageLookupByLibrary.simpleMessage("Critical %:"),
+        "game_main_modal_upgrade_title":
+            MessageLookupByLibrary.simpleMessage("Upgrade PC"),
         "game_main_news": MessageLookupByLibrary.simpleMessage("News"),
         "game_main_pcs_assign": MessageLookupByLibrary.simpleMessage("ASSIGN"),
         "game_main_pcs_mining": MessageLookupByLibrary.simpleMessage("Mined"),

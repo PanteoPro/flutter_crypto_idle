@@ -80,6 +80,15 @@
     "game_main_modal_exit_yes": "Да",
     "game_main_modal_exit_no": "Нет",
 
+    "game_main_modal_upgrade_title": "Улучшение компьютера",
+    "game_main_modal_upgrade_min": "Минимум:",
+    "game_main_modal_upgrade_max": "Максимум:",
+    "game_main_modal_upgrade_crit": "Крит:",
+    "game_main_modal_upgrade_probability_crit": "Шанс крита:",
+    "game_main_modal_upgrade_button": "Повысить уровень",
+    "game_main_modal_upgrade_cost": "Стоимость",
+    "game_main_modal_upgrade_level": "Текущий уровень",
+
     "game_market_pc_title": "Покупка установок",
     "game_market_pc_info_cost": "Стоимость",
     "game_market_pc_info_cost_sell": "Стоимость при продаже",

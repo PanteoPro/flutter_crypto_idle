@@ -730,6 +730,86 @@ class S {
     );
   }
 
+  /// `Upgrade PC`
+  String get game_main_modal_upgrade_title {
+    return Intl.message(
+      'Upgrade PC',
+      name: 'game_main_modal_upgrade_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Minimum:`
+  String get game_main_modal_upgrade_min {
+    return Intl.message(
+      'Minimum:',
+      name: 'game_main_modal_upgrade_min',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maximum:`
+  String get game_main_modal_upgrade_max {
+    return Intl.message(
+      'Maximum:',
+      name: 'game_main_modal_upgrade_max',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Critical:`
+  String get game_main_modal_upgrade_crit {
+    return Intl.message(
+      'Critical:',
+      name: 'game_main_modal_upgrade_crit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Critical %:`
+  String get game_main_modal_upgrade_probability_crit {
+    return Intl.message(
+      'Critical %:',
+      name: 'game_main_modal_upgrade_probability_crit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Level Up`
+  String get game_main_modal_upgrade_button {
+    return Intl.message(
+      'Level Up',
+      name: 'game_main_modal_upgrade_button',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cost`
+  String get game_main_modal_upgrade_cost {
+    return Intl.message(
+      'Cost',
+      name: 'game_main_modal_upgrade_cost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current Level`
+  String get game_main_modal_upgrade_level {
+    return Intl.message(
+      'Current Level',
+      name: 'game_main_modal_upgrade_level',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Buy computers`
   String get game_market_pc_title {
     return Intl.message(

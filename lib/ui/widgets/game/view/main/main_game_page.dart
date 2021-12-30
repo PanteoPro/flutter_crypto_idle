@@ -7,6 +7,7 @@ import 'package:crypto_idle/Widgets/game_button_widget.dart';
 import 'package:crypto_idle/Widgets/circle_index_widget.dart';
 import 'package:crypto_idle/Widgets/game_over_widget.dart';
 import 'package:crypto_idle/Widgets/page_wrapper.dart';
+import 'package:crypto_idle/config.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
@@ -40,6 +41,7 @@ part 'widgets/content_widgets/news_widget.dart';
 part 'widgets/content_widgets/background_widget.dart';
 part 'widgets/modal_exit_widget.dart';
 part 'widgets/modal_list_tokens_widget.dart';
+part 'widgets/modal_upgrade_widget.dart';
 
 class MainGamePage extends StatefulWidget {
   const MainGamePage({Key? key}) : super(key: key);
@@ -101,6 +103,7 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
     return PageWrapperWidget(
       modalWindows: const [
         _ModalListTokensWidget(),
+        _ModalUpgradeWidget(),
         _ModalExitWidget(),
       ],
       child: Column(

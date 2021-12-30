@@ -12,8 +12,10 @@ import 'package:flutter/material.dart';
 class ClickerGameViewModelState {
   ClickerGameViewModelState({
     required this.clicker,
+    required this.isModalUpgrade,
   });
   final Clicker clicker;
+  bool isModalUpgrade;
 
   double get percentCurrentClicks => clicker.currentClicks / clicker.maxClicks;
   double get percentCurrentDelay => (clicker.maxDelay - clicker.currentDelay) / clicker.maxDelay;
@@ -77,6 +79,7 @@ class ClickerGameViewModel extends ChangeNotifier {
   Future<void> _updateState() async {
     _state = ClickerGameViewModelState(
       clicker: _clickerRepository.clicker,
+      isModalUpgrade: _state.isModalUpgrade,
     );
     notifyListeners();
   }
@@ -85,7 +88,7 @@ class ClickerGameViewModel extends ChangeNotifier {
 
   // ----- Fields -----
 
-  var _state = ClickerGameViewModelState(clicker: Clicker.start());
+  var _state = ClickerGameViewModelState(clicker: Clicker.start(), isModalUpgrade: false);
   ClickerGameViewModelState get state => _state;
 
   final _clickerRepository = ClickerRepository();
@@ -188,5 +191,15 @@ class ClickerGameViewModel extends ChangeNotifier {
       // not enough money
     }
     return false;
+  }
+
+  void onOpenModal() {
+    state.isModalUpgrade = true;
+    notifyListeners();
+  }
+
+  void onCloseModal() {
+    state.isModalUpgrade = false;
+    notifyListeners();
   }
 }

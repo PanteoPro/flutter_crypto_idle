@@ -9,7 +9,7 @@ class AppImages {
   static String getPcPathByName(String name) {
     final index = InitialDataNames.namePCs.indexWhere((pcName) => pcName == name);
     const mainPath = 'assets/images/pcs/';
-    if (index == -1 || index > 6) return '${mainPath}1.png';
+    // if (index == -1 || index > 6) return '${mainPath}1.png';
     return '$mainPath${index + 1}.png';
   }
 

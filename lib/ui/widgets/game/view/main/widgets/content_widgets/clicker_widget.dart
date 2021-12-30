@@ -18,9 +18,10 @@ class _ClickerWidget extends StatelessWidget {
             child: _ClickerUpgradeWidget(),
           ),
           _CirlceWidget(key: _globalKeyCircleWidget),
-          const Expanded(
-            child: _ClickerInfoWidget(),
-          ),
+          // const Expanded(
+          //   child: _ClickerInfoWidget(),
+          // ),
+          const Spacer(),
         ],
       ),
     );
@@ -123,7 +124,7 @@ class _ClickerUpgradeWidgetState extends State<_ClickerUpgradeWidget> {
           if (!isMaxLevel) const SizedBox(height: 4),
           if (!isMaxLevel)
             GestureDetector(
-              onTap: () => clickerVM.onClickUpgradeButton(),
+              onTap: clickerVM.onOpenModal,
               child:
                   Image.asset(isCanUpgrade ? AppIconsImages.upgrade : AppIconsImages.noUpgrade, width: 32, height: 32),
             ),

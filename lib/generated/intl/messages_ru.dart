@@ -98,6 +98,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "game_main_modal_tokens_sub_title": m0,
         "game_main_modal_tokens_title":
             MessageLookupByLibrary.simpleMessage("Выберите криптовалюту"),
+        "game_main_modal_upgrade_button":
+            MessageLookupByLibrary.simpleMessage("Повысить уровень"),
+        "game_main_modal_upgrade_cost":
+            MessageLookupByLibrary.simpleMessage("Стоимость"),
+        "game_main_modal_upgrade_crit":
+            MessageLookupByLibrary.simpleMessage("Крит:"),
+        "game_main_modal_upgrade_level":
+            MessageLookupByLibrary.simpleMessage("Текущий уровень"),
+        "game_main_modal_upgrade_max":
+            MessageLookupByLibrary.simpleMessage("Максимум:"),
+        "game_main_modal_upgrade_min":
+            MessageLookupByLibrary.simpleMessage("Минимум:"),
+        "game_main_modal_upgrade_probability_crit":
+            MessageLookupByLibrary.simpleMessage("Шанс крита:"),
+        "game_main_modal_upgrade_title":
+            MessageLookupByLibrary.simpleMessage("Улучшение компьютера"),
         "game_main_news": MessageLookupByLibrary.simpleMessage("Новости"),
         "game_main_pcs_assign":
             MessageLookupByLibrary.simpleMessage("НАЗНАЧИТЬ"),

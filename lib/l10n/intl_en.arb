@@ -80,6 +80,15 @@
     "game_main_modal_exit_yes": "Yes",
     "game_main_modal_exit_no": "No",
 
+    "game_main_modal_upgrade_title": "Upgrade PC",
+    "game_main_modal_upgrade_min": "Minimum:",
+    "game_main_modal_upgrade_max": "Maximum:",
+    "game_main_modal_upgrade_crit": "Critical:",
+    "game_main_modal_upgrade_probability_crit": "Critical %:",
+    "game_main_modal_upgrade_button": "Level Up",
+    "game_main_modal_upgrade_cost": "Cost",
+    "game_main_modal_upgrade_level": "Current Level",
+
     "game_market_pc_title": "Buy computers",
     "game_market_pc_info_cost": "Price",
     "game_market_pc_info_cost_sell": "Selling price",
