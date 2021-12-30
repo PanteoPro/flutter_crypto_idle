@@ -92,6 +92,7 @@ class MainGameViewModelState {
   }
 
   void openModalTokens() {
+    MusicManager.playClick();
     isOpenModalTokens = true;
   }
 
@@ -247,29 +248,35 @@ class MainGameViewModel extends ChangeNotifier {
   }
 
   void onYesExitButtonPressed(BuildContext context) {
+    MusicManager.playClick();
     MusicManager.stopMain();
     MusicManager.playMenu();
     Navigator.of(context, rootNavigator: true).pushReplacementNamed(MainNavigationRouteNames.menu);
   }
 
   void onNoExitButtonPressed() {
+    MusicManager.playClick();
     _state.isModalExitShow = false;
     notifyListeners();
   }
 
   void onBuyPcButtonPressed(BuildContext context) {
+    MusicManager.playClick();
     Navigator.of(context).pushNamed(GameNavigationRouteNames.marketPC);
   }
 
   void onBuyFlatButtonPressed(BuildContext context) {
+    MusicManager.playClick();
     Navigator.of(context).pushNamed(GameNavigationRouteNames.marketFlat);
   }
 
   void onWalletButtonPressed(BuildContext context) {
+    MusicManager.playClick();
     Navigator.of(context).pushNamed(GameNavigationRouteNames.wallet);
   }
 
   void onStatisticButtonPressed(BuildContext context) {
+    MusicManager.playClick();
     Navigator.of(context).pushNamed(GameNavigationRouteNames.statistics);
   }
 
@@ -293,11 +300,13 @@ class MainGameViewModel extends ChangeNotifier {
   }
 
   void onExitModalAction() {
+    MusicManager.playClick();
     _state.closeModalTokens();
     notifyListeners();
   }
 
   void onShowNewsButtonPressed() {
+    MusicManager.playClick();
     _state.isShowNews = !_state.isShowNews;
     notifyListeners();
   }

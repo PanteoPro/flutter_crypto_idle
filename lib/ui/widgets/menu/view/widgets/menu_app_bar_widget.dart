@@ -28,6 +28,7 @@ class MenuAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       leading: automaticallyImplyLeading && canPop
           ? _AppBarActionWidget(
               onTap: () {
+                MusicManager.playClick();
                 Navigator.of(context).pop();
               },
               imagePath: AppIconsImages.backArrow,

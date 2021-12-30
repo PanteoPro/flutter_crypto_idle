@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:crypto_idle/domain/repositories/music_manager.dart';
 import 'package:flutter/material.dart';
 
 import 'package:crypto_idle/domain/entities/token.dart';
@@ -217,10 +218,12 @@ class GameCryptoViewModel extends ChangeNotifier {
   }
 
   void onTokenPressed(BuildContext context, Token token) {
+    MusicManager.playClick();
     Navigator.of(context).pushNamed(GameNavigationRouteNames.marketCrypto, arguments: token);
   }
 
   void onHideNullBalanceButtonPressed() {
+    MusicManager.playClick();
     _state.isHideNullBalance = !_state.isHideNullBalance;
     _updateState();
   }

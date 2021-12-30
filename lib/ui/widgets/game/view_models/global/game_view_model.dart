@@ -194,18 +194,21 @@ class GameViewModel extends ChangeNotifier {
   void onExitGameOverPressed(BuildContext context) {
     // _state.isModalGameOverClose = true;
     // notifyListeners();
+    MusicManager.playClick();
     MusicManager.stopMain();
     MusicManager.playMenu();
     Navigator.of(context, rootNavigator: true).pushReplacementNamed('menu');
   }
 
   void onGoStatisticGameOverPressed(BuildContext context) {
+    MusicManager.playClick();
     state.isModalGameOverClose = true;
     notifyListeners();
     Navigator.of(context).pushNamed(GameNavigationRouteNames.statistics, arguments: false);
   }
 
   void onSettingsButtonPressed() {
+    MusicManager.playClick();
     _state.isShowSettings = !_state.isShowSettings;
     notifyListeners();
   }

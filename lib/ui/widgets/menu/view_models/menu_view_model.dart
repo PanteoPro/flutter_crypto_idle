@@ -44,6 +44,7 @@ class MenuViewModel extends ChangeNotifier {
     // }
     final dataManager = InitialDataManager();
     await dataManager.registerAllAdapters();
+    MusicManager.playClick();
     MusicManager.stopMenu();
     MusicManager.playMain();
     Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.game);
@@ -53,26 +54,31 @@ class MenuViewModel extends ChangeNotifier {
     final dataManager = InitialDataManager();
     await dataManager.deleteBoxesFromDisk();
     await dataManager.init();
+    MusicManager.playClick();
     MusicManager.stopMenu();
     MusicManager.playMain();
     Navigator.of(context).pushReplacementNamed(MainNavigationRouteNames.game);
   }
 
   void onPlayButtonPressed() {
+    MusicManager.playClick();
     state.playMenu = true;
     notifyListeners();
   }
 
   void onBackFromPlayButtonPressed() {
+    MusicManager.playClick();
     state.playMenu = false;
     notifyListeners();
   }
 
   void onSettingsButtonPressed() {
+    MusicManager.playClick();
     Navigator.of(context).pushNamed(MainNavigationRouteNames.menuSettings);
   }
 
   void onAboutButtonPressed() {
+    MusicManager.playClick();
     Navigator.of(context).pushNamed(MainNavigationRouteNames.menuAbout);
   }
 

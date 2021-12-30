@@ -76,7 +76,7 @@ class MusicViewModel extends ChangeNotifier {
         // _playSound(AppAudio.selectToken);
         break;
       case MusicManagerStreamEvents.playClick:
-        // _playSound(AppAudio.click);
+        _playSound(AppAudio.click);
         break;
       case MusicManagerStreamEvents.playClickPc:
         _playSound(AppAudio.clickPC);

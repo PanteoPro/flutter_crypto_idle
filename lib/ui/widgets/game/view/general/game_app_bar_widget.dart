@@ -35,6 +35,7 @@ class GameAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       leading: isShowBackArrow && canPop
           ? _AppBarActionWidget(
               onTap: () {
+                MusicManager.playClick();
                 Navigator.of(context).pop();
               },
               imagePath: AppIconsImages.backArrow,

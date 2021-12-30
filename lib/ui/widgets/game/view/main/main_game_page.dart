@@ -77,6 +77,7 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
   @override
   Future<bool> didPopRoute() async {
     // Вызывается каждый раз, когда нажимается кнопка назад
+    MusicManager.playClick();
     final vm = context.read<GameViewModel>();
     if (ModalRoute.of(context)?.isCurrent ?? false) {
       final vm = context.read<MainGameViewModel>();

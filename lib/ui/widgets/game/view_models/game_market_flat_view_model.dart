@@ -124,6 +124,7 @@ class GameMarketFlatViewModel extends ChangeNotifier {
       final currentCountPC = _pcRepository.pcs.length;
       if (currentCountPC <= flat.countPC) {
         if (_getMaxLevelPc() <= flat.level) {
+          MusicManager.playClick();
           await _flatRepository.changeFlat(currentFlat, isActive: false);
           await _flatRepository.changeFlat(flat, isActive: true);
           MessageManager.addMessage(AppMessage.changeFlat(flatName: flat.name));
