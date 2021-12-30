@@ -1,3 +1,5 @@
+import 'package:crypto_idle/Theme/app_colors.dart';
+import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:crypto_idle/Widgets/game_over_widget.dart';
 import 'package:crypto_idle/Widgets/settings_modal_widget.dart';
 import 'package:crypto_idle/domain/repositories/message_manager.dart';
@@ -49,46 +51,58 @@ class _MessageBlockWidget extends StatelessWidget {
     final messagesWidgets =
         mvm.messages.map((AppMessage message) => _MessageBlockItemWidget(message: message)).toList();
     final children = <Widget>[];
+
     for (final widget in messagesWidgets) {
       children.add(widget);
       if (messagesWidgets.indexOf(widget) != messagesWidgets.length - 1) {
-        children.add(SizedBox(height: 8));
+        children.add(const SizedBox(height: 12));
       }
     }
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
-      child: ColoredBox(
-        color: Colors.black.withOpacity(0.7),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ...children,
-            ],
-          ),
+    final width = MediaQuery.of(context).size.width * 0.5;
+    return SizedBox(
+      width: width,
+      child: Padding(
+        padding: const EdgeInsets.only(top: kToolbarHeight * 2),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ...children,
+          ],
         ),
       ),
     );
   }
 }
 
-class _MessageBlockItemWidget extends StatelessWidget {
+class _MessageBlockItemWidget extends StatefulWidget {
   const _MessageBlockItemWidget({Key? key, required this.message}) : super(key: key);
 
   final AppMessage message;
 
   @override
+  State<_MessageBlockItemWidget> createState() => _MessageBlockItemWidgetState();
+}
+
+class _MessageBlockItemWidgetState extends State<_MessageBlockItemWidget> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
       decoration: BoxDecoration(
-        color: Theme.of(context).canvasColor,
-        borderRadius: BorderRadius.circular(4),
-        border: Border.all(color: message.color, width: 2),
+        color: widget.message.color,
+        borderRadius: const BorderRadius.only(bottomRight: Radius.elliptical(50, 50)),
       ),
-      child: Text(message.text, textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 12)),
+      child: Text(
+        widget.message.text,
+        textAlign: TextAlign.left,
+        style: AppFonts.body2.copyWith(color: AppColors.white),
+      ),
     );
   }
 }

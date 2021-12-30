@@ -19,5 +19,5 @@ class MessageStreamViewModel extends ChangeNotifier {
 
   StreamSubscription<dynamic>? _messageStreamSub;
   List<AppMessage> _messages = [];
-  List<AppMessage> get messages => _messages.sublist(0, min(_messages.length, 5));
+  List<AppMessage> get messages => _messages.sublist(0, min(_messages.length, 3));
 }

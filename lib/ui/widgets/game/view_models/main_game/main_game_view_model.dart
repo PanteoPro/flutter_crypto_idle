@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:collection/collection.dart';
+import 'package:crypto_idle/Theme/app_colors.dart';
 import 'package:crypto_idle/config.dart';
 import 'package:crypto_idle/domain/entities/clicker.dart';
 import 'package:crypto_idle/domain/entities/flat.dart';
@@ -215,7 +216,7 @@ class MainGameViewModel extends ChangeNotifier {
         MessageManager.addMessage(
           text:
               'У вас не хватает денег для месячной оплаты, найдите ${state.monthConsume - state.money}\$, или проиграете!',
-          color: Colors.red,
+          color: AppColors.newsRed,
         );
       }
     }

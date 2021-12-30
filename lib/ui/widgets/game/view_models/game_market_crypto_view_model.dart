@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:crypto_idle/Theme/app_colors.dart';
 import 'package:crypto_idle/domain/repositories/statistics_manager.dart';
 import 'package:flutter/material.dart';
 
@@ -145,9 +146,8 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
           );
           _state.percentSell = 0;
           MessageManager.addMessage(
-            text: 'Продано $volume ${_state.token!.symbol} по цене $lastPrice, вы получили $income\$',
-            color: Colors.red,
-          );
+              text: 'Продано $volume ${_state.token!.symbol} по цене $lastPrice, вы получили $income\$',
+              color: AppColors.newsGreen);
           _updateState();
         } else {
           // not Enought tokens
@@ -182,7 +182,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
             );
             MessageManager.addMessage(
               text: 'Куплено $countTokens ${_state.token!.symbol} по цене $lastPrice. Вы потратили $volume\$',
-              color: Colors.green,
+              color: AppColors.newsGreen,
             );
             _updateState();
           } else {

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:crypto_idle/Theme/app_colors.dart';
 import 'package:crypto_idle/domain/entities/flat.dart';
 import 'package:crypto_idle/domain/repositories/flat_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
@@ -95,17 +96,20 @@ class GameMarketFlatViewModel extends ChangeNotifier {
             value: flat.cost,
           ),
         );
-        MessageManager.addMessage(text: 'Куплено жилье ${flat.name} по цене ${flat.cost}\$');
+        MessageManager.addMessage(
+          text: 'Куплено жилье ${flat.name} по цене ${flat.cost}\$',
+          color: AppColors.newsGreen,
+        );
       } else {
         MessageManager.addMessage(
           text: 'Ваше текущее количество установок больше, чем максимальное количество установок в новом жилье',
-          color: Colors.red,
+          color: AppColors.newsRed,
         );
       }
     } else {
       MessageManager.addMessage(
         text: 'Недостаточно денег',
-        color: Colors.red,
+        color: AppColors.newsRed,
       );
     }
     _updateState();
@@ -133,24 +137,24 @@ class GameMarketFlatViewModel extends ChangeNotifier {
           await _flatRepository.changeFlat(flat, isActive: true);
           MessageManager.addMessage(
             text: 'Вы переехали в ${flat.name}',
-            color: Colors.yellow,
+            color: AppColors.newsBlue,
           );
         } else {
           MessageManager.addMessage(
             text: 'Ваши компьютеры выше уровнем, чем в помещнии ${flat.name}',
-            color: Colors.red,
+            color: AppColors.newsRed,
           );
         }
       } else {
         MessageManager.addMessage(
           text: 'Ваше текущее количество установок больше, чем максимальное количество установок в новом жилье',
-          color: Colors.red,
+          color: AppColors.newsRed,
         );
       }
     } else {
       MessageManager.addMessage(
         text: 'Это жилье не куплено',
-        color: Colors.red,
+        color: AppColors.newsRed,
       );
     }
     _updateState();

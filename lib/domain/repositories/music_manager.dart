@@ -27,7 +27,7 @@ enum MusicManagerStreamEvents {
 }
 
 class MusicManager {
-  /// Using this method before use MessageManager
+  /// Using this method before use MusicManager
   static void init() {
     stream ??= _streamController.stream.asBroadcastStream();
   }

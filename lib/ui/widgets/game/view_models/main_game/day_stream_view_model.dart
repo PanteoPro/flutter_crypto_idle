@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:crypto_idle/Theme/app_colors.dart';
 import 'package:crypto_idle/config.dart';
 import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
@@ -145,8 +146,9 @@ class DayStreamViewModel extends ChangeNotifier {
     if (currentDate.isAfter(endMonthDate.add(const Duration(days: -daysUntilTheEndOfMonth))) &&
         !isNotificateUntilTheEndOfMonth) {
       MessageManager.addMessage(
-          text:
-              'Через 7 дней оплата ежемесячных расходов, у вас должно быть достаточное количество наличных для оплаты.');
+        text: 'Через 7 дней оплата ежемесячных расходов, у вас должно быть достаточное количество наличных для оплаты.',
+        color: AppColors.newsBlue,
+      );
       isNotificateUntilTheEndOfMonth = true;
     }
   }

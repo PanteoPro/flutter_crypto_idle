@@ -41,7 +41,7 @@ class _FlatItemLockWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final flat = context.select((GameMarketFlatViewModel vm) => vm.state.flats[index]);
     final money = context.select((GameMarketFlatViewModel vm) => vm.state.money);
-    final isShow = flat.isActive != true && flat.cost > money;
+    final isShow = flat.isActive != true && flat.isBuy != true && flat.cost > money;
     if (!isShow) return const SizedBox();
     return Positioned(
       left: 0,
