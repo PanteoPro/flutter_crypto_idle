@@ -49,8 +49,7 @@ class _NewsOlderItemWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 78,
+          Expanded(
             child: Padding(
               padding: const EdgeInsets.only(right: 4, top: 2),
               child: Text(
@@ -61,10 +60,14 @@ class _NewsOlderItemWidget extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Text(
-              locale.languageCode == 'ru' ? news.text : news.textENG,
-              style: AppFonts.news.copyWith(color: AppColors.lightGrey),
-              maxLines: 2,
+            flex: 4,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 12),
+              child: Text(
+                locale.languageCode == 'ru' ? news.text : news.textENG,
+                style: AppFonts.body.copyWith(color: AppColors.lightGrey),
+                maxLines: 2,
+              ),
             ),
           ),
         ],

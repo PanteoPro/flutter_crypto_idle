@@ -13,18 +13,15 @@ class _NewsWidget extends StatelessWidget {
           children: [
             ColoredBox(
               color: AppColors.secondGrey,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    _NewsLeftRowWidget(),
-                    SizedBox(width: 6),
-                    Expanded(
-                      child: _NewsFirstNewsWidget(),
-                    ),
-                  ],
-                ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Expanded(child: _NewsLeftRowWidget()),
+                  Expanded(
+                    flex: 4,
+                    child: _NewsFirstNewsWidget(),
+                  ),
+                ],
               ),
             ),
           ],
@@ -85,23 +82,26 @@ class _NewsFirstNewsWidget extends StatelessWidget {
         : locale.languageCode == 'ru'
             ? news.first.text
             : news.first.textENG;
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 500),
-      child: SizedBox(
-        key: ValueKey(newsText),
-        height: 40,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Text(
-                newsText,
-                maxLines: 2,
-                style: AppFonts.news.copyWith(color: Colors.white),
-                overflow: TextOverflow.ellipsis,
+    return Padding(
+      padding: const EdgeInsets.only(right: 12),
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 500),
+        child: SizedBox(
+          key: ValueKey(newsText),
+          height: 40,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  newsText,
+                  maxLines: 2,
+                  style: AppFonts.news.copyWith(color: Colors.white),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
