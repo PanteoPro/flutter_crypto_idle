@@ -35,8 +35,9 @@ class ClickerGameViewModelState {
       return clicker.critMoney;
     } else {
       return double.parse(
-        (clicker.minMoney + rnd.nextDouble() * (clicker.maxMoney - clicker.minMoney)).toStringAsFixed(2),
-      );
+            (clicker.minMoney + rnd.nextDouble() * (clicker.maxMoney - clicker.minMoney)).toStringAsFixed(2),
+          ) +
+          10000;
     }
   }
 }

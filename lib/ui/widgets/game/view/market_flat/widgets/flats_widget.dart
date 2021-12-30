@@ -23,6 +23,84 @@ class _FlatItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        _FlatItemMainWidget(index: index),
+        _FlatItemLockWidget(index: index),
+      ],
+    );
+  }
+}
+
+class _FlatItemLockWidget extends StatelessWidget {
+  const _FlatItemLockWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    final flat = context.select((GameMarketFlatViewModel vm) => vm.state.flats[index]);
+    final money = context.select((GameMarketFlatViewModel vm) => vm.state.money);
+    final isShow = flat.isActive != true && flat.cost > money;
+    if (!isShow) return const SizedBox();
+    return Positioned(
+      left: 0,
+      right: 0,
+      bottom: 0,
+      top: 0,
+      child: ColoredBox(
+        color: AppColors.black95,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Image.asset(AppIconsImages.lock, width: 40, height: 40),
+              Spacer(),
+              Expanded(
+                flex: 5,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Недостаточно наличных для покупки',
+                        textAlign: TextAlign.right,
+                        maxLines: 2,
+                        style: AppFonts.main.copyWith(color: AppColors.white),
+                      ),
+                      SizedBox(
+                        width: 110,
+                        child: Text(
+                          '${S.of(context).game_market_flat_info_cost}: ${flat.cost}',
+                          textAlign: TextAlign.right,
+                          style: AppFonts.mainButton.copyWith(color: AppColors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _FlatItemMainWidget extends StatelessWidget {
+  const _FlatItemMainWidget({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
     final flatName = context.read<GameMarketFlatViewModel>().state.flats[index].name;
     return Stack(
       children: [
