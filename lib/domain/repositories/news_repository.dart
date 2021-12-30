@@ -172,7 +172,11 @@ class NewsRepository extends MyRepository {
           Random().nextInt(_NewsRepositoryParams.maxWaitDayDelay - _NewsRepositoryParams.minWaitDayDelay);
       lastGenerated = dateNow;
       final news = _generateNews(dateNow);
-      MusicManager.playNews();
+      if (news.isScamToken) {
+        MusicManager.playScamToken();
+      } else {
+        MusicManager.playNews();
+      }
       addNews(news);
     }
   }
@@ -342,7 +346,6 @@ class NewsRepository extends MyRepository {
   }
 
   void createNewsByMonthyPayments({required double flat, required double energy, required DateTime date}) {
-    MusicManager.playScamToken();
     final news = News(
       text: 'Оплата жилья: -$flat\$. Оплата энергии: -$energy\$',
       textENG: 'Payment for housing: -$flat\$. Energy payment: -$energy\$',

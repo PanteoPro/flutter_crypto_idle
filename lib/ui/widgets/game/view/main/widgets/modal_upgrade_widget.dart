@@ -110,8 +110,6 @@ class _UpgradeWidget extends StatelessWidget {
     final nowCrit = S.of(context).text_with_dollar(clicker.critMoney.toStringAsFixed(2));
     final nowProbability = '${(clicker.probabilityCrit * 100).toStringAsFixed(1)}%';
 
-    print(clicker.probabilityCrit);
-
     final nextMin = S.of(context).text_with_dollar(AppConfig.minByLevel(clicker.level + 1).toStringAsFixed(2));
     final nextMax = S.of(context).text_with_dollar(AppConfig.maxByLevel(clicker.level + 1).toStringAsFixed(2));
     final nextCrit = S.of(context).text_with_dollar(AppConfig.critByLevel(clicker.level + 1).toStringAsFixed(2));

@@ -58,22 +58,22 @@ class MusicViewModel extends ChangeNotifier {
         _playGameOver();
         break;
       case MusicManagerStreamEvents.playBuy:
-        _playSound(AppAudio.money);
+        _playSound(AppAudio.buy);
         break;
       case MusicManagerStreamEvents.playSell:
-        _playSound(AppAudio.money);
+        _playSound(AppAudio.sell);
         break;
       case MusicManagerStreamEvents.playNews:
-        // _playSound(AppAudio.news);
+        _playSound(AppAudio.news);
         break;
       case MusicManagerStreamEvents.playNewToken:
-        // _playSound(AppAudio.newToken);
+        _playSound(AppAudio.newToken);
         break;
       case MusicManagerStreamEvents.playScamToken:
-        // _playSound(AppAudio.scamToken);
+        _playSound(AppAudio.scamToken);
         break;
       case MusicManagerStreamEvents.playSelectToken:
-        // _playSound(AppAudio.selectToken);
+        _playSound(AppAudio.selectToken);
         break;
       case MusicManagerStreamEvents.playClick:
         _playSound(AppAudio.click);
@@ -111,7 +111,6 @@ class MusicViewModel extends ChangeNotifier {
   }
 
   void _checkToPlay() {
-    print(musicSettings.isMuteMusic);
     if (!musicSettings.isMuteMusic) {
       if (isPlayMain) {
         _startMainMusic();

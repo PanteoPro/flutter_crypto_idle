@@ -283,10 +283,10 @@ class MainGameViewModel extends ChangeNotifier {
   Future<void> onChangeMiningToken(int tokenIndex) async {
     final pc = _state.myPCs[_state.modalPCIndex];
     final token = _state.tokens[tokenIndex];
-    MusicManager.playSelectToken();
     if (pc.miningToken?.id == token.id) {
       await _pcRepository.changeMiningToken(pc);
     } else {
+      MusicManager.playSelectToken();
       await _pcRepository.changeMiningToken(pc, token);
     }
     _state.isOpenModalTokens = false;
