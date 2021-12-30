@@ -104,7 +104,7 @@ class _MessageBlockItemWidgetState extends State<_MessageBlockItemWidget> {
       child: Text(
         languageCode == 'ru' ? widget.message.text : widget.message.textENG,
         textAlign: TextAlign.left,
-        style: AppFonts.body2.copyWith(color: AppColors.white),
+        style: AppFonts.body.copyWith(color: AppColors.white),
       ),
     );
   }

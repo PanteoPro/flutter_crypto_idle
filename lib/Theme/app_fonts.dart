@@ -16,9 +16,9 @@ abstract class AppFonts {
     fontFamily: 'RobotoCondensed',
   );
   static const TextStyle news = TextStyle(
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: FontWeight.w300,
-    fontStyle: FontStyle.italic,
+    fontStyle: FontStyle.normal,
     fontFamily: 'RobotoCondensed',
   );
   static const TextStyle mainButton = TextStyle(

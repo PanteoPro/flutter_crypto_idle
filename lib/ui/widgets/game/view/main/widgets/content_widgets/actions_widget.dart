@@ -58,6 +58,10 @@ class _ActionItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GameButtonWidget.game(text: title, onPressed: onPressed);
+    return GameButtonWidget.game(
+      text: title,
+      onPressed: onPressed,
+      font: AppFonts.mainButton.copyWith(fontSize: 14),
+    );
   }
 }

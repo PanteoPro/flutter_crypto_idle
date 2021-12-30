@@ -97,7 +97,7 @@ class _NewsFirstNewsWidget extends StatelessWidget {
               child: Text(
                 newsText,
                 maxLines: 2,
-                style: AppFonts.mainLight.copyWith(color: Colors.white),
+                style: AppFonts.news.copyWith(color: Colors.white),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
