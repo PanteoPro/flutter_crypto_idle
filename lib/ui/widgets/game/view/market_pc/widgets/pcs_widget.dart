@@ -31,6 +31,98 @@ class _PCItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        _PCItemMainWidget(index: index),
+        _PCItemLockWidget(index: index),
+      ],
+    );
+  }
+}
+
+class _PCItemLockWidget extends StatelessWidget {
+  const _PCItemLockWidget({Key? key, required this.index}) : super(key: key);
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    final needLevel = context.select((GameMarketPCViewModel vm) => vm.state.marketPCs[index].needLevel);
+    final currentLevel = context.select((GameMarketPCViewModel vm) => vm.state.currentLevel);
+    final isShow = currentLevel < needLevel;
+    if (!isShow) return const SizedBox();
+    return Positioned(
+      left: 0,
+      right: 0,
+      bottom: 0,
+      top: 0,
+      child: ColoredBox(
+        color: AppColors.black95,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Image.asset(AppIconsImages.lock, width: 48, height: 48),
+              Spacer(),
+              Expanded(
+                flex: 5,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Недостаточный уровень помещения для покупки',
+                        textAlign: TextAlign.right,
+                        maxLines: 2,
+                        style: AppFonts.main.copyWith(color: AppColors.white),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: S.of(context).game_market_pc_info_no_level_1,
+                          style: AppFonts.mainButton.copyWith(
+                            color: AppColors.lightGrey,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: S.of(context).game_market_pc_info_no_level_2(needLevel),
+                              style: AppFonts.mainButton.copyWith(
+                                color: AppColors.red,
+                              ),
+                            ),
+                            TextSpan(
+                              text: S.of(context).game_market_pc_info_no_level_3,
+                              style: AppFonts.mainButton.copyWith(
+                                color: AppColors.lightGrey,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PCItemMainWidget extends StatelessWidget {
+  const _PCItemMainWidget({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
     return ColoredBox(
       color: AppColors.secondGrey,
       child: Padding(
@@ -159,10 +251,10 @@ class _ButtonsWidget extends StatelessWidget {
 
     final enoughtLevel = context.select((GameMarketPCViewModel vm) => vm.state.enoughtLevelByPC(pc));
     final haveSpaceForNewPC = context.select((GameMarketPCViewModel vm) => vm.state.haveSpaceForNewPC());
-    final bool haveThat = vm.state.isHavePCById(pc.id);
+    final bool haveThat = context.select((GameMarketPCViewModel vm) => vm.state.isHavePCById(pc.id));
     final bool enoughMoney = balance >= pc.cost;
 
-    final bool isBuyButton = enoughMoney && enoughtLevel;
+    final bool isBuyButton = enoughMoney && enoughtLevel && haveSpaceForNewPC;
     final bool isSellButton = haveThat && enoughtLevel;
     final bool isLevelButton = !enoughtLevel;
 

@@ -366,7 +366,7 @@ class InitialDataManager {
       'main',
       Game(
         id: 1,
-        money: 0,
+        money: 140,
         nick: 'User',
         date: DateTime.now(),
       ),
