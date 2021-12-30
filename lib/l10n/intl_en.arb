@@ -121,8 +121,11 @@
     "game_settings_sound": "Sound",
     "game_settings_close": "Close",
 
-    "text_with_dollar": "{value}$",
-    "text_with_dollar_month": "{value}$/month",
+    "game_authors_panteo": "Idea author/code",
+    "game_authors_codex": "Design by",
+
+    "text_with_dollar": "{value} $",
+    "text_with_dollar_month": "{value} $/month",
     "text_with_energy": "{value} V/h",
     "text_with_power_mining": "{value} U/dex",
     "text_with_slash": "{value1}/{value2}"

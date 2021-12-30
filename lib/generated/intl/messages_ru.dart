@@ -32,9 +32,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m5(symbol) => "Добыто ${symbol}";
 
-  static String m6(value) => "${value}\$";
+  static String m6(value) => "${value} \$";
 
-  static String m7(value) => "${value}\$/мес";
+  static String m7(value) => "${value} \$/мес";
 
   static String m8(value) => "${value} Ват/ч";
 
@@ -44,6 +44,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "game_authors_codex": MessageLookupByLibrary.simpleMessage("Дизайн"),
+        "game_authors_panteo":
+            MessageLookupByLibrary.simpleMessage("Автор идеи/код"),
         "game_global_app_bar_cash":
             MessageLookupByLibrary.simpleMessage("Наличные"),
         "game_global_app_bar_crypto":

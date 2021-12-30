@@ -1080,20 +1080,40 @@ class S {
     );
   }
 
-  /// `{value}$`
+  /// `Idea author/code`
+  String get game_authors_panteo {
+    return Intl.message(
+      'Idea author/code',
+      name: 'game_authors_panteo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Design by`
+  String get game_authors_codex {
+    return Intl.message(
+      'Design by',
+      name: 'game_authors_codex',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{value} $`
   String text_with_dollar(Object value) {
     return Intl.message(
-      '$value\$',
+      '$value \$',
       name: 'text_with_dollar',
       desc: '',
       args: [value],
     );
   }
 
-  /// `{value}$/month`
+  /// `{value} $/month`
   String text_with_dollar_month(Object value) {
     return Intl.message(
-      '$value\$/month',
+      '$value \$/month',
       name: 'text_with_dollar_month',
       desc: '',
       args: [value],

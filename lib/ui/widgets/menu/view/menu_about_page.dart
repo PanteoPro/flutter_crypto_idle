@@ -46,7 +46,7 @@ class _ContentWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Автор идеи/код',
+                  S.of(context).game_authors_panteo,
                   style: AppFonts.clicker.copyWith(color: AppColors.white),
                 ),
                 const SizedBox(height: 10),
@@ -69,7 +69,7 @@ class _ContentWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Дизайн',
+                  S.of(context).game_authors_codex,
                   style: AppFonts.clicker.copyWith(color: AppColors.white),
                 ),
                 const SizedBox(height: 10),

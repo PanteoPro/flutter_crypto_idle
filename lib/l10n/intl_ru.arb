@@ -120,8 +120,11 @@
     "game_settings_sound": "Звуки",
     "game_settings_close": "Закрыть",
 
-    "text_with_dollar": "{value}$",
-    "text_with_dollar_month": "{value}$/мес",
+    "game_authors_panteo": "Автор идеи/код",
+    "game_authors_codex": "Дизайн",
+
+    "text_with_dollar": "{value} $",
+    "text_with_dollar_month": "{value} $/мес",
     "text_with_energy": "{value} Ват/ч",
     "text_with_power_mining": "{value} U/dex",
     "text_with_slash": "{value1}/{value2}"
