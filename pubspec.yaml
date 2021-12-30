@@ -50,6 +50,7 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^2.1.5
   hive_generator: ^1.1.1
+  flutter_launcher_icons: ^0.9.2
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -125,3 +126,8 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_intl:
   enabled: true
+
+flutter_icons:
+  image_path: "assets/icon_app/icon.png"
+  android: true
+  ios: true

@@ -110,7 +110,7 @@ class _MessageBlockItemWidgetState extends State<_MessageBlockItemWidget> {
           Image.asset(widget.message.image, width: 16, height: 16),
           Expanded(
             child: Container(
-              padding: const EdgeInsets.only(left: 4, right: 10, top: 4, bottom: 4),
+              padding: const EdgeInsets.only(left: 4, right: 10, top: 5, bottom: 5),
               child: languageCode == 'ru' ? widget.message.text : widget.message.textENG,
             ),
           ),
