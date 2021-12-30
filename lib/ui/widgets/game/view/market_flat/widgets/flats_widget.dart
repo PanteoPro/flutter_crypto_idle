@@ -66,7 +66,7 @@ class _FlatItemLockWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        'Недостаточно наличных для покупки',
+                        S.of(context).game_market_flat_lock_title,
                         textAlign: TextAlign.right,
                         maxLines: 2,
                         style: AppFonts.main.copyWith(color: AppColors.white),
@@ -74,7 +74,7 @@ class _FlatItemLockWidget extends StatelessWidget {
                       SizedBox(
                         width: 110,
                         child: Text(
-                          '${S.of(context).game_market_flat_info_cost}: ${flat.cost}',
+                          '${S.of(context).game_market_flat_info_cost}: ${S.of(context).text_with_dollar(flat.cost)}',
                           textAlign: TextAlign.right,
                           style: AppFonts.mainButton.copyWith(color: AppColors.white),
                         ),
@@ -216,14 +216,14 @@ class _CostsFlatWidget extends StatelessWidget {
         SizedBox(
           width: 110,
           child: Text(
-            '${S.of(context).game_market_flat_info_cost}: $cost',
+            '${S.of(context).game_market_flat_info_cost}: ${S.of(context).text_with_dollar(cost)}',
             textAlign: TextAlign.left,
             style: AppFonts.mainButton.copyWith(color: AppColors.white),
           ),
         ),
         const SizedBox(width: 4),
         Text(
-          '${S.of(context).game_market_flat_info_month_cost}: $monthCost',
+          '${S.of(context).game_market_flat_info_month_cost}: ${S.of(context).text_with_dollar(monthCost)}',
           style: AppFonts.mainButton.copyWith(color: AppColors.white),
         ),
       ],

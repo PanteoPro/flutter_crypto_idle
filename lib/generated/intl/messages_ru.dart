@@ -28,7 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(value) => "${value} уровень ";
 
-  static String m4(symbol) => "Заработано на ${symbol}";
+  static String m4(symbol) => "Продано ${symbol} на сумму";
 
   static String m5(symbol) => "Добыто ${symbol}";
 
@@ -44,16 +44,6 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "game_app_bar_info_balance_title":
-            MessageLookupByLibrary.simpleMessage("Баланс"),
-        "game_app_bar_info_count_pc_title":
-            MessageLookupByLibrary.simpleMessage("Количество установок"),
-        "game_crypto_cost_header_title":
-            MessageLookupByLibrary.simpleMessage("Общая стоимость"),
-        "game_crypto_helper_title": MessageLookupByLibrary.simpleMessage(
-            "Нажми на криптовалюту, чтобы продать"),
-        "game_crypto_title":
-            MessageLookupByLibrary.simpleMessage("Криптовалюты"),
         "game_global_app_bar_cash":
             MessageLookupByLibrary.simpleMessage("Наличные"),
         "game_global_app_bar_crypto":
@@ -145,6 +135,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("LVL"),
         "game_market_flat_info_month_cost":
             MessageLookupByLibrary.simpleMessage("Месячная плата"),
+        "game_market_flat_lock_title": MessageLookupByLibrary.simpleMessage(
+            "Недостаточно наличных для покупки"),
         "game_market_flat_status_active_title":
             MessageLookupByLibrary.simpleMessage("АКТИВНО"),
         "game_market_flat_title":
@@ -170,56 +162,54 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("помещения"),
         "game_market_pc_info_power":
             MessageLookupByLibrary.simpleMessage("Мощность"),
+        "game_market_pc_lock_title": MessageLookupByLibrary.simpleMessage(
+            "Недостаточный уровень помещения для покупки"),
         "game_market_pc_title":
             MessageLookupByLibrary.simpleMessage("Покупка установок"),
-        "main_game_action_buy_flat_title":
-            MessageLookupByLibrary.simpleMessage("Купить помещение"),
-        "main_game_action_buy_pc_title":
-            MessageLookupByLibrary.simpleMessage("Купить установки"),
-        "main_game_action_crypto_title":
+        "game_wallet_assets_title":
+            MessageLookupByLibrary.simpleMessage("Распределение активов"),
+        "game_wallet_hide_null":
+            MessageLookupByLibrary.simpleMessage("Скрыть нулевые балансы"),
+        "game_wallet_tokens_title":
             MessageLookupByLibrary.simpleMessage("Кошелек криптовалют"),
-        "main_game_action_mining_title":
-            MessageLookupByLibrary.simpleMessage("Добыча криптовалют"),
-        "main_game_appbar_title":
-            MessageLookupByLibrary.simpleMessage("Криптовалютный IDLE"),
-        "main_game_cash_balance_title":
-            MessageLookupByLibrary.simpleMessage("Наличные"),
-        "main_game_crypto_balance_title":
-            MessageLookupByLibrary.simpleMessage("Криптовалюта"),
-        "main_game_info_count_pc_title":
-            MessageLookupByLibrary.simpleMessage("Количество установок"),
-        "main_game_info_energy_title":
-            MessageLookupByLibrary.simpleMessage("Потребление энергии"),
-        "main_game_info_place_title":
-            MessageLookupByLibrary.simpleMessage("Место"),
-        "main_game_info_power_mining_title":
-            MessageLookupByLibrary.simpleMessage("Мощность"),
-        "main_game_info_title":
-            MessageLookupByLibrary.simpleMessage("Основное"),
-        "main_game_month_energy_title":
-            MessageLookupByLibrary.simpleMessage("Оплата электричества"),
-        "main_game_month_flat_title":
-            MessageLookupByLibrary.simpleMessage("Оплата жилья"),
-        "main_game_month_title":
-            MessageLookupByLibrary.simpleMessage("Ежемесячные расходы"),
-        "main_game_stat_earn_on_crypto_title": m4,
-        "main_game_stat_mining_on_crypto_title": m5,
-        "main_game_stat_spend_all_title":
-            MessageLookupByLibrary.simpleMessage("Потрачено за все время"),
-        "main_game_stat_spend_energy_title":
+        "main_game_stat_consume":
+            MessageLookupByLibrary.simpleMessage("Расходы"),
+        "main_game_stat_consume_buyFlat":
+            MessageLookupByLibrary.simpleMessage("Потрачено на покупки жилья"),
+        "main_game_stat_consume_buyPC":
+            MessageLookupByLibrary.simpleMessage("Потрачено на покупки ПК"),
+        "main_game_stat_consume_energy":
             MessageLookupByLibrary.simpleMessage("Потрачено на электричество"),
-        "main_game_stat_spend_flat_title":
+        "main_game_stat_consume_flat":
             MessageLookupByLibrary.simpleMessage("Потрачено на жилье"),
-        "main_game_stat_spend_pc_title":
-            MessageLookupByLibrary.simpleMessage("Потрачено на установки"),
+        "main_game_stat_crypto":
+            MessageLookupByLibrary.simpleMessage("Криптовалюты"),
+        "main_game_stat_crypto_earn": m4,
+        "main_game_stat_crypto_mining": m5,
+        "main_game_stat_deals": MessageLookupByLibrary.simpleMessage("Сделки"),
+        "main_game_stat_deals_count_buy":
+            MessageLookupByLibrary.simpleMessage("Совершено сделок на покупку"),
+        "main_game_stat_deals_count_sell":
+            MessageLookupByLibrary.simpleMessage("Совершено сделок на продажу"),
+        "main_game_stat_deals_volume_buy":
+            MessageLookupByLibrary.simpleMessage("Объем покупок"),
+        "main_game_stat_deals_volume_sell":
+            MessageLookupByLibrary.simpleMessage("Объем продаж"),
+        "main_game_stat_other":
+            MessageLookupByLibrary.simpleMessage("Остальное"),
+        "main_game_stat_other_clicker_count":
+            MessageLookupByLibrary.simpleMessage(
+                "Количество нажатий на компьютер"),
+        "main_game_stat_other_clicker_crit_count":
+            MessageLookupByLibrary.simpleMessage("Количество критов"),
+        "main_game_stat_other_clicker_earn":
+            MessageLookupByLibrary.simpleMessage("Заработанно на кликах"),
+        "main_game_stat_other_days":
+            MessageLookupByLibrary.simpleMessage("Количество пройденных дней"),
+        "main_game_stat_sum": MessageLookupByLibrary.simpleMessage("Сумма"),
         "main_game_stat_title":
             MessageLookupByLibrary.simpleMessage("Статистика"),
-        "manu_about_by_title": MessageLookupByLibrary.simpleMessage(
-            "Автор приложения Грива Константин."),
-        "manu_about_dev_title": MessageLookupByLibrary.simpleMessage(
-            "Приложение создано на flutter."),
-        "manu_about_title": MessageLookupByLibrary.simpleMessage("Об авторе"),
-        "menu_app_bar": MessageLookupByLibrary.simpleMessage("CRYPTO IDLE"),
+        "menu_app_bar": MessageLookupByLibrary.simpleMessage("CRYPTO TYCOON"),
         "menu_button_authors": MessageLookupByLibrary.simpleMessage("АВТОРЫ"),
         "menu_button_back": MessageLookupByLibrary.simpleMessage("НАЗАД"),
         "menu_button_continue_game":
@@ -229,10 +219,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "menu_button_play": MessageLookupByLibrary.simpleMessage("ИГРАТЬ"),
         "menu_button_settings":
             MessageLookupByLibrary.simpleMessage("НАСТРОЙКИ"),
-        "menu_settings_swap_en_button_title":
-            MessageLookupByLibrary.simpleMessage("Поменять на язык EN"),
-        "menu_settings_swap_ru_button_title":
-            MessageLookupByLibrary.simpleMessage("Поменять на язык RU"),
+        "menu_settings_language": MessageLookupByLibrary.simpleMessage("ЯЗЫК"),
+        "menu_settings_music": MessageLookupByLibrary.simpleMessage("Музыка"),
+        "menu_settings_sound": MessageLookupByLibrary.simpleMessage("Звуки"),
         "menu_settings_title":
             MessageLookupByLibrary.simpleMessage("Настройки"),
         "text_with_dollar": m6,

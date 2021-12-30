@@ -10,7 +10,7 @@ class _CircleAssetsWidget extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: Text(
-            'Распределение активов',
+            S.of(context).game_wallet_assets_title,
             textAlign: TextAlign.left,
             style: AppFonts.main.copyWith(color: AppColors.white),
           ),

@@ -9,10 +9,19 @@ class _ConsumeWidget extends StatelessWidget {
     final buyFlats = context.read<GameStatisticsViewModel>().state.statistics.buyFlats.sum;
     return Column(
       children: [
-        _ItemWidget(title: 'Потрачено на покупки ПК', value: S.of(context).text_with_dollar(buyPCs.toStringAsFixed(2))),
+        _ItemWidget(
+          title: S.of(context).main_game_stat_consume_buyPC,
+          value: S.of(context).text_with_dollar(
+                buyPCs.toStringAsFixed(2),
+              ),
+        ),
         const SizedBox(height: 4),
         _ItemWidget(
-            title: 'Потрачено на покупки жилья', value: S.of(context).text_with_dollar(buyFlats.toStringAsFixed(2))),
+          title: S.of(context).main_game_stat_consume_buyFlat,
+          value: S.of(context).text_with_dollar(
+                buyFlats.toStringAsFixed(2),
+              ),
+        ),
         const SizedBox(height: 4),
         const _ConsumeEnergyWidget(),
         const SizedBox(height: 4),
@@ -30,7 +39,10 @@ class _ConsumeAllWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sumConsume = context.select((GameStatisticsViewModel vm) => vm.state.sumConsume);
-    return _ItemWidget(title: 'Сумма', value: S.of(context).text_with_dollar(sumConsume));
+    return _ItemWidget(
+      title: S.of(context).main_game_stat_sum,
+      value: S.of(context).text_with_dollar(sumConsume),
+    );
   }
 }
 
@@ -42,7 +54,10 @@ class _ConsumeEnergyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final consumeEnergy = context.select((GameStatisticsViewModel vm) => vm.state.energyConsume);
-    return _ItemWidget(title: 'Потрачено на электричество', value: S.of(context).text_with_dollar(consumeEnergy));
+    return _ItemWidget(
+      title: S.of(context).main_game_stat_consume_energy,
+      value: S.of(context).text_with_dollar(consumeEnergy),
+    );
   }
 }
 
@@ -54,6 +69,9 @@ class _ConsumeFlatWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final flatConsume = context.select((GameStatisticsViewModel vm) => vm.state.flatConsume);
-    return _ItemWidget(title: 'Потрачено на жилье', value: S.of(context).text_with_dollar(flatConsume));
+    return _ItemWidget(
+      title: S.of(context).main_game_stat_consume_flat,
+      value: S.of(context).text_with_dollar(flatConsume),
+    );
   }
 }

@@ -1,49 +1,36 @@
 {
-    "main_game_appbar_title": "Криптовалютный IDLE",
-    "main_game_cash_balance_title": "Наличные",
-    "main_game_crypto_balance_title": "Криптовалюта",
-
-    "main_game_action_buy_pc_title": "Купить установки",
-    "main_game_action_buy_flat_title": "Купить помещение",
-    "main_game_action_mining_title": "Добыча криптовалют",
-    "main_game_action_crypto_title": "Кошелек криптовалют",
-
-    "main_game_info_title": "Основное",
-    "main_game_info_place_title": "Место",
-    "main_game_info_count_pc_title": "Количество установок",
-    "main_game_info_energy_title": "Потребление энергии",
-    "main_game_info_power_mining_title": "Мощность",
-
-    "main_game_month_title": "Ежемесячные расходы",
-    "main_game_month_flat_title": "Оплата жилья",
-    "main_game_month_energy_title": "Оплата электричества",
-
     "main_game_stat_title": "Статистика",
-    "main_game_stat_spend_all_title": "Потрачено за все время",
-    "main_game_stat_spend_flat_title": "Потрачено на жилье",
-    "main_game_stat_spend_pc_title": "Потрачено на установки",
-    "main_game_stat_spend_energy_title": "Потрачено на электричество",
-    "main_game_stat_earn_on_crypto_title": "Заработано на {symbol}",
-    "main_game_stat_mining_on_crypto_title": "Добыто {symbol}",
+    "main_game_stat_consume": "Расходы",
+    "main_game_stat_consume_buyPC": "Потрачено на покупки ПК",
+    "main_game_stat_consume_buyFlat": "Потрачено на покупки жилья",
+    "main_game_stat_consume_energy": "Потрачено на электричество",
+    "main_game_stat_consume_flat": "Потрачено на жилье",
 
-    "game_crypto_title": "Криптовалюты",
-    "game_crypto_cost_header_title": "Общая стоимость",
-    "game_crypto_helper_title": "Нажми на криптовалюту, чтобы продать",
+    "main_game_stat_deals": "Сделки",
+    "main_game_stat_deals_count_sell": "Совершено сделок на продажу",
+    "main_game_stat_deals_count_buy": "Совершено сделок на покупку",
+    "main_game_stat_deals_volume_sell": "Объем продаж",
+    "main_game_stat_deals_volume_buy": "Объем покупок",
 
-    
+    "main_game_stat_other": "Остальное",
+    "main_game_stat_other_clicker_count": "Количество нажатий на компьютер",
+    "main_game_stat_other_clicker_earn": "Заработанно на кликах",
+    "main_game_stat_other_clicker_crit_count": "Количество критов",
+    "main_game_stat_other_days": "Количество пройденных дней",
+
+    "main_game_stat_crypto": "Криптовалюты",
+    "main_game_stat_crypto_mining": "Добыто {symbol}",
+    "main_game_stat_crypto_earn": "Продано {symbol} на сумму",
+
+    "main_game_stat_sum": "Сумма",
+
 
     "menu_settings_title": "Настройки",
-    "menu_settings_swap_ru_button_title": "Поменять на язык RU",
-    "menu_settings_swap_en_button_title": "Поменять на язык EN",
+    "menu_settings_music": "Музыка",
+    "menu_settings_sound": "Звуки",
+    "menu_settings_language": "ЯЗЫК",
 
-    "manu_about_title": "Об авторе",
-    "manu_about_by_title": "Автор приложения Грива Константин.",
-    "manu_about_dev_title": "Приложение создано на flutter.",
-
-    "game_app_bar_info_balance_title": "Баланс",
-    "game_app_bar_info_count_pc_title": "Количество установок",
-
-    "menu_app_bar": "CRYPTO IDLE",
+    "menu_app_bar": "CRYPTO TYCOON",
     "menu_button_play": "ИГРАТЬ",
     "menu_button_settings": "НАСТРОЙКИ",
     "menu_button_authors": "АВТОРЫ",
@@ -106,6 +93,7 @@
     "game_market_pc_info_no_level_3": "помещения",
     "game_market_pc_button_buy": "Купить",
     "game_market_pc_button_sell": "Продать",
+    "game_market_pc_lock_title": "Недостаточный уровень помещения для покупки",
 
     "game_market_flat_title": "Покупка помещений",
     "game_market_flat_info_cost": "Стоимость",
@@ -115,12 +103,17 @@
     "game_market_flat_button_have": "ПРИОБРЕТЕНО",
     "game_market_flat_button_buy": "ПРИОБРЕСТИ",
     "game_market_flat_status_active_title": "АКТИВНО",
+    "game_market_flat_lock_title": "Недостаточно наличных для покупки",
 
     "game_market_crypto_available": "Доступно",
     "game_market_crypto_buy_title": "Покупка",
     "game_market_crypto_buy_button": "КУПИТЬ",
     "game_market_crypto_sell_title": "Продажа",
     "game_market_crypto_sell_button": "ПРОДАТЬ",
+
+    "game_wallet_assets_title": "Распределение активов",
+    "game_wallet_tokens_title": "Кошелек криптовалют",
+    "game_wallet_hide_null": "Скрыть нулевые балансы",
 
     "text_with_dollar": "{value}$",
     "text_with_dollar_month": "{value}$/мес",

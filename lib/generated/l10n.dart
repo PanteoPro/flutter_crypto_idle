@@ -50,251 +50,201 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Crypto IDLE`
-  String get main_game_appbar_title {
-    return Intl.message(
-      'Crypto IDLE',
-      name: 'main_game_appbar_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Cash`
-  String get main_game_cash_balance_title {
-    return Intl.message(
-      'Cash',
-      name: 'main_game_cash_balance_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Crypto`
-  String get main_game_crypto_balance_title {
-    return Intl.message(
-      'Crypto',
-      name: 'main_game_crypto_balance_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Buy PC's`
-  String get main_game_action_buy_pc_title {
-    return Intl.message(
-      'Buy PC\'s',
-      name: 'main_game_action_buy_pc_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Buy flat`
-  String get main_game_action_buy_flat_title {
-    return Intl.message(
-      'Buy flat',
-      name: 'main_game_action_buy_flat_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Mining crypto`
-  String get main_game_action_mining_title {
-    return Intl.message(
-      'Mining crypto',
-      name: 'main_game_action_mining_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Purse crypto`
-  String get main_game_action_crypto_title {
-    return Intl.message(
-      'Purse crypto',
-      name: 'main_game_action_crypto_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Main`
-  String get main_game_info_title {
-    return Intl.message(
-      'Main',
-      name: 'main_game_info_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Place`
-  String get main_game_info_place_title {
-    return Intl.message(
-      'Place',
-      name: 'main_game_info_place_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Count PC`
-  String get main_game_info_count_pc_title {
-    return Intl.message(
-      'Count PC',
-      name: 'main_game_info_count_pc_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Consuming energy`
-  String get main_game_info_energy_title {
-    return Intl.message(
-      'Consuming energy',
-      name: 'main_game_info_energy_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Power mining`
-  String get main_game_info_power_mining_title {
-    return Intl.message(
-      'Power mining',
-      name: 'main_game_info_power_mining_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Monthly expenses`
-  String get main_game_month_title {
-    return Intl.message(
-      'Monthly expenses',
-      name: 'main_game_month_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Payment for housing`
-  String get main_game_month_flat_title {
-    return Intl.message(
-      'Payment for housing',
-      name: 'main_game_month_flat_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Electricity payment`
-  String get main_game_month_energy_title {
-    return Intl.message(
-      'Electricity payment',
-      name: 'main_game_month_energy_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Statistic`
+  /// `Statistics`
   String get main_game_stat_title {
     return Intl.message(
-      'Statistic',
+      'Statistics',
       name: 'main_game_stat_title',
       desc: '',
       args: [],
     );
   }
 
-  /// `Spend all time`
-  String get main_game_stat_spend_all_title {
+  /// `Costs`
+  String get main_game_stat_consume {
     return Intl.message(
-      'Spend all time',
-      name: 'main_game_stat_spend_all_title',
+      'Costs',
+      name: 'main_game_stat_consume',
       desc: '',
       args: [],
     );
   }
 
-  /// `Spend on flats`
-  String get main_game_stat_spend_flat_title {
+  /// `Spent on PC purchases`
+  String get main_game_stat_consume_buyPC {
     return Intl.message(
-      'Spend on flats',
-      name: 'main_game_stat_spend_flat_title',
+      'Spent on PC purchases',
+      name: 'main_game_stat_consume_buyPC',
       desc: '',
       args: [],
     );
   }
 
-  /// `Spend in pcs`
-  String get main_game_stat_spend_pc_title {
+  /// `Spent on home purchases`
+  String get main_game_stat_consume_buyFlat {
     return Intl.message(
-      'Spend in pcs',
-      name: 'main_game_stat_spend_pc_title',
+      'Spent on home purchases',
+      name: 'main_game_stat_consume_buyFlat',
       desc: '',
       args: [],
     );
   }
 
-  /// `Spend on energy`
-  String get main_game_stat_spend_energy_title {
+  /// `Spent on electricity`
+  String get main_game_stat_consume_energy {
     return Intl.message(
-      'Spend on energy',
-      name: 'main_game_stat_spend_energy_title',
+      'Spent on electricity',
+      name: 'main_game_stat_consume_energy',
       desc: '',
       args: [],
     );
   }
 
-  /// `Earn on {symbol}`
-  String main_game_stat_earn_on_crypto_title(Object symbol) {
+  /// `Spent on housing`
+  String get main_game_stat_consume_flat {
     return Intl.message(
-      'Earn on $symbol',
-      name: 'main_game_stat_earn_on_crypto_title',
+      'Spent on housing',
+      name: 'main_game_stat_consume_flat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Transactions`
+  String get main_game_stat_deals {
+    return Intl.message(
+      'Transactions',
+      name: 'main_game_stat_deals',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sell ​​deals`
+  String get main_game_stat_deals_count_sell {
+    return Intl.message(
+      'Sell ​​deals',
+      name: 'main_game_stat_deals_count_sell',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Buy deals completed`
+  String get main_game_stat_deals_count_buy {
+    return Intl.message(
+      'Buy deals completed',
+      name: 'main_game_stat_deals_count_buy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Volume of sales`
+  String get main_game_stat_deals_volume_sell {
+    return Intl.message(
+      'Volume of sales',
+      name: 'main_game_stat_deals_volume_sell',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Purchase volume`
+  String get main_game_stat_deals_volume_buy {
+    return Intl.message(
+      'Purchase volume',
+      name: 'main_game_stat_deals_volume_buy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other`
+  String get main_game_stat_other {
+    return Intl.message(
+      'Other',
+      name: 'main_game_stat_other',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Number of clicks on the computer`
+  String get main_game_stat_other_clicker_count {
+    return Intl.message(
+      'Number of clicks on the computer',
+      name: 'main_game_stat_other_clicker_count',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Earned on clicks`
+  String get main_game_stat_other_clicker_earn {
+    return Intl.message(
+      'Earned on clicks',
+      name: 'main_game_stat_other_clicker_earn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Number of crits`
+  String get main_game_stat_other_clicker_crit_count {
+    return Intl.message(
+      'Number of crits',
+      name: 'main_game_stat_other_clicker_crit_count',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Number of days passed`
+  String get main_game_stat_other_days {
+    return Intl.message(
+      'Number of days passed',
+      name: 'main_game_stat_other_days',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cryptocurrencies`
+  String get main_game_stat_crypto {
+    return Intl.message(
+      'Cryptocurrencies',
+      name: 'main_game_stat_crypto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mined {symbol}`
+  String main_game_stat_crypto_mining(Object symbol) {
+    return Intl.message(
+      'Mined $symbol',
+      name: 'main_game_stat_crypto_mining',
       desc: '',
       args: [symbol],
     );
   }
 
-  /// `Mining {symbol}`
-  String main_game_stat_mining_on_crypto_title(Object symbol) {
+  /// `Sold {symbol} for the amount`
+  String main_game_stat_crypto_earn(Object symbol) {
     return Intl.message(
-      'Mining $symbol',
-      name: 'main_game_stat_mining_on_crypto_title',
+      'Sold $symbol for the amount',
+      name: 'main_game_stat_crypto_earn',
       desc: '',
       args: [symbol],
     );
   }
 
-  /// `Crypto`
-  String get game_crypto_title {
+  /// `Sum`
+  String get main_game_stat_sum {
     return Intl.message(
-      'Crypto',
-      name: 'game_crypto_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Balance`
-  String get game_crypto_cost_header_title {
-    return Intl.message(
-      'Balance',
-      name: 'game_crypto_cost_header_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Click on cryptocurrency to sell`
-  String get game_crypto_helper_title {
-    return Intl.message(
-      'Click on cryptocurrency to sell',
-      name: 'game_crypto_helper_title',
+      'Sum',
+      name: 'main_game_stat_sum',
       desc: '',
       args: [],
     );
@@ -310,80 +260,40 @@ class S {
     );
   }
 
-  /// `Change to language RU`
-  String get menu_settings_swap_ru_button_title {
+  /// `Music`
+  String get menu_settings_music {
     return Intl.message(
-      'Change to language RU',
-      name: 'menu_settings_swap_ru_button_title',
+      'Music',
+      name: 'menu_settings_music',
       desc: '',
       args: [],
     );
   }
 
-  /// `Change to language EN`
-  String get menu_settings_swap_en_button_title {
+  /// `Sound`
+  String get menu_settings_sound {
     return Intl.message(
-      'Change to language EN',
-      name: 'menu_settings_swap_en_button_title',
+      'Sound',
+      name: 'menu_settings_sound',
       desc: '',
       args: [],
     );
   }
 
-  /// `About the author`
-  String get manu_about_title {
+  /// `LANGUAGE`
+  String get menu_settings_language {
     return Intl.message(
-      'About the author',
-      name: 'manu_about_title',
+      'LANGUAGE',
+      name: 'menu_settings_language',
       desc: '',
       args: [],
     );
   }
 
-  /// `The author of the application is Griva Konstantin.`
-  String get manu_about_by_title {
-    return Intl.message(
-      'The author of the application is Griva Konstantin.',
-      name: 'manu_about_by_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The application is created for flutter.`
-  String get manu_about_dev_title {
-    return Intl.message(
-      'The application is created for flutter.',
-      name: 'manu_about_dev_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Balance`
-  String get game_app_bar_info_balance_title {
-    return Intl.message(
-      'Balance',
-      name: 'game_app_bar_info_balance_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Count pcs`
-  String get game_app_bar_info_count_pc_title {
-    return Intl.message(
-      'Count pcs',
-      name: 'game_app_bar_info_count_pc_title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `CRYPTO IDLE`
+  /// `CRYPTO TYCOON`
   String get menu_app_bar {
     return Intl.message(
-      'CRYPTO IDLE',
+      'CRYPTO TYCOON',
       name: 'menu_app_bar',
       desc: '',
       args: [],
@@ -950,6 +860,16 @@ class S {
     );
   }
 
+  /// `Insufficient level of premises for purchase`
+  String get game_market_pc_lock_title {
+    return Intl.message(
+      'Insufficient level of premises for purchase',
+      name: 'game_market_pc_lock_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Buy a place`
   String get game_market_flat_title {
     return Intl.message(
@@ -1030,6 +950,16 @@ class S {
     );
   }
 
+  /// `Not enough cash to buy`
+  String get game_market_flat_lock_title {
+    return Intl.message(
+      'Not enough cash to buy',
+      name: 'game_market_flat_lock_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Available`
   String get game_market_crypto_available {
     return Intl.message(
@@ -1075,6 +1005,36 @@ class S {
     return Intl.message(
       'SELL',
       name: 'game_market_crypto_sell_button',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Asset allocation`
+  String get game_wallet_assets_title {
+    return Intl.message(
+      'Asset allocation',
+      name: 'game_wallet_assets_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cryptocurrency wallet`
+  String get game_wallet_tokens_title {
+    return Intl.message(
+      'Cryptocurrency wallet',
+      name: 'game_wallet_tokens_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hide zero balances`
+  String get game_wallet_hide_null {
+    return Intl.message(
+      'Hide zero balances',
+      name: 'game_wallet_hide_null',
       desc: '',
       args: [],
     );

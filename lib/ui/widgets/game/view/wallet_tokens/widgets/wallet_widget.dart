@@ -9,7 +9,7 @@ class _WalletWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Кошелек криптовалют',
+          S.of(context).game_wallet_tokens_title,
           style: AppFonts.main.copyWith(color: AppColors.white),
         ),
         SizedBox(height: 12),
@@ -40,7 +40,7 @@ class _CheckerNullBalancesWidget extends StatelessWidget {
           ),
           SizedBox(width: 4),
           Text(
-            'Скрыть нулевые балансы',
+            S.of(context).game_wallet_hide_null,
             style: AppFonts.body.copyWith(color: isHideNullBallance ? AppColors.green : AppColors.lightGrey),
           ),
         ],

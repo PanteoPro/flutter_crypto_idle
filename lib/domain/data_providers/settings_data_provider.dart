@@ -6,6 +6,8 @@ abstract class _SettingsDataProviderFields {
   static const isMuteSound = 'settings_music_isMuteSound';
   static const musicVolume = 'settings_music_musicVolume';
   static const soundVolume = 'settings_music_soundVolume';
+
+  static const locale = 'settings_main_locale';
 }
 
 class SettingsDataProvider {
@@ -34,5 +36,13 @@ class SettingsDataProvider {
     await prefs.setBool(_SettingsDataProviderFields.isMuteSound, settings.isMuteSound);
     await prefs.setDouble(_SettingsDataProviderFields.musicVolume, settings.musicVolume);
     await prefs.setDouble(_SettingsDataProviderFields.soundVolume, settings.soundVolume);
+  }
+
+  String? getLocale() {
+    return prefs.getString(_SettingsDataProviderFields.locale);
+  }
+
+  Future<void> saveLocale(String locale) async {
+    await prefs.setString(_SettingsDataProviderFields.locale, locale);
   }
 }

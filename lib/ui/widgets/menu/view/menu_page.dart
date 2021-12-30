@@ -20,7 +20,6 @@ class MenuWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.select((MainAppViewModel vm) => vm.locale);
     return Scaffold(
       appBar: const MenuAppBarWidget(),
       body: SafeArea(

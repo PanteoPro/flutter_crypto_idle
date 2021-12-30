@@ -8,13 +8,22 @@ class _OtherWidget extends StatelessWidget {
     final statistics = context.read<GameStatisticsViewModel>().state.statistics;
     return Column(
       children: [
-        _ItemWidget(title: 'Количество нажаний на компьютер', value: statistics.clickedPC.toString()),
+        _ItemWidget(
+          title: S.of(context).main_game_stat_other_clicker_count,
+          value: statistics.clickedPC.toString(),
+        ),
         const SizedBox(height: 4),
         _ItemWidget(
-            title: 'Заработанно на кликах',
-            value: S.of(context).text_with_dollar(statistics.clickerEarn.sum.toStringAsFixed(2))),
+          title: S.of(context).main_game_stat_other_clicker_earn,
+          value: S.of(context).text_with_dollar(
+                statistics.clickerEarn.sum.toStringAsFixed(2),
+              ),
+        ),
         const SizedBox(height: 4),
-        _ItemWidget(title: 'Количество критов', value: statistics.clickedPCCrits.toString()),
+        _ItemWidget(
+          title: S.of(context).main_game_stat_other_clicker_crit_count,
+          value: statistics.clickedPCCrits.toString(),
+        ),
         const SizedBox(height: 4),
         const _OtherItemDaysWidget(),
       ],
@@ -30,6 +39,9 @@ class _OtherItemDaysWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final daysCount = context.select((GameStatisticsViewModel vm) => vm.state.daysCount);
-    return _ItemWidget(title: 'Количество пройденных дней', value: daysCount);
+    return _ItemWidget(
+      title: S.of(context).main_game_stat_other_days,
+      value: daysCount,
+    );
   }
 }

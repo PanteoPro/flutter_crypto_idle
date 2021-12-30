@@ -28,9 +28,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(value) => "${value} level ";
 
-  static String m4(symbol) => "Earn on ${symbol}";
+  static String m4(symbol) => "Sold ${symbol} for the amount";
 
-  static String m5(symbol) => "Mining ${symbol}";
+  static String m5(symbol) => "Mined ${symbol}";
 
   static String m6(value) => "${value}\$";
 
@@ -44,15 +44,6 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "game_app_bar_info_balance_title":
-            MessageLookupByLibrary.simpleMessage("Balance"),
-        "game_app_bar_info_count_pc_title":
-            MessageLookupByLibrary.simpleMessage("Count pcs"),
-        "game_crypto_cost_header_title":
-            MessageLookupByLibrary.simpleMessage("Balance"),
-        "game_crypto_helper_title": MessageLookupByLibrary.simpleMessage(
-            "Click on cryptocurrency to sell"),
-        "game_crypto_title": MessageLookupByLibrary.simpleMessage("Crypto"),
         "game_global_app_bar_cash":
             MessageLookupByLibrary.simpleMessage("Cash"),
         "game_global_app_bar_crypto":
@@ -142,6 +133,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("LVL"),
         "game_market_flat_info_month_cost":
             MessageLookupByLibrary.simpleMessage("Monthly Fee"),
+        "game_market_flat_lock_title":
+            MessageLookupByLibrary.simpleMessage("Not enough cash to buy"),
         "game_market_flat_status_active_title":
             MessageLookupByLibrary.simpleMessage("ACTIVELY"),
         "game_market_flat_title":
@@ -167,56 +160,53 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("place"),
         "game_market_pc_info_power":
             MessageLookupByLibrary.simpleMessage("Power"),
+        "game_market_pc_lock_title": MessageLookupByLibrary.simpleMessage(
+            "Insufficient level of premises for purchase"),
         "game_market_pc_title":
             MessageLookupByLibrary.simpleMessage("Buy computers"),
-        "main_game_action_buy_flat_title":
-            MessageLookupByLibrary.simpleMessage("Buy flat"),
-        "main_game_action_buy_pc_title":
-            MessageLookupByLibrary.simpleMessage("Buy PC\'s"),
-        "main_game_action_crypto_title":
-            MessageLookupByLibrary.simpleMessage("Purse crypto"),
-        "main_game_action_mining_title":
-            MessageLookupByLibrary.simpleMessage("Mining crypto"),
-        "main_game_appbar_title":
-            MessageLookupByLibrary.simpleMessage("Crypto IDLE"),
-        "main_game_cash_balance_title":
-            MessageLookupByLibrary.simpleMessage("Cash"),
-        "main_game_crypto_balance_title":
-            MessageLookupByLibrary.simpleMessage("Crypto"),
-        "main_game_info_count_pc_title":
-            MessageLookupByLibrary.simpleMessage("Count PC"),
-        "main_game_info_energy_title":
-            MessageLookupByLibrary.simpleMessage("Consuming energy"),
-        "main_game_info_place_title":
-            MessageLookupByLibrary.simpleMessage("Place"),
-        "main_game_info_power_mining_title":
-            MessageLookupByLibrary.simpleMessage("Power mining"),
-        "main_game_info_title": MessageLookupByLibrary.simpleMessage("Main"),
-        "main_game_month_energy_title":
-            MessageLookupByLibrary.simpleMessage("Electricity payment"),
-        "main_game_month_flat_title":
-            MessageLookupByLibrary.simpleMessage("Payment for housing"),
-        "main_game_month_title":
-            MessageLookupByLibrary.simpleMessage("Monthly expenses"),
-        "main_game_stat_earn_on_crypto_title": m4,
-        "main_game_stat_mining_on_crypto_title": m5,
-        "main_game_stat_spend_all_title":
-            MessageLookupByLibrary.simpleMessage("Spend all time"),
-        "main_game_stat_spend_energy_title":
-            MessageLookupByLibrary.simpleMessage("Spend on energy"),
-        "main_game_stat_spend_flat_title":
-            MessageLookupByLibrary.simpleMessage("Spend on flats"),
-        "main_game_stat_spend_pc_title":
-            MessageLookupByLibrary.simpleMessage("Spend in pcs"),
+        "game_wallet_assets_title":
+            MessageLookupByLibrary.simpleMessage("Asset allocation"),
+        "game_wallet_hide_null":
+            MessageLookupByLibrary.simpleMessage("Hide zero balances"),
+        "game_wallet_tokens_title":
+            MessageLookupByLibrary.simpleMessage("Cryptocurrency wallet"),
+        "main_game_stat_consume": MessageLookupByLibrary.simpleMessage("Costs"),
+        "main_game_stat_consume_buyFlat":
+            MessageLookupByLibrary.simpleMessage("Spent on home purchases"),
+        "main_game_stat_consume_buyPC":
+            MessageLookupByLibrary.simpleMessage("Spent on PC purchases"),
+        "main_game_stat_consume_energy":
+            MessageLookupByLibrary.simpleMessage("Spent on electricity"),
+        "main_game_stat_consume_flat":
+            MessageLookupByLibrary.simpleMessage("Spent on housing"),
+        "main_game_stat_crypto":
+            MessageLookupByLibrary.simpleMessage("Cryptocurrencies"),
+        "main_game_stat_crypto_earn": m4,
+        "main_game_stat_crypto_mining": m5,
+        "main_game_stat_deals":
+            MessageLookupByLibrary.simpleMessage("Transactions"),
+        "main_game_stat_deals_count_buy":
+            MessageLookupByLibrary.simpleMessage("Buy deals completed"),
+        "main_game_stat_deals_count_sell":
+            MessageLookupByLibrary.simpleMessage("Sell ​​deals"),
+        "main_game_stat_deals_volume_buy":
+            MessageLookupByLibrary.simpleMessage("Purchase volume"),
+        "main_game_stat_deals_volume_sell":
+            MessageLookupByLibrary.simpleMessage("Volume of sales"),
+        "main_game_stat_other": MessageLookupByLibrary.simpleMessage("Other"),
+        "main_game_stat_other_clicker_count":
+            MessageLookupByLibrary.simpleMessage(
+                "Number of clicks on the computer"),
+        "main_game_stat_other_clicker_crit_count":
+            MessageLookupByLibrary.simpleMessage("Number of crits"),
+        "main_game_stat_other_clicker_earn":
+            MessageLookupByLibrary.simpleMessage("Earned on clicks"),
+        "main_game_stat_other_days":
+            MessageLookupByLibrary.simpleMessage("Number of days passed"),
+        "main_game_stat_sum": MessageLookupByLibrary.simpleMessage("Sum"),
         "main_game_stat_title":
-            MessageLookupByLibrary.simpleMessage("Statistic"),
-        "manu_about_by_title": MessageLookupByLibrary.simpleMessage(
-            "The author of the application is Griva Konstantin."),
-        "manu_about_dev_title": MessageLookupByLibrary.simpleMessage(
-            "The application is created for flutter."),
-        "manu_about_title":
-            MessageLookupByLibrary.simpleMessage("About the author"),
-        "menu_app_bar": MessageLookupByLibrary.simpleMessage("CRYPTO IDLE"),
+            MessageLookupByLibrary.simpleMessage("Statistics"),
+        "menu_app_bar": MessageLookupByLibrary.simpleMessage("CRYPTO TYCOON"),
         "menu_button_authors": MessageLookupByLibrary.simpleMessage("AUTHORS"),
         "menu_button_back": MessageLookupByLibrary.simpleMessage("BACK"),
         "menu_button_continue_game":
@@ -226,10 +216,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "menu_button_play": MessageLookupByLibrary.simpleMessage("PLAY"),
         "menu_button_settings":
             MessageLookupByLibrary.simpleMessage("SETTINGS"),
-        "menu_settings_swap_en_button_title":
-            MessageLookupByLibrary.simpleMessage("Change to language EN"),
-        "menu_settings_swap_ru_button_title":
-            MessageLookupByLibrary.simpleMessage("Change to language RU"),
+        "menu_settings_language":
+            MessageLookupByLibrary.simpleMessage("LANGUAGE"),
+        "menu_settings_music": MessageLookupByLibrary.simpleMessage("Music"),
+        "menu_settings_sound": MessageLookupByLibrary.simpleMessage("Sound"),
         "menu_settings_title": MessageLookupByLibrary.simpleMessage("Settings"),
         "text_with_dollar": m6,
         "text_with_dollar_month": m7,

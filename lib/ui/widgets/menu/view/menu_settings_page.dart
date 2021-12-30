@@ -68,7 +68,7 @@ class _ContentWidget extends StatelessWidget {
           const _SoundSliderWidget(),
           const SizedBox(height: 12),
           Text(
-            'ЯЗЫК',
+            S.of(context).menu_settings_language,
             style: AppFonts.clicker.copyWith(color: AppColors.white),
           ),
           const SizedBox(height: 4),
@@ -91,18 +91,42 @@ class _LanguageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.read<MainAppViewModel>();
+    final locale = context.select((MainAppViewModel vm) => vm.locale);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        GestureDetector(
-          onTap: vm.setLocaleRu,
-          child: Image.asset(AppIconsImages.ru, width: 64, height: 64),
-        ),
-        GestureDetector(
-          onTap: vm.setLocaleEn,
-          child: Image.asset(AppIconsImages.en, width: 64, height: 64),
-        ),
+        _LanguageItem(callback: vm.setLocaleRu, image: AppIconsImages.ru, isActive: locale.languageCode == 'ru'),
+        _LanguageItem(callback: vm.setLocaleEn, image: AppIconsImages.en, isActive: locale.languageCode == 'en'),
       ],
+    );
+  }
+}
+
+class _LanguageItem extends StatelessWidget {
+  const _LanguageItem({
+    Key? key,
+    required this.callback,
+    required this.image,
+    this.isActive = false,
+  }) : super(key: key);
+
+  final VoidCallback callback;
+  final String image;
+  final bool isActive;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(100),
+      child: GestureDetector(
+        onTap: callback,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: isActive ? AppColors.green : Colors.transparent,
+          ),
+          child: Image.asset(image, width: 64, height: 64),
+        ),
+      ),
     );
   }
 }
@@ -172,15 +196,15 @@ class _SoundSwitchWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Spacer(flex: 2),
+        const Spacer(flex: 2),
         Expanded(
           child: Text(
-            'Звуки',
+            S.of(context).menu_settings_sound,
             style: AppFonts.main.copyWith(color: AppColors.white),
             textAlign: TextAlign.left,
           ),
         ),
-        Spacer(),
+        const Spacer(),
         Expanded(
           child: Align(
             alignment: Alignment.centerRight,
@@ -190,7 +214,7 @@ class _SoundSwitchWidget extends StatelessWidget {
             ),
           ),
         ),
-        Spacer(flex: 2),
+        const Spacer(flex: 2),
       ],
     );
   }
@@ -213,7 +237,7 @@ class _MusicSwitchWidget extends StatelessWidget {
         Spacer(flex: 2),
         Expanded(
           child: Text(
-            'Музыка',
+            S.of(context).menu_settings_music,
             style: AppFonts.main.copyWith(color: AppColors.white),
             textAlign: TextAlign.left,
           ),

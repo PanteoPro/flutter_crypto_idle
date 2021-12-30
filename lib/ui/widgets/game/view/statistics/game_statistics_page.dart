@@ -33,21 +33,21 @@ class GameStatisticsPage extends StatelessWidget {
               Expanded(
                 child: ListView(
                   children: [
-                    _HeaderWidget(title: 'Расходы'),
+                    _HeaderWidget(title: S.of(context).main_game_stat_consume),
                     const SizedBox(height: 6),
-                    _ConsumeWidget(),
+                    const _ConsumeWidget(),
                     const SizedBox(height: 12),
-                    _HeaderWidget(title: 'Сделки'),
+                    _HeaderWidget(title: S.of(context).main_game_stat_deals),
                     const SizedBox(height: 6),
-                    _DealsWidget(),
+                    const _DealsWidget(),
                     const SizedBox(height: 12),
-                    _HeaderWidget(title: 'Остальное'),
+                    _HeaderWidget(title: S.of(context).main_game_stat_other),
                     const SizedBox(height: 6),
-                    _OtherWidget(),
+                    const _OtherWidget(),
                     const SizedBox(height: 12),
-                    _HeaderWidget(title: 'Криптовалюты'),
+                    _HeaderWidget(title: S.of(context).main_game_stat_crypto),
                     const SizedBox(height: 6),
-                    _CryptoWidget(),
+                    const _CryptoWidget(),
                   ],
                 ),
               ),
@@ -67,7 +67,7 @@ class _TitleWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8, bottom: 12),
       child: Text(
-        'Статистика',
+        S.of(context).main_game_stat_title,
         style: AppFonts.main.copyWith(color: AppColors.white),
       ),
     );

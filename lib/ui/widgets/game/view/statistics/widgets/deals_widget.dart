@@ -9,15 +9,29 @@ class _DealsWidget extends StatelessWidget {
     final dealsSellVolume = context.read<GameStatisticsViewModel>().state.statistics.dealsSellVolume;
     return Column(
       children: [
-        _ItemWidget(title: 'Совершено сделок на продажу', value: '${dealsSellVolume.length}'),
-        SizedBox(height: 4),
-        _ItemWidget(title: 'Совершено сделок на покупку', value: '${dealsBuyVolume.length}'),
-        SizedBox(height: 4),
         _ItemWidget(
-            title: 'Объем продаж', value: S.of(context).text_with_dollar(dealsSellVolume.sum.toStringAsFixed(2))),
-        SizedBox(height: 4),
+          title: S.of(context).main_game_stat_deals_count_sell,
+          value: '${dealsSellVolume.length}',
+        ),
+        const SizedBox(height: 4),
         _ItemWidget(
-            title: 'Объем покупок', value: S.of(context).text_with_dollar(dealsBuyVolume.sum.toStringAsFixed(2))),
+          title: S.of(context).main_game_stat_deals_count_buy,
+          value: '${dealsBuyVolume.length}',
+        ),
+        const SizedBox(height: 4),
+        _ItemWidget(
+          title: S.of(context).main_game_stat_deals_volume_sell,
+          value: S.of(context).text_with_dollar(
+                dealsSellVolume.sum.toStringAsFixed(2),
+              ),
+        ),
+        const SizedBox(height: 4),
+        _ItemWidget(
+          title: S.of(context).main_game_stat_deals_volume_buy,
+          value: S.of(context).text_with_dollar(
+                dealsBuyVolume.sum.toStringAsFixed(2),
+              ),
+        ),
       ],
     );
   }

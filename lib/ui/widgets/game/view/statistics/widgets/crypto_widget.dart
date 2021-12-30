@@ -11,18 +11,24 @@ class _CryptoWidget extends StatelessWidget {
 
     final children = <Widget>[];
     for (final token in vm.state.tokens) {
+      final titleEarn = S.of(context).main_game_stat_crypto_earn(token.symbol);
+      final titleMined = S.of(context).main_game_stat_crypto_mining(token.symbol);
       try {
         final mining = tokensMiningMap[token.id];
         final miningSum = mining!.sum.toStringAsFixed(8);
         final widget = _ItemWidget(
-          title: 'Добыто ${token.symbol}',
+          title: titleMined,
           value: miningSum,
           symbol: token.symbol,
         );
         children.add(widget);
         children.add(const SizedBox(height: 4));
       } catch (_) {
-        final widget = _ItemWidget(title: 'Добыто ${token.symbol}', value: 0.toStringAsFixed(8), symbol: token.symbol);
+        final widget = _ItemWidget(
+          title: titleMined,
+          value: 0.toStringAsFixed(8),
+          symbol: token.symbol,
+        );
         children.add(widget);
         children.add(const SizedBox(height: 4));
       }
@@ -30,13 +36,19 @@ class _CryptoWidget extends StatelessWidget {
       try {
         final earns = tokensEarnMap[token.id];
         final earnsSum = earns!.sum.toStringAsFixed(2);
-        final widget =
-            _ItemWidget(title: 'Продано ${token.symbol} на сумму', value: S.of(context).text_with_dollar(earnsSum));
+        final widget = _ItemWidget(
+          title: titleEarn,
+          value: S.of(context).text_with_dollar(earnsSum),
+        );
         children.add(widget);
         children.add(const SizedBox(height: 4));
       } catch (_) {
         final widget = _ItemWidget(
-            title: 'Продано ${token.symbol} на сумму', value: S.of(context).text_with_dollar(0.toStringAsFixed(2)));
+          title: titleEarn,
+          value: S.of(context).text_with_dollar(
+                0.toStringAsFixed(2),
+              ),
+        );
         children.add(widget);
         children.add(const SizedBox(height: 4));
       }

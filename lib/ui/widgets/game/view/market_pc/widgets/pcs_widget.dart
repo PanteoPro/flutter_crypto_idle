@@ -74,7 +74,7 @@ class _PCItemLockWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        'Недостаточный уровень помещения для покупки',
+                        S.of(context).game_market_pc_lock_title,
                         textAlign: TextAlign.right,
                         maxLines: 2,
                         style: AppFonts.main.copyWith(color: AppColors.white),
