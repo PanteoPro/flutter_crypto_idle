@@ -3,6 +3,7 @@ import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:crypto_idle/Widgets/game_over_widget.dart';
 import 'package:crypto_idle/Widgets/settings_modal_widget.dart';
 import 'package:crypto_idle/domain/repositories/message_manager.dart';
+import 'package:crypto_idle/resources/resources.dart';
 import 'package:crypto_idle/ui/widgets/game/view/general/game_app_bar_widget.dart';
 import 'package:crypto_idle/ui/widgets/game/view/general/game_footer_widget.dart';
 import 'package:crypto_idle/ui/widgets/game/view/general/game_header_balance_widget.dart';
@@ -63,7 +64,7 @@ class _MessageBlockWidget extends StatelessWidget {
     return SizedBox(
       width: width,
       child: Padding(
-        padding: const EdgeInsets.only(top: kToolbarHeight * 2),
+        padding: const EdgeInsets.only(top: kToolbarHeight * 2 + 10),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -94,17 +95,26 @@ class _MessageBlockItemWidgetState extends State<_MessageBlockItemWidget> {
   Widget build(BuildContext context) {
     final languageCode = context.read<MainAppViewModel>().locale.languageCode;
 
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: widget.message.color,
-        borderRadius: const BorderRadius.only(bottomRight: Radius.elliptical(50, 50)),
+        borderRadius: const BorderRadius.only(
+          bottomRight: Radius.elliptical(15, 20),
+          topRight: Radius.elliptical(15, 20),
+        ),
       ),
-      child: Text(
-        languageCode == 'ru' ? widget.message.text : widget.message.textENG,
-        textAlign: TextAlign.left,
-        style: AppFonts.body.copyWith(color: AppColors.white),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(width: 4),
+          Image.asset(widget.message.image, width: 16, height: 16),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(left: 4, right: 10, top: 4, bottom: 4),
+              child: languageCode == 'ru' ? widget.message.text : widget.message.textENG,
+            ),
+          ),
+        ],
       ),
     );
   }

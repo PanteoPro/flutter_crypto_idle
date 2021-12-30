@@ -180,6 +180,7 @@ class ClickerGameViewModel extends ChangeNotifier {
     final upgradeCost = _clickerRepository.clicker.upgradeCost;
     if (_gameRepository.game.money >= upgradeCost) {
       if (await _clickerRepository.levelUp()) {
+        MusicManager.playClick();
         _gameRepository.changeMoney(-upgradeCost);
         return true;
       } else {
@@ -194,11 +195,13 @@ class ClickerGameViewModel extends ChangeNotifier {
   }
 
   void onOpenModal() {
+    MusicManager.playClick();
     state.isModalUpgrade = true;
     notifyListeners();
   }
 
   void onCloseModal() {
+    MusicManager.playClick();
     state.isModalUpgrade = false;
     notifyListeners();
   }

@@ -4,11 +4,13 @@ class AppIconsImages {
   AppIconsImages._();
 
   static const String backArrow = 'assets/images/icons/back_arrow.png';
+  static const String car = 'assets/images/icons/car.png';
   static const String cashIcon = 'assets/images/icons/cash_icon.png';
   static const String checkboxActive =
       'assets/images/icons/checkbox_active.png';
   static const String checkboxInactive =
       'assets/images/icons/checkbox_inactive.png';
+  static const String clock = 'assets/images/icons/clock.png';
   static const String computerIcon = 'assets/images/icons/computer_icon.png';
   static const String dollarIcon = 'assets/images/icons/dollar_icon.png';
   static const String downIcon = 'assets/images/icons/down_icon.png';
@@ -18,6 +20,7 @@ class AppIconsImages {
   static const String exit = 'assets/images/icons/exit.png';
   static const String lightningIcon = 'assets/images/icons/lightning_icon.png';
   static const String lock = 'assets/images/icons/lock.png';
+  static const String money = 'assets/images/icons/money.png';
   static const String muteIcon = 'assets/images/icons/mute_icon.png';
   static const String noUpgrade = 'assets/images/icons/no_upgrade.png';
   static const String ru = 'assets/images/icons/ru.png';
