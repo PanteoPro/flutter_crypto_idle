@@ -166,6 +166,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "Недостаточный уровень помещения для покупки"),
         "game_market_pc_title":
             MessageLookupByLibrary.simpleMessage("Покупка установок"),
+        "game_settings_close": MessageLookupByLibrary.simpleMessage("Закрыть"),
+        "game_settings_music": MessageLookupByLibrary.simpleMessage("Музыка"),
+        "game_settings_sound": MessageLookupByLibrary.simpleMessage("Звуки"),
+        "game_settings_title":
+            MessageLookupByLibrary.simpleMessage("Настройки"),
         "game_wallet_assets_title":
             MessageLookupByLibrary.simpleMessage("Распределение активов"),
         "game_wallet_hide_null":

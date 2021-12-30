@@ -1040,6 +1040,46 @@ class S {
     );
   }
 
+  /// `Settings`
+  String get game_settings_title {
+    return Intl.message(
+      'Settings',
+      name: 'game_settings_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Music`
+  String get game_settings_music {
+    return Intl.message(
+      'Music',
+      name: 'game_settings_music',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sound`
+  String get game_settings_sound {
+    return Intl.message(
+      'Sound',
+      name: 'game_settings_sound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close`
+  String get game_settings_close {
+    return Intl.message(
+      'Close',
+      name: 'game_settings_close',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{value}$`
   String text_with_dollar(Object value) {
     return Intl.message(

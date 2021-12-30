@@ -164,6 +164,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "Insufficient level of premises for purchase"),
         "game_market_pc_title":
             MessageLookupByLibrary.simpleMessage("Buy computers"),
+        "game_settings_close": MessageLookupByLibrary.simpleMessage("Close"),
+        "game_settings_music": MessageLookupByLibrary.simpleMessage("Music"),
+        "game_settings_sound": MessageLookupByLibrary.simpleMessage("Sound"),
+        "game_settings_title": MessageLookupByLibrary.simpleMessage("Settings"),
         "game_wallet_assets_title":
             MessageLookupByLibrary.simpleMessage("Asset allocation"),
         "game_wallet_hide_null":

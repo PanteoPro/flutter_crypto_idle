@@ -3,6 +3,7 @@ import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:crypto_idle/Widgets/game_button_widget.dart';
 import 'package:crypto_idle/Widgets/my_slider_widget.dart';
 import 'package:crypto_idle/Widgets/my_switcher_widget.dart';
+import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
 import 'package:crypto_idle/ui/widgets/music_view_model.dart';
 import 'package:flutter/material.dart';
@@ -35,14 +36,14 @@ class SettingsModalWidget extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Настройки', style: AppFonts.main.copyWith(color: AppColors.white)),
+                  Text(S.of(context).game_settings_title, style: AppFonts.main.copyWith(color: AppColors.white)),
                   const SizedBox(height: 12),
                   const _MusicWidget(),
                   const SizedBox(height: 12),
                   const _SoundWidget(),
                   const SizedBox(height: 12),
                   GameButtonWidget.tokenSelect(
-                    text: 'Закрыть',
+                    text: S.of(context).game_settings_close,
                     onPressed: closeCallback,
                     font: AppFonts.main,
                     backgroundColor: AppColors.secondGrey,
@@ -70,7 +71,7 @@ class _SoundWidget extends StatelessWidget {
         Expanded(
           flex: 2,
           child: Text(
-            'Звуки',
+            S.of(context).game_settings_sound,
             style: AppFonts.main.copyWith(color: AppColors.white),
             textAlign: TextAlign.right,
           ),
@@ -129,7 +130,7 @@ class _MusicWidget extends StatelessWidget {
         Expanded(
           flex: 2,
           child: Text(
-            'Музыка',
+            S.of(context).game_settings_music,
             style: AppFonts.main.copyWith(color: AppColors.white),
             textAlign: TextAlign.right,
           ),

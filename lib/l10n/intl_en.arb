@@ -116,6 +116,11 @@
     "game_wallet_tokens_title": "Cryptocurrency wallet",
     "game_wallet_hide_null": "Hide zero balances",
 
+    "game_settings_title": "Settings",
+    "game_settings_music": "Music",
+    "game_settings_sound": "Sound",
+    "game_settings_close": "Close",
+
     "text_with_dollar": "{value}$",
     "text_with_dollar_month": "{value}$/month",
     "text_with_energy": "{value} V/h",

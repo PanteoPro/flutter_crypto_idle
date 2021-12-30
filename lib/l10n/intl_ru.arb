@@ -115,6 +115,11 @@
     "game_wallet_tokens_title": "Кошелек криптовалют",
     "game_wallet_hide_null": "Скрыть нулевые балансы",
 
+    "game_settings_title": "Настройки",
+    "game_settings_music": "Музыка",
+    "game_settings_sound": "Звуки",
+    "game_settings_close": "Закрыть",
+
     "text_with_dollar": "{value}$",
     "text_with_dollar_month": "{value}$/мес",
     "text_with_energy": "{value} Ват/ч",
