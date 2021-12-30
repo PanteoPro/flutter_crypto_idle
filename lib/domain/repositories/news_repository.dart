@@ -7,6 +7,7 @@ import 'package:crypto_idle/domain/data_providers/token_data_provider.dart';
 import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/price_token.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
+import 'package:crypto_idle/domain/repositories/music_manager.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 
 class _NewsStruct {
@@ -171,6 +172,7 @@ class NewsRepository extends MyRepository {
           Random().nextInt(_NewsRepositoryParams.maxWaitDayDelay - _NewsRepositoryParams.minWaitDayDelay);
       lastGenerated = dateNow;
       final news = _generateNews(dateNow);
+      MusicManager.playNews();
       addNews(news);
     }
   }
@@ -329,6 +331,7 @@ class NewsRepository extends MyRepository {
   }
 
   void createNewsByNewToken(Token token, DateTime date) {
+    MusicManager.playNewToken();
     final news = News(
       text: 'Появилась новая криптовалюта ${token.symbol} - ${token.fullName}',
       textENG: 'A new cryptocurrency has appeared ${token.symbol} - ${token.fullName}',
@@ -339,6 +342,7 @@ class NewsRepository extends MyRepository {
   }
 
   void createNewsByMonthyPayments({required double flat, required double energy, required DateTime date}) {
+    MusicManager.playScamToken();
     final news = News(
       text: 'Оплата жилья: -$flat\$. Оплата энергии: -$energy\$',
       textENG: 'Payment for housing: -$flat\$. Energy payment: -$energy\$',

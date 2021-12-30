@@ -10,6 +10,7 @@ import 'package:crypto_idle/Widgets/page_wrapper.dart';
 import 'package:crypto_idle/domain/entities/game.dart';
 import 'package:crypto_idle/domain/entities/news.dart';
 import 'package:crypto_idle/domain/entities/token.dart';
+import 'package:crypto_idle/domain/repositories/music_manager.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/app_images.dart';
 import 'package:crypto_idle/Libs/gif_lib.dart';
@@ -84,6 +85,7 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
         vm.onReturnToMenuButtonPressed();
       }
     } else if (vm.state.gameOver) {
+      MusicManager.stopSound();
       context.read<MainGameViewModel>().onYesExitButtonPressed(context);
     } else {
       Navigator.of(context).pop();

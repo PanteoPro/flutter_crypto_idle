@@ -89,6 +89,9 @@ class MusicViewModel extends ChangeNotifier {
       case MusicManagerStreamEvents.resume:
         _resume();
         break;
+      case MusicManagerStreamEvents.stopSound:
+        _stopSound();
+        break;
     }
     if (message == MusicManagerStreamEvents.mute ||
         message == MusicManagerStreamEvents.unmute ||
@@ -171,6 +174,11 @@ class MusicViewModel extends ChangeNotifier {
   Future<void> _startMainMusic() async {
     await _playerMain?.stop();
     _playerMain = await _playerCacheMain.loop(AppAudio.main, volume: musicSettings.musicVolume);
+    notifyListeners();
+  }
+
+  Future<void> _stopSound() async {
+    await _playerSounds?.stop();
     notifyListeners();
   }
 

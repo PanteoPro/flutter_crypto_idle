@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:crypto_idle/Theme/app_colors.dart';
+import 'package:crypto_idle/domain/repositories/music_manager.dart';
 import 'package:crypto_idle/domain/repositories/statistics_manager.dart';
 import 'package:flutter/material.dart';
 
@@ -126,6 +127,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
         var volume = _state.sellVolumeToken;
         volume = max(min(volume, _state.token!.count), 0);
         if (volume > 0) {
+          MusicManager.playSell();
           final lastPrice = _state.getLastPrice().cost;
           final income = double.parse((volume * lastPrice).toStringAsFixed(2));
 
@@ -167,6 +169,7 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
         if (volume != null) {
           volume = max(min(volume, _gameRepository.game.money), 0);
           if (volume > 0) {
+            MusicManager.playBuy();
             final lastPrice = _state.getLastPrice().cost;
             final countTokens = double.parse((volume / lastPrice).toStringAsFixed(8));
 

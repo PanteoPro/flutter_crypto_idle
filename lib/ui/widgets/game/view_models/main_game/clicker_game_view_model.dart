@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:crypto_idle/domain/entities/clicker.dart';
 import 'package:crypto_idle/domain/repositories/clicker_repository.dart';
 import 'package:crypto_idle/domain/repositories/game_repository.dart';
+import 'package:crypto_idle/domain/repositories/music_manager.dart';
 import 'package:crypto_idle/domain/repositories/my_repository.dart';
 import 'package:crypto_idle/domain/repositories/statistics_manager.dart';
 import 'package:flutter/material.dart';
@@ -126,6 +127,7 @@ class ClickerGameViewModel extends ChangeNotifier {
           ),
         );
       }
+      MusicManager.playClickPc();
     }
     if (_clickerRepository.clicker.currentClicks > 0) {
       await _gameRepository.clickerMoney(rndMoney);

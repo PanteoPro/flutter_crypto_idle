@@ -13,6 +13,7 @@ enum MusicManagerStreamEvents {
   stopMain,
   playMenu,
   stopMenu,
+  stopSound,
 
   playGameOver,
 
@@ -49,6 +50,10 @@ class MusicManager {
 
   static void unmute() {
     _playSound(MusicManagerStreamEvents.unmute);
+  }
+
+  static void stopSound() {
+    _playSound(MusicManagerStreamEvents.stopSound);
   }
 
   static void playMain() {
