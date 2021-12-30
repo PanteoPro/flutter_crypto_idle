@@ -108,23 +108,28 @@ class _ClickerUpgradeWidgetState extends State<_ClickerUpgradeWidget> {
     final clickerVM = context.watch<ClickerGameViewModel>();
     final money = context.select((MainGameViewModel vm) => vm.state.money);
     final isCanUpgrade = money >= clickerVM.state.clicker.upgradeCost;
+    final isMaxLevel = clickerVM.state.clicker.level == clickerVM.state.clicker.maxLevel;
+    final textMaxLevel = isMaxLevel ? '${S.of(context).game_main_upgrade_info_max} ' : '';
     return SizedBox(
       height: height,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          if (!isMaxLevel)
+            Text(
+              S.of(context).game_main_upgrade_title,
+              style: AppFonts.body2.copyWith(color: AppColors.white),
+            ),
+          if (!isMaxLevel) const SizedBox(height: 4),
+          if (!isMaxLevel)
+            GestureDetector(
+              onTap: () => clickerVM.onClickUpgradeButton(),
+              child:
+                  Image.asset(isCanUpgrade ? AppIconsImages.upgrade : AppIconsImages.noUpgrade, width: 32, height: 32),
+            ),
+          if (!isMaxLevel) const SizedBox(height: 4),
           Text(
-            S.of(context).game_main_upgrade_title,
-            style: AppFonts.body2.copyWith(color: AppColors.white),
-          ),
-          const SizedBox(height: 4),
-          GestureDetector(
-            onTap: () => clickerVM.onClickUpgradeButton(),
-            child: Image.asset(isCanUpgrade ? AppIconsImages.upgrade : AppIconsImages.noUpgrade, width: 32, height: 32),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            '${S.of(context).game_main_upgrade_level}: ${clickerVM.state.clicker.level}',
+            '$textMaxLevel${S.of(context).game_main_upgrade_level}: ${clickerVM.state.clicker.level}',
             style: AppFonts.body2.copyWith(color: AppColors.white),
           ),
         ],
