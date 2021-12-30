@@ -115,7 +115,7 @@ class _MusicSliderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.read<MusicViewModel>();
-    final value = context.select((MusicViewModel vm) => vm.musicVolume);
+    final value = context.select((MusicViewModel vm) => vm.musicSettings.musicVolume);
     return Row(
       children: [
         Spacer(flex: 2),
@@ -141,7 +141,7 @@ class _SoundSliderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.read<MusicViewModel>();
-    final value = context.select((MusicViewModel vm) => vm.soundVolume);
+    final value = context.select((MusicViewModel vm) => vm.musicSettings.soundVolume);
     return Row(
       children: [
         Spacer(flex: 2),
@@ -167,7 +167,7 @@ class _SoundSwitchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final onChangeMuteSound = context.read<MusicViewModel>().onChangeMuteSound;
-    final isMuteSound = context.select((MusicViewModel vm) => vm.isMuteSound);
+    final isMuteSound = context.select((MusicViewModel vm) => vm.musicSettings.isMuteSound);
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -204,7 +204,7 @@ class _MusicSwitchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final onChangeMuteMusic = context.read<MusicViewModel>().onChangeMuteMusic;
-    final isMuteMusic = context.select((MusicViewModel vm) => vm.isMuteMusic);
+    final isMuteMusic = context.select((MusicViewModel vm) => vm.musicSettings.isMuteMusic);
 
     return Row(
       mainAxisSize: MainAxisSize.min,

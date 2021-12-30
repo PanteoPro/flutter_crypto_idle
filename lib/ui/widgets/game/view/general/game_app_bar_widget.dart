@@ -75,8 +75,8 @@ class _MuteActionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = context.read<MusicViewModel>();
 
-    final isMuteMusic = context.select((MusicViewModel vm) => vm.isMuteMusic);
-    final isMuteSound = context.select((MusicViewModel vm) => vm.isMuteSound);
+    final isMuteMusic = context.select((MusicViewModel vm) => vm.musicSettings.isMuteMusic);
+    final isMuteSound = context.select((MusicViewModel vm) => vm.musicSettings.isMuteSound);
 
     // MusicManager.mute(); MusicManager.unmute();
     final action = () {

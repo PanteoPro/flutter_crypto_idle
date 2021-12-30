@@ -33,12 +33,12 @@ class MenuAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
               imagePath: AppIconsImages.backArrow,
             )
           : null,
-      actions: isShowActions
-          ? const [
-              _MuteActionWidget(),
-              SizedBox(width: 12),
-            ]
-          : [],
+      // actions: isShowActions
+      //     ? const [
+      //         _MuteActionWidget(),
+      //         SizedBox(width: 12),
+      //       ]
+      //     : [],
     );
   }
 
@@ -53,7 +53,7 @@ class _MuteActionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMute = context.select((MusicViewModel vm) => vm.isMuteMusic);
+    final isMute = context.select((MusicViewModel vm) => vm.musicSettings.isMuteMusic);
     final action = isMute ? () => MusicManager.unmute() : () => MusicManager.mute();
     final image = isMute ? AppIconsImages.muteIcon : AppIconsImages.unmuteIcon;
     return _AppBarActionWidget(onTap: action, imagePath: image);

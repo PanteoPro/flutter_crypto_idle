@@ -1,14 +1,29 @@
 import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:crypto_idle/domain/data_providers/settings_data_provider.dart';
+import 'package:crypto_idle/domain/entities/settings.dart';
 import 'package:crypto_idle/domain/repositories/music_manager.dart';
 import 'package:crypto_idle/resources/app_audio.dart';
 import 'package:flutter/material.dart';
 
 class MusicViewModel extends ChangeNotifier {
+  final _settingsDataProvider = SettingsDataProvider();
   MusicViewModel() {
     _musicStreamSub = MusicManager.stream?.listen(_streamChoicer);
+    _startInitial();
+  }
+
+  var musicSettings = MusicSettings();
+
+  Future<void> _startInitial() async {
+    await _settingsDataProvider.init();
+    musicSettings = _settingsDataProvider.getMusicSettings();
     _startMenuMusic();
+  }
+
+  Future<void> _saveSettings() async {
+    _settingsDataProvider.saveMusicSettings(musicSettings);
   }
 
   StreamSubscription<dynamic>? _musicStreamSub;
@@ -20,6 +35,7 @@ class MusicViewModel extends ChangeNotifier {
     _playerMain?.stop();
     _playerSounds?.stop();
     _musicStreamSub?.cancel();
+    _saveSettings();
     super.dispose();
   }
 
@@ -60,12 +76,12 @@ class MusicViewModel extends ChangeNotifier {
       case MusicManagerStreamEvents.playClickPc:
         break;
       case MusicManagerStreamEvents.mute:
-        isMuteMusic = true;
-        isMuteSound = true;
+        musicSettings.isMuteMusic = true;
+        musicSettings.isMuteSound = true;
         break;
       case MusicManagerStreamEvents.unmute:
-        isMuteMusic = false;
-        isMuteSound = false;
+        musicSettings.isMuteMusic = false;
+        musicSettings.isMuteSound = false;
         break;
       case MusicManagerStreamEvents.pause:
         _pause();
@@ -81,12 +97,13 @@ class MusicViewModel extends ChangeNotifier {
         message == MusicManagerStreamEvents.stopMain ||
         message == MusicManagerStreamEvents.playMain) {
       _checkToPlay();
+      _saveSettings();
     }
   }
 
   void _checkToPlay() {
-    print(isMuteMusic);
-    if (!isMuteMusic) {
+    print(musicSettings.isMuteMusic);
+    if (!musicSettings.isMuteMusic) {
       if (isPlayMain) {
         _startMainMusic();
       } else {
@@ -114,34 +131,31 @@ class MusicViewModel extends ChangeNotifier {
   var isPlayMain = false;
   var isPlayMenu = true;
 
-  var isMuteMusic = false;
-  var isMuteSound = false;
-
-  var musicVolume = 1.0;
-  var soundVolume = 1.0;
-
   void onChangeMuteMusic(bool value) {
-    isMuteMusic = value;
-    print(isMuteMusic);
+    musicSettings.isMuteMusic = value;
     notifyListeners();
     _checkToPlay();
+    _saveSettings();
   }
 
   void onChangeMuteSound(bool value) {
-    isMuteSound = value;
+    musicSettings.isMuteSound = value;
     notifyListeners();
+    _saveSettings();
   }
 
   void onChangeVolumeMusic(double volume) {
-    musicVolume = volume;
-    _playerMain?.setVolume(musicVolume);
+    musicSettings.musicVolume = volume;
+    _playerMain?.setVolume(musicSettings.musicVolume);
     notifyListeners();
+    _saveSettings();
   }
 
   void onChangeVolumeSound(double volume) {
-    soundVolume = volume;
-    _playerSounds?.setVolume(soundVolume);
+    musicSettings.soundVolume = volume;
+    _playerSounds?.setVolume(musicSettings.soundVolume);
     notifyListeners();
+    _saveSettings();
   }
 
   Future<void> _pause() async {
@@ -149,14 +163,14 @@ class MusicViewModel extends ChangeNotifier {
   }
 
   Future<void> _resume() async {
-    if (!isMuteMusic) {
+    if (!musicSettings.isMuteMusic) {
       await _playerMain?.resume();
     }
   }
 
   Future<void> _startMainMusic() async {
     await _playerMain?.stop();
-    _playerMain = await _playerCacheMain.loop(AppAudio.main, volume: musicVolume);
+    _playerMain = await _playerCacheMain.loop(AppAudio.main, volume: musicSettings.musicVolume);
     notifyListeners();
   }
 
@@ -166,9 +180,11 @@ class MusicViewModel extends ChangeNotifier {
   }
 
   Future<void> _startMenuMusic() async {
-    await _playerMain?.stop();
-    _playerMain = await _playerCacheMain.loop(AppAudio.menu, volume: musicVolume);
-    notifyListeners();
+    if (!musicSettings.isMuteMusic) {
+      await _playerMain?.stop();
+      _playerMain = await _playerCacheMain.loop(AppAudio.menu, volume: musicSettings.musicVolume);
+      notifyListeners();
+    }
   }
 
   Future<void> _endMenuMusic() async {
@@ -185,8 +201,8 @@ class MusicViewModel extends ChangeNotifier {
   }
 
   Future<void> _playSound(String soundPath) async {
-    if (!isMuteSound) {
-      _playerSounds = await _playerCacheSounds.play(soundPath, volume: soundVolume);
+    if (!musicSettings.isMuteSound) {
+      _playerSounds = await _playerCacheSounds.play(soundPath, volume: musicSettings.soundVolume);
     }
   }
 }
