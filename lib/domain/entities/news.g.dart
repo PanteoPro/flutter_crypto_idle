@@ -18,6 +18,7 @@ class NewsAdapter extends TypeAdapter<News> {
     };
     return News(
       text: fields[0] as String,
+      textENG: fields[7] as String,
       newsTypeValue: fields[2] as int,
       tokenID: fields[1] as int?,
       date: fields[3] as DateTime,
@@ -29,7 +30,7 @@ class NewsAdapter extends TypeAdapter<News> {
   @override
   void write(BinaryWriter writer, News obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.text)
       ..writeByte(1)
@@ -43,7 +44,9 @@ class NewsAdapter extends TypeAdapter<News> {
       ..writeByte(5)
       ..write(obj.isScamToken)
       ..writeByte(6)
-      ..write(obj.isAllCrypto);
+      ..write(obj.isAllCrypto)
+      ..writeByte(7)
+      ..write(obj.textENG);
   }
 
   @override

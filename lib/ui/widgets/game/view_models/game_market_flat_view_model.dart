@@ -96,21 +96,12 @@ class GameMarketFlatViewModel extends ChangeNotifier {
             value: flat.cost,
           ),
         );
-        MessageManager.addMessage(
-          text: 'Куплено жилье ${flat.name} по цене ${flat.cost}\$',
-          color: AppColors.newsGreen,
-        );
+        MessageManager.addMessage(AppMessage.buyFlat(flatName: flat.name, cost: flat.cost));
       } else {
-        MessageManager.addMessage(
-          text: 'Ваше текущее количество установок больше, чем максимальное количество установок в новом жилье',
-          color: AppColors.newsRed,
-        );
+        MessageManager.addMessage(AppMessage.errorFlatWithMaxPC());
       }
     } else {
-      MessageManager.addMessage(
-        text: 'Недостаточно денег',
-        color: AppColors.newsRed,
-      );
+      MessageManager.addMessage(AppMessage.errorFlatNotEnoughtMoney());
     }
     _updateState();
   }
@@ -135,27 +126,15 @@ class GameMarketFlatViewModel extends ChangeNotifier {
         if (_getMaxLevelPc() <= flat.level) {
           await _flatRepository.changeFlat(currentFlat, isActive: false);
           await _flatRepository.changeFlat(flat, isActive: true);
-          MessageManager.addMessage(
-            text: 'Вы переехали в ${flat.name}',
-            color: AppColors.newsBlue,
-          );
+          MessageManager.addMessage(AppMessage.changeFlat(flatName: flat.name));
         } else {
-          MessageManager.addMessage(
-            text: 'Ваши компьютеры выше уровнем, чем в помещнии ${flat.name}',
-            color: AppColors.newsRed,
-          );
+          MessageManager.addMessage(AppMessage.errorNotEnoughLevelFlat(flatName: flat.name));
         }
       } else {
-        MessageManager.addMessage(
-          text: 'Ваше текущее количество установок больше, чем максимальное количество установок в новом жилье',
-          color: AppColors.newsRed,
-        );
+        MessageManager.addMessage(AppMessage.errorFlatWithMaxPC());
       }
     } else {
-      MessageManager.addMessage(
-        text: 'Это жилье не куплено',
-        color: AppColors.newsRed,
-      );
+      MessageManager.addMessage(AppMessage.errorFlatNotBoughtFlat());
     }
     _updateState();
   }

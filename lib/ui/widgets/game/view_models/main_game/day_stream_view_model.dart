@@ -145,10 +145,7 @@ class DayStreamViewModel extends ChangeNotifier {
     final endMonthDate = DateTime(currentDate.year, currentDate.month + 1);
     if (currentDate.isAfter(endMonthDate.add(const Duration(days: -daysUntilTheEndOfMonth))) &&
         !isNotificateUntilTheEndOfMonth) {
-      MessageManager.addMessage(
-        text: 'Через 7 дней оплата ежемесячных расходов, у вас должно быть достаточное количество наличных для оплаты.',
-        color: AppColors.newsBlue,
-      );
+      MessageManager.addMessage(AppMessage.day7());
       isNotificateUntilTheEndOfMonth = true;
     }
   }

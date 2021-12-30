@@ -146,8 +146,8 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
           );
           _state.percentSell = 0;
           MessageManager.addMessage(
-              text: 'Продано $volume ${_state.token!.symbol} по цене $lastPrice, вы получили $income\$',
-              color: AppColors.newsGreen);
+              AppMessage.sellToken(volume: volume, symbol: _state.token!.symbol, lastPrice: lastPrice, income: income));
+
           _updateState();
         } else {
           // not Enought tokens
@@ -180,10 +180,8 @@ class GameMarketCryptoViewModel extends ChangeNotifier {
                 token: _state.token,
               ),
             );
-            MessageManager.addMessage(
-              text: 'Куплено $countTokens ${_state.token!.symbol} по цене $lastPrice. Вы потратили $volume\$',
-              color: AppColors.newsGreen,
-            );
+            MessageManager.addMessage(AppMessage.buyToken(
+                volume: countTokens, symbol: _state.token!.symbol, lastPrice: lastPrice, spent: volume));
             _updateState();
           } else {
             // not enough money

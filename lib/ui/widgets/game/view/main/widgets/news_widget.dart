@@ -78,7 +78,13 @@ class _NewsFirstNewsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final news = context.select((DayStreamViewModel vm) => vm.newsListToDisplay);
-    final newsText = news.isEmpty ? '' : news.first.text;
+    final locale = context.read<MainAppViewModel>().locale;
+
+    final newsText = news.isEmpty
+        ? ''
+        : locale.languageCode == 'ru'
+            ? news.first.text
+            : news.first.textENG;
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 500),
       child: SizedBox(

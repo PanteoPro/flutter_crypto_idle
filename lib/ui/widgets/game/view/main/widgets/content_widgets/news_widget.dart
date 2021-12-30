@@ -62,7 +62,7 @@ class _NewsOlderItemWidget extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              news.text,
+              locale.languageCode == 'ru' ? news.text : news.textENG,
               style: AppFonts.mainPagePc.copyWith(color: AppColors.lightGrey),
               maxLines: 2,
             ),

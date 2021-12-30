@@ -158,27 +158,15 @@ class GameMarketPCViewModel extends ChangeNotifier {
               value: pc.cost,
             ),
           );
-          MessageManager.addMessage(
-            text: 'Вы купили установку - ${pc.name} за ${pc.cost}\$',
-            color: AppColors.newsGreen,
-          );
+          MessageManager.addMessage(AppMessage.buyPC(name: pc.name, cost: pc.cost));
         } else {
-          MessageManager.addMessage(
-            text: 'У вас максимальное количество установок!',
-            color: AppColors.newsRed,
-          );
+          MessageManager.addMessage(AppMessage.errorPCMaxPC());
         }
       } else {
-        MessageManager.addMessage(
-          text: 'У вас недостаточно денег!',
-          color: AppColors.newsRed,
-        );
+        MessageManager.addMessage(AppMessage.errorPCNotEnoughtMoney());
       }
     } else {
-      MessageManager.addMessage(
-        text: 'Недостающий уровень жилья',
-        color: AppColors.newsRed,
-      );
+      MessageManager.addMessage(AppMessage.errorPCNotEnoughtLevel());
     }
     _updateState();
   }
@@ -190,10 +178,7 @@ class GameMarketPCViewModel extends ChangeNotifier {
       final energyConsume = state.ifEnergyCostByPc(pc);
       final finalEarnings = pc.costSell - energyConsume;
       await _gameRepository.changeMoney(finalEarnings);
-      MessageManager.addMessage(
-        text: 'Вы продали установку - ${pc.name} за ${pc.costSell}\$',
-        color: AppColors.newsGreen,
-      );
+      MessageManager.addMessage(AppMessage.sellPC(name: pc.name, cost: pc.costSell));
       if (energyConsume > 0) {
         StatisticsManager.sendMessageStream(
           StatisticsManagerStreamEvents(
@@ -203,10 +188,7 @@ class GameMarketPCViewModel extends ChangeNotifier {
         );
       }
     } else {
-      MessageManager.addMessage(
-        text: 'Вы не можете продать, то чего у вас нет',
-        color: AppColors.newsRed,
-      );
+      MessageManager.addMessage(AppMessage.errorSellPCNothing());
     }
     _updateState();
   }

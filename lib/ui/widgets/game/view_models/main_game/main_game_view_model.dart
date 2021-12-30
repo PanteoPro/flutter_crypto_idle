@@ -213,11 +213,7 @@ class MainGameViewModel extends ChangeNotifier {
         currentDate != lastNotifyDate) {
       if (state.monthConsume > state.money) {
         lastNotifyDate = currentDate;
-        MessageManager.addMessage(
-          text:
-              'У вас не хватает денег для месячной оплаты, найдите ${state.monthConsume - state.money}\$, или проиграете!',
-          color: AppColors.newsRed,
-        );
+        MessageManager.addMessage(AppMessage.dayNotEnoughtMoney(notEnoughtMoney: state.monthConsume - state.money));
       }
     }
   }

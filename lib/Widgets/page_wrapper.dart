@@ -7,6 +7,7 @@ import 'package:crypto_idle/ui/widgets/game/view/general/game_app_bar_widget.dar
 import 'package:crypto_idle/ui/widgets/game/view/general/game_footer_widget.dart';
 import 'package:crypto_idle/ui/widgets/game/view/general/game_header_balance_widget.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/global/message_stream_view_model.dart';
+import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -91,6 +92,8 @@ class _MessageBlockItemWidgetState extends State<_MessageBlockItemWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final languageCode = context.read<MainAppViewModel>().locale.languageCode;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
@@ -99,7 +102,7 @@ class _MessageBlockItemWidgetState extends State<_MessageBlockItemWidget> {
         borderRadius: const BorderRadius.only(bottomRight: Radius.elliptical(50, 50)),
       ),
       child: Text(
-        widget.message.text,
+        languageCode == 'ru' ? widget.message.text : widget.message.textENG,
         textAlign: TextAlign.left,
         style: AppFonts.body2.copyWith(color: AppColors.white),
       ),

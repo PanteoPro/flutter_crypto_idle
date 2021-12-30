@@ -6,6 +6,7 @@ part 'news.g.dart';
 class News extends HiveObject {
   News({
     required this.text,
+    required this.textENG,
     required this.newsTypeValue,
     this.tokenID,
     required this.date,
@@ -27,4 +28,6 @@ class News extends HiveObject {
   bool isScamToken;
   @HiveField(6)
   bool isAllCrypto;
+  @HiveField(7)
+  final String textENG;
 }
