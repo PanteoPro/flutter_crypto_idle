@@ -58,22 +58,28 @@ class MusicViewModel extends ChangeNotifier {
         _playGameOver();
         break;
       case MusicManagerStreamEvents.playBuy:
-        _playBuy();
+        _playSound(AppAudio.money);
         break;
       case MusicManagerStreamEvents.playSell:
-        _playBuy();
+        _playSound(AppAudio.money);
         break;
       case MusicManagerStreamEvents.playNews:
+        // _playSound(AppAudio.news);
         break;
       case MusicManagerStreamEvents.playNewToken:
+        // _playSound(AppAudio.newToken);
         break;
       case MusicManagerStreamEvents.playScamToken:
+        // _playSound(AppAudio.scamToken);
         break;
       case MusicManagerStreamEvents.playSelectToken:
+        // _playSound(AppAudio.selectToken);
         break;
       case MusicManagerStreamEvents.playClick:
+        // _playSound(AppAudio.click);
         break;
       case MusicManagerStreamEvents.playClickPc:
+        _playSound(AppAudio.clickPC);
         break;
       case MusicManagerStreamEvents.mute:
         musicSettings.isMuteMusic = true;
@@ -202,10 +208,6 @@ class MusicViewModel extends ChangeNotifier {
 
   Future<void> _playGameOver() async {
     await _playSound(AppAudio.gameOver);
-  }
-
-  Future<void> _playBuy() async {
-    await _playSound(AppAudio.money);
   }
 
   Future<void> _playSound(String soundPath) async {
