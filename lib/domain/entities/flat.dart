@@ -7,6 +7,7 @@ class Flat extends HiveObject {
   Flat({
     required this.id,
     required this.name,
+    required this.nameENG,
     required this.cost,
     required this.costMonth,
     required this.countPC,
@@ -17,6 +18,7 @@ class Flat extends HiveObject {
   Flat.empty({
     this.id = -1,
     this.name = 'undefined',
+    this.nameENG = 'undefined',
     this.cost = 0,
     this.costMonth = 0,
     this.countPC = 0,
@@ -41,6 +43,8 @@ class Flat extends HiveObject {
   bool isActive;
   @HiveField(7)
   final int level;
+  @HiveField(8)
+  final String nameENG;
 
   Flat copyWith({
     int? id,
@@ -51,6 +55,7 @@ class Flat extends HiveObject {
     bool? isBuy,
     bool? isActive,
     int? level,
+    String? nameENG,
   }) {
     return Flat(
       id: id ?? this.id,
@@ -61,6 +66,7 @@ class Flat extends HiveObject {
       isBuy: isBuy ?? this.isBuy,
       isActive: isActive ?? this.isActive,
       level: level ?? this.level,
+      nameENG: nameENG ?? this.nameENG,
     );
   }
 }

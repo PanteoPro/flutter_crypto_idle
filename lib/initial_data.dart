@@ -52,6 +52,19 @@ abstract class InitialDataNames {
     'Дата центр',
     'Квартира бабушки',
   ];
+  static const List<String> nameFlatsENG = [
+    'Parental home',
+    "Grandfather's garage",
+    'Basement',
+    'House in the forest',
+    'Spacious apartment',
+    'Futuristic apartment',
+    'Office on Tverskaya',
+    'Office in Moscow City',
+    'Cottage',
+    'Data center',
+    "Granny's apartment",
+  ];
   static const Map<String, String> nameTokens = {
     'ISF': 'Income Soft Frame',
     'PRS': 'Proof Resistant Secure',
@@ -117,24 +130,26 @@ abstract class InitialData {
 
   static List<Flat> generateFlats() {
     const names = InitialDataNames.nameFlats;
-    var index = 0;
-    final result = names.map((String name) {
-      final cost = (AppConfig.kFlatCost[index]).toDouble();
+    const nameENG = InitialDataNames.nameFlatsENG;
+    final result = <Flat>[];
+    for (var i = 0; i < names.length; i++) {
+      final cost = (AppConfig.kFlatCost[i]).toDouble();
       final costMonth = cost * AppConfig.kRentFlat;
-      final countPC = AppConfig.kStartCountPc + index;
-      final isBuy = index == 0 || false;
-      final isActive = index == 0 || false;
-      index += 1;
-      return Flat(
-          id: index,
-          name: name,
-          cost: cost,
-          costMonth: costMonth,
-          countPC: countPC,
-          isBuy: isBuy,
-          isActive: isActive,
-          level: index);
-    });
+      final countPC = AppConfig.kStartCountPc + i;
+      final isBuy = i == 0 || false;
+      final isActive = i == 0 || false;
+      result.add(Flat(
+        id: i + 1,
+        name: names[i],
+        cost: cost,
+        costMonth: costMonth,
+        countPC: countPC,
+        isBuy: isBuy,
+        isActive: isActive,
+        level: i + 1,
+        nameENG: nameENG[i],
+      ));
+    }
     return result.toList();
   }
 

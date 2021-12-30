@@ -3,6 +3,7 @@ import 'package:crypto_idle/Theme/app_fonts.dart';
 import 'package:crypto_idle/generated/l10n.dart';
 import 'package:crypto_idle/resources/resources.dart';
 import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
+import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
@@ -38,6 +39,7 @@ class _FooterPlaceWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final flat = context.select((GameViewModel vm) => vm.state.currentFlat);
+    final locale = context.read<MainAppViewModel>().locale;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
@@ -49,7 +51,7 @@ class _FooterPlaceWidget extends StatelessWidget {
               style: AppFonts.main.copyWith(color: AppColors.white),
               children: [
                 TextSpan(
-                  text: flat.name,
+                  text: locale.languageCode == 'ru' ? flat.name : flat.nameENG,
                   style: AppFonts.main.copyWith(color: AppColors.green),
                 ),
               ],

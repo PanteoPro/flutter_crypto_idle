@@ -179,7 +179,9 @@ class _TitleFlatWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name = context.read<GameMarketFlatViewModel>().state.flats[index].name;
+    final locale = context.read<MainAppViewModel>().locale;
+    final flat = context.read<GameMarketFlatViewModel>().state.flats[index];
+    final name = locale.languageCode == 'ru' ? flat.name : flat.nameENG;
     return Text(
       name,
       style: AppFonts.mainLight.copyWith(color: AppColors.white),

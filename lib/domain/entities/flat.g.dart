@@ -19,6 +19,7 @@ class FlatAdapter extends TypeAdapter<Flat> {
     return Flat(
       id: fields[0] as int,
       name: fields[1] as String,
+      nameENG: fields[8] as String,
       cost: fields[2] as double,
       costMonth: fields[3] as double,
       countPC: fields[4] as int,
@@ -31,7 +32,7 @@ class FlatAdapter extends TypeAdapter<Flat> {
   @override
   void write(BinaryWriter writer, Flat obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -47,7 +48,9 @@ class FlatAdapter extends TypeAdapter<Flat> {
       ..writeByte(6)
       ..write(obj.isActive)
       ..writeByte(7)
-      ..write(obj.level);
+      ..write(obj.level)
+      ..writeByte(8)
+      ..write(obj.nameENG);
   }
 
   @override
