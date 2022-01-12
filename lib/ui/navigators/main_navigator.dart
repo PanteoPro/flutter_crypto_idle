@@ -1,10 +1,10 @@
-import 'package:crypto_idle/ui/widgets/game/view/main/main_game_page.dart';
-import 'package:crypto_idle/ui/widgets/game/view/navigator/game_navigator_widget.dart';
-import 'package:crypto_idle/ui/widgets/menu/view/menu_about_page.dart';
-import 'package:crypto_idle/ui/widgets/menu/view/menu_page.dart';
-import 'package:crypto_idle/ui/widgets/menu/view/menu_settings_page.dart';
-import 'package:crypto_idle/ui/widgets/menu/view/test_page.dart';
-import 'package:crypto_idle/ui/widgets/menu/view_models/menu_view_model.dart';
+import 'package:crypto_tycoon/ui/widgets/game/view/main/main_game_page.dart';
+import 'package:crypto_tycoon/ui/widgets/game/view/navigator/game_navigator_widget.dart';
+import 'package:crypto_tycoon/ui/widgets/menu/view/menu_about_page.dart';
+import 'package:crypto_tycoon/ui/widgets/menu/view/menu_page.dart';
+import 'package:crypto_tycoon/ui/widgets/menu/view/menu_settings_page.dart';
+import 'package:crypto_tycoon/ui/widgets/menu/view/test_page.dart';
+import 'package:crypto_tycoon/ui/widgets/menu/view_models/menu_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

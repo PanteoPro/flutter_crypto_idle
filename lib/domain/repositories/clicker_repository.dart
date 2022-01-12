@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:crypto_idle/config.dart';
-import 'package:crypto_idle/domain/data_providers/clicker_data_provider.dart';
-import 'package:crypto_idle/domain/entities/clicker.dart';
-import 'package:crypto_idle/domain/repositories/my_repository.dart';
+import 'package:crypto_tycoon/config.dart';
+import 'package:crypto_tycoon/domain/data_providers/clicker_data_provider.dart';
+import 'package:crypto_tycoon/domain/entities/clicker.dart';
+import 'package:crypto_tycoon/domain/repositories/my_repository.dart';
 
 enum ClickerRepositoryStreamEvents { levelUp, decreaceClick, decreaceDelay, resetClicks, resetDelay }
 

@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:crypto_idle/domain/entities/clicker.dart';
-import 'package:crypto_idle/domain/repositories/clicker_repository.dart';
-import 'package:crypto_idle/domain/repositories/game_repository.dart';
-import 'package:crypto_idle/domain/repositories/music_manager.dart';
-import 'package:crypto_idle/domain/repositories/my_repository.dart';
-import 'package:crypto_idle/domain/repositories/statistics_manager.dart';
+import 'package:crypto_tycoon/domain/entities/clicker.dart';
+import 'package:crypto_tycoon/domain/repositories/clicker_repository.dart';
+import 'package:crypto_tycoon/domain/repositories/game_repository.dart';
+import 'package:crypto_tycoon/domain/repositories/music_manager.dart';
+import 'package:crypto_tycoon/domain/repositories/my_repository.dart';
+import 'package:crypto_tycoon/domain/repositories/statistics_manager.dart';
 import 'package:flutter/material.dart';
 
 class ClickerGameViewModelState {

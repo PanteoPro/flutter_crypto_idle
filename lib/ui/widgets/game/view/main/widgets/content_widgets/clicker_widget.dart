@@ -426,7 +426,10 @@ class _RewardAdWidgetState extends State<_RewardAdWidget> {
             child: Image.asset(AppIconsImages.tv),
           ),
           const SizedBox(height: 10),
-          Text('Ускорить ПК', style: AppFonts.body.copyWith(color: isActive ? AppColors.white : AppColors.grey)),
+          Text(
+            S.of(context).game_main_ads_title,
+            style: AppFonts.body.copyWith(color: isActive ? AppColors.white : AppColors.grey),
+          ),
         ],
       ),
     );

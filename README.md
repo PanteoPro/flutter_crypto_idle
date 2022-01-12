@@ -1,4 +1,4 @@
-# crypto_idle
+# crypto_tycoon
 
 A new Flutter project.
 

@@ -1,4 +1,4 @@
-import 'package:crypto_idle/domain/entities/token.dart';
+import 'package:crypto_tycoon/domain/entities/token.dart';
 import 'package:hive/hive.dart';
 
 part 'pc.g.dart';

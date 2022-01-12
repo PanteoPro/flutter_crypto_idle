@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:crypto_idle/domain/data_providers/pc_data_provider.dart';
-import 'package:crypto_idle/domain/entities/pc.dart';
-import 'package:crypto_idle/domain/entities/token.dart';
-import 'package:crypto_idle/domain/repositories/my_repository.dart';
+import 'package:crypto_tycoon/domain/data_providers/pc_data_provider.dart';
+import 'package:crypto_tycoon/domain/entities/pc.dart';
+import 'package:crypto_tycoon/domain/entities/token.dart';
+import 'package:crypto_tycoon/domain/repositories/my_repository.dart';
 
 enum PCRepositoryStreamEvents { addPc, sellPc, changeMiningToken }
 

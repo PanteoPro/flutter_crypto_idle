@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.crypto_idle">
+    package="com.panteopro.crypto_tycoon">
    <application
         android:label="Crypto Tycoon"
         android:icon="@mipmap/ic_launcher">

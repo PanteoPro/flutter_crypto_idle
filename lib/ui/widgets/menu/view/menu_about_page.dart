@@ -1,9 +1,9 @@
-import 'package:crypto_idle/Theme/app_colors.dart';
-import 'package:crypto_idle/Theme/app_fonts.dart';
-import 'package:crypto_idle/Widgets/cirlce_animated_background_widget.dart';
-import 'package:crypto_idle/generated/l10n.dart';
-import 'package:crypto_idle/resources/resources.dart';
-import 'package:crypto_idle/ui/widgets/menu/view/widgets/menu_app_bar_widget.dart';
+import 'package:crypto_tycoon/Theme/app_colors.dart';
+import 'package:crypto_tycoon/Theme/app_fonts.dart';
+import 'package:crypto_tycoon/Widgets/cirlce_animated_background_widget.dart';
+import 'package:crypto_tycoon/generated/l10n.dart';
+import 'package:crypto_tycoon/resources/resources.dart';
+import 'package:crypto_tycoon/ui/widgets/menu/view/widgets/menu_app_bar_widget.dart';
 import 'package:flutter/material.dart';
 
 class MenuAboutWidget extends StatelessWidget {

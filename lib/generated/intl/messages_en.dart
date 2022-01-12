@@ -79,6 +79,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Cryptocurrency"),
         "game_main_actions_statistics":
             MessageLookupByLibrary.simpleMessage("Statistics"),
+        "game_main_ads_title":
+            MessageLookupByLibrary.simpleMessage("Auto clicks"),
         "game_main_modal_exit_no": MessageLookupByLibrary.simpleMessage("No"),
         "game_main_modal_exit_title": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to go to the menu?"),

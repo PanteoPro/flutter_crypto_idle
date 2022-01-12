@@ -1,8 +1,8 @@
-import 'package:crypto_idle/ui/navigators/game_navigator.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/global/game_statistics_view_model.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/global/message_stream_view_model.dart';
-import 'package:crypto_idle/ui/widgets/music_view_model.dart';
+import 'package:crypto_tycoon/ui/navigators/game_navigator.dart';
+import 'package:crypto_tycoon/ui/widgets/game/view_models/global/game_statistics_view_model.dart';
+import 'package:crypto_tycoon/ui/widgets/game/view_models/global/game_view_model.dart';
+import 'package:crypto_tycoon/ui/widgets/game/view_models/global/message_stream_view_model.dart';
+import 'package:crypto_tycoon/ui/widgets/music_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

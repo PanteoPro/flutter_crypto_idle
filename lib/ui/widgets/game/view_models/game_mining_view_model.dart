@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:crypto_idle/domain/repositories/game_repository.dart';
+import 'package:crypto_tycoon/domain/repositories/game_repository.dart';
 import 'package:flutter/material.dart';
 
-import 'package:crypto_idle/domain/entities/pc.dart';
-import 'package:crypto_idle/domain/entities/price_token.dart';
-import 'package:crypto_idle/domain/entities/token.dart';
-import 'package:crypto_idle/domain/repositories/my_repository.dart';
-import 'package:crypto_idle/domain/repositories/pc_repository.dart';
-import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
-import 'package:crypto_idle/domain/repositories/token_repository.dart';
+import 'package:crypto_tycoon/domain/entities/pc.dart';
+import 'package:crypto_tycoon/domain/entities/price_token.dart';
+import 'package:crypto_tycoon/domain/entities/token.dart';
+import 'package:crypto_tycoon/domain/repositories/my_repository.dart';
+import 'package:crypto_tycoon/domain/repositories/pc_repository.dart';
+import 'package:crypto_tycoon/domain/repositories/price_token_repository.dart';
+import 'package:crypto_tycoon/domain/repositories/token_repository.dart';
 
 class GameMiningViewModelState {
   GameMiningViewModelState({

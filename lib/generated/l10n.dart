@@ -510,6 +510,16 @@ class S {
     );
   }
 
+  /// `Auto clicks`
+  String get game_main_ads_title {
+    return Intl.message(
+      'Auto clicks',
+      name: 'game_main_ads_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Money per click`
   String get game_main_upgrade_info_title {
     return Intl.message(

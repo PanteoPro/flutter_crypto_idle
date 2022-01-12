@@ -1,12 +1,12 @@
-import 'package:crypto_idle/Theme/app_colors.dart';
-import 'package:crypto_idle/Theme/app_fonts.dart';
-import 'package:crypto_idle/Widgets/game_button_widget.dart';
-import 'package:crypto_idle/Widgets/page_wrapper.dart';
-import 'package:crypto_idle/generated/l10n.dart';
-import 'package:crypto_idle/resources/app_images.dart';
-import 'package:crypto_idle/resources/resources.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/game_market_flat_view_model.dart';
-import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
+import 'package:crypto_tycoon/Theme/app_colors.dart';
+import 'package:crypto_tycoon/Theme/app_fonts.dart';
+import 'package:crypto_tycoon/Widgets/game_button_widget.dart';
+import 'package:crypto_tycoon/Widgets/page_wrapper.dart';
+import 'package:crypto_tycoon/generated/l10n.dart';
+import 'package:crypto_tycoon/resources/app_images.dart';
+import 'package:crypto_tycoon/resources/resources.dart';
+import 'package:crypto_tycoon/ui/widgets/game/view_models/game_market_flat_view_model.dart';
+import 'package:crypto_tycoon/ui/widgets/main_app_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

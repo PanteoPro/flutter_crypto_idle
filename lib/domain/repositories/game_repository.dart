@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:crypto_idle/domain/data_providers/game_data_provider.dart';
-import 'package:crypto_idle/domain/entities/game.dart';
-import 'package:crypto_idle/domain/repositories/my_repository.dart';
+import 'package:crypto_tycoon/domain/data_providers/game_data_provider.dart';
+import 'package:crypto_tycoon/domain/entities/game.dart';
+import 'package:crypto_tycoon/domain/repositories/my_repository.dart';
 
 enum GameRepositoryStreamEvents { changeMoney, changeDate, nextDay, clickerMoney }
 

@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:crypto_idle/domain/entities/statistics.dart';
-import 'package:crypto_idle/domain/entities/token.dart';
-import 'package:crypto_idle/domain/repositories/my_repository.dart';
-import 'package:crypto_idle/domain/repositories/statistics_manager.dart';
-import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
-import 'package:crypto_idle/domain/repositories/token_repository.dart';
+import 'package:crypto_tycoon/domain/entities/statistics.dart';
+import 'package:crypto_tycoon/domain/entities/token.dart';
+import 'package:crypto_tycoon/domain/repositories/my_repository.dart';
+import 'package:crypto_tycoon/domain/repositories/statistics_manager.dart';
+import 'package:crypto_tycoon/domain/repositories/statistics_repository.dart';
+import 'package:crypto_tycoon/domain/repositories/token_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 

@@ -1,14 +1,14 @@
 import 'dart:math';
 
-import 'package:crypto_idle/config.dart';
-import 'package:crypto_idle/domain/entities/clicker.dart';
-import 'package:crypto_idle/domain/entities/flat.dart';
-import 'package:crypto_idle/domain/entities/game.dart';
-import 'package:crypto_idle/domain/entities/news.dart';
-import 'package:crypto_idle/domain/entities/pc.dart';
-import 'package:crypto_idle/domain/entities/price_token.dart';
-import 'package:crypto_idle/domain/entities/statistics.dart';
-import 'package:crypto_idle/domain/entities/token.dart';
+import 'package:crypto_tycoon/config.dart';
+import 'package:crypto_tycoon/domain/entities/clicker.dart';
+import 'package:crypto_tycoon/domain/entities/flat.dart';
+import 'package:crypto_tycoon/domain/entities/game.dart';
+import 'package:crypto_tycoon/domain/entities/news.dart';
+import 'package:crypto_tycoon/domain/entities/pc.dart';
+import 'package:crypto_tycoon/domain/entities/price_token.dart';
+import 'package:crypto_tycoon/domain/entities/statistics.dart';
+import 'package:crypto_tycoon/domain/entities/token.dart';
 import 'package:hive/hive.dart';
 
 abstract class InitialDataNames {

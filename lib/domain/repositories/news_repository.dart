@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:crypto_idle/domain/data_providers/news_data_provider.dart';
-import 'package:crypto_idle/domain/data_providers/price_token_data_provider.dart';
-import 'package:crypto_idle/domain/data_providers/token_data_provider.dart';
-import 'package:crypto_idle/domain/entities/news.dart';
-import 'package:crypto_idle/domain/entities/price_token.dart';
-import 'package:crypto_idle/domain/entities/token.dart';
-import 'package:crypto_idle/domain/repositories/music_manager.dart';
-import 'package:crypto_idle/domain/repositories/my_repository.dart';
+import 'package:crypto_tycoon/domain/data_providers/news_data_provider.dart';
+import 'package:crypto_tycoon/domain/data_providers/price_token_data_provider.dart';
+import 'package:crypto_tycoon/domain/data_providers/token_data_provider.dart';
+import 'package:crypto_tycoon/domain/entities/news.dart';
+import 'package:crypto_tycoon/domain/entities/price_token.dart';
+import 'package:crypto_tycoon/domain/entities/token.dart';
+import 'package:crypto_tycoon/domain/repositories/music_manager.dart';
+import 'package:crypto_tycoon/domain/repositories/my_repository.dart';
 
 class _NewsStruct {
   _NewsStruct({

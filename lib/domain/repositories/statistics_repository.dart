@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:crypto_idle/domain/data_providers/statistics_data_provider.dart';
-import 'package:crypto_idle/domain/entities/statistics.dart';
-import 'package:crypto_idle/domain/entities/token.dart';
-import 'package:crypto_idle/domain/repositories/my_repository.dart';
-import 'package:crypto_idle/domain/repositories/statistics_manager.dart';
+import 'package:crypto_tycoon/domain/data_providers/statistics_data_provider.dart';
+import 'package:crypto_tycoon/domain/entities/statistics.dart';
+import 'package:crypto_tycoon/domain/entities/token.dart';
+import 'package:crypto_tycoon/domain/repositories/my_repository.dart';
+import 'package:crypto_tycoon/domain/repositories/statistics_manager.dart';
 
 class StatisticsRepository implements MyRepository {
   final _statisticsDataProvider = StatisticsDataProvider();

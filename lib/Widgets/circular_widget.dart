@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:crypto_idle/Theme/app_colors.dart';
-import 'package:crypto_idle/Theme/app_fonts.dart';
+import 'package:crypto_tycoon/Theme/app_colors.dart';
+import 'package:crypto_tycoon/Theme/app_fonts.dart';
 import 'package:flutter/material.dart';
 
 class RadialPercentWidget extends StatelessWidget {

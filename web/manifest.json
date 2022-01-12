@@ -1,6 +1,6 @@
 {
-    "name": "crypto_idle",
-    "short_name": "crypto_idle",
+    "name": "crypto_tycoon",
+    "short_name": "crypto_tycoon",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

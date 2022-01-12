@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:crypto_idle/resources/resources.dart';
+import 'package:crypto_tycoon/resources/resources.dart';
 import 'package:flutter/material.dart';
 
 class CircleAnimatedBackgroundWidget extends StatefulWidget {

@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:crypto_idle/domain/repositories/game_repository.dart';
-import 'package:crypto_idle/domain/repositories/music_manager.dart';
-import 'package:crypto_idle/domain/repositories/my_repository.dart';
-import 'package:crypto_idle/initial_data.dart';
-import 'package:crypto_idle/ui/navigators/main_navigator.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
+import 'package:crypto_tycoon/domain/repositories/game_repository.dart';
+import 'package:crypto_tycoon/domain/repositories/music_manager.dart';
+import 'package:crypto_tycoon/domain/repositories/my_repository.dart';
+import 'package:crypto_tycoon/initial_data.dart';
+import 'package:crypto_tycoon/ui/navigators/main_navigator.dart';
+import 'package:crypto_tycoon/ui/widgets/game/view_models/global/game_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

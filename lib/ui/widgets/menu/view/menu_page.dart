@@ -1,17 +1,17 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:crypto_idle/Theme/app_colors.dart';
-import 'package:crypto_idle/Theme/app_fonts.dart';
-import 'package:crypto_idle/Widgets/cirlce_animated_background_widget.dart';
-import 'package:crypto_idle/Widgets/game_button_widget.dart';
-import 'package:crypto_idle/domain/repositories/music_manager.dart';
-import 'package:crypto_idle/generated/l10n.dart';
-import 'package:crypto_idle/resources/resources.dart';
-import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
-import 'package:crypto_idle/ui/widgets/menu/view/widgets/menu_app_bar_widget.dart';
-import 'package:crypto_idle/ui/widgets/menu/view_models/menu_view_model.dart';
-import 'package:crypto_idle/ui/widgets/music_view_model.dart';
+import 'package:crypto_tycoon/Theme/app_colors.dart';
+import 'package:crypto_tycoon/Theme/app_fonts.dart';
+import 'package:crypto_tycoon/Widgets/cirlce_animated_background_widget.dart';
+import 'package:crypto_tycoon/Widgets/game_button_widget.dart';
+import 'package:crypto_tycoon/domain/repositories/music_manager.dart';
+import 'package:crypto_tycoon/generated/l10n.dart';
+import 'package:crypto_tycoon/resources/resources.dart';
+import 'package:crypto_tycoon/ui/widgets/main_app_view_model.dart';
+import 'package:crypto_tycoon/ui/widgets/menu/view/widgets/menu_app_bar_widget.dart';
+import 'package:crypto_tycoon/ui/widgets/menu/view_models/menu_view_model.dart';
+import 'package:crypto_tycoon/ui/widgets/music_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

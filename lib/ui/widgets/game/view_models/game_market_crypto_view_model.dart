@@ -1,20 +1,20 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:crypto_idle/Theme/app_colors.dart';
-import 'package:crypto_idle/domain/repositories/music_manager.dart';
-import 'package:crypto_idle/domain/repositories/statistics_manager.dart';
+import 'package:crypto_tycoon/Theme/app_colors.dart';
+import 'package:crypto_tycoon/domain/repositories/music_manager.dart';
+import 'package:crypto_tycoon/domain/repositories/statistics_manager.dart';
 import 'package:flutter/material.dart';
 
-import 'package:crypto_idle/domain/entities/price_token.dart';
-import 'package:crypto_idle/domain/entities/token.dart';
-import 'package:crypto_idle/domain/repositories/game_repository.dart';
-import 'package:crypto_idle/domain/repositories/message_manager.dart';
-import 'package:crypto_idle/domain/repositories/my_repository.dart';
-import 'package:crypto_idle/domain/repositories/price_token_repository.dart';
-import 'package:crypto_idle/domain/repositories/statistics_repository.dart';
-import 'package:crypto_idle/domain/repositories/token_repository.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
+import 'package:crypto_tycoon/domain/entities/price_token.dart';
+import 'package:crypto_tycoon/domain/entities/token.dart';
+import 'package:crypto_tycoon/domain/repositories/game_repository.dart';
+import 'package:crypto_tycoon/domain/repositories/message_manager.dart';
+import 'package:crypto_tycoon/domain/repositories/my_repository.dart';
+import 'package:crypto_tycoon/domain/repositories/price_token_repository.dart';
+import 'package:crypto_tycoon/domain/repositories/statistics_repository.dart';
+import 'package:crypto_tycoon/domain/repositories/token_repository.dart';
+import 'package:crypto_tycoon/ui/widgets/game/view_models/global/game_view_model.dart';
 
 class GameMarketCryptoViewModelState {
   GameMarketCryptoViewModelState({

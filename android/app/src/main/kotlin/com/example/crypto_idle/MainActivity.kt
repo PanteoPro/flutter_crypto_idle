@@ -1,4 +1,4 @@
-package com.example.crypto_idle
+package com.panteopro.crypto_tycoon
 
 import io.flutter.embedding.android.FlutterActivity
 

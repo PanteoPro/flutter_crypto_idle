@@ -1,4 +1,4 @@
-import 'package:crypto_idle/domain/entities/settings.dart';
+import 'package:crypto_tycoon/domain/entities/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class _SettingsDataProviderFields {

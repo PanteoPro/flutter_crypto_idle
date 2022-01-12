@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:crypto_idle/domain/data_providers/settings_data_provider.dart';
-import 'package:crypto_idle/domain/entities/settings.dart';
-import 'package:crypto_idle/domain/repositories/music_manager.dart';
-import 'package:crypto_idle/resources/app_audio.dart';
+import 'package:crypto_tycoon/domain/data_providers/settings_data_provider.dart';
+import 'package:crypto_tycoon/domain/entities/settings.dart';
+import 'package:crypto_tycoon/domain/repositories/music_manager.dart';
+import 'package:crypto_tycoon/resources/app_audio.dart';
 import 'package:flutter/material.dart';
 
 class MusicViewModel extends ChangeNotifier {

@@ -1,4 +1,4 @@
-import 'package:crypto_idle/Theme/app_colors.dart';
+import 'package:crypto_tycoon/Theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class MySliderWidget extends StatelessWidget {

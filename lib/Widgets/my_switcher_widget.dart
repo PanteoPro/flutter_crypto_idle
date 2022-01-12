@@ -1,4 +1,4 @@
-import 'package:crypto_idle/Theme/app_colors.dart';
+import 'package:crypto_tycoon/Theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class MySwitcher extends StatefulWidget {
@@ -24,8 +24,6 @@ class _MySwitcherState extends State<MySwitcher> with SingleTickerProviderStateM
   late AnimationController _animationController;
 
   void _initAnimation() {
-    print('init animation');
-
     _circleAnimation = AlignmentTween(
       begin: widget.value ? Alignment.centerRight : Alignment.centerLeft,
       end: widget.value ? Alignment.centerLeft : Alignment.centerRight,

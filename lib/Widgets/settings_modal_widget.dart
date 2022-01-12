@@ -1,11 +1,11 @@
-import 'package:crypto_idle/Theme/app_colors.dart';
-import 'package:crypto_idle/Theme/app_fonts.dart';
-import 'package:crypto_idle/Widgets/game_button_widget.dart';
-import 'package:crypto_idle/Widgets/my_slider_widget.dart';
-import 'package:crypto_idle/Widgets/my_switcher_widget.dart';
-import 'package:crypto_idle/generated/l10n.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/global/game_view_model.dart';
-import 'package:crypto_idle/ui/widgets/music_view_model.dart';
+import 'package:crypto_tycoon/Theme/app_colors.dart';
+import 'package:crypto_tycoon/Theme/app_fonts.dart';
+import 'package:crypto_tycoon/Widgets/game_button_widget.dart';
+import 'package:crypto_tycoon/Widgets/my_slider_widget.dart';
+import 'package:crypto_tycoon/Widgets/my_switcher_widget.dart';
+import 'package:crypto_tycoon/generated/l10n.dart';
+import 'package:crypto_tycoon/ui/widgets/game/view_models/global/game_view_model.dart';
+import 'package:crypto_tycoon/ui/widgets/music_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 

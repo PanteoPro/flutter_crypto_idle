@@ -1,14 +1,14 @@
-import 'package:crypto_idle/Theme/app_colors.dart';
-import 'package:crypto_idle/Theme/app_fonts.dart';
-import 'package:crypto_idle/Widgets/game_over_widget.dart';
-import 'package:crypto_idle/Widgets/settings_modal_widget.dart';
-import 'package:crypto_idle/domain/repositories/message_manager.dart';
-import 'package:crypto_idle/resources/resources.dart';
-import 'package:crypto_idle/ui/widgets/game/view/general/game_app_bar_widget.dart';
-import 'package:crypto_idle/ui/widgets/game/view/general/game_footer_widget.dart';
-import 'package:crypto_idle/ui/widgets/game/view/general/game_header_balance_widget.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/global/message_stream_view_model.dart';
-import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
+import 'package:crypto_tycoon/Theme/app_colors.dart';
+import 'package:crypto_tycoon/Theme/app_fonts.dart';
+import 'package:crypto_tycoon/Widgets/game_over_widget.dart';
+import 'package:crypto_tycoon/Widgets/settings_modal_widget.dart';
+import 'package:crypto_tycoon/domain/repositories/message_manager.dart';
+import 'package:crypto_tycoon/resources/resources.dart';
+import 'package:crypto_tycoon/ui/widgets/game/view/general/game_app_bar_widget.dart';
+import 'package:crypto_tycoon/ui/widgets/game/view/general/game_footer_widget.dart';
+import 'package:crypto_tycoon/ui/widgets/game/view/general/game_header_balance_widget.dart';
+import 'package:crypto_tycoon/ui/widgets/game/view_models/global/message_stream_view_model.dart';
+import 'package:crypto_tycoon/ui/widgets/main_app_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

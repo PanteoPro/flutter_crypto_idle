@@ -1,8 +1,8 @@
-import 'package:crypto_idle/domain/repositories/message_manager.dart';
-import 'package:crypto_idle/domain/repositories/music_manager.dart';
-import 'package:crypto_idle/domain/repositories/statistics_manager.dart';
-import 'package:crypto_idle/initial_data.dart';
-import 'package:crypto_idle/ui/main_app.dart';
+import 'package:crypto_tycoon/domain/repositories/message_manager.dart';
+import 'package:crypto_tycoon/domain/repositories/music_manager.dart';
+import 'package:crypto_tycoon/domain/repositories/statistics_manager.dart';
+import 'package:crypto_tycoon/initial_data.dart';
+import 'package:crypto_tycoon/ui/main_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -13,6 +13,7 @@ Future<void> main() async {
   await Hive.initFlutter();
   MessageManager.init();
   StatisticsManager.init();
+  MusicManager.init();
 
   MobileAds.instance.initialize();
   // final dataManager = InitialDataManager();

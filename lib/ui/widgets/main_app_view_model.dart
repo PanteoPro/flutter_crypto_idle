@@ -1,4 +1,4 @@
-import 'package:crypto_idle/domain/data_providers/settings_data_provider.dart';
+import 'package:crypto_tycoon/domain/data_providers/settings_data_provider.dart';
 import 'package:flutter/material.dart';
 
 class MainAppViewModel extends ChangeNotifier {

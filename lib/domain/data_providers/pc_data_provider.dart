@@ -1,5 +1,5 @@
-import 'package:crypto_idle/domain/data_providers/my_hive_data_provider.dart';
-import 'package:crypto_idle/domain/entities/pc.dart';
+import 'package:crypto_tycoon/domain/data_providers/my_hive_data_provider.dart';
+import 'package:crypto_tycoon/domain/entities/pc.dart';
 import 'package:hive/hive.dart';
 
 class PCDataProvider implements MyHiveDataProvider<PC> {

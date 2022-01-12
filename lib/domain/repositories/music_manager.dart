@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:crypto_idle/resources/app_audio.dart';
+import 'package:crypto_tycoon/resources/app_audio.dart';
 
 enum MusicManagerStreamEvents {
   pause,

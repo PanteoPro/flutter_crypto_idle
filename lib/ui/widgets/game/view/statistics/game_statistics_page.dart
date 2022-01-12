@@ -1,10 +1,10 @@
-import 'package:crypto_idle/Theme/app_colors.dart';
-import 'package:crypto_idle/Theme/app_fonts.dart';
-import 'package:crypto_idle/Widgets/page_wrapper.dart';
-import 'package:crypto_idle/domain/entities/token.dart';
-import 'package:crypto_idle/generated/l10n.dart';
-import 'package:crypto_idle/resources/app_images.dart';
-import 'package:crypto_idle/ui/widgets/game/view_models/global/game_statistics_view_model.dart';
+import 'package:crypto_tycoon/Theme/app_colors.dart';
+import 'package:crypto_tycoon/Theme/app_fonts.dart';
+import 'package:crypto_tycoon/Widgets/page_wrapper.dart';
+import 'package:crypto_tycoon/domain/entities/token.dart';
+import 'package:crypto_tycoon/generated/l10n.dart';
+import 'package:crypto_tycoon/resources/app_images.dart';
+import 'package:crypto_tycoon/ui/widgets/game/view_models/global/game_statistics_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';

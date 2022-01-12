@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:crypto_idle/Theme/app_colors.dart';
-import 'package:crypto_idle/Theme/app_fonts.dart';
-import 'package:crypto_idle/resources/resources.dart';
+import 'package:crypto_tycoon/Theme/app_colors.dart';
+import 'package:crypto_tycoon/Theme/app_fonts.dart';
+import 'package:crypto_tycoon/resources/resources.dart';
 import 'package:flutter/material.dart';
 
 abstract class MessageTexts {}
@@ -589,7 +589,7 @@ class AppMessage {
           style: AppFonts.body2.copyWith(color: AppColors.white),
           children: [
             TextSpan(
-              text: '7 days',
+              text: '7 days ',
               style: AppFonts.body2.copyWith(color: AppColors.green),
             ),
             TextSpan(

@@ -1,4 +1,4 @@
-import 'package:crypto_idle/initial_data.dart';
+import 'package:crypto_tycoon/initial_data.dart';
 
 class AppImages {
   static String getTokenPathBySymbol(String symbol) {

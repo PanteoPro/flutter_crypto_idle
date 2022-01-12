@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:crypto_idle/domain/data_providers/price_token_data_provider.dart';
-import 'package:crypto_idle/domain/entities/price_token.dart';
-import 'package:crypto_idle/domain/entities/token.dart';
-import 'package:crypto_idle/domain/repositories/my_repository.dart';
-import 'package:crypto_idle/initial_data.dart';
+import 'package:crypto_tycoon/domain/data_providers/price_token_data_provider.dart';
+import 'package:crypto_tycoon/domain/entities/price_token.dart';
+import 'package:crypto_tycoon/domain/entities/token.dart';
+import 'package:crypto_tycoon/domain/repositories/my_repository.dart';
+import 'package:crypto_tycoon/initial_data.dart';
 
 enum PriceTokenRepositoryStreamEvents { addPrice, addInitialPrices }
 
