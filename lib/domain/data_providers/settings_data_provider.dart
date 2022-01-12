@@ -26,8 +26,8 @@ class SettingsDataProvider {
     return MusicSettings(
       isMuteMusic: isMuteMusic ?? false,
       isMuteSound: isMuteSound ?? false,
-      musicVolume: musicVolume ?? 1,
-      soundVolume: soundVolume ?? 1,
+      musicVolume: musicVolume ?? 0.5,
+      soundVolume: soundVolume ?? 0.3,
     );
   }
 

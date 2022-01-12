@@ -18,10 +18,10 @@ class Clicker extends HiveObject {
     required this.upgradeCost,
   });
   Clicker.start({
-    this.currentClicks = 20,
-    this.maxClicks = 20,
+    this.currentClicks = 200,
+    this.maxClicks = 200,
     this.currentDelay = 0,
-    this.maxDelay = 10,
+    this.maxDelay = 60,
     this.minMoney = 0.01,
     this.maxMoney = 0.1,
     this.critMoney = 0.5,

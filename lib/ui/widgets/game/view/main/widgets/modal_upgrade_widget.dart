@@ -9,52 +9,58 @@ class _ModalUpgradeWidget extends StatelessWidget {
     final clicker = context.read<ClickerGameViewModel>().state.clicker;
     final isModalUpgrade = context.select((ClickerGameViewModel vm) => vm.state.isModalUpgrade);
     if (!isModalUpgrade) return const SizedBox();
-    return SizedBox(
-      width: double.infinity,
-      height: double.infinity,
-      child: ColoredBox(
-        color: AppColors.black50,
-        child: Center(
-          child: SizedBox(
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        GestureDetector(
+          onTap: context.read<ClickerGameViewModel>().onCloseModal,
+          child: const SizedBox(
             width: double.infinity,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.green),
-                color: AppColors.secondGrey,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const _HeaderWidget(),
-                    const SizedBox(height: 10),
-                    const _UpgradeWidget(),
-                    const SizedBox(height: 10),
-                    const _ButtonUpgradeWidget(),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        const Spacer(),
-                        Text(
-                          '${S.of(context).game_main_modal_upgrade_cost}: ${S.of(context).text_with_dollar(clicker.upgradeCost.toStringAsFixed(2))}',
-                          style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
-                        ),
-                        const Spacer(),
-                        Text(
-                          '${S.of(context).game_main_modal_upgrade_level}: ${clicker.level}',
-                          style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
-                        ),
-                        const Spacer()
-                      ],
-                    )
-                  ],
-                ),
+            height: double.infinity,
+            child: ColoredBox(
+              color: AppColors.black50,
+            ),
+          ),
+        ),
+        SizedBox(
+          width: double.infinity,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.green),
+              color: AppColors.secondGrey,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const _HeaderWidget(),
+                  const SizedBox(height: 10),
+                  const _UpgradeWidget(),
+                  const SizedBox(height: 10),
+                  const _ButtonUpgradeWidget(),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      const Spacer(),
+                      Text(
+                        '${S.of(context).game_main_modal_upgrade_cost}: ${S.of(context).text_with_dollar(clicker.upgradeCost.toStringAsFixed(2))}',
+                        style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
+                      ),
+                      const Spacer(),
+                      Text(
+                        '${S.of(context).game_main_modal_upgrade_level}: ${clicker.level}',
+                        style: AppFonts.mainPagePc.copyWith(color: AppColors.white),
+                      ),
+                      const Spacer()
+                    ],
+                  )
+                ],
               ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

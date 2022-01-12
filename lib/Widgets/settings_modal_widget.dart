@@ -19,10 +19,13 @@ class SettingsModalWidget extends StatelessWidget {
     if (!isShow) return SizedBox();
     return Stack(
       children: [
-        const SizedBox(
-          width: double.infinity,
-          height: double.infinity,
-          child: ColoredBox(color: AppColors.black50),
+        GestureDetector(
+          onTap: closeCallback,
+          child: const SizedBox(
+            width: double.infinity,
+            height: double.infinity,
+            child: ColoredBox(color: AppColors.black50),
+          ),
         ),
         SizedBox(
           width: double.infinity,

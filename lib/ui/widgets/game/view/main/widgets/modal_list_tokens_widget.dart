@@ -7,34 +7,40 @@ class _ModalListTokensWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final isShow = context.select((MainGameViewModel vm) => vm.state.isOpenModalTokens);
     if (isShow) {
-      return SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: ColoredBox(
-          color: AppColors.black50,
-          child: Center(
-            child: SizedBox(
-              height: 380,
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          GestureDetector(
+            onTap: context.read<MainGameViewModel>().onExitModalAction,
+            child: const SizedBox(
               width: double.infinity,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: AppColors.black,
-                  border: Border.all(color: AppColors.green),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(1),
-                  child: Column(
-                    children: const [
-                      _ModalHeaderWidget(),
-                      Expanded(child: _ModalListWidget()),
-                      _ModalFooterWidget(),
-                    ],
-                  ),
+              height: double.infinity,
+              child: ColoredBox(
+                color: AppColors.black50,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 380,
+            width: double.infinity,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: AppColors.black,
+                border: Border.all(color: AppColors.green),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(1),
+                child: Column(
+                  children: const [
+                    _ModalHeaderWidget(),
+                    Expanded(child: _ModalListWidget()),
+                    _ModalFooterWidget(),
+                  ],
                 ),
               ),
             ),
           ),
-        ),
+        ],
       );
     }
     return const SizedBox();
