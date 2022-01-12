@@ -81,17 +81,21 @@ class _MainGamePageState extends State<MainGamePage> with WidgetsBindingObserver
     // Вызывается каждый раз, когда нажимается кнопка назад
     MusicManager.playClick();
     final vm = context.read<GameViewModel>();
-    if (ModalRoute.of(context)?.isCurrent ?? false) {
-      final vm = context.read<MainGameViewModel>();
-      final isModalShow = context.read<MainGameViewModel>().state.isModalExitShow;
-      if (!isModalShow) {
-        vm.onReturnToMenuButtonPressed();
-      }
-    } else if (vm.state.gameOver) {
-      MusicManager.stopSound();
-      context.read<MainGameViewModel>().onYesExitButtonPressed(context);
+    if (vm.state.isShowSettings) {
+      vm.onSettingsButtonPressed();
     } else {
-      Navigator.of(context).pop();
+      if (ModalRoute.of(context)?.isCurrent ?? false) {
+        final vm = context.read<MainGameViewModel>();
+        final isModalShow = context.read<MainGameViewModel>().state.isModalExitShow;
+        if (!isModalShow) {
+          vm.onReturnToMenuButtonPressed();
+        }
+      } else if (vm.state.gameOver) {
+        MusicManager.stopSound();
+        context.read<MainGameViewModel>().onYesExitButtonPressed(context);
+      } else {
+        Navigator.of(context).pop();
+      }
     }
     return true;
   }

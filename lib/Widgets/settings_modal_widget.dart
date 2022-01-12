@@ -16,7 +16,7 @@ class SettingsModalWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final closeCallback = context.read<GameViewModel>().onSettingsButtonPressed;
     final isShow = context.select((GameViewModel vm) => vm.state.isShowSettings);
-    if (!isShow) return SizedBox();
+    if (!isShow) return const SizedBox();
     return Stack(
       children: [
         GestureDetector(

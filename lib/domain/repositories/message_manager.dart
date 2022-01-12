@@ -572,7 +572,7 @@ class AppMessage {
           style: AppFonts.body2.copyWith(color: AppColors.white),
           children: [
             TextSpan(
-              text: '7 дней',
+              text: '7 дней ',
               style: AppFonts.body2.copyWith(color: AppColors.green),
             ),
             TextSpan(

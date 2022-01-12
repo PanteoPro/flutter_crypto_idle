@@ -57,14 +57,14 @@ class _PCItemLockWidget extends StatelessWidget {
       bottom: 0,
       top: 0,
       child: ColoredBox(
-        color: AppColors.black95,
+        color: AppColors.black80,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Image.asset(AppIconsImages.lock, width: 48, height: 48),
-              Spacer(),
+              const Spacer(),
               Expanded(
                 flex: 5,
                 child: Padding(
