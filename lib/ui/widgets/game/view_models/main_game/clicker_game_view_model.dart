@@ -13,19 +13,23 @@ class ClickerGameViewModelState {
   ClickerGameViewModelState({
     required this.clicker,
     required this.isModalUpgrade,
+    required this.isReward,
+    required this.rewardSeconds,
   });
   final Clicker clicker;
   bool isModalUpgrade;
+  bool isReward;
+  int rewardSeconds;
 
   double get percentCurrentClicks => clicker.currentClicks / clicker.maxClicks;
   double get percentCurrentDelay => (clicker.maxDelay - clicker.currentDelay) / clicker.maxDelay;
   String get currentDelayString {
-    var minutes = 0;
-    var seconds = 0;
-    if (clicker.currentClicks == 0) {
-      minutes = (clicker.currentDelay / 60).floor();
-      seconds = clicker.currentDelay - minutes * 60;
-    }
+    return secondsToString(clicker.currentDelay);
+  }
+
+  static String secondsToString(int initSeconds) {
+    final minutes = (initSeconds / 60).floor();
+    final seconds = initSeconds - minutes * 60;
     final minutesString = minutes < 10 ? '0$minutes' : '$minutes';
     final secondsString = seconds < 10 ? '0$seconds' : '$seconds';
     return '$minutesString:$secondsString';
@@ -79,6 +83,8 @@ class ClickerGameViewModel extends ChangeNotifier {
     _state = ClickerGameViewModelState(
       clicker: _clickerRepository.clicker,
       isModalUpgrade: _state.isModalUpgrade,
+      isReward: _state.isReward,
+      rewardSeconds: _state.rewardSeconds,
     );
     notifyListeners();
   }
@@ -87,7 +93,12 @@ class ClickerGameViewModel extends ChangeNotifier {
 
   // ----- Fields -----
 
-  var _state = ClickerGameViewModelState(clicker: Clicker.start(), isModalUpgrade: false);
+  var _state = ClickerGameViewModelState(
+    clicker: Clicker.start(),
+    isModalUpgrade: false,
+    isReward: false,
+    rewardSeconds: 0,
+  );
   ClickerGameViewModelState get state => _state;
 
   final _clickerRepository = ClickerRepository();
@@ -106,6 +117,25 @@ class ClickerGameViewModel extends ChangeNotifier {
 
   void resumeDelayClicker() {
     _delayClickerPCSub?.resume();
+  }
+
+  void onGetReward(int seconds) {
+    if (!state.isReward) {
+      state.isReward = true;
+      state.rewardSeconds = seconds;
+      _updateState();
+    }
+  }
+
+  void onUseReward() {
+    state.isReward = false;
+    state.rewardSeconds = 0;
+    // _updateState();
+  }
+
+  Future<void> rewardGetMoney(double rndMoney) async {
+    await _gameRepository.clickerMoney(rndMoney);
+    _updateState();
   }
 
   Future<bool> onClickerPcPressed(double rndMoney) async {

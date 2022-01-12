@@ -149,10 +149,27 @@ class _CirlceWidget extends StatefulWidget {
 }
 
 class _CirlceWidgetState extends State<_CirlceWidget> {
+  Stream<dynamic>? _streamRewardTimer;
+  Stream<dynamic>? _streamReward;
+  StreamSubscription<dynamic>? _streamRewardTimerSubscription;
+  StreamSubscription<dynamic>? _streamRewardSubscription;
+  int currentSeconds = 0;
+  int rewardSeconds = 0;
+
   final digitals = <Widget>[];
   final animationLength = 800;
   var _isStartToClean = false;
   double padding = 20;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final vm = context.read<ClickerGameViewModel>();
+    final isReward = context.watch<ClickerGameViewModel>().state.isReward;
+    if (isReward) {
+      _startMoneyReward(vm);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,23 +182,38 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
 
     final isNoData = percentCurrentClicks == 0 && percentCurrentDelay == 1;
 
+    final rewardSecondsVMText = ClickerGameViewModelState.secondsToString(rewardSeconds - currentSeconds);
+
+    // if (isReward) {
+    //   _startMoneyReward(vm);
+    // }
+
+    final percent = _streamRewardSubscription != null
+        ? (rewardSeconds - currentSeconds) / rewardSeconds
+        : currentClicks > 0
+            ? percentCurrentClicks
+            : percentCurrentDelay;
     return Center(
       child: Stack(
         children: [
           GestureDetector(
-            onTap: () => _addMoney(vm),
+            onTap: _streamRewardSubscription != null ? null : () => _addMoney(vm),
             child: SizedBox(
               width: 170,
               height: 170,
               child: isNoData
                   ? const CircularProgressIndicator(color: AppColors.green, strokeWidth: 2)
                   : RadialPercentWidget(
-                      percent: currentClicks > 0 ? percentCurrentClicks : percentCurrentDelay,
+                      percent: percent,
                       lineColor: AppColors.red,
                       maxLineColor: AppColors.dollar,
                       lineWidth: 2,
                       paddingForChild: padding,
-                      text: currentClicks > 0 ? '$currentClicks' : delayText,
+                      text: _streamRewardSubscription != null
+                          ? rewardSecondsVMText
+                          : currentClicks > 0
+                              ? '$currentClicks'
+                              : delayText,
                       left: currentClicks > 0 ? 10 : 5,
                       child: Image.asset(AppImages.imageCompTap),
                     ),
@@ -196,6 +228,41 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
         ],
       ),
     );
+  }
+
+  void _startMoneyReward(ClickerGameViewModel vm) {
+    if (_streamReward == null) {
+      currentSeconds = 0;
+      rewardSeconds = vm.state.rewardSeconds;
+
+      _streamRewardTimer = Stream.periodic(const Duration(seconds: 1));
+      _streamRewardTimerSubscription = _streamRewardTimer?.listen((event) {
+        currentSeconds++;
+        setState(() {});
+      });
+      _streamReward = Stream.periodic(const Duration(milliseconds: 300));
+      _streamRewardSubscription = _streamReward?.listen((event) {
+        _addMoneyReward(vm);
+      });
+      Future.delayed(Duration(seconds: rewardSeconds), () {
+        _streamRewardSubscription?.cancel();
+        _streamRewardTimerSubscription?.cancel();
+        _streamReward = null;
+        _streamRewardTimer = null;
+        _streamRewardSubscription = null;
+        _streamRewardTimerSubscription = null;
+        vm.onUseReward();
+        _cleanDigits();
+      });
+    }
+  }
+
+  Future<void> _addMoneyReward(ClickerGameViewModel vm) async {
+    final rndMoney = vm.state.getRandomMoney();
+    final isCritical = rndMoney == vm.state.clicker.critMoney;
+    await vm.rewardGetMoney(rndMoney);
+    _tappedAnimate();
+    _addDigit(isCritical, rndMoney);
   }
 
   Future<void> _addMoney(ClickerGameViewModel vm) async {
@@ -309,7 +376,7 @@ class _RewardAdWidgetState extends State<_RewardAdWidget> {
     _rewardedAd!.show(onUserEarnedReward: (RewardedAd ad, RewardItem reward) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('$ad with reward $RewardItem(${reward.amount}, ${reward.type}'),
+          content: Text('Reward $RewardItem(${reward.amount}, ${reward.type}'),
         ),
       );
       // print('$ad with reward $RewardItem(${reward.amount}, ${reward.type}');
@@ -330,10 +397,14 @@ class _RewardAdWidgetState extends State<_RewardAdWidget> {
     _rewardedAd?.dispose();
   }
 
+  void testReward() {
+    context.read<ClickerGameViewModel>().onGetReward(10);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _showRewardedAd,
+      onTap: testReward,
       child: Icon(
         Icons.tv_sharp,
         color: _rewardedAd != null ? AppColors.green : AppColors.grey,
