@@ -86,7 +86,7 @@ class AppMessage {
           ],
         ),
       ),
-      color: AppColors.newsGreen,
+      color: AppColors.black,
       image: AppIconsImages.money,
     );
   }
