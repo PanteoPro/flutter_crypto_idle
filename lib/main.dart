@@ -5,14 +5,16 @@ import 'package:crypto_idle/initial_data.dart';
 import 'package:crypto_idle/ui/main_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   MessageManager.init();
-  MusicManager.init();
   StatisticsManager.init();
 
+  MobileAds.instance.initialize();
   // final dataManager = InitialDataManager();
   // await dataManager.deleteBoxesFromDisk();
 

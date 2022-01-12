@@ -187,6 +187,11 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
                     ),
             ),
           ),
+          const Positioned(
+            right: 0,
+            top: 0,
+            child: _RewardAdWidget(),
+          ),
           ...digitals,
         ],
       ),
@@ -235,6 +240,105 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
     setState(() {
       digitals.add(digit);
     });
+  }
+}
+
+class _RewardAdWidget extends StatefulWidget {
+  const _RewardAdWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<_RewardAdWidget> createState() => _RewardAdWidgetState();
+}
+
+class _RewardAdWidgetState extends State<_RewardAdWidget> {
+  static final AdRequest request = AdRequest(
+      // keywords: <String>['foo', 'bar'],
+      // contentUrl: 'http://foo.com/bar.html',
+      // nonPersonalizedAds: true,
+      );
+
+  final int maxFailedLoadAttempts = 3;
+  RewardedAd? _rewardedAd;
+  int _numRewardedLoadAttempts = 0;
+
+  void _createRewardedAd() {
+    RewardedAd.load(
+        adUnitId: 'ca-app-pub-7838430906859541/4736119101',
+        request: request,
+        rewardedAdLoadCallback: RewardedAdLoadCallback(
+          onAdLoaded: (RewardedAd ad) {
+            // print('$ad loaded.');
+            _rewardedAd = ad;
+            setState(() {});
+            _numRewardedLoadAttempts = 0;
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            // print('RewardedAd failed to load: $error');
+            _rewardedAd = null;
+            setState(() {});
+            _numRewardedLoadAttempts += 1;
+            if (_numRewardedLoadAttempts <= maxFailedLoadAttempts) {
+              _createRewardedAd();
+            }
+          },
+        ));
+  }
+
+  void _showRewardedAd() {
+    if (_rewardedAd == null) {
+      // print('Warning: attempt to show rewarded before loaded.');
+      return;
+    }
+    _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
+      // onAdShowedFullScreenContent: (RewardedAd ad) => print('НАЧАЛО РЕКЛАМЫ -----------------------.'),
+      onAdDismissedFullScreenContent: (RewardedAd ad) {
+        // print('РЕКЛАМА ЗАКРЫТА -----------------------');
+        ad.dispose();
+        _createRewardedAd();
+      },
+      onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
+        // print('$ad onAdFailedToShowFullScreenContent: $error');
+        ad.dispose();
+        _createRewardedAd();
+      },
+    );
+
+    _rewardedAd!.setImmersiveMode(true);
+    _rewardedAd!.show(onUserEarnedReward: (RewardedAd ad, RewardItem reward) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('$ad with reward $RewardItem(${reward.amount}, ${reward.type}'),
+        ),
+      );
+      // print('$ad with reward $RewardItem(${reward.amount}, ${reward.type}');
+    });
+    _rewardedAd = null;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _createRewardedAd();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _rewardedAd?.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: _showRewardedAd,
+      child: Icon(
+        Icons.tv_sharp,
+        color: _rewardedAd != null ? AppColors.green : AppColors.grey,
+      ),
+    );
   }
 }
 

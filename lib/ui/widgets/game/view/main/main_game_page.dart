@@ -29,6 +29,7 @@ import 'package:crypto_idle/ui/widgets/main_app_view_model.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/src/provider.dart';
 
