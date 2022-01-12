@@ -21,7 +21,9 @@ class _ClickerWidget extends StatelessWidget {
           // const Expanded(
           //   child: _ClickerInfoWidget(),
           // ),
-          const Spacer(),
+          const Expanded(
+            child: _RewardAdWidget(),
+          ),
         ],
       ),
     );
@@ -219,11 +221,11 @@ class _CirlceWidgetState extends State<_CirlceWidget> {
                     ),
             ),
           ),
-          const Positioned(
-            right: 0,
-            top: 0,
-            child: _RewardAdWidget(),
-          ),
+          // const Positioned(
+          //   right: 0,
+          //   top: 0,
+          //   child: _RewardAdWidget(),
+          // ),
           ...digitals,
         ],
       ),
@@ -348,6 +350,10 @@ class _RewardAdWidgetState extends State<_RewardAdWidget> {
             _numRewardedLoadAttempts += 1;
             if (_numRewardedLoadAttempts <= maxFailedLoadAttempts) {
               _createRewardedAd();
+            } else {
+              Future.delayed(const Duration(seconds: 60), () {
+                _createRewardedAd();
+              });
             }
           },
         ));
@@ -376,9 +382,10 @@ class _RewardAdWidgetState extends State<_RewardAdWidget> {
     _rewardedAd!.show(onUserEarnedReward: (RewardedAd ad, RewardItem reward) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Reward $RewardItem(${reward.amount}, ${reward.type}'),
+          content: Text('Reward ${reward.amount} ${reward.type}'),
         ),
       );
+      context.read<ClickerGameViewModel>().onGetReward(reward.amount as int);
       // print('$ad with reward $RewardItem(${reward.amount}, ${reward.type}');
     });
     _rewardedAd = null;
@@ -403,11 +410,24 @@ class _RewardAdWidgetState extends State<_RewardAdWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final isReward = context.select((ClickerGameViewModel vm) => vm.state.isReward);
+    final isActive = _rewardedAd != null && isReward == false;
     return GestureDetector(
-      onTap: testReward,
-      child: Icon(
-        Icons.tv_sharp,
-        color: _rewardedAd != null ? AppColors.green : AppColors.grey,
+      onTap: isActive ? _showRewardedAd : null,
+      child: Column(
+        children: [
+          ShaderMask(
+            shaderCallback: (Rect bounds) {
+              return LinearGradient(
+                colors: isActive ? [AppColors.green, AppColors.green] : [AppColors.grey, AppColors.grey],
+              ).createShader(bounds);
+            },
+            blendMode: BlendMode.srcATop,
+            child: Image.asset(AppIconsImages.tv),
+          ),
+          const SizedBox(height: 10),
+          Text('Ускорить ПК', style: AppFonts.body.copyWith(color: isActive ? AppColors.white : AppColors.grey)),
+        ],
       ),
     );
   }
