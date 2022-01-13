@@ -7,5 +7,5 @@
 В игре есть симулятор криптовалют, некоторые растут, некоторые падают в цене, вы их можете покупать и продавать, а так же добывать с помощью компьютеров.
 Следите за новостями в игре, он влияют на цены криптовалют. 
 
-<img src="google_play/screenshot_1.jpg" width="750" height="500"/>
-<img src="google_play/screenshot_2.jpg" width="750" height="500"/>
+<img src="game_image_1.png" width="750" height="500"/>
+<img src="game_image_2.png" width="750" height="500"/>
