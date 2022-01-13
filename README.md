@@ -1,16 +1,11 @@
-# crypto_tycoon
+# Crypto Tycoon
 
-A new Flutter project.
+Игра симулятор, добывайте, покупайте, продавайте разные криптовалюты. 
 
-## Getting Started
+Игра в которой вам предстоит развиваться, зарабатывая на симуляции криптовалюты.
+В игре можно покупать компьютеры, чтобы с помощью них добывать криптовалюту. Покупать жилье для размещения еще большего количества компьютеров.
+В игре есть симулятор криптовалют, некоторые растут, некоторые падают в цене, вы их можете покупать и продавать, а так же добывать с помощью компьютеров.
+Следите за новостями в игре, он влияют на цены криптовалют. 
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="google_play/screenshot_1.jpg" width="750" height="500"/>
+<img src="google_play/screenshot_2.jpg" width="750" height="500"/>
