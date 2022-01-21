@@ -28,13 +28,9 @@ abstract class GameNavigationRouteNames {
 }
 
 class GameNavigation {
-  static GameMarketCryptoViewModel? gmcvm;
-
   static String get initialRoute => GameNavigationRouteNames.main;
 
   static Route<Object> onGenerateRoute(RouteSettings settings) {
-    gmcvm?.dispose();
-    gmcvm = null;
     switch (settings.name) {
       case GameNavigationRouteNames.marketCrypto:
         final arguments = settings.arguments;
